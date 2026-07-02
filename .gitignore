@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Expo / RN
+.expo/
+mobile/.expo/
+mobile/android/build/
+mobile/android/.gradle/
+mobile/android/app/build/
+mobile/android/app/release/
+mobile/android/
+
+# Build / generated outputs
+build/
+dist/
+out/
+release/
+logs/
+desktop/out/
+desktop/release/
+
+# Pandoc binaries (downloaded/bundled, not source)
+pandoc-3.10-windows-x86_64.msi
+pandoc.zip
+pandoc_extracted/
+desktop/resources/pandoc.exe
+sample.docx
+sample_1.docx
+
+# Out-of-scope personal files (config.json contains plaintext credentials)
+config.json
+school_sdk (1).exe
+analyze_exe.py
+hello_tool.py
+hello_tool.spec
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.qoder/
+mobile/.git/
+mobile/.claude/
+
+# Local agent instructions
+AGENTS.local.md

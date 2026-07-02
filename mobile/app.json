@@ -1,0 +1,158 @@
+{
+  "expo": {
+    "name": "墨览 文档阅读助手",
+    "slug": "md-reader",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mdreader.app",
+      "infoPlist": {
+        "CFBundleDisplayName": "墨览",
+        "CFBundleDocumentTypes": [
+          {
+            "CFBundleTypeName": "Markdown 文档",
+            "CFBundleTypeRole": "Viewer",
+            "LSHandlerRank": "Default",
+            "LSItemContentTypes": [
+              "net.daringfireball.markdown",
+              "public.plain-text"
+            ]
+          },
+          {
+            "CFBundleTypeName": "JSON 文档",
+            "CFBundleTypeRole": "Viewer",
+            "LSHandlerRank": "Alternate",
+            "LSItemContentTypes": [
+              "public.json"
+            ]
+          }
+        ],
+        "UTImportedTypeDeclarations": [
+          {
+            "UTTypeIdentifier": "net.daringfireball.markdown",
+            "UTTypeDescription": "Markdown 文档",
+            "UTTypeConformsTo": [
+              "public.plain-text"
+            ],
+            "UTTypeTagSpecification": {
+              "public.filename-extension": [
+                "md",
+                "markdown",
+                "mdown",
+                "mkd"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "android": {
+      "package": "com.mdreader.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "intentFilters": [
+        {
+          "action": [
+            "VIEW"
+          ],
+          "category": [
+            "DEFAULT"
+          ],
+          "data": [
+            {
+              "scheme": "content",
+              "mimeType": "text/markdown"
+            },
+            {
+              "scheme": "file",
+              "mimeType": "text/markdown"
+            },
+            {
+              "scheme": "content",
+              "mimeType": "text/plain",
+              "pathPattern": ".*\\.md"
+            },
+            {
+              "scheme": "file",
+              "mimeType": "text/plain",
+              "pathPattern": ".*\\.md"
+            },
+            {
+              "scheme": "content",
+              "pathPattern": ".*\\.md"
+            },
+            {
+              "scheme": "file",
+              "pathPattern": ".*\\.md"
+            },
+            {
+              "scheme": "content",
+              "pathPattern": ".*\\.markdown"
+            },
+            {
+              "scheme": "file",
+              "pathPattern": ".*\\.markdown"
+            },
+            {
+              "scheme": "content",
+              "mimeType": "application/json"
+            },
+            {
+              "scheme": "file",
+              "mimeType": "application/json"
+            },
+            {
+              "scheme": "content",
+              "mimeType": "text/plain",
+              "pathPattern": ".*\\.json"
+            },
+            {
+              "scheme": "file",
+              "mimeType": "text/plain",
+              "pathPattern": ".*\\.json"
+            },
+            {
+              "scheme": "content",
+              "pathPattern": ".*\\.json"
+            },
+            {
+              "scheme": "file",
+              "pathPattern": ".*\\.json"
+            },
+            {
+              "scheme": "content",
+              "mimeType": "application/octet-stream",
+              "pathPattern": ".*\\.md"
+            },
+            {
+              "scheme": "file",
+              "mimeType": "application/octet-stream",
+              "pathPattern": ".*\\.md"
+            },
+            {
+              "scheme": "content",
+              "mimeType": "application/octet-stream",
+              "pathPattern": ".*\\.json"
+            },
+            {
+              "scheme": "file",
+              "mimeType": "application/octet-stream",
+              "pathPattern": ".*\\.json"
+            }
+          ]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
