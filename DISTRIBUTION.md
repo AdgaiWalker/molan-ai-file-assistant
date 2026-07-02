@@ -65,6 +65,41 @@ release-notes.md
 
 ## 各端发布策略
 
+## 技术栈与体积策略
+
+### 总体原则
+
+- React / TypeScript 作为主栈，服务 AI 辅助开发效率。
+- 移动端采用轻 React Native，不把电脑端重转换能力塞进 APK。
+- 电脑端 CLI 和 GUI 继续使用 TypeScript 生态。
+- Pandoc / LibreOffice 作为外部转换引擎，不用 TypeScript 重写底层转换。
+
+### 移动端体积与启动
+
+目标：
+- 打开文件后尽快看到阅读内容。
+- APK / AAB 尽量小，但不牺牲核心体验。
+
+策略：
+- 使用 Hermes。
+- 使用 AAB 上架，官网 APK 尽量分架构。
+- 转换模块懒加载。
+- 首页只加载最近文档和提示词元数据。
+- 不在启动时扫描文件、不预加载转换器、不做阻断式 AI 识别。
+- Office / PDF / PPT / Excel → Markdown 下沉到电脑端 CLI。
+
+### 电脑端 / CLI
+
+定位：
+- AI 可调用的格式转换脚本。
+- 人用的轻量批量转换与编辑器。
+
+策略：
+- CLI 优先于 GUI。
+- 命令行输出必须稳定、可机器读取。
+- GUI 用 Electron + React 保持和主技术栈一致。
+- 重转换依赖 Pandoc / LibreOffice。
+
 ### Android
 
 V1 可先发布 APK：

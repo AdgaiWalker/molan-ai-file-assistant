@@ -462,19 +462,37 @@ P1 分享目标：
 
 ## 十二、技术路线
 
+### 技术选型原则
+
+- 迎合 AI 辅助开发：优先选择 AI 更擅长、生态更丰富的 React / TypeScript 技术栈。
+- 移动端体验不能被技术栈拖累：React Native 要做轻，不把重转换、复杂 Office 能力塞进手机端。
+- 先利用 React 生态快速打磨 UI / UX 和核心闭环；如果包体和启动速度成为真实市场阻碍，再评估 React Native Bare、关键入口原生化或原生重写。
+- TypeScript 作为主要业务语言；Pandoc / LibreOffice 等成熟转换引擎可作为外部二进制调用，不强行用 TypeScript 重写。
+
 ### 手机端
 
-- React Native / Expo
+- React Native / Expo + TypeScript
+- 轻 React Native 策略：移动端只保留阅读、复制、轻编辑、提示词、分享、最近文档等轻核心
+- 尽量减少重型 Expo / 原生模块
+- 转换模块懒加载
+- Hermes 优先
+- Android 使用 AAB / 分架构 APK 控制用户实际下载体积
 - 本地 Markdown 渲染
 - 本地 JSON 树渲染
 - 本地编辑与草稿
-- 本地格式转换优先
+- 手机端仅保留服务分享闭环的基础转换；Office / PDF / PPT / Excel 转 Markdown 优先交给电脑端
 - 系统分享面板
 - safe-area 适配
 
 ### 电脑端 / 桌面端
 
 电脑端不复制手机端完整体验，也不承担社交分享主流程。它的定位是：**AI 可调用的格式转换脚本 + 人用的轻量批量转换与编辑器。**
+
+推荐技术栈：
+- Node.js + TypeScript CLI
+- Electron + Vite + React + TypeScript GUI
+- Pandoc / LibreOffice 作为转换引擎
+- 输出结构化 JSON 日志，方便 AI / agent 判断下一步
 
 #### 1. AI 调用脚本进行格式转换
 
