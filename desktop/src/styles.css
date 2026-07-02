@@ -244,39 +244,4 @@ button:disabled {
 }
 
 /* AI 面板 */
-.ai-panel {
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.ai-input-row {
-  display: flex;
-  gap: 8px;
-}
-.ai-input-row input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 14px;
-}
-.ai-output {
-  background: #1e1e1e;
-  color: #e0e0e0;
-  padding: 16px;
-  border-radius: 8px;
-  font-family: Consolas, monospace;
-  font-size: 13px;
-  white-space: pre-wrap;
-  overflow: auto;
-  max-height: 50vh;
-  min-height: 120px;
-}
-.ai-hint {
-  color: var(--text-secondary);
-  font-size: 12px;
-  line-height: 1.6;
-}
+

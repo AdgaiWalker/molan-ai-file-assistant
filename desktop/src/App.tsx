@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { ReadableFile } from './shared/ipc';
 import ConvertPanel from './components/ConvertPanel';
 import ReaderPanel from './components/ReaderPanel';
-import AiPanel from './components/AiPanel';
 
-type Tab = 'convert' | 'reader' | 'ai';
+type Tab = 'reader' | 'convert';
 
 interface Settings {
   outputDir: string;
@@ -11,12 +11,11 @@ interface Settings {
 }
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>('convert');
+  const [tab, setTab] = useState<Tab>('reader');
   const [outputDir, setOutputDir] = useState<string>('');
   const [readerContent, setReaderContent] = useState<string>('');
   const [readerTitle, setReaderTitle] = useState<string>('');
 
-  // 启动时加载设置
   useEffect(() => {
     window.api.loadSettings().then((s) => {
       if (s) {
@@ -25,7 +24,23 @@ export default function App() {
         if (settings.lastTab) setTab(settings.lastTab);
       }
     });
+
+    window.api.getPendingFile().then((file) => {
+      if (file) openFileInReader(file);
+    });
+
+    const unsub = window.api.onOpenFile((file) => {
+      openFileInReader(file);
+    });
+
+    return unsub;
   }, []);
+
+  const openFileInReader = (file: ReadableFile) => {
+    setReaderContent(file.content);
+    setReaderTitle(file.name);
+    setTab('reader');
+  };
 
   const switchTab = (t: Tab) => {
     setTab(t);
@@ -35,24 +50,20 @@ export default function App() {
   return (
     <div className="app">
       <nav className="sidebar-tabs">
-        <button className={tab === 'convert' ? 'active' : ''} onClick={() => switchTab('convert')}>
-          转换
-        </button>
         <button className={tab === 'reader' ? 'active' : ''} onClick={() => switchTab('reader')}>
           阅读
         </button>
-        <button className={tab === 'ai' ? 'active' : ''} onClick={() => switchTab('ai')}>
-          AI
+        <button className={tab === 'convert' ? 'active' : ''} onClick={() => switchTab('convert')}>
+          转换
         </button>
       </nav>
       <main className="content">
-        {tab === 'convert' && (
-          <ConvertPanel outputDir={outputDir} setOutputDir={setOutputDir} />
-        )}
         {tab === 'reader' && (
           <ReaderPanel content={readerContent} title={readerTitle} onLoad={setReaderContent} setTitle={setReaderTitle} />
         )}
-        {tab === 'ai' && <AiPanel />}
+        {tab === 'convert' && (
+          <ConvertPanel outputDir={outputDir} setOutputDir={setOutputDir} />
+        )}
       </main>
     </div>
   );

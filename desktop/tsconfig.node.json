@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["node"]
+    "types": ["node", "electron"]
   },
   "include": ["electron/**/*.ts", "src/shared/**/*.ts"]
 }

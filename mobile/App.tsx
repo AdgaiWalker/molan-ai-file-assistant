@@ -10,9 +10,10 @@ import { JsonView } from './src/components/JsonView';
 import { ConvertSheet } from './src/components/ConvertSheet';
 import { EditSheet } from './src/components/EditSheet';
 import { RecentSheet } from './src/components/RecentSheet';
+import { PromptSheet } from './src/components/PromptSheet';
 import { SAMPLE_MD } from './src/sampleMd';
 import { themes, ThemeMode } from './src/theme';
-import { loadRecentDocs, RecentDoc, saveRecentDoc, removeRecentDoc } from './src/storage/recentDocs';
+import { loadRecentDocs, RecentDoc, saveRecentDoc, removeRecentDoc, DocSource } from './src/storage/recentDocs';
 import { writeMdFile } from './src/converter/fileConvert';
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
   const [convertVisible, setConvertVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [recentVisible, setRecentVisible] = useState(false);
+  const [promptVisible, setPromptVisible] = useState(false);
   const [recentDocs, setRecentDocs] = useState<RecentDoc[]>([]);
   const [immersive, setImmersive] = useState(true);
   const systemMode: ThemeMode = useColorScheme() === 'dark' ? 'night' : 'day';
@@ -64,9 +66,9 @@ export default function App() {
     }
   }, []);
 
-  const remember = useCallback(async (name: string, kind: 'markdown' | 'json', text: string) => {
+  const remember = useCallback(async (name: string, kind: 'markdown' | 'json', text: string, source?: DocSource) => {
     try {
-      const docs = await saveRecentDoc({ title: name, kind, content: text });
+      const docs = await saveRecentDoc({ title: name, kind, content: text, source });
       setRecentDocs(docs);
     } catch {
       /* 最近文档失败不阻断阅读 */
@@ -95,11 +97,11 @@ export default function App() {
       if (isJson) {
         setJsonRaw(text);
         setContent('');
-        await remember(fileSeg.replace(/\.json$/i, '') || 'JSON', 'json', text);
+        await remember(fileSeg.replace(/\.json$/i, '') || 'JSON', 'json', text, 'fileManager');
       } else {
         setJsonRaw(null);
         setContent(text);
-        await remember(fileSeg.replace(/\.(md|markdown)$/i, '') || '文档', 'markdown', text);
+        await remember(fileSeg.replace(/\.(md|markdown)$/i, '') || '文档', 'markdown', text, 'fileManager');
       }
       setTitle(fileSeg.replace(/\.(md|markdown|json)$/i, '') || '文档');
       setImmersive(!isJson);
@@ -137,11 +139,11 @@ export default function App() {
       if (isJson) {
         setJsonRaw(text);
         setContent('');
-        await remember(file.name.replace(/\.json$/i, '') || 'JSON', 'json', text);
+        await remember(file.name.replace(/\.json$/i, '') || 'JSON', 'json', text, 'documentPicker');
       } else {
         setJsonRaw(null);
         setContent(text);
-        await remember(file.name.replace(/\.(md|markdown)$/i, '') || '文档', 'markdown', text);
+        await remember(file.name.replace(/\.(md|markdown)$/i, '') || '文档', 'markdown', text, 'documentPicker');
       }
       setTitle(file.name.replace(/\.(md|markdown|json)$/i, ''));
       setImmersive(!isJson);
@@ -164,7 +166,7 @@ export default function App() {
       setContent(doc.content);
       setImmersive(true);
     }
-    remember(doc.title, doc.kind, doc.content);
+    remember(doc.title, doc.kind, doc.content, 'recent');
   }, [remember]);
 
   const removeRecent = useCallback(async (id: string) => {
@@ -176,11 +178,15 @@ export default function App() {
     }
   }, []);
 
-  const saveEdited = useCallback((md: string) => {
-    setContent(md);
-    setJsonRaw(null);
-    remember(title, 'markdown', md);
-  }, [remember, title]);
+  const saveEdited = useCallback((newContent: string) => {
+    if (jsonRaw !== null) {
+      setJsonRaw(newContent);
+      remember(title, 'json', newContent);
+    } else {
+      setContent(newContent);
+      remember(title, 'markdown', newContent);
+    }
+  }, [remember, title, jsonRaw]);
 
   const shareCurrent = useCallback(async () => {
     if (jsonRaw !== null) {
@@ -227,7 +233,7 @@ export default function App() {
       >
         <View style={styles.primaryRow}>
           <TouchableOpacity style={styles.bottomBtn} onPress={shareCurrent} disabled={loading || jsonRaw !== null}>
-            {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.bottomBtnText}>发给微信</Text>}
+            {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.bottomBtnText}>分享</Text>}
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.bottomBtn}
@@ -238,7 +244,7 @@ export default function App() {
           </TouchableOpacity>
         </View>
         <View style={styles.secondaryRow}>
-          <TouchableOpacity style={styles.ghostBtn} onPress={() => setEditVisible(true)} disabled={jsonRaw !== null}>
+          <TouchableOpacity style={styles.ghostBtn} onPress={() => setEditVisible(true)}>
             <Text style={styles.ghostBtnText}>编辑</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.ghostBtn} onPress={openFile} disabled={loading}>
@@ -246,6 +252,9 @@ export default function App() {
           </TouchableOpacity>
           <TouchableOpacity style={styles.ghostBtn} onPress={() => setRecentVisible(true)}>
             <Text style={styles.ghostBtnText}>最近</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.ghostBtn} onPress={() => setPromptVisible(true)}>
+            <Text style={styles.ghostBtnText}>提示词库</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -260,8 +269,9 @@ export default function App() {
       <EditSheet
         visible={editVisible}
         onClose={() => setEditVisible(false)}
-        content={content}
+        content={jsonRaw !== null ? jsonRaw : content}
         title={title}
+        isJson={jsonRaw !== null}
         theme={theme}
         onSave={saveEdited}
       />
@@ -273,6 +283,13 @@ export default function App() {
         onOpen={openRecent}
         onRemove={removeRecent}
       />
+      <PromptSheet
+        visible={promptVisible}
+        theme={theme}
+        onClose={() => setPromptVisible(false)}
+        currentContent={jsonRaw !== null ? jsonRaw : content}
+        currentTitle={title}
+      />
       {error ? (
         <View style={[styles.errorBar, { bottom: insets.bottom + 68 }]}>
           <Text style={styles.errorText}>{error}</Text>
@@ -283,7 +300,7 @@ export default function App() {
           <View style={styles.hintCard}>
             <Text style={styles.hintTitle}>使用提示</Text>
             <Text style={styles.hintText}>
-              {'· 轻点屏幕中部，唤出分享、转换、编辑与最近文档\n· 在微信/QQ 中打开 .md / .json 时，选「其他应用」找到「墨览 文档阅读助手」\n· 长按正文复制文字；代码块点"复制"；顶部"目录"跳转章节'}
+              {'· 在微信/QQ 中收到 .md / .json 文件 → 「其他应用」→「墨览 文档阅读助手」\n· 文件管理器点 .md / .json → 选墨览打开\n· 轻点屏幕中部唤出操作面板\n· 长按正文复制文字；代码块点"复制"；顶部"目录"跳转章节'}
             </Text>
             <TouchableOpacity style={styles.hintBtn} onPress={dismissHint}>
               <Text style={styles.hintBtnText}>知道了</Text>

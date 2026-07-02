@@ -8,8 +8,19 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import { RecentDoc } from '../storage/recentDocs';
+import { RecentDoc, DocSource } from '../storage/recentDocs';
 import { Theme } from '../theme';
+
+function sourceLabel(s: DocSource | string): string {
+  switch (s) {
+    case 'wechat': return '微信';
+    case 'qq': return 'QQ';
+    case 'fileManager': return '文件管理';
+    case 'documentPicker': return '本地选择';
+    case 'recent': return '最近文档';
+    default: return '其他';
+  }
+}
 
 interface RecentSheetProps {
   visible: boolean;
@@ -48,7 +59,7 @@ export function RecentSheet({ visible, docs, theme, onClose, onOpen, onRemove }:
                       {item.title}
                     </Text>
                     <Text style={[styles.meta, { color: theme.textSecondary }]}>
-                      {item.kind === 'json' ? 'JSON' : 'Markdown'} · {new Date(item.updatedAt).toLocaleString()}
+                      {sourceLabel(item.source ?? 'other')} · {item.kind === 'json' ? 'JSON' : 'Markdown'} · {new Date(item.updatedAt).toLocaleString()}
                     </Text>
                   </View>
                   <Text style={{ color: theme.textSecondary, fontSize: 12 }}>长按移除</Text>

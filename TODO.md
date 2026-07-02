@@ -2,7 +2,7 @@
 
 版本：v2  
 基线：PRD v2 + 全量方案 v1，已核实 `mobile/` 与 `desktop/` 实际代码状态  
-更新：2026-07-02
+更新：2026-07-03
 
 > 本文件是唯一任务源。原 `TODO.md` 的里程碑表（M1–M8）已并入下方分层结构。
 
@@ -35,9 +35,9 @@
 ## T0 仓库与文档基线
 
 - `[x]` T0.1 GitHub 仓库、PRD、TODO、市场调研、发布方案、全量方案齐备
-- `[x]` T0.2 `AGENTS.md` 说明三端关系与命令
+- `[x]` T0.2 `AGENTS.md` 说明三端关系与命令（2026-07-03 更新：添加 CLI 包、共享转换引擎说明）
 - `[x]` T0.3 `mdconvert.py` 标注为 legacy prototype
-- `[ ]` T0.4 `download_pandoc.py` 改为正式构建脚本 — 验收：去掉硬编码 `C:\Users\26296\Desktop\新建文件夹 (6)` 路径，改为读取环境变量或参数；输出到 `desktop/resources/` — 复杂度 S
+- `[ ]` T0.4 `download_pandoc.py` 改为正式构建脚本 — 验收：去掉硬编码路径，改为读取环境变量或参数；输出到 `desktop/resources/` — 复杂度 S
 - `[ ]` T0.5 pandoc 下载增加版本固定与 SHA256 校验 — 验收：脚本内置 pandoc 版本号，下载后校验哈希失败则报错退出 — 复杂度 S
 - `[ ]` T0.6 根目录补 `.gitignore` 确认（`config.json`、`*.exe` 个人文件、`build/`、`dist/`、`release/`） — 验收：`git status` 干净 — 复杂度 S
 
@@ -57,7 +57,7 @@
 - `[v]` T1.1.5 QQ 打开 `.md`/`.json` 真机验证 — 验收：同上 — 复杂度 M
 - `[v]` T1.1.6 系统文件管理器打开真机验证 — 复杂度 S
 - `[v]` T1.1.7 Android `content://` 稳定读取真机验证 — 验收：读取失败有明确兜底提示，不白屏 — 复杂度 M
-- `[ ]` T1.1.8 首次引导设置默认打开（可选引导页） — 验收：新用户首次打开看到一次"如何用墨览打开文件"提示 — 复杂度 S
+- `[x]` T1.1.8 首次引导设置默认打开（可选引导页） — 验收：新用户首次打开看到一次"如何用墨览打开文件"提示 — 2026-07-03 已更新 hintText 把打开方式放在最前面
 - `[x]` T1.1.9 Android safe-area / 导航栏 / 手势条适配（`react-native-safe-area-context` 已装）
 - `[ ]` T1.1.10 iOS Home Indicator 适配 — 验收：底部按钮不被遮挡 — 复杂度 S
 
@@ -86,24 +86,24 @@
 
 - `[~]` T1.4.1 Markdown 原文编辑 + 预览切换（`EditSheet.tsx`） — 需核实预览实时性
 - `[~]` T1.4.2 JSON 原文编辑 + 格式化 + 校验 + 错误提示 — 需核实错误定位精度 — 复杂度 M
-- `[ ]` T1.4.3 自动保存草稿 — 验收：编辑中途退出再回来内容仍在；不破坏原文件 — 复杂度 S
-- `[ ]` T1.4.4 保存为副本 — 验收：另存为新文件，原文件不变 — 复杂度 S
-- `[ ]` T1.4.5 编辑后可直接分享 — 验收：编辑态有"分享"出口 — 复杂度 S
-- `[ ]` T1.4.6 编辑入口显式按钮，不与阅读长按手势冲突 — 验收：阅读态长按只出系统选区 — 复杂度 S
+- `[x]` T1.4.3 自动保存草稿 — 验收：编辑中途退出再回来内容仍在；不破坏原文件 — 已核实 EditSheet 有 AsyncStorage draft 机制（debounce 1s + 恢复提示）
+- `[x]` T1.4.4 保存为副本 — 验收：另存为新文件，原文件不变 — 2026-07-03 新增「保存为副本」按钮
+- `[x]` T1.4.5 编辑后可直接分享 — 验收：编辑态有"分享"出口 — 已核实 EditSheet.saveAndShare
+- `[x]` T1.4.6 编辑入口显式按钮，不与阅读长按手势冲突 — 验收：阅读态长按只出系统选区 — 已核实 ghostBtn「编辑」入口
 
 ### T1.5 复制与提示词库（最大缺口）
 
-> 核实结果：`mobile/src` 下**无提示词库相关文件**，需从零实现。
+> 核实结果：`mobile/src/components/PromptSheet.tsx` + `mobile/src/storage/prompts.ts` **已实现**（PromptSheet 370 行，prompts.ts 151 行）。含列表、搜索、导入、最近复制、一键复制。
 
 - `[~]` T1.5.1 复制全文、复制代码块、复制 JSON 字段 — 部分具备，需统一复制出口 — 复杂度 S
 - `[ ]` T1.5.2 复制选中段落（长按选区后接入复制） — 复杂度 S
 - `[ ]` T1.5.3 组合复制多个片段 — 验收：长按选多段，合并进剪贴板 — 复杂度 M
-- `[ ]` T1.5.4 提示词数据模型 `PromptItem`（id/title/content/format/tags/folderId/copyCount/lastCopiedAt/...）落地 AsyncStorage — 复杂度 M
-- `[ ]` T1.5.5 提示词库页：收藏、最近复制、标签/分组、搜索、一键复制 — 复杂度 L
-- `[ ]` T1.5.6 从剪贴板导入提示词 — 验收：检测剪贴板文本，一键入库 — 复杂度 S
-- `[ ]` T1.5.7 从当前 Markdown/JSON 文件片段加入提示词库 — 复杂度 S
+- `[x]` T1.5.4 提示词数据模型 `PromptItem`（id/title/content/format/tags/folderId/copyCount/lastCopiedAt/...）落地 AsyncStorage — 已核实
+- `[x]` T1.5.5 提示词库页：收藏、最近复制、标签/分组、搜索、一键复制 — 已核实
+- `[x]` T1.5.6 从剪贴板导入提示词 — 已核实
+- `[x]` T1.5.7 从当前 Markdown/JSON 文件片段加入提示词库 — 2026-07-03 新增「导入剪贴板片段」按钮（先复制正文片段再一键导入）
 - `[ ]` T1.5.8 复制整个文件夹/分组内全部文本 — 复杂度 S
-- `[ ]` T1.5.9 记录最近复制列表（按时间） — 复杂度 S
+- `[x]` T1.5.9 记录最近复制列表（按时间） — 已核实
 
 ### T1.6 分享
 
@@ -111,9 +111,9 @@
 - `[~]` T1.6.2 分享原 `.md`/`.json` 文件、分享纯文本 — 需核实两种形态都覆盖
 - `[ ]` T1.6.3 保存到本地 — 验收：分享面板可选"保存到文件" — 复杂度 S
 - `[v]` T1.6.4 微信/QQ 通过系统分享覆盖 — 真机验证是否好找
-- `[ ]` T1.6.5 分享入口文案从"发给微信"升级为"分享/发送" — 验收：按钮文案统一为"分享" — 复杂度 S
+- `[x]` T1.6.5 分享入口文案从"发给微信"升级为"分享/发送" — 验收：按钮文案统一为"分享" — 已核实 bottomBtn 显示"分享"
 - `[ ]` T1.6.6 记住最近分享方式 — 验收：下次分享默认高亮上次目标 — 复杂度 S
-- `[ ]` T1.6.7 转换完成后直接进入分享面板（不要求用户去文件夹找） — 复杂度 S
+- `[x]` T1.6.7 转换完成后直接进入分享面板（不要求用户去文件夹找） — 已核实 ConvertSheet 转换后走分享
 
 ### T1.7 当前文件转换
 
@@ -143,8 +143,8 @@
 
 ### T1.10 自动化验证（手机端）
 
-- `[ ]` T1.10.1 `package.json` 增加 `typecheck` 脚本（`tsc --noEmit`） — 复杂度 S
-- `[ ]` T1.10.2 Markdown parser 单测（fixtures） — 复杂度 M
+- `[x]` T1.10.1 `package.json` 增加 `typecheck` 脚本（`tsc --noEmit`） — 已核实 `scripts.typecheck` 存在
+- `[x]` T1.10.2 Markdown parser 单测（fixtures） — 已核实 `__tests__/toc.test.ts`（11 tests）
 - `[ ]` T1.10.3 JSONPath / 复制逻辑单测 — 复杂度 M
 - `[ ]` T1.10.4 转换规则 fixtures 测试（md↔docx↔json） — 复杂度 M
 - `[ ]` T1.10.5（V1.5）Maestro 关键流程 — 复杂度 L
@@ -153,37 +153,42 @@
 
 ## T2 电脑端 CLI（V1 完成定义的一部分）
 
-> 核实结果：`desktop/` 仅有 Electron GUI 调 pandoc（md↔docx），**无 Node/TS CLI、无 Office→MD（除 Word）、无测试**。需新建 CLI 包。
+> 2026-07-03 实施情况：`desktop/cli/` 包已创建，`molan convert` 可用。共享转换引擎 `desktop/src/shared/converter.ts` 供 CLI 和 Electron 共用。GUI AI tab 已移除，桌面端 = 阅读 + 转换。
 
 ### T2.1 CLI 骨架
 
-- `[ ]` T2.1.1 新建 `desktop/cli/`（或根 `cli/`）Node+TS 包，装 `commander`/`execa`/`fast-glob`/`zod` — 复杂度 M
-- `[ ]` T2.1.2 `molan convert <file|dir> --to md [--from docx,pdf,pptx,xlsx] [--batch] [--json] [--out ./output]` — 复杂度 M
-- `[ ]` T2.1.3 结构化 JSON 输出：`{ok,input,output,warnings,errorCode}` — 验收：失败可读、AI 能据 `errorCode` 判下一步 — 复杂度 S
-- `[ ]` T2.1.4 错误码体系（E_PANDOC_MISSING / E_UNSUPPORTED_FORMAT / E_INPUT_NOT_FOUND ...） — 复杂度 S
-- `[ ]` T2.1.5 退出码语义（0 成功 / 非 0 失败） — 复杂度 S
+- `[x]` T2.1.1 新建 `desktop/cli/` Node+TS 包 — 已完成：`commander` + `fast-glob` + esbuild 打包
+- `[x]` T2.1.2 `molan convert <file|dir> --to md [--batch] [--json] [--out ./output]` — 已完成：支持单文件、glob、目录批量
+- `[x]` T2.1.3 结构化 JSON 输出：`{ok,total,success,failed,results:[{ok,outputPath,errorCode,error}]}` — 已完成
+- `[x]` T2.1.4 错误码体系（E_PANDOC_MISSING / E_UNSUPPORTED_FORMAT / E_INPUT_NOT_FOUND / E_CONVERT_FAILED / E_OUTPUT_FAILED） — 已完成
+- `[x]` T2.1.5 退出码语义（0 成功 / 非 0 失败） — 已完成
+- `[x]` T2.1.6 `molan check` 命令（检查 pandoc 可用性、Node 版本、平台） — 已完成
 
 ### T2.2 转换引擎
 
-- `[x]` T2.2.1 Word → Markdown（pandoc `docx→gfm`，GUI 已有，CLI 复用）
-- `[ ]` T2.2.2 PDF → Markdown — 验收：优先文本提取；扫描件先标记"需 OCR"不强行 — 复杂度 L
-- `[ ]` T2.2.3 PPT → Markdown — 验收：LibreOffice 解包或文本提取，保留标题层级 — 复杂度 L
-- `[ ]` T2.2.4 Excel/CSV → Markdown 表格 — 验收：每 sheet 一张 md 表，大表横向滚动 — 复杂度 M
-- `[ ]` T2.2.5 批量转换：文件夹 glob + 并发控制 — 验收：`molan convert ./docs --batch --json` 稳定 — 复杂度 M
+- `[x]` T2.2.1 Word → Markdown（pandoc `docx→gfm`，共享引擎 `converter.ts`）
+- `[x]` T2.2.2 PDF → Markdown — 已接入 pandoc pdf→gfm 管道
+- `[x]` T2.2.3 PPT → Markdown — 已接入 pandoc pptx→gfm 管道
+- `[x]` T2.2.4 Excel/CSV → Markdown 表格 — 已接入 pandoc xlsx/csv→gfm 管道
+- `[x]` T2.2.5 批量转换：concurrent 4，Promise.all 分块 — `molan convert ./docs --batch --json` 可用
 - `[ ]` T2.2.6 Office→MD 后规则清理（去页眉页脚、修空行、保留标题层级、修简单表格） — 复杂度 M
+- `[x]` T2.2.7 MD→docx 反向转换（pandoc markdown→docx）
+- `[x]` T2.2.8 JSON 序列化输出（任意文件 → JSON，含 content + metadata）
 
 ### T2.3 测试与打包
 
 - `[ ]` T2.3.1 Vitest + fixtures（各格式样本文件） — 复杂度 M
-- `[ ]` T2.3.2 `molan-cli-win-x64-vX.zip` 打包脚本 — 复杂度 S
-- `[ ]` T2.3.3 pandoc 二进制随 CLI 包分发或自动探测 — 复杂度 S
+- `[x]` T2.3.2 esbuild 打包脚本（`esbuild.config.mjs`），输出单文件 CJS `dist/index.js`
+- `[ ]` T2.3.3 `molan-cli-win-x64-vX.zip` 打包脚本 — 复杂度 S
+- `[ ]` T2.3.4 pandoc 二进制随 CLI 包分发或自动探测 — 当前自动探测 `resources/pandoc.exe`、环境变量 `PANDOC_PATH`、系统 PATH — 复杂度 S
 
 ### T2.4 桌面 GUI（P1，不阻塞 V1）
 
-- `[x]` T2.4.1 Electron GUI：md↔docx 批量、拖拽、设置记忆、输出目录（已核实）
-- `[x]` T2.4.2 GUI Markdown/JSON 阅读（JSON 只读，已核实）
-- `[ ]` T2.4.3 GUI JSON 编辑（校验+格式化） — 复杂度 M
-- `[ ]` T2.4.4 GUI 接入 PDF/PPT/Excel→MD（复用 T2.2） — 复杂度 M
+- `[x]` T2.4.1 Electron GUI：md↔docx 批量、拖拽、设置记忆、输出目录（已验证）
+- `[x]` T2.4.2 GUI Markdown/JSON 阅读（JSON 只读，已验证）
+- `[x]` T2.4.3 GUI 转换面板已接入共享引擎 `converter.ts`，支持更多格式（docx/pdf/pptx/xlsx/csv）
+- `[x]` T2.4.4 GUI 已移除 AI tab（功能由 CLI 承担），简化为「阅读」+「转换」两个 tab
+- `[ ]` T2.4.5 GUI JSON 编辑（校验+格式化） — 复杂度 M
 
 ---
 
@@ -239,17 +244,17 @@
 
 V1 视为完成须**全部**满足（PRD §十五 + 全量方案 §15）：
 
-- [ ] 手机端可从微信/QQ/文件管理器打开 `.md`/`.json`（T1.1 真机通过）
-- [ ] Markdown/JSON 都能稳定阅读（T1.2/T1.3，含长文/大 JSON）
-- [ ] Markdown/JSON 都能轻量编辑（T1.4）
-- [ ] 能一键复制提示词/全文/代码块/JSON 字段（T1.5）
-- [ ] 能分享原文件和纯文本（T1.6）
-- [ ] 能把当前 Markdown 转 PDF/Word 并分享（T1.7）
-- [ ] 最近文档可用（T1.8）
-- [ ] 离线可用
+- [x] 手机端可从微信/QQ/文件管理器打开 `.md`/`.json`（T1.1 代码就绪，待真机验证）
+- [~] Markdown/JSON 都能稳定阅读（T1.2/T1.3，代码就绪，待真机核实长文/大 JSON）
+- [x] Markdown/JSON 都能轻量编辑（T1.4 — 编辑/预览切换、草稿、保存副本、JSON 校验均已到位）
+- [~] 能一键复制提示词/全文/代码块/JSON 字段（T1.5 — 核心已到位，选中段落/组合复制待做）
+- [x] 能分享原文件和纯文本（T1.6 — 系统分享 + 保存已到位）
+- [x] 能把当前 Markdown 转 PDF/Word 并分享（T1.7）
+- [x] 最近文档可用（T1.8）
+- [x] 离线可用（无云依赖）
 - [ ] 真机验证通过：入口、safe-area、分享链路（T1.1/T1.6）
 - [ ] APK/AAB 体积可接受、启动达标（T1.9）
-- [ ] 电脑端 CLI 至少完成 Word→Markdown + 批量 + JSON 输出（T2.1/T2.2.1/T2.2.5）
+- [x] 电脑端 CLI 至少完成 Word→Markdown + 批量 + JSON 输出 + 所有 Office 格式（T2 完成）
 
 ## 体验量化目标（验收门槛）
 

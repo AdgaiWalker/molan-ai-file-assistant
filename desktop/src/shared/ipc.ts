@@ -42,8 +42,8 @@ export const ipcChannels = {
   SELECT_OUTPUT_DIR: 'select-output-dir',
   CONVERT: 'convert',
   READ_MD: 'read-md',
-  RUN_AI: 'run-ai',
   OPEN_PATH: 'open-path',
   SAVE_SETTINGS: 'save-settings',
   LOAD_SETTINGS: 'load-settings',
+  GET_PENDING_FILE: 'get-pending-file',
 } as const;

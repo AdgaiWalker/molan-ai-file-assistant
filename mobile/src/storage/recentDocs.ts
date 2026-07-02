@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type RecentDocKind = 'markdown' | 'json';
+export type DocSource = 'wechat' | 'qq' | 'fileManager' | 'documentPicker' | 'recent' | 'other';
 
 export interface RecentDoc {
   id: string;
@@ -8,6 +9,9 @@ export interface RecentDoc {
   kind: RecentDocKind;
   content: string;
   updatedAt: number;
+  source?: DocSource;
+  lastEditedAt?: number;
+  lastCopiedAt?: number;
 }
 
 const KEY = 'recentDocs:v1';
