@@ -11,6 +11,7 @@ AI 产物阅读器项目，面向收到 `.md` / `.json` 后无法顺畅阅读、
 ## 产品与发布文档
 
 - [PRD.md](PRD.md)：产品需求文档。
+- [全量方案.md](全量方案.md)：基于 PRD 的产品、架构、技术栈、实施与验收全量方案。
 - [TODO.md](TODO.md)：按优先级拆解的任务清单。
 - [MARKET_RESEARCH.md](MARKET_RESEARCH.md)：国内 AI 使用与产品机会调研。
 - [DISTRIBUTION.md](DISTRIBUTION.md)：GitHub、官网、国内镜像与安装包发布策略。
