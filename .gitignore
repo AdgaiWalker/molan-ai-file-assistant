@@ -40,6 +40,7 @@ Thumbs.db
 .idea/
 .vscode/
 .qoder/
+.git-nested-backups/
 mobile/.git/
 mobile/.claude/
 
