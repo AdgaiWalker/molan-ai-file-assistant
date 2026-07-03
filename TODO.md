@@ -103,7 +103,7 @@
 - `[x]` D1.12 设计设置页 — 默认打开指引、云同步开关、隐私说明、缓存管理、导出数据。证据：`docs/design/mobile-settings-page.md` 覆盖入口、微信/QQ 默认打开指引、云同步默认关闭、隐私说明、缓存清理、数据导出 JSON 边界；与 PRD 本地优先、文件不默认上传一致。
 - `[x]` D1.13 输出手机端全量页面状态表 — 空态、加载、错误、无权限、离线、大文件、转换失败、同步冲突。证据：`docs/design/mobile-page-state-table.md` 覆盖首页、打开引导、Markdown/JSON 阅读、编辑、提示词、最近、AI 卡片、转换、批量转换、设置页的全局/局部状态和验收口径。
 - `[x]` D1.14 输出手机端视觉规范 — 图标、字号、间距、按钮层级、安全区、浅深色、Android/iOS 适配。证据：`docs/design/mobile-visual-spec.md` 基于参考图、`theme.ts`、现有组件整理色彩、字号、间距、圆角、图标、按钮层级、安全区、浅深色和 Android/iOS 差异，并列出实现债务。
-- `[ ]` D1.15 设计 App 外快贴平台方案 — Android 悬浮快贴、iOS 键盘扩展/分享扩展、权限说明、关闭入口、隐私边界。
+- `[x]` D1.15 设计 App 外快贴平台方案 — Android 悬浮快贴、iOS 键盘扩展/分享扩展、权限说明、关闭入口、隐私边界。证据：`docs/design/mobile-external-quick-paste.md` 覆盖 Android 悬浮球/迷你面板/关闭入口、iOS 键盘扩展与分享扩展、权限说明文案、剪贴板和输入框隐私边界、与提示词库数据关系。
 - `[ ]` D1.16 设计转换配方 — 给 AI 读→Markdown、给别人看→PDF、给别人改→Word、给开发/Agent→JSON 或 Markdown。
 
 **D2 电脑端 / CLI 全量设计**
