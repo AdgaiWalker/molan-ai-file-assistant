@@ -210,13 +210,13 @@
 | ID | 优先级 | 状态 | 任务 | 依赖 | 交付物 | 验收 |
 |---|---|---|---|---|---|---|
 | S0-PD-001 | P0 | `[x]` | 明确产品总目标 | 无 | `PRD.md` | 有手机端、电脑端的一句话定位 |
-| S0-PD-002 | P0 | `[x]` | 明确国内市场优先 | 无 | `market-research.md` | 微信、QQ、国内办公场景写入策略 |
-| S0-PD-003 | P0 | `[x]` | 明确离线优先 | 无 | `PRD.md` / `full-plan.md` | V1 不依赖后端 |
+| S0-PD-002 | P0 | `[x]` | 明确国内市场优先 | 无 | `docs/market-research.md` | 微信、QQ、国内办公场景写入策略 |
+| S0-PD-003 | P0 | `[x]` | 明确离线优先 | 无 | `PRD.md` / `docs/full-plan.md` | V1 不依赖后端 |
 | S0-PD-004 | P0 | `[x]` | 明确 Markdown / JSON 双核心 | 无 | `PRD.md` | 二者都支持阅读、编辑、复制、分享 |
-| S0-PD-005 | P0 | `[x]` | 明确电脑端脚本定位 | 无 | `PRD.md` / `full-plan.md` | 电脑端偏 CLI 和轻 GUI |
-| S0-PD-006 | P0 | `[x]` | 明确技术栈方向 | 无 | `full-plan.md` | TypeScript、React Native、Electron、Node CLI |
+| S0-PD-005 | P0 | `[x]` | 明确电脑端脚本定位 | 无 | `PRD.md` / `docs/full-plan.md` | 电脑端偏 CLI 和轻 GUI |
+| S0-PD-006 | P0 | `[x]` | 明确技术栈方向 | 无 | `docs/full-plan.md` | TypeScript、React Native、Electron、Node CLI |
 | S0-PD-007 | P0 | `[x]` | 拆解旧里程碑任务 | S0-PD-001 | `TODO.md` | M1-M8 已并入分层任务 |
-| S0-PD-008 | P0 | `[x]` | 生成全量方案 | S0-PD-001 | `full-plan.md` | 含架构、数据、流程、发布 |
+| S0-PD-008 | P0 | `[x]` | 生成全量方案 | S0-PD-001 | `docs/full-plan.md` | 含架构、数据、流程、发布 |
 | S0-PD-009 | P0 | `[x]` | 生成全量可执行任务清单 | S0-PD-007 | `TODO.md` | 本文件存在且覆盖所有阶段（已合并 D 层设计任务） |
 | S0-PD-010 | P1 | `[ ]` | 建立任务状态更新规则 | S0-PD-009 | 文档章节或 issue 模板 | 每次完成开发后更新状态和证据 |
 
@@ -753,7 +753,7 @@ V1 只在以下全部成立时关闭：
 
 | 验证类型 | 必做检查 | 通过标准 |
 |---|---|---|
-| 文档一致性 | 搜索 `selected-mobile-ui`、`selected-desktop-ui` | `TODO.md`、`full-plan.md` 均引用 |
+| 文档一致性 | 搜索 `selected-mobile-ui`、`selected-desktop-ui` | `TODO.md`、`docs/full-plan.md` 均引用 |
 | 文档一致性 | 搜索 Android 悬浮快贴、iOS 键盘扩展、置顶快贴窗、MCP、`molan pull/read/push` | 全量任务和完成定义均覆盖 |
 | 手机产品验收 | 微信 / QQ 打开 `.md` / `.json` | 最多滑动 1-2 下找到墨览，5 秒内看到内容 |
 | 手机产品验收 | 复制和转换分享 | 10 秒内复制提示词，20 秒内转换并分享 |
