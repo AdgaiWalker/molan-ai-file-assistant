@@ -98,7 +98,7 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
         <div className="prompt-header">
           <div>
             <h2>墨览快贴</h2>
-            <p className="sync-dot">已同步 · 手机与电脑</p>
+            <p className="sync-dot"><span className="sync-dot-icon" />已同步 · 手机与电脑</p>
           </div>
           <div className="prompt-actions">
             {!compact && (
@@ -170,9 +170,16 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
           <div className="detail-actions">
             <button className="btn-secondary">组合</button>
             <button className="btn-secondary">编辑</button>
+            <button className="btn-secondary">...</button>
           </div>
         </aside>
       )}
+
+      <div className="prompt-footer">
+        <button className="btn-ghost">＋ 新建提示词</button>
+        <button className="btn-ghost" onClick={openPromptWindow}>打开墨览</button>
+        <button className="btn-ghost">打开输出文件夹</button>
+      </div>
     </div>
   );
 }

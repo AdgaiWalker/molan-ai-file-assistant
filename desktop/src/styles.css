@@ -376,18 +376,19 @@ button:disabled {
 }
 
 .sync-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: #18864b;
   font-size: 12px;
 }
 
-.sync-dot::before {
-  content: "";
+.sync-dot-icon {
   display: inline-block;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #20a05a;
-  margin-right: 6px;
 }
 
 .prompt-actions,
@@ -502,6 +503,39 @@ button:disabled {
   background: rgba(232, 240, 254, 0.82);
   color: #1c5fc3;
   font-size: 12px;
+}
+
+.prompt-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(210, 216, 226, 0.82);
+  border-radius: 14px;
+  backdrop-filter: blur(22px);
+}
+
+.prompt-panel.mini .prompt-footer {
+  grid-column: auto;
+}
+
+.btn-ghost {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.04);
 }
 
 /* AI 面板 */
