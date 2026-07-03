@@ -17,19 +17,9 @@
   -> 成功后直接分享 / 阅读
 ```
 
-## 2. 当前能力基线
+## 2. 设计范围
 
-| 转换 | 当前状态 | 实现 |
-|---|---|---|
-| Markdown -> PDF | 已实现 | `exportPdfFile` + `expo-print` |
-| Markdown -> Word | 已实现 | `convertMdToDocxFile` + `docx` |
-| Markdown -> `.md` 文件 | 已实现 | `writeMdFile` |
-| JSON -> Markdown | 已实现 | `jsonToMarkdown` |
-| JSON -> PDF | 已实现为 JSON 规则化 Markdown 后 PDF | `contentAsMarkdown` + `exportPdfFile` |
-| JSON -> Word | 已实现为 JSON 规则化 Markdown 后 Word | `contentAsMarkdown` + `convertMdToDocxFile` |
-| JSON 原文件分享 | 已实现 | `writeJsonFile` |
-| JSON -> Markdown 并阅读 | 已实现 | `loadJsonAsMd` |
-| Word -> Markdown 临时导入 | 已实现 | `DocumentPicker` + `convertDocxFileToMd` |
+实现参考：`mobile/src/components/ConvertSheet.tsx`、`mobile/src/converter/fileConvert.ts`。
 
 ## 3. 转换入口
 

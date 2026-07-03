@@ -11,18 +11,18 @@ AI 阅读卡片是手机端阅读页的辅助判断层，不替代 Markdown / JS
 
 V1 只做本地规则识别，不能默认上传文件。V2 接入真实 AI 时，上传动作也必须由用户主动触发。
 
-## 2. 当前实现基线
+## 2. 设计范围
 
-代码入口：`mobile/src/components/AiInsightSheet.tsx`。
+实现参考：`mobile/src/components/AiInsightSheet.tsx`。
 
-| 能力 | 当前状态 | 设计口径 |
-|---|---|---|
-| 文件类型 | 已区分 Markdown 与 JSON | 后续可细分 PRD、README、API 响应、Agent 配置、MCP 配置、日志 |
-| 内容摘要 | Markdown 取首段与标题/代码块统计，JSON 取对象/数组/字段摘要 | 摘要只做快速判断，不承诺完整总结 |
-| 提示词候选 | 识别 prompt、system、instruction、rules、message、template、斜杠命令 | 候选可一键复制，后续可导入提示词库 |
-| 待办候选 | 识别 todo、待办、任务、下一步、action、review 等线索 | 候选用于复制或进入后续任务流 |
-| 敏感字段 | 识别 token、secret、api_key、authorization、password、privateKey 等 key/path | 仅本地提示，不自动上传，不自动清洗原文件 |
-| 保存建议 | 根据结构、提示词、敏感字段给保留/临时查看建议 | 建议不自动改变文件状态 |
+| 能力 | 设计口径 |
+|---|---|
+| 文件类型 | V1 区分 Markdown 与 JSON；V1.5/V2 可细分为 PRD、README、API 响应、Agent 配置、MCP 配置、日志 |
+| 内容摘要 | Markdown 取首段与标题/代码块统计，JSON 取对象/数组/字段摘要；摘要只做快速判断，不承诺完整总结 |
+| 提示词候选 | 识别 prompt、system、instruction、rules、message、template、斜杠命令；候选可一键复制，V1.5 可导入提示词库 |
+| 待办候选 | 识别 todo、待办、任务、下一步、action、review 等线索；候选用于复制或 V2 转任务 |
+| 敏感字段 | 识别 token、secret、api_key、authorization、password、privateKey 等 key/path；仅本地提示，不自动上传，不自动清洗原文件 |
+| 保存建议 | 根据结构、提示词、敏感字段给保留/临时查看建议；建议不自动改变文件状态 |
 
 ## 3. 卡片结构
 

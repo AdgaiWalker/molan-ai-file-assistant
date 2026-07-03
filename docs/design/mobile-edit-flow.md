@@ -5,21 +5,9 @@
 对应任务：D1.4  
 依据：`mobile/src/components/EditSheet.tsx`、`mobile/src/json/format.ts`、`mobile/src/converter/fileConvert.ts`
 
-## 1. 当前能力基线
+## 1. 设计范围
 
-| 能力 | 当前实现 | 证据 |
-|---|---|---|
-| Markdown 原文编辑 | `TextInput multiline` | `EditSheet.tsx` |
-| Markdown 预览 | `Reader content={draft}` | `EditSheet.tsx` |
-| JSON 原文编辑 | `TextInput multiline` | `EditSheet.tsx` |
-| JSON 实时校验 | `JSON.parse(draft)` effect | `EditSheet.tsx` |
-| JSON 格式化 | `formatJson` | `EditSheet.tsx` |
-| JSON 错误提示 | error bar + 禁用保存按钮 | `EditSheet.tsx` |
-| 自动保存草稿 | `AsyncStorage.setItem(DRAFT_KEY)` | `EditSheet.tsx` |
-| 草稿恢复 | 打开时读取 `DRAFT_KEY` | `EditSheet.tsx` |
-| 保存到当前文档 | `onSave(draft)` | `EditSheet.tsx` / `App.tsx` |
-| 保存为副本 | `writeMdFile` / `writeJsonFile` + share sheet | `EditSheet.tsx` |
-| 保存并分享 | 写临时文件后 `Sharing.shareAsync` | `EditSheet.tsx` |
+实现参考：`mobile/src/components/EditSheet.tsx`、`mobile/src/json/format.ts`、`mobile/src/converter/fileConvert.ts`。
 
 ## 2. 编辑入口
 

@@ -18,17 +18,19 @@
 - V1/S2 先基于 pandoc 输出稳定 Markdown；Office 转 Markdown 后清理进入后续增强。
 - 不做 OCR，不处理扫描件 PDF，不做复杂 Office 编辑。
 
-## 2. 当前转换基线
+## 2. 转换映射
 
-| 输入 | 当前 from/to | 代码 |
-|---|---|---|
-| `.docx` | `docx -> gfm` | `pandocFormat('.docx')` |
-| `.pdf` | `pdf -> gfm` | `pandocFormat('.pdf')` |
-| `.pptx` | `pptx -> gfm` | `pandocFormat('.pptx')` |
-| `.xlsx` | `xlsx -> gfm` | `pandocFormat('.xlsx')` |
-| `.csv` | `csv -> gfm` | `pandocFormat('.csv')` |
+V1 统一通过 `desktop/src/shared/converter.ts` 调用 pandoc，输入到 GFM Markdown：
 
-输出命名由 `makeOutputPath` 保证不覆盖已有文件：同名时追加 `_1`、`_2`。
+| 输入 | from/to |
+|---|---|
+| `.docx` | `docx -> gfm` |
+| `.pdf` | `pdf -> gfm` |
+| `.pptx` | `pptx -> gfm` |
+| `.xlsx` | `xlsx -> gfm` |
+| `.csv` | `csv -> gfm` |
+
+输出命名保证不覆盖已有文件：同名时追加 `_1`、`_2`。
 
 ## 3. 通用 Markdown 规则
 

@@ -5,24 +5,9 @@
 对应任务：D1.2  
 依据：`mobile/src/components/Reader.tsx`、`mobile/src/markdown/renderer.tsx`、`mobile/src/markdown/toc.ts`、`mobile/src/markdown/search.ts`
 
-## 1. 当前能力基线
+## 1. 设计范围
 
-| 能力 | 当前实现 | 证据 |
-|---|---|---|
-| 标题 / 段落 / 列表 / 引用 | marked token -> `renderBlock` | `renderer.tsx` |
-| 加粗 / 斜体 / 删除线 / 行内代码 | `renderInlineToken` | `renderer.tsx` |
-| 表格横向滚动 | `ScrollView horizontal` | `renderTable` |
-| 代码块横向滚动 | `ScrollView horizontal` | `CodeBlock` |
-| 代码块一键复制 | `expo-clipboard` | `CodeBlock` |
-| 链接点击 | `Linking.openURL` | `renderLink` |
-| 图片展示 | `expo-image` | `ImageBlock` |
-| 图片地址复制 | 长按 Alert | `ImageBlock` |
-| 深色模式 | system + override | `Reader.tsx` |
-| 字号调整 | `FONT_SCALES` | `Reader.tsx` |
-| 目录跳转 | `parseToc` + `scrollToIndex` | `toc.ts` / `Reader.tsx` |
-| 当前文件搜索 | `findMarkdownMatches` | `search.ts` |
-| 长文分块 | `FlatList<Token>` | `Reader.tsx` |
-| 滚动位置记忆 | `AsyncStorage readPos:*` | `Reader.tsx` |
+实现参考：`mobile/src/components/Reader.tsx`、`mobile/src/markdown/` 下的渲染与逻辑模块。
 
 ## 2. 页面结构
 

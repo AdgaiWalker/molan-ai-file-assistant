@@ -14,20 +14,9 @@
 
 它不是完整文档编辑器，不替代 CLI，也不读取 IDE 输入框内容。
 
-## 2. 当前实现基线
+## 2. 设计范围
 
-| 能力 | 当前代码 | 状态 |
-|---|---|---|
-| 快贴 tab | `PromptPanel` | 已实现 |
-| 独立窗口 | `OPEN_PROMPT_WINDOW` / `createPromptWindow` | 已实现 |
-| always-on-top | `BrowserWindow alwaysOnTop` + `setAlwaysOnTop` | 已实现 |
-| 快捷键 | `CommandOrControl+Shift+M` | 已实现 |
-| 窗口位置记忆 | `prompt-window.json` | 已实现 |
-| 搜索 | title/content/group/tags 本地过滤 | 已实现 |
-| 分组 | 最近复制 / 收藏 / 开发常用 | 已实现静态数据 |
-| Mini | `mini` state + compact 样式 | 已实现基础 |
-| 提示词详情 | title/content/tags/variables/actions | 已实现基础 |
-| 复制 | `window.api.copyText` 写剪贴板 | 已实现 |
+实现参考：`desktop/src/components/PromptPanel.tsx`、Electron 主进程的 `createPromptWindow`。
 
 当前缺口：
 

@@ -5,20 +5,9 @@
 对应任务：D1.3  
 依据：`mobile/src/components/JsonView.tsx`、`mobile/src/components/JsonTree.tsx`、`mobile/src/json/tree.ts`、`mobile/src/json/format.ts`
 
-## 1. 当前能力基线
+## 1. 设计范围
 
-| 能力 | 当前实现 | 证据 |
-|---|---|---|
-| JSON parse 与错误提示 | `parseAndFormatJson` | `json/format.ts` |
-| 树形展示 | `JsonTree` + `buildJsonRows` | `JsonTree.tsx` / `json/tree.ts` |
-| 折叠 / 展开 | `expanded Set`，默认展开 `$` | `JsonTree.tsx` |
-| 搜索 key / value | `filterJsonRows` 展平搜索 | `json/tree.ts` |
-| 复制字段值 | 点击叶子节点复制 | `copyValue` |
-| 复制 JSONPath | 长按节点复制 path | `copyPath` |
-| 美化 / 压缩切换 | `viewMode='pretty'/'minified'` | `JsonView.tsx` |
-| Markdown 字段预览 | `looksLikeMarkdown` + `Reader` modal | `JsonTree.tsx` / `JsonView.tsx` |
-| 大 JSON 基础虚拟化 | `FlatList` + `initialNumToRender=40` | `JsonTree.tsx` |
-| JSONPath 单测 | quoted key / array index | `jsonTree.test.ts` |
+实现参考：`mobile/src/components/JsonView.tsx`、`JsonTree.tsx` 及 `mobile/src/json/` 下的纯逻辑模块。
 
 ## 2. 页面结构
 

@@ -18,21 +18,9 @@
 
 V1 先做 App 内提示词库；Android 悬浮窗、iOS 键盘扩展和云同步放到 V2。
 
-## 2. 当前能力基线
+## 2. 设计范围
 
-| 能力 | 当前实现 | 证据 |
-|---|---|---|
-| 种子提示词 | 4 条 seed prompt | `prompts.ts` |
-| 提示词搜索 | 标题 / 内容 / 标签 | `searchPrompts` |
-| 最近复制 | `recentCopies(5)` | `PromptSheet.tsx` |
-| 一键复制 | 行按钮 `Clipboard.setStringAsync` | `PromptSheet.tsx` |
-| 复制计数 | `copyCount` / `lastCopiedAt` | `prompts.ts` |
-| 从剪贴板导入 | `Clipboard.getStringAsync` | `PromptSheet.tsx` |
-| 从当前文件导入 | `currentContent` -> `addPrompt` | `PromptSheet.tsx` |
-| 从剪贴板片段导入 | 先复制片段再导入 | `PromptSheet.tsx` |
-| 复制列表全部 | 搜索结果或全部合并复制 | `PromptSheet.tsx` |
-| 标签字段 | `tags?: string[]` | `prompts.ts` |
-| 分组字段 | `folderId?: string` | `prompts.ts` |
+实现参考：`mobile/src/components/PromptSheet.tsx`、`mobile/src/storage/prompts.ts`。
 
 ## 3. 页面结构
 

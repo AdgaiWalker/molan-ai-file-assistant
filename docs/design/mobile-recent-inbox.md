@@ -18,19 +18,9 @@
   -> V2 用户主动同步到云端
 ```
 
-## 2. 当前能力基线
+## 2. 设计范围
 
-| 能力 | 当前实现 | 证据 |
-|---|---|---|
-| 最近文档列表 | `RecentSheet` | `RecentSheet.tsx` |
-| 标题 / 类型 | `RecentDoc.title/kind` | `recentDocs.ts` |
-| 来源记录 | `DocSource` | `recentDocs.ts` |
-| 状态记录 | `DocumentStatus` | `recentDocs.ts` |
-| 最近动作时间 | `lastCopiedAt/lastEditedAt/...` | `recentDocs.ts` |
-| 搜索 | 标题 / 来源 / 类型 / 状态 | `RecentSheet.tsx` |
-| 删除记录 | 长按移除 | `RecentSheet.tsx` |
-| 状态合并测试 | `mergeDocumentStatuses` | `recentDocs.test.ts` |
-| 归档 / 同步 / 冲突字段 | 数据层已有 | `DocumentStatus` |
+实现参考：`mobile/src/components/RecentSheet.tsx`、`mobile/src/storage/recentDocs.ts`。
 
 ## 3. 数据结构
 

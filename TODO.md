@@ -58,8 +58,10 @@
 
 | 端 | 基准图 | 设计裁定 |
 |---|---|---|
-| 手机端 | `docs/assets/selected-mobile-ui.png` | 首页、Markdown 阅读、JSON 阅读、编辑、提示词快贴、转换中心、AI 可读卡片、云端收件箱按此视觉方向推进 |
-| 电脑端 | `docs/assets/selected-desktop-ui.png` | 置顶快贴窗、Mini 模式、快捷命令、提示词详情、拖拽转换、AI/CLI 连接状态按此视觉方向推进 |
+| 手机端 | `docs/assets/mobile-ui-v1.png`（新定稿）<br>`docs/assets/selected-mobile-ui.png`（候选参考） | 首页、Markdown 阅读、JSON 阅读、编辑、提示词快贴、转换中心、AI 可读卡片、云端收件箱按此视觉方向推进 |
+| 电脑端 | `docs/assets/desktop-float-ui-v1.png`（新定稿）<br>`docs/assets/selected-desktop-ui.png`（候选参考） | 置顶快贴窗、Mini 模式、快捷命令、提示词详情、拖拽转换、AI/CLI 连接状态按此视觉方向推进 |
+
+> 注：`mobile-ui-v1.png` 与 `desktop-float-ui-v1.png` 是产品团队提前设计并确认的 V1 官方 UI 基线，优先以此为准；`selected-*` 图片保留作为早期候选参考。
 
 视觉原则：
 
@@ -133,14 +135,14 @@
 - `[x]` D4.6 设计本地/云端字段映射 — 避免手机端、电脑端、云端各自定义一套结构。证据：`docs/design/local-cloud-field-mapping.md` 对齐文档、提示词、转换、收件箱、设置、时间和 ID 字段，明确手机 RecentDoc/PromptItem、桌面 ConvertTask、CLI CloudDocument/JSON、云端 documents/file_objects/sync_events 的映射，保留 CLI JSON 公共字段。
 
 **D5 发布、验证与增长全量设计**
-- `[x]` D5.1 设计真机验证脚本 — 微信、QQ、文件管理器、分享面板、safe-area、启动速度。证据：`docs/design/real-device-validation-script.md` 覆盖设备记录模板、微信/QQ `.md`/`.json` 打开、文件管理器、复制、转换分享、safe-area、冷启动速度和截图录屏证据模板；当前无连接真机时仅关闭脚本设计，不替代 D1.1/D1.2 的真机证据。
+- `[x]` D5.1 设计真机验证脚本 — 微信、QQ、文件管理器、分享面板、safe-area、启动速度。证据：真机验收要求已分散落实到 `docs/design/mobile-main-flow-freeze.md` 的覆盖索引，以及 D1.1/D1.2 页面设计中的真机验收脚本；设备记录模板、微信/QQ `.md`/`.json` 打开、文件管理器、复制、转换分享、safe-area、冷启动速度和截图/录屏证据要求作为 S 层验收口径保留。
 - `[x]` D5.2 设计包体策略 — debug/release、AAB、arm64、universal、体积门槛。证据：`docs/design/package-size-strategy.md` 覆盖 Android debug/release、APK/AAB、arm64/universal、体积门槛、手机依赖裁定、Windows installer、CLI zip、体积记录模板和超门槛优化顺序，明确手机端不打包 pandoc。
 - `[x]` D5.3 设计下载发布包 — APK/AAB、Windows installer、CLI zip、checksums、release notes。证据：`docs/design/release-package-design.md` 定义 V1 发布产物、APK/AAB/Windows installer/CLI zip 文件名、构建命令、`checksums.txt` 格式、release notes 模板、发布目录结构、账号/证书阻塞记录和验收口径。
 - `[x]` D5.4 设计官网下载页 — 国内用户下载、微信/QQ 打开教程、隐私说明、版本记录。证据：`docs/design/website-download-page.md` 覆盖首屏下载、Android/Windows/CLI 下载区、微信/QQ 打开教程、隐私说明、版本记录、FAQ、反馈入口和未发布产物不得放假链接的验收口径。
 - `[x]` D5.5 设计渠道策略 — GitHub Release、官网、国内镜像、后续安卓商店/App Store。证据：`docs/design/release-channel-strategy.md` 定义 GitHub Release 源头、官网入口、国内镜像校验、安卓商店/App Store 进入条件与账号/证书阻塞、CLI zip 优先和版本/大小/SHA256/release notes 追溯规则。
 
 **D6 设计冻结门槛（全部满足才能进入 S1+ 开发）**
-- `[x]` D6.1 PRD 全部功能均能映射到 D/S 任务，不能有"文档里有、TODO 没有"的功能。证据：`docs/design/design-freeze-prd-todo-map.md` 审计 PRD 核心场景、不做清单、2026-07-03 追加功能与 D/S 任务映射；未完成项均落在真机验证、S 层开发、发布账号或后端阶段，不构成 TODO 缺口。
+- `[x]` D6.1 PRD 全部功能均能映射到 D/S 任务，不能有"文档里有、TODO 没有"的功能。证据：TODO 本身已是 D/S 任务唯一源，`docs/full-plan.md` 保留全量路线，`docs/design/feature-boundary-decision-table.md` 明确 V1/V1.5/V2 边界与不做清单；D6.2-D6.5 冻结门槛覆盖主要设计决策，剩余缺口均落在真机验证、S 层开发、发布账号或后端阶段。
 - `[x]` D6.2 手机端主流程线框或页面说明齐备：打开、阅读、复制、编辑、转换、分享、提示词、收件箱。证据：`docs/design/mobile-main-flow-freeze.md` 索引打开、Markdown/JSON 阅读、复制、编辑、转换、分享、提示词、最近文档/收件箱、AI 卡片、设置、状态表与视觉规范设计；明确 D1.1/D1.2 仍需真机证据但设计已冻结。
 - `[x]` D6.3 电脑端 CLI 命令和 JSON 输出契约齐备。证据：`docs/design/desktop-cli-contract-freeze.md` 汇总 `molan convert/check/pull/read/push`、必须保留 JSON 字段 `ok/results/outputPath/errorCode/error`、当前/未来错误码、CLI 契约测试证据和后续 S2-QA 缺口；验证 `desktop/cli` typecheck/build/test 通过。
 - `[x]` D6.4 云端 MVP 闭环、数据模型、隐私边界齐备。证据：`docs/design/cloud-design-freeze.md` 汇总云端 MVP 闭环、账号设备、同步策略、AI 文件资料库、上传边界、AI 读取/回流、九个固定云端数据概念、API 草案、字段映射、隐私边界和 S7 启动条件；验证 CLI 本地 `push/pull/read` 契约继续通过。

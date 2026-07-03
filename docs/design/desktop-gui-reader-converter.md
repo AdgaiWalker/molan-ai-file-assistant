@@ -9,20 +9,9 @@
 
 桌面 GUI 不承担微信/QQ 社交分享主流程，不做完整 Office 编辑器。
 
-## 2. 当前实现基线
+## 2. 设计范围
 
-| 能力 | 当前代码 | 状态 |
-|---|---|---|
-| 主 tab | `desktop/src/App.tsx` reader / convert / prompt | 已实现 |
-| 设置记忆 | `loadSettings/saveSettings` 保存 `outputDir/lastTab` | 已实现 |
-| 文件关联打开 | `GET_PENDING_FILE` + `open-file` | 已实现 |
-| 阅读 Markdown | `ReaderPanel` + `marked` | 已实现 |
-| 阅读 JSON | `ReaderPanel.renderJson` | 基础实现 |
-| 编辑 / 保存副本 | `ReaderPanel` edit + `SAVE_TEXT_AS` | 已实现 |
-| JSON 格式化/压缩/校验 | `ReaderPanel` | 已实现 |
-| 拖拽转换 | `ConvertPanel` | 已实现，当前只筛 md/docx |
-| 共享转换引擎 | `electron/main/index.ts` -> `convertFile` | 已实现 |
-| 置顶快贴窗 | `PromptPanel` + `createPromptWindow` | 已实现基础 |
+实现参考：`desktop/src/App.tsx`、`desktop/src/components/ReaderPanel.tsx`、`ConvertPanel.tsx`、Electron 主进程 IPC。
 
 ## 3. 桌面信息架构
 
