@@ -168,3 +168,26 @@ When writing components, self-check these separations. The repo already does som
 - A 500-line commit titled "update" — split into small runnable commits.
 - Commented-out code "kept just in case" — delete it.
 - Premature abstraction (config/plugin/factory) for a single use case — inline it.
+
+## Backend working discipline (V2 cloud, S7+)
+
+The repo currently has NO backend — the CLI's `push`/`pull`/`read` commands simulate a cloud inbox on the local filesystem (`~/.molan/cloud/`). Real backend work starts at S7 (P2). These rules apply when that work begins. Until then: keep the CLI's `--json` output contract stable so future backend integration doesn't break AI consumers.
+
+### 10 self-checks for backend work
+
+1. **Data model is shared, not reinvented.** The 9 concepts in TODO §19.1 (users, devices, prompts, documents, document_versions, file_objects, sync_events, conversion_jobs, ai_jobs) are frozen. Backend tables/objects map directly to these — never define a parallel schema.
+2. **Contract = doc = test.** The CLI `--json` shape (`ok`/`results`/`errorCode`/`error`) is the API AI consumes. Define the backend API contract first (TS interfaces / OpenAPI), write contract tests first (`cloud.test.ts` is the model — extend it to the real backend), then implement. A renamed field silently breaks every AI consumer.
+3. **Explicit state machines, not boolean combos.** No `isActive && !isDeleted && isSynced`. Use enumerated states. The file state machine (unprocessed/read/copied/edited/converted/shared/archived/synced/conflict) must be unified across mobile, CLI, and backend (TODO D4.3).
+4. **Idempotency is a first-class citizen.** Offline queues mean the same request can be replayed after network recovery. `push` the same file twice → one version, not two. Use client-generated IDs or content hashes as idempotency keys.
+5. **Conflict is the default, not an error.** Multi-device edits will happen. Design for it upfront: keep both versions / auto-merge / let user choose. Never overwrite, never throw, never lose data. (TODO S7-BACKUP-005, D3.3.)
+6. **Privacy is architecture, not a setting.** "Default no upload, user explicitly opts in" (PRD core positioning) is a data-flow principle: the first question when designing any flow is "should this data leave the device?" File content stays local by default; backend stores metadata only; sensitive fields (token/secret/key) are flagged locally, never silently uploaded; delete means really delete (including backups).
+7. **Offline-first, sync is background.** The client is the source of truth; the cloud is a merge point. Sync is an async queue, never blocking UI. The client may go a week offline and arrive with a pile of local changes — the backend handles that, not rejects it. (TODO S7-BACKEND-003.)
+8. **Object storage and metadata are separate.** File content (Markdown/JSON) goes to object storage (S3/OSS/local files); the DB stores only metadata + pointers. `file_objects` is already a distinct concept — keep it that way.
+9. **Observable but minimal logging.** Structured JSON logs with request id / user id / action / result. Log "who, when, what, outcome" — never log file content (privacy). Errors carry explicit codes aligned with the CLI `errorCode` system. Key metrics: sync success rate, conflict rate, upload volume.
+10. **Runnable locally, testable in isolation.** The backend must start with one command (docker-compose or in-memory DB). Unit tests don't depend on external services. Follow the pattern `cloud.test.ts` already set: it runs against a temp dir, no real infra needed.
+
+### What "no backend yet" means right now
+
+- Do NOT start backend code until S7 tasks are actively in progress.
+- The CLI's `push`/`pull`/`read` local-simulation behavior is correct for now — its value is keeping the JSON contract stable.
+- When S7 begins: the first task is S7-BACKEND-001 (tech selection design doc), not writing endpoints. Node.js + TypeScript is already decided (TODO §0.5, cloud-workflow doc §推荐技术路线).
