@@ -134,7 +134,7 @@
 
 **D5 发布、验证与增长全量设计**
 - `[x]` D5.1 设计真机验证脚本 — 微信、QQ、文件管理器、分享面板、safe-area、启动速度。证据：`docs/design/real-device-validation-script.md` 覆盖设备记录模板、微信/QQ `.md`/`.json` 打开、文件管理器、复制、转换分享、safe-area、冷启动速度和截图录屏证据模板；当前无连接真机时仅关闭脚本设计，不替代 D1.1/D1.2 的真机证据。
-- `[ ]` D5.2 设计包体策略 — debug/release、AAB、arm64、universal、体积门槛。
+- `[x]` D5.2 设计包体策略 — debug/release、AAB、arm64、universal、体积门槛。证据：`docs/design/package-size-strategy.md` 覆盖 Android debug/release、APK/AAB、arm64/universal、体积门槛、手机依赖裁定、Windows installer、CLI zip、体积记录模板和超门槛优化顺序，明确手机端不打包 pandoc。
 - `[ ]` D5.3 设计下载发布包 — APK/AAB、Windows installer、CLI zip、checksums、release notes。
 - `[ ]` D5.4 设计官网下载页 — 国内用户下载、微信/QQ 打开教程、隐私说明、版本记录。
 - `[ ]` D5.5 设计渠道策略 — GitHub Release、官网、国内镜像、后续安卓商店/App Store。
