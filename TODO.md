@@ -119,7 +119,7 @@
 - `[x]` D3.1 设计云端 MVP 闭环 — 手机保存到云端 → 电脑 CLI 拉取 → AI 读取。证据：`docs/design/cloud-mvp-loop.md` 覆盖 MVP 范围、手机主动保存、云端收件箱记录、CLI pull/read、AI 读取、删除撤回、本地模拟到真实云端迁移和验收口径；保持 S7 前本地模拟不变。
 - `[x]` D3.2 设计账号与设备体系 — 手机号登录、设备绑定、设备名、最后同步时间。证据：`docs/design/cloud-account-device-system.md` 覆盖手机号验证码登录、用户/设备/会话模型、设备绑定与撤销、设备名、最后在线/最后同步时间、CLI 身份边界、失败状态和隐私边界；保持未登录本地功能可用，且不因登录自动上传文件。
 - `[x]` D3.3 设计同步策略 — 本地优先、增量同步、冲突保留、删除、离线队列。证据：`docs/design/cloud-sync-strategy.md` 覆盖本地优先落盘、mutation 队列、`clientMutationId` 幂等、`syncCursor` 增量拉取、推送顺序、冲突版本保留、删除墓碑、离线队列 UI 和 CLI JSON 向后扩展边界。
-- `[ ]` D3.4 设计 AI 文件资料库 — 收藏、有用资源、项目/集合、标签、状态。
+- `[x]` D3.4 设计 AI 文件资料库 — 收藏、有用资源、项目/集合、标签、状态。证据：`docs/design/ai-file-library.md` 覆盖资料库定位、收件箱/收藏/项目集合/标签 IA、`LibraryDocument` 与 `LibraryCollection` 模型、统一文件状态、筛选搜索、CLI AI 读取边界和默认不扫描上传本地文件。
 - `[ ]` D3.5 设计文件上传边界 — 默认不上传、主动保存、敏感字段提醒、上传前确认。
 - `[ ]` D3.6 设计 AI 读取入口 — CLI 优先、MCP 后置、云端 API 后置。
 - `[ ]` D3.7 设计 AI 生产结果回流 — 生成 Markdown/JSON，保存版本，同步回手机/电脑。
