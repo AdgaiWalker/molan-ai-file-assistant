@@ -127,7 +127,7 @@
 **D4 数据模型与接口全量设计**
 - `[x]` D4.1 设计本地数据模型 — DocumentRecord、PromptItem、CopyEvent、ConversionJob、InboxItem、Settings。证据：`docs/design/local-data-model.md` 基于 `mobile/src/storage/recentDocs.ts`、`mobile/src/storage/prompts.ts`、`desktop/src/shared/ipc.ts` 和 `desktop/cli/src/index.ts` 梳理 DocumentRecord、PromptItem、CopyEvent、ConversionJob、InboxItem、Settings 目标模型与当前映射，保持文件内容默认本地。
 - `[x]` D4.2 设计云端数据模型 — users、devices、prompts、documents、document_versions、file_objects、sync_events、conversion_jobs、ai_jobs。证据：`docs/design/cloud-data-model.md` 严格按 TODO §19.1 九个概念定义 users、devices、prompts、documents、document_versions、file_objects、sync_events、conversion_jobs、ai_jobs 的字段、关系和规则，强调文件内容走 file_objects、同步走 sync_events、默认不上传/不 AI 可读。
-- `[~]` D4.3 设计文件状态机 — 已在本地 `DocumentStatus` 落地未处理、已阅读、已复制、已编辑、已转换、已分享、已归档、已同步、冲突；仍需和云端/MCP 状态模型统一。
+- `[x]` D4.3 设计文件状态机 — 已在本地 `DocumentStatus` 落地未处理、已阅读、已复制、已编辑、已转换、已分享、已归档、已同步、冲突；仍需和云端/MCP 状态模型统一。证据：`docs/design/file-state-machine.md` 以 `mobile/src/storage/recentDocs.ts` 的 `DocumentStatus` 为源头，统一手机、桌面、CLI、云端、MCP 状态枚举、状态集合规则、转移触发、冲突、归档/删除边界和测试判定；`recentDocs.test.ts` 覆盖状态合并。
 - `[ ]` D4.4 设计转换任务状态机 — pending、running、success、failed、cancelled、shared、saved。
 - `[ ]` D4.5 设计 API 草案 — auth、sync、documents、prompts、files、conversion_jobs、ai_jobs。
 - `[ ]` D4.6 设计本地/云端字段映射 — 避免手机端、电脑端、云端各自定义一套结构。
