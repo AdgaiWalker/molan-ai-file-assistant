@@ -244,9 +244,9 @@ export function ConvertSheet({
         >
           <View style={styles.headerRow}>
             <View style={{ flex: 1, minWidth: 0 }}>
-              <Text style={[styles.header, { color: theme.heading }]}>转换与导出</Text>
+              <Text style={[styles.header, { color: theme.heading }]}>转换中心</Text>
               <Text style={[styles.subhead, { color: theme.textSecondary }]} numberOfLines={2}>
-                {kind === 'json' ? '把 JSON 转成可阅读文档，或保留原文件分享。' : '把当前 Markdown 转成办公格式，生成后直接分享。'}
+                按用途选择输出格式，生成后直接分享。
               </Text>
             </View>
             <TouchableOpacity style={[styles.closeBtn, { borderColor: theme.border }]} onPress={onClose}>
@@ -254,19 +254,30 @@ export function ConvertSheet({
             </TouchableOpacity>
           </View>
 
+          <View style={styles.purposeRow}>
+            <View style={[styles.purposeChip, { backgroundColor: theme.link }]}>
+              <Text style={styles.purposeChipText}>给 AI 读</Text>
+              <Text style={styles.purposeChipMeta}>Markdown</Text>
+            </View>
+            <View style={[styles.purposeChip, { backgroundColor: theme.link + '22', borderColor: theme.link }]}>
+              <Text style={[styles.purposeChipText, { color: theme.link }]}>给别人看</Text>
+              <Text style={[styles.purposeChipMeta, { color: theme.link }]}>PDF</Text>
+            </View>
+            <View style={[styles.purposeChip, { backgroundColor: theme.link + '22', borderColor: theme.link }]}>
+              <Text style={[styles.purposeChipText, { color: theme.link }]}>给别人改</Text>
+              <Text style={[styles.purposeChipMeta, { color: theme.link }]}>Word</Text>
+            </View>
+          </View>
+
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.actionList}>
+            <Text style={[styles.groupTitle, { color: theme.textSecondary }]}>给 AI 读</Text>
             <ActionRow
-              title="分享纯文本"
-              desc="直接把当前内容交给系统分享面板，不生成文件"
-              onPress={sharePlainText}
+              title={kind === 'json' ? 'JSON → Markdown 并分享' : '导出为 .md 文件'}
+              desc="适合给 AI 或懂 Markdown 的人继续处理"
+              onPress={exportMd}
               disabled={busy}
             />
-            <ActionRow
-              title={kind === 'json' ? 'JSON → Word' : '当前文档 → Word'}
-              desc="适合发给别人继续编辑"
-              onPress={toWord}
-              disabled={busy}
-            />
+            <Text style={[styles.groupTitle, { color: theme.textSecondary }]}>给别人看</Text>
             <ActionRow
               title={kind === 'json' ? 'JSON → PDF' : '导出为 PDF'}
               desc="适合办公查看和微信/QQ 转发"
@@ -274,13 +285,21 @@ export function ConvertSheet({
               disabled={busy}
             />
             <ActionRow
-              title={kind === 'json' ? 'JSON → Markdown 并分享' : '导出为 .md 文件'}
-              desc="适合给 AI 或懂 Markdown 的人继续处理"
-              onPress={exportMd}
+              title="分享纯文本"
+              desc="直接把当前内容交给系统分享面板，不生成文件"
+              onPress={sharePlainText}
+              disabled={busy}
+            />
+            <Text style={[styles.groupTitle, { color: theme.textSecondary }]}>给别人改</Text>
+            <ActionRow
+              title={kind === 'json' ? 'JSON → Word' : '当前文档 → Word'}
+              desc="适合发给别人继续编辑"
+              onPress={toWord}
               disabled={busy}
             />
             {kind === 'json' ? (
               <>
+                <Text style={[styles.groupTitle, { color: theme.textSecondary }]}>原文件</Text>
                 <ActionRow
                   title="分享原 .json 文件"
                   desc="保留结构化数据，不做格式转换"
@@ -295,6 +314,7 @@ export function ConvertSheet({
                 />
               </>
             ) : null}
+            <Text style={[styles.groupTitle, { color: theme.textSecondary }]}>导入</Text>
             <ActionRow
               title="选择 Word → Markdown"
               desc="手机端轻转换，适合临时把 Word 放进阅读器"
@@ -347,7 +367,37 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   actionList: {
+    gap: 6,
+  },
+  purposeRow: {
+    flexDirection: 'row',
     gap: 8,
+    marginBottom: 14,
+  },
+  purposeChip: {
+    flex: 1,
+    borderRadius: 10,
+    borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  purposeChipText: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  purposeChipMeta: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 11,
+    marginTop: 2,
+  },
+  groupTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 8,
+    marginBottom: 2,
   },
   action: {
     minHeight: 68,
