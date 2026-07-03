@@ -129,7 +129,7 @@
 - `[x]` D4.2 设计云端数据模型 — users、devices、prompts、documents、document_versions、file_objects、sync_events、conversion_jobs、ai_jobs。证据：`docs/design/cloud-data-model.md` 严格按 TODO §19.1 九个概念定义 users、devices、prompts、documents、document_versions、file_objects、sync_events、conversion_jobs、ai_jobs 的字段、关系和规则，强调文件内容走 file_objects、同步走 sync_events、默认不上传/不 AI 可读。
 - `[x]` D4.3 设计文件状态机 — 已在本地 `DocumentStatus` 落地未处理、已阅读、已复制、已编辑、已转换、已分享、已归档、已同步、冲突；仍需和云端/MCP 状态模型统一。证据：`docs/design/file-state-machine.md` 以 `mobile/src/storage/recentDocs.ts` 的 `DocumentStatus` 为源头，统一手机、桌面、CLI、云端、MCP 状态枚举、状态集合规则、转移触发、冲突、归档/删除边界和测试判定；`recentDocs.test.ts` 覆盖状态合并。
 - `[x]` D4.4 设计转换任务状态机 — pending、running、success、failed、cancelled、shared、saved。证据：`docs/design/conversion-job-state-machine.md` 统一 pending/running/success/failed/cancelled/shared/saved，定义转移规则、任务模型、手机/桌面/CLI/云端映射、共享转换错误码、批量转换失败隔离和后续测试判定；明确桌面现有 `converting` 迁移为 `running`。
-- `[ ]` D4.5 设计 API 草案 — auth、sync、documents、prompts、files、conversion_jobs、ai_jobs。
+- `[x]` D4.5 设计 API 草案 — auth、sync、documents、prompts、files、conversion_jobs、ai_jobs。证据：`docs/design/cloud-api-draft.md` 覆盖公共响应、错误码、auth、sync、documents、prompts、files、conversion_jobs、ai_jobs 端点草案、幂等、冲突、文件上传分离、CLI 对齐和 S7 前不写后端代码边界。
 - `[ ]` D4.6 设计本地/云端字段映射 — 避免手机端、电脑端、云端各自定义一套结构。
 
 **D5 发布、验证与增长全量设计**
