@@ -121,7 +121,7 @@
 - `[x]` D3.3 设计同步策略 — 本地优先、增量同步、冲突保留、删除、离线队列。证据：`docs/design/cloud-sync-strategy.md` 覆盖本地优先落盘、mutation 队列、`clientMutationId` 幂等、`syncCursor` 增量拉取、推送顺序、冲突版本保留、删除墓碑、离线队列 UI 和 CLI JSON 向后扩展边界。
 - `[x]` D3.4 设计 AI 文件资料库 — 收藏、有用资源、项目/集合、标签、状态。证据：`docs/design/ai-file-library.md` 覆盖资料库定位、收件箱/收藏/项目集合/标签 IA、`LibraryDocument` 与 `LibraryCollection` 模型、统一文件状态、筛选搜索、CLI AI 读取边界和默认不扫描上传本地文件。
 - `[x]` D3.5 设计文件上传边界 — 默认不上传、主动保存、敏感字段提醒、上传前确认。证据：`docs/design/cloud-file-upload-boundary.md` 覆盖默认不上传、上传层级、允许入口、禁止后台上传、确认页字段、敏感字段本地扫描、文件类型边界、删除撤回、CLI/GUI 上传契约和验收口径。
-- `[ ]` D3.6 设计 AI 读取入口 — CLI 优先、MCP 后置、云端 API 后置。
+- `[x]` D3.6 设计 AI 读取入口 — CLI 优先、MCP 后置、云端 API 后置。证据：`docs/design/ai-read-entrypoints.md` 明确 CLI/MCP/云端 API 优先级，覆盖 `molan check/convert/pull/read/push` 流程、必须保留 JSON 字段、可扩展字段、错误码、MCP 最小工具、云端 API 后置条件和安全边界。
 - `[ ]` D3.7 设计 AI 生产结果回流 — 生成 Markdown/JSON，保存版本，同步回手机/电脑。
 
 **D4 数据模型与接口全量设计**
