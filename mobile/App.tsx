@@ -599,6 +599,13 @@ export default function App() {
           'recent',
           shared ? ['converted', 'shared'] : ['converted'],
         )}
+        onShared={() => remember(
+          title,
+          jsonRaw !== null ? 'json' : 'markdown',
+          jsonRaw !== null ? jsonRaw : content,
+          'recent',
+          ['shared'],
+        )}
         themeMode={systemMode}
       />
       <EditSheet

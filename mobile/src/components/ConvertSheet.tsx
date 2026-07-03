@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Pressable,
+  Share,
   ScrollView,
   useWindowDimensions,
 } from 'react-native';
@@ -31,6 +32,7 @@ interface ConvertSheetProps {
   kind?: 'markdown' | 'json';
   onLoadMd: (md: string, name: string) => void;
   onConverted?: (shared?: boolean) => void | Promise<void>;
+  onShared?: () => void | Promise<void>;
   themeMode?: 'day' | 'night';
 }
 
@@ -42,6 +44,7 @@ export function ConvertSheet({
   kind = 'markdown',
   onLoadMd,
   onConverted,
+  onShared,
   themeMode = 'day',
 }: ConvertSheetProps) {
   const theme = themes[themeMode];
@@ -160,6 +163,19 @@ export function ConvertSheet({
     onClose();
   };
 
+  const sharePlainText = async () => {
+    setBusy(true);
+    setMsg(null);
+    try {
+      await Share.share({ title: baseName, message: content });
+      await onShared?.();
+      setMsg('已调起纯文本分享');
+    } catch (e) {
+      setMsg('分享失败：' + (e as Error).message);
+    }
+    setBusy(false);
+  };
+
   // 导出当前内容为 PDF（按当前主题渲染）并分享；JSON 会先规则化为 Markdown。
   const exportPdf = async () => {
     setBusy(true);
@@ -232,6 +248,12 @@ export function ConvertSheet({
           </View>
 
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.actionList}>
+            <ActionRow
+              title="分享纯文本"
+              desc="直接把当前内容交给系统分享面板，不生成文件"
+              onPress={sharePlainText}
+              disabled={busy}
+            />
             <ActionRow
               title={kind === 'json' ? 'JSON → Word' : '当前文档 → Word'}
               desc="适合发给别人继续编辑"

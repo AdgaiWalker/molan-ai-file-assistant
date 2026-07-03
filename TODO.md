@@ -355,9 +355,9 @@
 
 | ID | 优先级 | 状态 | 任务 | 依赖 | 交付物 | 验收 |
 |---|---|---|---|---|---|---|
-| S1-SHARE-001 | P0 | `[~]` | 系统分享面板 | S1-READ-001 | share action | 可分享到任意系统目标 |
-| S1-SHARE-002 | P0 | `[~]` | 分享原文件 | S1-SHARE-001 | temp file | `.md` / `.json` 原格式可分享 |
-| S1-SHARE-003 | P0 | `[~]` | 分享纯文本 | S1-SHARE-001 | text share | 对方不用 App 也能看 |
+| S1-SHARE-001 | P0 | `[x]` | 系统分享面板 | S1-READ-001 | share action | 已通过 `expo-sharing`/系统 `Share` 调起分享面板，分享成功后回写 `shared` 状态；证据：`mobile/App.tsx`、`mobile/src/components/ConvertSheet.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
+| S1-SHARE-002 | P0 | `[x]` | 分享原文件 | S1-SHARE-001 | temp file | `.md` / `.json` 会写入缓存文件并按原 MIME 分享；证据：`mobile/App.tsx`、`mobile/src/converter/fileConvert.ts`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
+| S1-SHARE-003 | P0 | `[x]` | 分享纯文本 | S1-SHARE-001 | text share | 转换/导出面板新增“分享纯文本”，直接使用系统 `Share.share`，不生成文件且只回写 `shared`；证据：`mobile/src/components/ConvertSheet.tsx`、`mobile/App.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-SHARE-004 | P0 | `[v]` | 分享到微信真机验证 | S1-SHARE-001 | 验证记录 | 能选会话发送 |
 | S1-SHARE-005 | P0 | `[v]` | 分享到 QQ 真机验证 | S1-SHARE-001 | 验证记录 | 能选会话发送 |
 | S1-SHARE-006 | P1 | `[ ]` | 记住最近分享方式 | S1-SHARE-001 | share record | 下次提示最近目标 |
@@ -367,13 +367,13 @@
 
 | ID | 优先级 | 状态 | 任务 | 依赖 | 交付物 | 验收 |
 |---|---|---|---|---|---|---|
-| S1-CONV-001 | P0 | `[~]` | Markdown 转 PDF | S1-MD-001 | PDF output | 当前文件可生成 PDF |
-| S1-CONV-002 | P0 | `[~]` | Markdown 转 Word | S1-MD-001 | DOCX output | 当前文件可生成 Word |
-| S1-CONV-003 | P0 | `[~]` | JSON 转 Markdown | S1-JSON-001 | MD output | 结构化输出可读 |
-| S1-CONV-004 | P0 | `[~]` | 转换后直接分享 | S1-SHARE-001 | convert share flow | 不要求用户去文件夹找 |
+| S1-CONV-001 | P0 | `[x]` | Markdown 转 PDF | S1-MD-001 | PDF output | 当前 Markdown 通过 `expo-print` 生成 PDF，并可直接分享；证据：`mobile/src/converter/fileConvert.ts`、`mobile/src/components/ConvertSheet.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
+| S1-CONV-002 | P0 | `[x]` | Markdown 转 Word | S1-MD-001 | DOCX output | 当前 Markdown 通过 `mdToDocxBytes` 写出 DOCX，并可直接分享；证据：`mobile/src/converter/fileConvert.ts`、`mobile/src/converter/mdToDocx.ts`、`mobile/src/components/ConvertSheet.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
+| S1-CONV-003 | P0 | `[x]` | JSON 转 Markdown | S1-JSON-001 | MD output | JSON 通过 `jsonToMarkdown` 规则化输出 Markdown，可载入阅读器或导出分享；证据：`mobile/src/converter/fileConvert.ts`、`mobile/src/components/ConvertSheet.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
+| S1-CONV-004 | P0 | `[x]` | 转换后直接分享 | S1-SHARE-001 | convert share flow | PDF/Word/Markdown/JSON 导出成功后直接调起分享面板，并回写 `converted/shared` 状态；证据：`mobile/src/components/ConvertSheet.tsx`、`mobile/App.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-CONV-005 | P0 | `[ ]` | 转换模块懒加载 | S1-CONV-001 | dynamic import | 阅读首屏不加载重模块 |
-| S1-CONV-006 | P1 | `[ ]` | JSON 转 PDF | S1-CONV-003 | PDF output | 规则化文档可读 |
-| S1-CONV-007 | P1 | `[ ]` | JSON 转 Word | S1-CONV-003 | DOCX output | 规则化文档可编辑 |
+| S1-CONV-006 | P1 | `[x]` | JSON 转 PDF | S1-CONV-003 | PDF output | JSON 先规则化为 Markdown，再通过 PDF 导出分享；证据：`mobile/src/converter/fileConvert.ts`、`mobile/src/components/ConvertSheet.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
+| S1-CONV-007 | P1 | `[x]` | JSON 转 Word | S1-CONV-003 | DOCX output | JSON 先规则化为 Markdown，再通过 DOCX 导出分享；证据：`mobile/src/converter/fileConvert.ts`、`mobile/src/components/ConvertSheet.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-CONV-008 | P1 | `[ ]` | 长图导出 | S1-MD-001 | image output | 适合聊天转发 |
 
 ### S1.10 最近文档与本地数据
