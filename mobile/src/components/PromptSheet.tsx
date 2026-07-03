@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  useWindowDimensions,
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Theme } from '../theme';
 import {
   add as addPrompt,
@@ -29,6 +31,9 @@ interface PromptSheetProps {
 }
 
 export function PromptSheet({ visible, theme, onClose, currentContent, currentTitle }: PromptSheetProps) {
+  const insets = useSafeAreaInsets();
+  const { height, width } = useWindowDimensions();
+  const compact = width < 380;
   const [prompts, setPrompts] = useState<PromptItem[]>([]);
   const [results, setResults] = useState<PromptItem[]>([]);
   const [recent, setRecent] = useState<PromptItem[]>([]);
@@ -136,6 +141,16 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
     setImporting(true);
   };
 
+  const copyAllResults = async () => {
+    const items = results.length > 0 ? results : prompts;
+    if (items.length === 0) {
+      showToast('暂无可复制内容');
+      return;
+    }
+    await Clipboard.setStringAsync(items.map((item) => item.content.trim()).filter(Boolean).join('\n\n---\n\n'));
+    showToast(`已复制 ${items.length} 条`);
+  };
+
   const isJsonLike = (text: string): boolean => {
     try { JSON.parse(text); return true; } catch { return false; }
   };
@@ -164,16 +179,27 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
       <Pressable style={styles.overlay} onPress={onClose}>
-        <Pressable style={[styles.sheet, { backgroundColor: theme.surface }]}>
+        <Pressable
+          style={[
+            styles.sheet,
+            {
+              backgroundColor: theme.surface,
+              maxHeight: Math.min(height * 0.84, 640),
+              paddingBottom: Math.max(24, insets.bottom + 18),
+            },
+          ]}
+        >
           <View style={styles.headerRow}>
-            <Text style={[styles.header, { color: theme.heading }]}>提示词库</Text>
-            <TouchableOpacity onPress={onClose}>
+            <View style={{ flex: 1, minWidth: 0 }}>
+              <Text style={[styles.header, { color: theme.heading }]}>提示词库</Text>
+              <Text style={[styles.hint, { color: theme.textSecondary }]}>
+                点按复制，搜索后也可以批量复制当前列表。
+              </Text>
+            </View>
+            <TouchableOpacity style={[styles.closeBtn, { borderColor: theme.border }]} onPress={onClose}>
               <Text style={{ color: theme.link, fontSize: 14 }}>关闭</Text>
             </TouchableOpacity>
           </View>
-          <Text style={[styles.hint, { color: theme.textSecondary }]}>
-            点按即可复制提示词，粘贴到任意 AI 助手中使用。
-          </Text>
 
           <View style={styles.searchRow}>
             <TextInput
@@ -187,28 +213,36 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
               onChangeText={setQuery}
               returnKeyType="search"
             />
-            <TouchableOpacity
-              style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
-              onPress={startImport}
-            >
-              <Text style={{ color: theme.text, fontSize: 13 }}>从剪贴板导入</Text>
-            </TouchableOpacity>
-            {currentContent ? (
-              <>
-                <TouchableOpacity
-                  style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
-                  onPress={importCurrent}
-                >
-                  <Text style={{ color: theme.text, fontSize: 13 }}>导入当前文档</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
-                  onPress={importFragment}
-                >
-                  <Text style={{ color: theme.text, fontSize: 13 }}>导入剪贴板片段</Text>
-                </TouchableOpacity>
-              </>
-            ) : null}
+            <View style={[styles.importActions, compact && styles.importActionsCompact]}>
+              <TouchableOpacity
+                style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
+                onPress={startImport}
+              >
+                <Text style={{ color: theme.text, fontSize: 13 }}>从剪贴板导入</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
+                onPress={copyAllResults}
+              >
+                <Text style={{ color: theme.text, fontSize: 13 }}>复制列表全部</Text>
+              </TouchableOpacity>
+              {currentContent ? (
+                <>
+                  <TouchableOpacity
+                    style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
+                    onPress={importCurrent}
+                  >
+                    <Text style={{ color: theme.text, fontSize: 13 }}>导入当前文档</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
+                    onPress={importFragment}
+                  >
+                    <Text style={{ color: theme.text, fontSize: 13 }}>导入剪贴板片段</Text>
+                  </TouchableOpacity>
+                </>
+              ) : null}
+            </View>
           </View>
 
           <FlatList
@@ -283,32 +317,39 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.28)',
   },
   sheet: {
-    maxHeight: '72%',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     padding: 20,
-    paddingBottom: 28,
   },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
+    gap: 12,
   },
   header: {
     fontSize: 18,
     fontWeight: '700',
   },
+  closeBtn: {
+    minHeight: 36,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
   hint: {
     fontSize: 12,
-    marginBottom: 12,
+    lineHeight: 18,
+    marginTop: 3,
   },
   searchRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     gap: 8,
     marginBottom: 12,
   },
@@ -323,8 +364,18 @@ const styles = StyleSheet.create({
   importBtn: {
     borderWidth: 1,
     borderRadius: 8,
+    minHeight: 38,
+    justifyContent: 'center',
     paddingHorizontal: 10,
     paddingVertical: 8,
+  },
+  importActions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  importActionsCompact: {
+    flexDirection: 'column',
   },
   list: {
     flex: 1,

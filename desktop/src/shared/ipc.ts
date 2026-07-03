@@ -36,6 +36,12 @@ export interface ReadableFile {
   content: string;
 }
 
+export interface SaveTextRequest {
+  defaultName: string;
+  content: string;
+  kind: 'markdown' | 'json';
+}
+
 export const ipcChannels = {
   SELECT_FILES: 'select-files',
   SELECT_READER_FILE: 'select-reader-file',
@@ -43,6 +49,10 @@ export const ipcChannels = {
   CONVERT: 'convert',
   READ_MD: 'read-md',
   OPEN_PATH: 'open-path',
+  COPY_TEXT: 'copy-text',
+  SET_ALWAYS_ON_TOP: 'set-always-on-top',
+  OPEN_PROMPT_WINDOW: 'open-prompt-window',
+  SAVE_TEXT_AS: 'save-text-as',
   SAVE_SETTINGS: 'save-settings',
   LOAD_SETTINGS: 'load-settings',
   GET_PENDING_FILE: 'get-pending-file',

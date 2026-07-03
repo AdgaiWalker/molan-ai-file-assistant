@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "墨览 文档阅读助手",
+    "name": "墨览",
     "slug": "md-reader",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -52,7 +52,7 @@
     "android": {
       "package": "com.mdreader.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FFFFFF",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"

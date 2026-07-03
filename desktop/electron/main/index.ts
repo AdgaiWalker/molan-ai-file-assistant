@@ -1,11 +1,13 @@
-import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell, clipboard, globalShortcut, type Rectangle } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
-import { ipcChannels, ConvertTask, ConvertDirection, ReadableFile } from '../../src/shared/ipc';
+import { ipcChannels, ConvertTask, ConvertDirection, ReadableFile, SaveTextRequest } from '../../src/shared/ipc';
 import { convertFile, type ConvertFormat } from '../../src/shared/converter';
 
 let mainWindow: BrowserWindow | null = null;
+let promptWindow: BrowserWindow | null = null;
 let pendingFile: string | null = null;
+const promptBoundsFile = path.join(app.getPath('userData'), 'prompt-window.json');
 
 function createWindow(fileToOpen?: string) {
   mainWindow = new BrowserWindow({
@@ -32,6 +34,73 @@ function createWindow(fileToOpen?: string) {
   }
 
   return mainWindow;
+}
+
+function readPromptBounds(): Rectangle | undefined {
+  try {
+    const bounds = JSON.parse(fs.readFileSync(promptBoundsFile, 'utf-8')) as Partial<Rectangle>;
+    if (
+      typeof bounds.x !== 'number' ||
+      typeof bounds.y !== 'number' ||
+      typeof bounds.width !== 'number' ||
+      typeof bounds.height !== 'number'
+    ) {
+      return undefined;
+    }
+    return {
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height,
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+function savePromptBounds(win: BrowserWindow) {
+  fs.writeFileSync(promptBoundsFile, JSON.stringify(win.getBounds(), null, 2), 'utf-8');
+}
+
+function loadPromptRenderer(win: BrowserWindow) {
+  if (process.env['ELECTRON_RENDERER_URL']) {
+    win.loadURL(`${process.env['ELECTRON_RENDERER_URL']}#/prompt`);
+  } else {
+    win.loadFile(path.join(__dirname, '../renderer/index.html'), { hash: '/prompt' });
+  }
+}
+
+function createPromptWindow() {
+  if (promptWindow) {
+    promptWindow.show();
+    promptWindow.focus();
+    return promptWindow;
+  }
+
+  const bounds = readPromptBounds();
+  const win = new BrowserWindow({
+    width: 360,
+    height: 620,
+    minWidth: 320,
+    minHeight: 420,
+    ...(bounds || {}),
+    title: '墨览快贴',
+    alwaysOnTop: true,
+    resizable: true,
+    webPreferences: {
+      preload: path.join(__dirname, '../preload/index.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+  promptWindow = win;
+  win.setAlwaysOnTop(true, 'floating');
+  loadPromptRenderer(win);
+  win.on('close', () => savePromptBounds(win));
+  win.on('closed', () => {
+    if (promptWindow === win) promptWindow = null;
+  });
+  return win;
 }
 
 // 渲染进程就绪后，把待处理文件发过去
@@ -128,6 +197,38 @@ ipcMain.handle(ipcChannels.OPEN_PATH, async (_e, p: string): Promise<void> => {
   await shell.openPath(p);
 });
 
+// 复制文本到系统剪贴板
+ipcMain.handle(ipcChannels.COPY_TEXT, async (_e, text: string): Promise<void> => {
+  clipboard.writeText(text);
+});
+
+// 置顶主窗口，作为电脑端快贴窗的第一阶段能力
+ipcMain.handle(ipcChannels.SET_ALWAYS_ON_TOP, async (_e, enabled: boolean): Promise<void> => {
+  if (!mainWindow) return;
+  mainWindow.setAlwaysOnTop(enabled, 'floating');
+});
+
+// 打开独立置顶快贴窗，面向桌面端 AI/IDE 旁侧复制粘贴场景
+ipcMain.handle(ipcChannels.OPEN_PROMPT_WINDOW, async (): Promise<void> => {
+  createPromptWindow();
+});
+
+// 阅读器/编辑器保存副本，避免直接覆盖用户原文件
+ipcMain.handle(ipcChannels.SAVE_TEXT_AS, async (_e, request: SaveTextRequest): Promise<string | null> => {
+  const result = await dialog.showSaveDialog(mainWindow!, {
+    title: '保存副本',
+    defaultPath: request.defaultName,
+    filters: [
+      request.kind === 'json'
+        ? { name: 'JSON', extensions: ['json'] }
+        : { name: 'Markdown', extensions: ['md', 'markdown'] },
+    ],
+  });
+  if (result.canceled || !result.filePath) return null;
+  fs.writeFileSync(result.filePath, request.content, 'utf-8');
+  return result.filePath;
+});
+
 // 保存/读取设置
 const settingsFile = path.join(app.getPath('userData'), 'settings.json');
 ipcMain.handle(ipcChannels.SAVE_SETTINGS, async (_e, settings: unknown): Promise<void> => {
@@ -149,6 +250,9 @@ ipcMain.handle(ipcChannels.LOAD_SETTINGS, async (): Promise<unknown> => {
 
 app.whenReady().then(() => {
   createWindow();
+  globalShortcut.register('CommandOrControl+Shift+M', () => {
+    createPromptWindow();
+  });
 });
 
 // Windows: 通过"打开方式"或文件关联启动时，解析文件路径
@@ -172,6 +276,10 @@ app.on('open-file', (_event, filePath) => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
 
 app.on('activate', () => {

@@ -206,8 +206,67 @@ button:disabled {
 }
 .reader-toolbar {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 8px 0 16px;
+}
+
+.reader-file-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  max-width: 420px;
+  color: #666;
+  font-size: 13px;
+}
+
+.reader-file-title small {
+  margin-top: 2px;
+  overflow: hidden;
+  color: #999;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-error,
+.reader-status {
+  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+}
+
+.reader-error {
+  background: #fce8e6;
+  color: var(--error);
+}
+
+.reader-status {
+  background: #e6f4ea;
+  color: var(--success);
+}
+
+.reader-editor {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  resize: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 18px;
+  color: var(--text);
+  font-family: Consolas, "SFMono-Regular", monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  outline: none;
+}
+
+.reader-editor:focus {
+  border-color: rgba(26, 115, 232, 0.52);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.12);
 }
 .reader-content {
   background: var(--surface);
@@ -243,5 +302,206 @@ button:disabled {
   white-space: pre;
 }
 
-/* AI 面板 */
+/* 快贴 */
+.prompt-panel {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) minmax(320px, 1fr);
+  gap: 18px;
+  min-height: 100%;
+}
 
+.prompt-panel.mini {
+  grid-template-columns: minmax(280px, 360px);
+  max-width: 380px;
+}
+
+.prompt-window-app {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(219, 235, 250, 0.82), transparent 32%),
+    radial-gradient(circle at 90% 12%, rgba(228, 232, 239, 0.72), transparent 34%),
+    #f7f8fa;
+}
+
+.prompt-window-content {
+  padding: 12px;
+  overflow: hidden;
+}
+
+.prompt-panel.compact {
+  grid-template-columns: 1fr;
+  max-width: none;
+  min-height: calc(100vh - 24px);
+}
+
+.prompt-panel.compact .prompt-main {
+  min-height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt-panel.compact .prompt-groups {
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.prompt-main,
+.prompt-detail {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(210, 216, 226, 0.82);
+  border-radius: 14px;
+  box-shadow: 0 18px 55px rgba(42, 65, 103, 0.12);
+  backdrop-filter: blur(22px);
+}
+
+.prompt-main {
+  padding: 16px;
+}
+
+.prompt-detail {
+  padding: 22px;
+}
+
+.prompt-header,
+.detail-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prompt-header h2,
+.detail-title h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.sync-dot {
+  color: #18864b;
+  font-size: 12px;
+}
+
+.sync-dot::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #20a05a;
+  margin-right: 6px;
+}
+
+.prompt-actions,
+.detail-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.prompt-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 16px;
+  padding: 8px 10px;
+  border: 1px solid rgba(210, 216, 226, 0.9);
+  border-radius: 10px;
+  background: rgba(247, 249, 252, 0.88);
+}
+
+.prompt-search input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.prompt-search span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.prompt-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.prompt-group h3 {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.prompt-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 10px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(226, 229, 235, 0.9);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.prompt-row.selected {
+  border-color: rgba(26, 115, 232, 0.42);
+  background: rgba(232, 240, 254, 0.74);
+}
+
+.prompt-row span {
+  min-width: 0;
+}
+
+.prompt-row strong,
+.prompt-row small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prompt-row strong {
+  font-size: 14px;
+}
+
+.prompt-row small {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.prompt-row em {
+  color: var(--primary);
+  font-style: normal;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.prompt-detail p {
+  line-height: 1.75;
+  margin: 18px 0;
+  white-space: pre-wrap;
+}
+
+.variable-row,
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.variable-row span,
+.tag-row span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(232, 240, 254, 0.82);
+  color: #1c5fc3;
+  font-size: 12px;
+}
+
+/* AI 面板 */

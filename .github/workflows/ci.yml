@@ -8,7 +8,7 @@ on:
 
 jobs:
   desktop:
-    name: Desktop typecheck
+    name: Desktop typecheck & build
     runs-on: windows-latest
     defaults:
       run:
@@ -22,9 +22,10 @@ jobs:
           cache-dependency-path: desktop/package-lock.json
       - run: npm ci
       - run: npm run typecheck
+      - run: npm run build
 
   desktop-cli:
-    name: Desktop CLI typecheck
+    name: Desktop CLI typecheck, build & tests
     runs-on: windows-latest
     defaults:
       run:
@@ -38,6 +39,8 @@ jobs:
           cache-dependency-path: desktop/cli/package-lock.json
       - run: npm ci
       - run: npm run typecheck
+      - run: npm run build
+      - run: npm run test
 
   mobile:
     name: Mobile typecheck & tests

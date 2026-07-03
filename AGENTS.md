@@ -32,7 +32,7 @@ mobile/ (run inside `mobile/`):
 - Expo SDK 57 is recent; if writing Expo code, read the exact versioned docs at https://docs.expo.dev/versions/v57.0.0/ first.
 
 Root:
-- `python download_pandoc.py` — download pandoc binary to `desktop/resources/`
+- `python scripts/download_pandoc.py` — download pandoc binary to `desktop/resources/`
 
 ## Conversion engine (differs per subproject — don't mix up)
 - `desktop/src/shared/converter.ts` — shared conversion engine (CLI + Electron both use it). Wraps pandoc for Office→MD, Office→docx, MD→docx, with structured error codes.

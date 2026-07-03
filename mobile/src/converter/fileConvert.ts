@@ -10,11 +10,67 @@ export interface ConvertResult {
   error?: string;
 }
 
+function safeFileName(name: string): string {
+  return (name || '文档').replace(/[\\/:*?"<>|]/g, '_');
+}
+
+function fence(text: string, lang = ''): string {
+  const ticks = text.includes('```') ? '````' : '```';
+  return `${ticks}${lang}\n${text}\n${ticks}`;
+}
+
+function jsonValueToMarkdown(value: unknown, depth = 2): string {
+  const heading = '#'.repeat(Math.min(depth, 6));
+  if (value === null || value === undefined) return '`null`';
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (!trimmed) return '""';
+    const looksMarkdown = /(^|\n)\s{0,3}#{1,6}\s/.test(trimmed)
+      || /(^|\n)\s{0,3}[-*+]\s/.test(trimmed)
+      || /\*\*[^*]+\*\*/.test(trimmed);
+    return looksMarkdown ? trimmed : trimmed.replace(/\n{3,}/g, '\n\n');
+  }
+  if (typeof value === 'number' || typeof value === 'boolean') return `\`${String(value)}\``;
+  if (Array.isArray(value)) {
+    if (value.length === 0) return '[]';
+    return value
+      .map((item, index) => {
+        const body = jsonValueToMarkdown(item, depth + 1);
+        if (typeof item === 'object' && item !== null) {
+          return `${heading} 第 ${index + 1} 项\n\n${body}`;
+        }
+        return `- ${body}`;
+      })
+      .join('\n\n');
+  }
+
+  const entries = Object.entries(value as Record<string, unknown>);
+  if (entries.length === 0) return '{}';
+  return entries
+    .map(([key, item]) => {
+      const body = jsonValueToMarkdown(item, depth + 1);
+      if (typeof item === 'object' && item !== null) {
+        return `${heading} ${key}\n\n${body}`;
+      }
+      return `- **${key}**：${body}`;
+    })
+    .join('\n\n');
+}
+
+export function jsonToMarkdown(jsonContent: string, title = 'JSON 文档'): string {
+  try {
+    const data = JSON.parse(jsonContent);
+    return `# ${title}\n\n${jsonValueToMarkdown(data)}\n`;
+  } catch {
+    return `# ${title}\n\nJSON 解析失败，以下为原始内容：\n\n${fence(jsonContent, 'json')}\n`;
+  }
+}
+
 // md 文本 -> docx 文件，写入缓存目录
 export async function convertMdToDocxFile(mdContent: string, baseName: string): Promise<ConvertResult> {
   try {
     const bytes = await mdToDocxBytes(mdContent);
-    const file = new File(Paths.cache, `${baseName}.docx`);
+    const file = new File(Paths.cache, `${safeFileName(baseName)}.docx`);
     file.write(bytes);
     return { ok: true, outputPath: file.uri };
   } catch (e) {
@@ -36,8 +92,18 @@ export async function convertDocxFileToMd(docxUri: string): Promise<ConvertResul
 // 把 md 文本写入 .md 文件
 export async function writeMdFile(mdContent: string, baseName: string): Promise<ConvertResult> {
   try {
-    const file = new File(Paths.cache, `${baseName}.md`);
+    const file = new File(Paths.cache, `${safeFileName(baseName)}.md`);
     file.write(mdContent);
+    return { ok: true, outputPath: file.uri };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
+export async function writeJsonFile(jsonContent: string, baseName: string): Promise<ConvertResult> {
+  try {
+    const file = new File(Paths.cache, `${safeFileName(baseName)}.json`);
+    file.write(jsonContent);
     return { ok: true, outputPath: file.uri };
   } catch (e) {
     return { ok: false, error: (e as Error).message };

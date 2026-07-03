@@ -8,12 +8,14 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Sharing from 'expo-sharing';
-import { writeMdFile } from '../converter/fileConvert';
+import { writeJsonFile, writeMdFile } from '../converter/fileConvert';
 import { Theme } from '../theme';
 import { Reader } from './Reader';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface EditSheetProps {
   visible: boolean;
@@ -28,6 +30,7 @@ interface EditSheetProps {
 const DRAFT_KEY = 'molan.edit.draft';
 
 export function EditSheet({ visible, title, content, isJson, theme, onClose, onSave }: EditSheetProps) {
+  const insets = useSafeAreaInsets();
   const [draft, setDraft] = useState(content);
   const [preview, setPreview] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -108,7 +111,9 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
       savedRef.current = true;
       onSave(draft);
       AsyncStorage.removeItem(DRAFT_KEY).catch(() => {});
-      const result = await writeMdFile(draft, title || '文档');
+      const result = isJson
+        ? await writeJsonFile(draft, title || 'JSON')
+        : await writeMdFile(draft, title || '文档');
       if (!result.ok || !result.outputPath) {
         setMessage('导出失败：' + result.error);
         return;
@@ -127,17 +132,34 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
     }
   };
 
-  const saveAsCopy = () => {
+  const saveAsCopy = async () => {
     if (isJson && jsonError) {
       setMessage('JSON 格式有误，请先修复');
       return;
     }
+    setBusy(true);
+    setMessage(null);
     savedRef.current = true;
-    // 不调用 onSave (不覆盖原文件)，但保留草稿
     const copyName = title ? `${title}（副本）` : '文档副本';
-    onSave(draft);
-    setMessage('已保存为副本');
-    AsyncStorage.removeItem(DRAFT_KEY).catch(() => {});
+    try {
+      const result = isJson ? await writeJsonFile(draft, copyName) : await writeMdFile(draft, copyName);
+      if (!result.ok || !result.outputPath) {
+        setMessage('保存副本失败：' + result.error);
+        return;
+      }
+      AsyncStorage.removeItem(DRAFT_KEY).catch(() => {});
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(result.outputPath, {
+          mimeType: isJson ? 'application/json' : 'text/markdown',
+          dialogTitle: `${copyName}.${isJson ? 'json' : 'md'}`,
+        });
+        setMessage('已生成副本，可保存到本地或分享');
+      } else {
+        setMessage('已生成副本，但当前环境不支持系统分享');
+      }
+    } finally {
+      setBusy(false);
+    }
   };
 
   const formatJson = () => {
@@ -153,8 +175,18 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
 
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <View style={[styles.toolbar, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+        <View
+          style={[
+            styles.toolbar,
+            {
+              backgroundColor: theme.surface,
+              borderBottomColor: theme.border,
+              height: insets.top + 52,
+              paddingTop: insets.top,
+            },
+          ]}
+        >
           <TouchableOpacity onPress={onClose} style={styles.toolBtn}>
             <Text style={{ color: theme.link, fontSize: 14 }}>关闭</Text>
           </TouchableOpacity>
@@ -208,7 +240,16 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
           />
         )}
 
-        <View style={[styles.footer, { backgroundColor: theme.surface, borderTopColor: theme.border }]}>
+        <View
+          style={[
+            styles.footer,
+            {
+              backgroundColor: theme.surface,
+              borderTopColor: theme.border,
+              paddingBottom: Math.max(14, insets.bottom + 14),
+            },
+          ]}
+        >
           <TouchableOpacity
             style={[styles.primaryBtn, { backgroundColor: theme.link }]}
             onPress={save}
@@ -232,7 +273,7 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
           </TouchableOpacity>
           {message ? <Text style={[styles.message, { color: theme.textSecondary }]}>{message}</Text> : null}
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 }
