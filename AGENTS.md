@@ -123,3 +123,48 @@ Tests slow you down when AI writes them reflexively. Don't write tests to "match
 - Logic/contract tests: written in the same change as the code they cover. They ARE the first way you run that code.
 - UI/feature tests: deferred to V1.5+ at the earliest, behind a real acceptance script, never as mock-heavy unit tests.
 - Each test must fail-meaningfully: break the SUT in your head and confirm the assertion catches it. If it wouldn't, delete the test.
+
+## Frontend working discipline (enforced)
+
+These rules exist because AI's default behavior is the opposite of senior engineering: it writes before reading, adds before deleting, batches instead of slicing. Follow these or you will produce code that fights the existing codebase.
+
+### How to work — the 10 self-checks
+
+Apply these constantly while writing frontend code, not just at the end:
+
+1. **Read before write.** Read the full file before changing it. Never guess content from filename or import path. Before writing a new feature, grep for existing similar code (`search|filter|highlight|copy|toast|error`) and follow its pattern instead of inventing a new one.
+2. **Vertical slices, not horizontal layers.** Take one feature from UI → logic → data → test → commit, end-to-end. Do NOT write "all the reading UI first, then all the data layer." Each slice must be runnable on its own.
+3. **Skeleton first.** The first version of a feature is the thinnest path that runs end-to-end, even if ugly. Prove the chain works (button → convert → share) before polishing styles or edge cases. Ask mid-way: "can I run this end-to-end now?" If no, stop polishing.
+4. **Failure paths before happy paths.** Before writing the normal flow, enumerate: empty, error, slow/large, boundary, cancel. Each must have explicit UI (no white screens, no hangs). The repo's `friendlyOpenError` / `inferExternalSourceLabel` in `mobile/App.tsx` is the model.
+5. **Small commits.** Commit per sub-step (UI done, logic done, test added), not per day. Each commit must be runnable and revertable. Never batch a day's work into one "update" commit.
+6. **Abstract only on the third occurrence.** Write inline first occurrence, copy-paste second, abstract third. Do NOT build abstraction layers / config systems / plugin hooks "for future reuse." Premature abstraction is debt.
+7. **Delete code freely.** Cut features → delete immediately, don't comment out "just in case." Find a better way → delete the old. Low-value tests → delete (we did this). Sunk cost is not a reason to keep bad code.
+8. **Reuse before create.** Before writing new logic, grep for existing implementations. Follow the existing pattern. Never let the codebase grow a 2nd search / a 3rd toast / a 4th error-handling style.
+9. **Sync docs the moment behavior changes.** After changing code, immediately ask "which docs/comments/TODO entries are now stale?" Stale references (we hit this: deleted tests still cited as evidence) are the top maintenance debt.
+10. **Don't fight the type system.** If a type is hard to write, the design is wrong — refactor, don't `any`/`as` around it. A pile of `any` means you haven't designed the data shape. `as unknown as` is a danger signal.
+
+### Separation principles — 7 dimensions
+
+When writing components, self-check these separations. The repo already does some; violations noted below are real and must be fixed going forward.
+
+| # | Principle | Repo status | Rule |
+|---|---|---|---|
+| 1 | Logic vs render | ✅ done (`markdown/toc.ts`, `json/tree.ts` hold pure logic) | No `try/catch`, `JSON.parse`, complex computation in components — extract pure functions |
+| 2 | Data access下沉 | ⚠️ violated (`Reader.tsx`, `EditSheet.tsx` call AsyncStorage directly) | AsyncStorage/localStorage/fetch/IPC never appear in components — go through `storage/` layer |
+| 3 | Strings centralized | ❌ not done (text like `'复制成功'`, `'暂无提示词'` hardcoded in JSX) | User-visible strings go in a strings file (`src/constants/strings.ts`), not scattered in JSX |
+| 4 | Container vs presentational | ⚠️ partially mixed | If a component both fetches/stores AND renders complex UI, consider splitting Container + View. Don't over-split in V1. |
+| 5 | Styles centralized | ✅ done (mobile: `StyleSheet.create`; desktop: className + CSS vars) | No hardcoded colors — mobile via `themes[mode].xxx`, desktop via `var(--xxx)` |
+| 6 | Config externalized | ⚠️ partial (`duration: 220`, `width < 380` inline) | Magic numbers (durations, thresholds, scale tiers) become named constants |
+| 7 | Platform isolated | ⚠️ partial | iOS/Android/Electron differences don't scatter in business logic — abstract them |
+
+**Priority fixes for existing violations**: #2 (data access — extract `storage/readPosition.ts`, `storage/draft.ts`) and #3 (strings — centralize). These are the highest-leverage cleanups.
+
+### Anti-patterns that will be rejected in review
+
+- A component file growing `AsyncStorage.getItem` / `fetch` / `JSON.parse` calls — extract to storage/logic layer.
+- User-visible Chinese strings written directly in JSX — centralize them.
+- A new "search" / "toast" / "error handler" that duplicates an existing one — reuse.
+- `any` or `as unknown as` to silence a type error — refactor the design.
+- A 500-line commit titled "update" — split into small runnable commits.
+- Commented-out code "kept just in case" — delete it.
+- Premature abstraction (config/plugin/factory) for a single use case — inline it.
