@@ -107,7 +107,7 @@
 - `[x]` D1.16 设计转换配方 — 给 AI 读→Markdown、给别人看→PDF、给别人改→Word、给开发/Agent→JSON 或 Markdown。证据：`docs/design/conversion-recipes.md` 覆盖用途到格式推荐、手机轻转换、电脑重转换、JSON 转 Markdown 规则、分享前推荐、失败降级、AI 可读工作流边界，并声明 CLI JSON 契约不变。
 
 **D2 电脑端 / CLI 全量设计**
-- `[ ]` D2.1 设计 CLI 命令体系 — `molan convert/check/pull/read/push` 的参数、输出、错误码、退出码。
+- `[x]` D2.1 设计 CLI 命令体系 — `molan convert/check/pull/read/push` 的参数、输出、错误码、退出码。证据：`docs/design/desktop-cli-command-contract.md` 覆盖五个命令的参数、JSON 公共结构、必须保留字段、错误码、退出码、后续扩展字段和契约测试要求；与现有 `desktop/cli/src/index.ts`、`converter.ts`、`cloud.test.ts` 对齐。
 - `[ ]` D2.2 设计 Office/PDF/PPT/Excel→Markdown 转换规则 — 标题、表格、图片、代码、分页、元数据、失败策略。
 - `[ ]` D2.3 设计批量转换输出结构 — 成功/失败列表、输出路径、hash、可读性评分、AI 下一步建议。
 - `[ ]` D2.4 设计桌面 GUI 阅读与转换 — 拖拽、队列、输出目录、阅读预览、JSON 编辑、错误恢复。
