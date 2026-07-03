@@ -85,7 +85,7 @@
 - `[x]` D0.2 输出"功能边界裁定表" — 证据：`docs/design/feature-boundary-decision-table.md` 明确做什么、不做什么、V1/V1.5/V2/V3 分界，并保留 PRD 冲突裁定。
 - `[x]` D0.3 输出"用户任务优先级矩阵" — 证据：`docs/design/user-task-priority-matrix.md` 按频率、价值、风险、实现成本排序 V1/V1.5/V2/V3 主要 PRD 功能，并映射 TODO 阶段。
 - `[x]` D0.4 输出"关键指标设计" — 证据：`docs/design/key-metrics-design.md` 定义 5 秒看到内容、10 秒复制、20 秒转换分享、1-2 次滑动找到 App、云同步成功率、AI 可读取成功率和证据模板。
-- `[ ]` D0.5 输出"权限与隐私设计原则" — 文件默认本地、主动上传、敏感字段提醒、删除与撤回、云端可见性。
+- `[x]` D0.5 输出"权限与隐私设计原则" — 证据：`docs/design/permission-privacy-principles.md` 定义文件默认本地、主动上传、敏感字段提醒、删除与撤回、云端可见性和权限触发时机。
 - `[ ]` D0.6 输出"全量信息架构 IA" — 首页、阅读页、编辑页、提示词库、最近文档、转换中心、AI 卡片、云端收件箱、设置。
 
 **D1 手机端 UX / UI 全量设计**
