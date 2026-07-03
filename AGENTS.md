@@ -34,6 +34,55 @@ mobile/ (run inside `mobile/`):
 Root:
 - `python scripts/download_pandoc.py` — download pandoc binary to `desktop/resources/`
 
+## Architecture
+
+### Conversion engine (shared, desktop + CLI)
+
+`desktop/src/shared/converter.ts` is the single conversion engine used by both the Electron GUI (`electron/main/index.ts`) and the CLI (`cli/src/index.ts`). It wraps pandoc and provides:
+
+- `convertFile(inputPath, outputFormat, outputDir)` → `ConvertResult`
+- `convertBatch(inputs, outputFormat, outputDir, concurrency)` → `ConvertResult[]`
+- Error codes: `E_PANDOC_MISSING`, `E_UNSUPPORTED_FORMAT`, `E_INPUT_NOT_FOUND`, `E_CONVERT_FAILED`, `E_OUTPUT_FAILED`
+- Supported formats: `docx`, `pdf`, `pptx`, `xlsx`, `csv`, `md`, `json`
+- `pandocPath()` resolves via: `PANDOC_PATH` env → `resources/pandoc.exe` → system PATH
+
+**Do not duplicate pandoc-calling logic.** Always route through `converter.ts`.
+
+### mobile conversion (separate, offline)
+
+Mobile uses pure JS libraries (no pandoc): `mammoth` (docx→md), `docx` (md→docx), `marked` (md→HTML), `expo-print` (md→PDF). These are in `mobile/src/converter/`. Do not import from `desktop/src/shared/` in mobile.
+
+### Key shared types
+
+- `desktop/src/shared/ipc.ts` — TypeScript interfaces shared between Electron main + renderer. Defines `ConvertTask`, `ReadableFile`, `ipcChannels`. The preload script (`electron/preload/index.ts`) exposes these via `contextBridge`.
+- `desktop/src/global.d.ts` — `window.api` type declaration consumed by renderer React code.
+
+### mobile code organization
+
+- `App.tsx` — top-level: state machine (reader vs JSON view), bottom sheet orchestration, file open via `Linking` + `DocumentPicker`
+- `src/components/Reader.tsx` — Markdown reader (marked-based), scroll position memory, theme-aware
+- `src/components/JsonView.tsx` / `JsonTree.tsx` — JSON tree viewer with collapse/search/copy
+- `src/components/EditSheet.tsx` — modal editor: source/preview toggle, JSON validate+format, auto-draft, save-as-copy, save-and-share
+- `src/components/PromptSheet.tsx` — prompt library: list/search/import/copy, recent copies section
+- `src/components/RecentSheet.tsx` — recent documents list
+- `src/components/ConvertSheet.tsx` — format conversion panel
+- `src/storage/` — AsyncStorage-backed persistence for prompts (`prompts.ts`) and recent docs (`recentDocs.ts`)
+- `src/theme.ts` — day/night theme from system `useColorScheme()`
+
+### desktop GUI code organization
+
+- `App.tsx` — two tabs: reader (default), converter. Listens for `open-file` events from Electron main for file-association launch.
+- `src/components/ReaderPanel.tsx` — markdown/JSON reader with file picker
+- `src/components/ConvertPanel.tsx` — conversion panel: drag-drop, format selection, batch convert via `window.api.convert()`
+
+### desktop main process
+
+`electron/main/index.ts` handles: window creation + IPC handlers for file dialogs, conversion (via `converter.ts`), settings persistence. `GET_PENDING_FILE` serves files opened via OS file association before renderer is ready. `app.on('open-file')` is the Windows file association handler, pushing file to renderer via IPC.
+
+### File association
+
+Mobile `app.json` registers `.md`/`.markdown`/`.json` open-with (iOS `CFBundleDocumentTypes` + Android `intentFilters`). Desktop GUI registers via Electron's `app.on('open-file')` (dev) and `electron-builder.yml` `fileAssociations` (prod). On open, the reader tab auto-loads the file.
+
 ## Conversion engine (differs per subproject — don't mix up)
 - `desktop/src/shared/converter.ts` — shared conversion engine (CLI + Electron both use it). Wraps pandoc for Office→MD, Office→docx, MD→docx, with structured error codes.
 - `desktop/cli/src/index.ts` — `molan` CLI entry point. Commander-based, supports single-file, batch, glob, `--json` output.
