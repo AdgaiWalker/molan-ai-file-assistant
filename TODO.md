@@ -144,7 +144,7 @@
 - `[x]` D6.2 手机端主流程线框或页面说明齐备：打开、阅读、复制、编辑、转换、分享、提示词、收件箱。证据：`docs/design/mobile-main-flow-freeze.md` 索引打开、Markdown/JSON 阅读、复制、编辑、转换、分享、提示词、最近文档/收件箱、AI 卡片、设置、状态表与视觉规范设计；明确 D1.1/D1.2 仍需真机证据但设计已冻结。
 - `[x]` D6.3 电脑端 CLI 命令和 JSON 输出契约齐备。证据：`docs/design/desktop-cli-contract-freeze.md` 汇总 `molan convert/check/pull/read/push`、必须保留 JSON 字段 `ok/results/outputPath/errorCode/error`、当前/未来错误码、CLI 契约测试证据和后续 S2-QA 缺口；验证 `desktop/cli` typecheck/build/test 通过。
 - `[x]` D6.4 云端 MVP 闭环、数据模型、隐私边界齐备。证据：`docs/design/cloud-design-freeze.md` 汇总云端 MVP 闭环、账号设备、同步策略、AI 文件资料库、上传边界、AI 读取/回流、九个固定云端数据概念、API 草案、字段映射、隐私边界和 S7 启动条件；验证 CLI 本地 `push/pull/read` 契约继续通过。
-- `[ ]` D6.5 每个开发任务都有验收标准和失败状态。
+- `[x]` D6.5 每个开发任务都有验收标准和失败状态。证据：`docs/design/development-task-acceptance-index.md` 定义 S 层任务关闭规则、§17 证据类型、三端验证命令、打开/阅读/JSON/编辑/复制/转换/分享/云同步/发布失败状态、测试裁定、S0-S9 阶段验收索引和 `[v]/[!]/[~]` 阻塞标记规则。
 
 ## 1. 阶段总览
 
