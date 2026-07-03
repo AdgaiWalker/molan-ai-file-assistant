@@ -282,8 +282,8 @@
 | ID | 优先级 | 状态 | 任务 | 依赖 | 交付物 | 验收 |
 |---|---|---|---|---|---|---|
 | S1-READ-001 | P0 | `[~]` | 文件打开后直达阅读页 | S1-OPEN-001 | App 路由 | 不先弹导入、上传、识别 |
-| S1-READ-002 | P0 | `[~]` | 首页展示最近文档和提示词入口 | S1-ENG-001 | 首页 UI | 主动打开 App 时可快速继续 |
-| S1-READ-003 | P0 | `[~]` | 阅读页操作面板 | S1-READ-001 | 按钮组 | 复制、编辑、分享、转格式入口清楚 |
+| S1-READ-002 | P0 | `[~]` | 首页展示最近文档和提示词入口 | S1-ENG-001 | 首页 UI | 已按 UI 基线改造今天 Tab、快捷入口、底部导航；待真机验证 |
+| S1-READ-003 | P0 | `[~]` | 阅读页操作面板 | S1-READ-001 | 按钮组 | 已改为复制/编辑/AI可读/转换/分享 5 按钮底栏；待真机验证 |
 | S1-READ-004 | P0 | `[v]` | Android 安全区适配 | S1-READ-003 | UI 调整 | 底部按钮不被导航栏遮挡 |
 | S1-READ-005 | P0 | `[v]` | iOS Home Indicator 适配 | S1-READ-003 | UI 调整 | 底部按钮不被遮挡 |
 | S1-READ-006 | P0 | `[ ]` | 深色模式视觉验收 | S1-READ-003 | 主题样式 | 低亮度可读，代码块对比度足够 |
@@ -326,13 +326,13 @@
 
 | ID | 优先级 | 状态 | 任务 | 依赖 | 交付物 | 验收 |
 |---|---|---|---|---|---|---|
-| S1-EDIT-001 | P0 | `[~]` | Markdown 原文编辑 | S1-MD-001 | edit sheet/page | 可修改文本 |
-| S1-EDIT-002 | P0 | `[~]` | Markdown 预览切换 | S1-EDIT-001 | preview toggle | 编辑后预览一致 |
-| S1-EDIT-003 | P0 | `[~]` | JSON 原文编辑 | S1-JSON-001 | edit UI | 可修改 JSON |
-| S1-EDIT-004 | P0 | `[~]` | JSON 校验与错误提示 | S1-EDIT-003 | validation | 非法 JSON 不覆盖原有效文件 |
-| S1-EDIT-005 | P0 | `[~]` | 自动草稿 | S1-EDIT-001 | local draft | 退出后可恢复 |
-| S1-EDIT-006 | P0 | `[~]` | 保存为副本 | S1-EDIT-001 | save copy | 原文件不被破坏 |
-| S1-EDIT-007 | P0 | `[~]` | 编辑后直接分享 | S1-EDIT-001 | share action | 不用先回阅读页找入口 |
+| S1-EDIT-001 | P0 | `[~]` | Markdown 原文编辑 | S1-MD-001 | edit sheet/page | 已支持原文编辑；UI 顶栏已按基线改造 |
+| S1-EDIT-002 | P0 | `[~]` | Markdown 预览切换 | S1-EDIT-001 | preview toggle | 已支持源码/预览切换 |
+| S1-EDIT-003 | P0 | `[~]` | JSON 原文编辑 | S1-JSON-001 | edit UI | 已支持 JSON 原文编辑和格式化 |
+| S1-EDIT-004 | P0 | `[~]` | JSON 校验与错误提示 | S1-EDIT-003 | validation | 已实时校验并禁用非法 JSON 保存 |
+| S1-EDIT-005 | P0 | `[~]` | 自动草稿 | S1-EDIT-001 | local draft | 已支持自动草稿和恢复，UI 显示保存状态 |
+| S1-EDIT-006 | P0 | `[~]` | 保存为副本 | S1-EDIT-001 | save copy | 已支持保存副本并调起分享 |
+| S1-EDIT-007 | P0 | `[~]` | 编辑后直接分享 | S1-EDIT-001 | share action | 已支持保存并分享 |
 | S1-EDIT-008 | P1 | `[ ]` | 编辑历史版本 | S1-EDIT-005 | local versions | 可回退上一个版本 |
 
 ### S1.7 复制与提示词
