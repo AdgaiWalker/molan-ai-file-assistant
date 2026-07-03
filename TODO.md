@@ -340,7 +340,7 @@
 | S1-COPY-001 | P0 | `[x]` | 复制全文 | S1-READ-001 | copy action | 当前文件全部内容进剪贴板，并记录最近文档 `copied` 状态；证据：`mobile/App.tsx` 的 `copyCurrent` / `remember` 链路；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-COPY-002 | P0 | `[x]` | 复制代码块 | S1-MD-003 | copy action | 代码内容准确，并通过 `onCopied` 回写最近文档状态；证据：`mobile/src/markdown/renderer.tsx`、`mobile/src/components/Reader.tsx`、`mobile/App.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-COPY-003 | P0 | `[x]` | 复制 JSON 字段 | S1-JSON-004 | copy action | 字段值准确；证据：`mobile/src/json/tree.ts`、`mobile/src/__tests__/jsonTree.test.ts` |
-| S1-COPY-004 | P0 | `[ ]` | 复制选中片段 | S1-READ-001 | selection action | 长按选中后可复制 |
+| S1-COPY-004 | P0 | `[v]` | 复制选中片段 | S1-READ-001 | selection action | Markdown 段落/标题/列表/表格文本已使用 React Native `Text selectable` 支持系统选中复制，提示词片段导入可读取剪贴板；证据：`mobile/src/markdown/renderer.tsx`、`mobile/src/components/PromptSheet.tsx`；仍需 Android/iOS 真机长按选中菜单截图或录屏后改 `[x]` |
 | S1-COPY-005 | P1 | `[ ]` | 组合复制多个片段 | S1-COPY-004 | selection tray | 多段合并复制 |
 | S1-PROMPT-001 | P0 | `[~]` | 提示词数据模型 | S1-COPY-001 | storage | title/content/tags/folder/copyCount/lastCopiedAt |
 | S1-PROMPT-002 | P0 | `[~]` | 提示词库入口 | S1-PROMPT-001 | prompt sheet/page | 首页或阅读页可进入 |
