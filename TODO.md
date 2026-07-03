@@ -140,7 +140,7 @@
 - `[x]` D5.5 设计渠道策略 — GitHub Release、官网、国内镜像、后续安卓商店/App Store。证据：`docs/design/release-channel-strategy.md` 定义 GitHub Release 源头、官网入口、国内镜像校验、安卓商店/App Store 进入条件与账号/证书阻塞、CLI zip 优先和版本/大小/SHA256/release notes 追溯规则。
 
 **D6 设计冻结门槛（全部满足才能进入 S1+ 开发）**
-- `[ ]` D6.1 PRD 全部功能均能映射到 D/S 任务，不能有"文档里有、TODO 没有"的功能。
+- `[x]` D6.1 PRD 全部功能均能映射到 D/S 任务，不能有"文档里有、TODO 没有"的功能。证据：`docs/design/design-freeze-prd-todo-map.md` 审计 PRD 核心场景、不做清单、2026-07-03 追加功能与 D/S 任务映射；未完成项均落在真机验证、S 层开发、发布账号或后端阶段，不构成 TODO 缺口。
 - `[ ]` D6.2 手机端主流程线框或页面说明齐备：打开、阅读、复制、编辑、转换、分享、提示词、收件箱。
 - `[ ]` D6.3 电脑端 CLI 命令和 JSON 输出契约齐备。
 - `[ ]` D6.4 云端 MVP 闭环、数据模型、隐私边界齐备。
