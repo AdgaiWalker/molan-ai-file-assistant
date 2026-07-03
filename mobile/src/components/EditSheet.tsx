@@ -35,6 +35,7 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [jsonError, setJsonError] = useState<string | null>(null);
+  const [savingDraft, setSavingDraft] = useState(false);
   const savedRef = useRef(false);
 
   useEffect(() => {
@@ -49,9 +50,15 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
 
   // 自动保存草稿
   useEffect(() => {
-    if (!visible || draft === content || savedRef.current) return;
+    if (!visible || draft === content || savedRef.current) {
+      setSavingDraft(false);
+      return;
+    }
+    setSavingDraft(true);
     const timer = setTimeout(() => {
-      AsyncStorage.setItem(DRAFT_KEY, JSON.stringify({ title, content: draft, isJson })).catch(() => {});
+      AsyncStorage.setItem(DRAFT_KEY, JSON.stringify({ title, content: draft, isJson }))
+        .then(() => setSavingDraft(false))
+        .catch(() => setSavingDraft(false));
     }, 1000);
     return () => clearTimeout(timer);
   }, [draft, content, title, isJson, visible]);
@@ -188,20 +195,32 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
             },
           ]}
         >
-          <TouchableOpacity onPress={onClose} style={styles.toolBtn}>
-            <Text style={{ color: theme.link, fontSize: 14 }}>关闭</Text>
-          </TouchableOpacity>
-          <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>
-            编辑：{title}
-          </Text>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={styles.toolLeft}>
+            <TouchableOpacity onPress={onClose} style={styles.toolBtn}>
+              <Text style={[styles.backIcon, { color: theme.text }]}>‹</Text>
+            </TouchableOpacity>
+            <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>
+              {title}
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {savingDraft ? (
+              <Text style={[styles.draftHint, { color: theme.textSecondary }]}>自动保存中</Text>
+            ) : hasChanges ? (
+              <Text style={[styles.draftHint, { color: theme.textSecondary }]}>未保存</Text>
+            ) : null}
             {isJson ? (
               <TouchableOpacity onPress={formatJson} style={styles.toolBtn}>
                 <Text style={{ color: theme.link, fontSize: 14 }}>格式化</Text>
               </TouchableOpacity>
             ) : null}
-            <TouchableOpacity onPress={() => setPreview((v) => !v)} style={styles.toolBtn}>
-              <Text style={{ color: theme.link, fontSize: 14 }}>{preview ? '源码' : '预览'}</Text>
+            <TouchableOpacity
+              style={[styles.previewToggle, { backgroundColor: preview ? theme.link : theme.surface, borderColor: theme.border }]}
+              onPress={() => setPreview((v) => !v)}
+            >
+              <Text style={{ color: preview ? '#fff' : theme.text, fontSize: 13, fontWeight: '600' }}>
+                {preview ? '源码' : '预览'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -287,20 +306,46 @@ const styles = StyleSheet.create({
     height: 52,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
     paddingHorizontal: 10,
   },
+  toolLeft: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   toolBtn: {
-    minWidth: 54,
+    minWidth: 44,
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  backIcon: {
+    fontSize: 28,
+    fontWeight: '300',
+    lineHeight: 30,
+  },
   title: {
     flex: 1,
-    textAlign: 'center',
-    fontSize: 15,
+    textAlign: 'left',
+    fontSize: 16,
     fontWeight: '700',
+    marginHorizontal: 4,
+  },
+  draftHint: {
+    fontSize: 12,
+    fontWeight: '500',
+    marginRight: 6,
+  },
+  previewToggle: {
+    minHeight: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginRight: 4,
   },
   editor: {
     flex: 1,
