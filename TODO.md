@@ -286,7 +286,7 @@
 | S1-READ-005 | P0 | `[v]` | iOS Home Indicator 适配 | S1-READ-003 | UI 调整 | 底部按钮不被遮挡 |
 | S1-READ-006 | P0 | `[ ]` | 深色模式视觉验收 | S1-READ-003 | 主题样式 | 低亮度可读，代码块对比度足够 |
 | S1-READ-007 | P0 | `[ ]` | 字体、行距、字号设置验收 | S1-READ-003 | 设置项 | 长文阅读不拥挤 |
-| S1-READ-008 | P1 | `[x]` | 阅读页搜索 | S1-READ-001 | 搜索 UI | 已支持当前 Markdown 文档关键词搜索、结果列表、点击跳转；证据：`mobile/src/components/Reader.tsx`、`mobile/src/markdown/search.ts`、`mobile/src/__tests__/markdownSearch.test.ts`；2026-07-04 `cd mobile` 后 `npm run typecheck`、`npm run test` 通过 |
+| S1-READ-008 | P1 | `[x]` | 阅读页搜索 | S1-READ-001 | 搜索 UI | 已支持当前 Markdown 文档关键词搜索、结果列表、点击跳转；证据：`mobile/src/components/Reader.tsx`、`mobile/src/markdown/search.ts`（搜索为字符串 includes 薄封装，按测试策略不单测）；2026-07-04 `cd mobile` 后 `npm run typecheck`、`npm run test` 通过 |
 
 ### S1.4 Markdown 阅读
 
@@ -318,7 +318,7 @@
 | S1-JSON-006 | P0 | `[~]` | JSON 内嵌 Markdown 字段预览 | S1-JSON-002 | preview | `content` / `markdown` / `text` 字段可阅读 |
 | S1-JSON-007 | P1 | `[x]` | JSON 搜索 | S1-JSON-002 | search | 已支持 key/value 搜索，搜索时 flatten 折叠结构并高亮命中；证据：`mobile/src/components/JsonView.tsx`、`mobile/src/json/tree.ts`、`mobile/src/__tests__/jsonTree.test.ts` |
 | S1-JSON-008 | P1 | `[ ]` | 大 JSON 虚拟化 | S1-JSON-002 | virtual tree | 5MB+ JSON 不冻结 |
-| S1-JSON-009 | P1 | `[x]` | 格式化/压缩切换 | S1-JSON-001 | action | 已支持树形/美化/压缩查看模式和美化/压缩复制；证据：`mobile/src/components/JsonView.tsx`、`mobile/src/json/format.ts`、`mobile/src/__tests__/jsonFormat.test.ts`；2026-07-04 在 `mobile/` 分步运行 `npm run typecheck`、`npm run test` 通过 |
+| S1-JSON-009 | P1 | `[x]` | 格式化/压缩切换 | S1-JSON-001 | action | 已支持树形/美化/压缩查看模式和美化/压缩复制；证据：`mobile/src/components/JsonView.tsx`、`mobile/src/json/format.ts`（格式化为 JSON.parse/stringify 薄封装，按测试策略不单测）；2026-07-04 在 `mobile/` 分步运行 `npm run typecheck`、`npm run test` 通过 |
 
 ### S1.6 编辑
 
@@ -405,9 +405,9 @@
 | ID | 优先级 | 状态 | 任务 | 依赖 | 交付物 | 验收 |
 |---|---|---|---|---|---|---|
 | S1-QA-001 | P0 | `[x]` | TypeScript 检查 | S1-ENG-001 | 命令记录 | 2026-07-04 `cd mobile && npm run typecheck` 通过 |
-| S1-QA-002 | P0 | `[x]` | 单元测试 | S1-ENG-001 | 命令记录 | 2026-07-04 `cd mobile` 后 `npm run test` 通过，6 个测试文件 / 31 个测试 |
+| S1-QA-002 | P0 | `[x]` | 单元测试 | S1-ENG-001 | 命令记录 | 2026-07-04 `cd mobile` 后 `npm run test` 通过，3 个测试文件 / 18 个测试（已按测试策略删除凑数测试） |
 | S1-QA-003 | P0 | `[ ]` | Markdown fixture 测试 | S1-MD-001 | tests | 标题、代码、表格、链接覆盖 |
-| S1-QA-004 | P0 | `[x]` | JSONPath/复制测试 | S1-JSON-005 | tests | 已覆盖 JSONPath、搜索、复制文本规则；证据：`mobile/src/__tests__/jsonPath.test.ts`、`mobile/src/__tests__/jsonTree.test.ts` |
+| S1-QA-004 | P0 | `[x]` | JSONPath/复制测试 | S1-JSON-005 | tests | JSONPath 生成、搜索、复制文本规则已覆盖；证据：`mobile/src/__tests__/jsonTree.test.ts`（原 `jsonPath.test.ts` 测的 getByPath 函数零引用，已连同测试删除） |
 | S1-QA-005 | P0 | `[v]` | Android 真机验收表 | S1-OPEN-003 | 验收表 | 至少覆盖 2 个国产 Android 品牌 |
 | S1-QA-006 | P0 | `[v]` | iOS 真机验收表 | S1-OPEN-008 | 验收表 | iPhone 打开/分享/safe-area 通过 |
 | S1-QA-007 | P1 | `[ ]` | Maestro 移动端 E2E | S1-QA-005 | e2e | 打开、复制、转格式、分享自动化 |
@@ -769,3 +769,50 @@ V1 只在以下全部成立时关闭：
 - 没有明确要求时，不写为了历史包袱服务的兼容代码。
 - 云端不是 V1 阻塞项，但必须完整规划到最终完成。
 - 手机端悬浮功能指 Android 系统级悬浮快贴；iOS 用键盘扩展或分享扩展实现相近目标。
+
+## 20. 测试判断规则（写不写测试的判据）
+
+> 完整策略见 `AGENTS.md` 的「Testing strategy (enforced)」。本节是针对本 TODO 全量任务的速查裁定，新 AI 接手时按此执行，不要再凭感觉写测试。
+
+### 20.1 一条核心判据
+
+**"这个 bug 不写测试，多快会被发现？"** —— 答案是"立刻/很快"的不写；答案是"会藏在某个角落，几天后才暴雷"的才写。
+
+### 20.2 该写测试的（写完代码立刻写）
+
+| 代码类型 | 本项目实例 | 为什么该测 |
+|---|---|---|
+| 纯逻辑 + 规则 + 边界 | `parseToc`（中文标点、行内 token 递归）、`mergeDocumentStatuses`（unprocessed 去重顺序）、`buildJsonRows`（JSONPath 引号 key / 数组下标） | 无 UI、无副作用、断了不会立刻报错，但状态/路径会错乱 |
+| 对外输出契约 | CLI `--json` 输出（`cloud.test.ts` 守 push→pull→read）、MCP 响应、云端 API schema | 消费者是 AI，AI 不会告诉你它读不懂；改字段名会悄悄断掉整条工作流 |
+| 状态机 | 文件状态机（D4.3）、转换任务状态机（D4.4） | 状态转移错了，UI 还能跑，但用户看到的状态标签会错 |
+
+### 20.3 不该写测试的（写了是浪费，会拖慢）
+
+| 代码类型 | 本项目实例 | 为什么不该测 |
+|---|---|---|
+| 标准库薄封装 | `JSON.parse`/`stringify` 包一层（已删 `jsonFormat.test.ts`）、字符串 `includes` 搜索（已删 `markdownSearch.test.ts`） | 坏了立刻崩；类型已保证结构；测它等于测标准库 |
+| 零引用函数 | `getByPath`（已删 `jsonPath.test.ts`） | 函数本身就该删，不是"测它" |
+| UI 组件 / 交互 / RN 渲染 | Reader、各 Sheet、JsonView 的渲染 | mock 成本 > 抓 bug 收益；用真机验收清单（§S1.12）和截图 |
+| 类型能证明的不变量 | 函数返回类型、props 接口 | `tsc` 已经证明了，运行时断言多余 |
+
+### 20.4 针对 TODO 里具体测试任务的裁定
+
+下表是本 TODO 里带"测试/fixture/E2E"字样的任务，**新 AI 按此裁定执行，不要默认全做**：
+
+| 任务 ID | 任务 | 裁定 | 理由 |
+|---|---|---|---|
+| S1-QA-003 | Markdown fixture 测试 | ✅ **做** | marked 解析有真实边界（嵌套列表、代码块、表格），属于纯逻辑，值得 fixture 覆盖 |
+| S1-MD-011 | 1MB+ 长文性能测试 | 🔶 **改做手动测量** | 这是性能验收不是单测；用真机 + 计时记录，不写 vitest 单测 |
+| S1-QA-007 | Maestro 移动端 E2E | ⏸ **延后** | E2E 框架成本高，V1 用真机验收清单（S1-QA-005/006）；真机通过后再考虑 |
+| S2-QA-001 | CLI fixture 样本集 | ✅ **做** | docx/pdf/pptx/xlsx 样本是 CLI 契约测试的基础，必须有 |
+| S2-QA-004 | CLI 单测 | ✅ **做**（补 fixture 部分） | `cloud.test.ts` 已守契约，待补的是转换 fixtures 的回归 |
+| S2-QA-005 | 真实文件 smoke test | ✅ **做** | CLI 转换是 AI 主入口，必须对真实样例验证输出 |
+| S3-GUI-011 | Playwright 桌面 E2E | ⏸ **延后** | 桌面 GUI 是 P1，E2E 等核心转换/阅读稳定后再做 |
+| S1-QA-002 | 单元测试基线 | ✅ **保持** | 当前 3 文件/18 测试是合理基线；不要为了"覆盖率"再加凑数测试 |
+
+### 20.5 写测试时的硬规矩
+
+1. **每个测试必须能"有意义地失败"**：写完后在脑子里把被测代码改坏，确认断言会抓住。抓不住就删测试。
+2. **测试和代码同提交**：纯逻辑/契约测试不是事后补的，它是你第一次运行这段代码的方式。
+3. **不为了覆盖率写测试**：项目没有覆盖率门槛，也不设。覆盖率是凑数测试的温床。
+4. **遇到拿不准的，先问判据**：如果某个测试候选不知道该不该写，回 20.1 那个问题；还定不了，看 AGENTS.md 完整策略。
