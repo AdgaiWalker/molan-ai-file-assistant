@@ -104,7 +104,7 @@
 - `[x]` D1.13 输出手机端全量页面状态表 — 空态、加载、错误、无权限、离线、大文件、转换失败、同步冲突。证据：`docs/design/mobile-page-state-table.md` 覆盖首页、打开引导、Markdown/JSON 阅读、编辑、提示词、最近、AI 卡片、转换、批量转换、设置页的全局/局部状态和验收口径。
 - `[x]` D1.14 输出手机端视觉规范 — 图标、字号、间距、按钮层级、安全区、浅深色、Android/iOS 适配。证据：`docs/design/mobile-visual-spec.md` 基于参考图、`theme.ts`、现有组件整理色彩、字号、间距、圆角、图标、按钮层级、安全区、浅深色和 Android/iOS 差异，并列出实现债务。
 - `[x]` D1.15 设计 App 外快贴平台方案 — Android 悬浮快贴、iOS 键盘扩展/分享扩展、权限说明、关闭入口、隐私边界。证据：`docs/design/mobile-external-quick-paste.md` 覆盖 Android 悬浮球/迷你面板/关闭入口、iOS 键盘扩展与分享扩展、权限说明文案、剪贴板和输入框隐私边界、与提示词库数据关系。
-- `[ ]` D1.16 设计转换配方 — 给 AI 读→Markdown、给别人看→PDF、给别人改→Word、给开发/Agent→JSON 或 Markdown。
+- `[x]` D1.16 设计转换配方 — 给 AI 读→Markdown、给别人看→PDF、给别人改→Word、给开发/Agent→JSON 或 Markdown。证据：`docs/design/conversion-recipes.md` 覆盖用途到格式推荐、手机轻转换、电脑重转换、JSON 转 Markdown 规则、分享前推荐、失败降级、AI 可读工作流边界，并声明 CLI JSON 契约不变。
 
 **D2 电脑端 / CLI 全量设计**
 - `[ ]` D2.1 设计 CLI 命令体系 — `molan convert/check/pull/read/push` 的参数、输出、错误码、退出码。
