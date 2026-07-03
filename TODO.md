@@ -113,7 +113,7 @@
 - `[x]` D2.4 设计桌面 GUI 阅读与转换 — 拖拽、队列、输出目录、阅读预览、JSON 编辑、错误恢复。证据：`docs/design/desktop-gui-reader-converter.md` 基于 `App.tsx`、`ReaderPanel.tsx`、`ConvertPanel.tsx`、Electron IPC 设计阅读、转换队列、输出目录、转换日志、阅读预览、JSON 编辑、错误恢复与设置记忆。
 - `[x]` D2.5 设计电脑端与云端收件箱交互 — 拉取手机保存文件、上传转换结果、打开本地输出。证据：`docs/design/desktop-cloud-inbox-interaction.md` 覆盖本地模拟与真实云端阶段、手机保存到云端、电脑 CLI/GUI 拉取、上传转换结果、打开本地输出、状态映射、失败路径和隐私边界；明确 S7 前不写后端代码。
 - `[x]` D2.6 设计 AI 调用说明 — Codex/Claude Code/Cursor 如何通过 CLI 读取资料。证据：`docs/design/desktop-ai-cli-usage.md` 覆盖 check、单文件转换、批量转换、pull/read/push、本地收件箱、Codex/Claude Code/Cursor 调用流程、错误处理模板和安全边界；命令均基于现有 CLI。
-- `[ ]` D2.7 设计电脑端置顶快贴窗 — 侧边置顶、迷你模式、快捷命令模式、提示词详情、复制后回到开发窗口。
+- `[x]` D2.7 设计电脑端置顶快贴窗 — 侧边置顶、迷你模式、快捷命令模式、提示词详情、复制后回到开发窗口。证据：`docs/design/desktop-floating-prompt-window.md` 基于 `PromptPanel.tsx` 与 Electron `createPromptWindow` 覆盖侧边置顶、Mini、快捷命令、提示词详情、复制工作流、快捷键、共享提示词模型、轻量转换入口、状态失败和隐私边界。
 
 **D3 云端与 AI 工作流全量设计**
 - `[ ]` D3.1 设计云端 MVP 闭环 — 手机保存到云端 → 电脑 CLI 拉取 → AI 读取。
