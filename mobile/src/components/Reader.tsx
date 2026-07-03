@@ -27,9 +27,10 @@ interface ReaderProps {
   title?: string;
   immersive?: boolean;
   onToggleChrome?: () => void;
+  onCopied?: () => void;
 }
 
-export function Reader({ content, title = '阅读', immersive = false, onToggleChrome }: ReaderProps) {
+export function Reader({ content, title = '阅读', immersive = false, onToggleChrome, onCopied }: ReaderProps) {
   const systemMode: ThemeMode = useColorScheme() === 'dark' ? 'night' : 'day';
   const [override, setOverride] = useState<'day' | 'night' | null>(null);
   const [fontScaleIndex, setFontScaleIndex] = useState(DEFAULT_FONT_SCALE_INDEX);
@@ -125,7 +126,7 @@ export function Reader({ content, title = '阅读', immersive = false, onToggleC
   );
 
   const renderBlockItem = ({ item, index }: { item: Token; index: number }) => (
-    <>{renderBlock(item, `b-${index}`, theme, fontScale)}</>
+    <>{renderBlock(item, `b-${index}`, theme, fontScale, onCopied)}</>
   );
 
   return (

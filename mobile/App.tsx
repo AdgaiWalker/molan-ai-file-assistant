@@ -473,6 +473,14 @@ export default function App() {
     }
   }, [content, jsonRaw, title]);
 
+  const recordCopied = useCallback(() => {
+    if (!hasDocument) return;
+    const isJson = jsonRaw !== null;
+    const text = isJson ? jsonRaw : content;
+    if (!text.trim()) return;
+    remember(title, isJson ? 'json' : 'markdown', text, 'recent', ['copied']);
+  }, [content, hasDocument, jsonRaw, remember, title]);
+
   // Android 返回键：优先关 Sheet → 回到首页 → 不拦截让系统退出
   const handleBackPress = useCallback(() => {
     if (convertVisible) { setConvertVisible(false); return true; }
@@ -510,13 +518,14 @@ export default function App() {
           onOpenGuide={() => setOpenGuideVisible(true)}
         />
       ) : jsonRaw !== null ? (
-        <JsonView raw={jsonRaw} title={title} />
+        <JsonView raw={jsonRaw} title={title} onCopied={recordCopied} />
       ) : (
         <Reader
           content={content}
           title={title}
           immersive={immersive}
           onToggleChrome={() => setImmersive((v) => !v)}
+          onCopied={recordCopied}
         />
       )}
       {hasDocument ? (
@@ -615,6 +624,7 @@ export default function App() {
         onClose={() => setPromptVisible(false)}
         currentContent={jsonRaw !== null ? jsonRaw : content}
         currentTitle={title}
+        onCopied={recordCopied}
       />
       <AiInsightSheet
         visible={aiVisible}

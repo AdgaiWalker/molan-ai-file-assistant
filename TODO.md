@@ -295,7 +295,7 @@
 | S1-MD-001 | P0 | `[~]` | 标题/段落/列表/引用渲染 | S1-READ-001 | Markdown renderer | 常见 README 可正常阅读 |
 | S1-MD-002 | P0 | `[~]` | 加粗/斜体/删除线/行内代码渲染 | S1-MD-001 | renderer | 样式正确 |
 | S1-MD-003 | P0 | `[~]` | 代码块横向滚动 | S1-MD-001 | code block UI | 长代码不挤压页面 |
-| S1-MD-004 | P0 | `[~]` | 代码块一键复制 | S1-MD-003 | copy button | 点击后剪贴板正确 |
+| S1-MD-004 | P0 | `[x]` | 代码块一键复制 | S1-MD-003 | copy button | 点击后剪贴板正确，并回写最近文档 `copied` 状态；证据：`mobile/src/markdown/renderer.tsx`、`mobile/src/components/Reader.tsx`、`mobile/App.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-MD-005 | P0 | `[~]` | 表格横向滚动 | S1-MD-001 | table UI | 宽表不破版 |
 | S1-MD-006 | P0 | `[~]` | 链接点击与长按复制 | S1-MD-001 | link actions | 不误触编辑 |
 | S1-MD-007 | P0 | `[~]` | 图片展示 | S1-MD-001 | image component | 本地/远程图片可展示 |
@@ -337,14 +337,14 @@
 
 | ID | 优先级 | 状态 | 任务 | 依赖 | 交付物 | 验收 |
 |---|---|---|---|---|---|---|
-| S1-COPY-001 | P0 | `[~]` | 复制全文 | S1-READ-001 | copy action | 当前文件全部内容进剪贴板 |
-| S1-COPY-002 | P0 | `[~]` | 复制代码块 | S1-MD-003 | copy action | 代码内容准确 |
+| S1-COPY-001 | P0 | `[x]` | 复制全文 | S1-READ-001 | copy action | 当前文件全部内容进剪贴板，并记录最近文档 `copied` 状态；证据：`mobile/App.tsx` 的 `copyCurrent` / `remember` 链路；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
+| S1-COPY-002 | P0 | `[x]` | 复制代码块 | S1-MD-003 | copy action | 代码内容准确，并通过 `onCopied` 回写最近文档状态；证据：`mobile/src/markdown/renderer.tsx`、`mobile/src/components/Reader.tsx`、`mobile/App.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-COPY-003 | P0 | `[x]` | 复制 JSON 字段 | S1-JSON-004 | copy action | 字段值准确；证据：`mobile/src/json/tree.ts`、`mobile/src/__tests__/jsonTree.test.ts` |
 | S1-COPY-004 | P0 | `[ ]` | 复制选中片段 | S1-READ-001 | selection action | 长按选中后可复制 |
 | S1-COPY-005 | P1 | `[ ]` | 组合复制多个片段 | S1-COPY-004 | selection tray | 多段合并复制 |
 | S1-PROMPT-001 | P0 | `[~]` | 提示词数据模型 | S1-COPY-001 | storage | title/content/tags/folder/copyCount/lastCopiedAt |
 | S1-PROMPT-002 | P0 | `[~]` | 提示词库入口 | S1-PROMPT-001 | prompt sheet/page | 首页或阅读页可进入 |
-| S1-PROMPT-003 | P0 | `[~]` | 提示词一键复制 | S1-PROMPT-001 | copy button | 戳一下复制 |
+| S1-PROMPT-003 | P0 | `[x]` | 提示词一键复制 | S1-PROMPT-001 | copy button | 戳一下复制，更新提示词复制计数/最近复制，并在当前文件上下文回写 `copied` 状态；证据：`mobile/src/components/PromptSheet.tsx`、`mobile/src/storage/prompts.ts`、`mobile/App.tsx`；2026-07-04 `cd mobile && npm run typecheck && npm test` 通过 |
 | S1-PROMPT-004 | P0 | `[~]` | 从剪贴板导入提示词 | S1-PROMPT-001 | import action | 剪贴板文本可入库 |
 | S1-PROMPT-005 | P0 | `[~]` | 从当前文件加入提示词 | S1-PROMPT-001 | import action | 可把文件片段加入库 |
 | S1-PROMPT-006 | P1 | `[ ]` | 文件夹/分组全文复制 | S1-PROMPT-001 | batch copy | 一个文件夹所有提示词一键复制 |

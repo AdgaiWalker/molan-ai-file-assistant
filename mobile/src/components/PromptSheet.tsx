@@ -28,9 +28,10 @@ interface PromptSheetProps {
   onClose: () => void;
   currentContent?: string;
   currentTitle?: string;
+  onCopied?: () => void;
 }
 
-export function PromptSheet({ visible, theme, onClose, currentContent, currentTitle }: PromptSheetProps) {
+export function PromptSheet({ visible, theme, onClose, currentContent, currentTitle, onCopied }: PromptSheetProps) {
   const insets = useSafeAreaInsets();
   const { height, width } = useWindowDimensions();
   const compact = width < 380;
@@ -78,6 +79,7 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
 
   const copy = async (item: PromptItem) => {
     await Clipboard.setStringAsync(item.content);
+    onCopied?.();
     await recordCopy(item.id);
     setCopiedId(item.id);
     setTimeout(() => setCopiedId((cur) => (cur === item.id ? null : cur)), 1200);
@@ -148,6 +150,7 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
       return;
     }
     await Clipboard.setStringAsync(items.map((item) => item.content.trim()).filter(Boolean).join('\n\n---\n\n'));
+    onCopied?.();
     showToast(`已复制 ${items.length} 条`);
   };
 

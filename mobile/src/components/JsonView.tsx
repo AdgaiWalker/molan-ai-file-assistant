@@ -22,9 +22,10 @@ import { parseAndFormatJson } from '../json/format';
 interface JsonViewProps {
   raw: string;
   title?: string;
+  onCopied?: () => void;
 }
 
-export function JsonView({ raw, title = 'JSON' }: JsonViewProps) {
+export function JsonView({ raw, title = 'JSON', onCopied }: JsonViewProps) {
   const systemMode: ThemeMode = useColorScheme() === 'dark' ? 'night' : 'day';
   const theme = themes[systemMode];
   const insets = useSafeAreaInsets();
@@ -39,10 +40,16 @@ export function JsonView({ raw, title = 'JSON' }: JsonViewProps) {
   const parseError = formatted.ok ? null : formatted.error;
 
   const copyPretty = async () => {
-    if (formatted.ok) await Clipboard.setStringAsync(formatted.pretty);
+    if (formatted.ok) {
+      await Clipboard.setStringAsync(formatted.pretty);
+      onCopied?.();
+    }
   };
   const copyMinified = async () => {
-    if (formatted.ok) await Clipboard.setStringAsync(formatted.minified);
+    if (formatted.ok) {
+      await Clipboard.setStringAsync(formatted.minified);
+      onCopied?.();
+    }
   };
 
   const rawDisplay = formatted.ok
@@ -122,7 +129,7 @@ export function JsonView({ raw, title = 'JSON' }: JsonViewProps) {
           </ScrollView>
         </View>
       ) : viewMode === 'tree' ? (
-        <JsonTree data={parsed} theme={theme} query={query} onRenderMd={(md) => setMdPreview(md)} />
+        <JsonTree data={parsed} theme={theme} query={query} onRenderMd={(md) => setMdPreview(md)} onCopied={onCopied} />
       ) : (
         <ScrollView
           style={{ flex: 1 }}

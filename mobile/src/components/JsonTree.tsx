@@ -33,9 +33,10 @@ interface JsonTreeProps {
   theme: Theme;
   query: string;
   onRenderMd?: (md: string) => void;
+  onCopied?: () => void;
 }
 
-export function JsonTree({ data, theme, query, onRenderMd }: JsonTreeProps) {
+export function JsonTree({ data, theme, query, onRenderMd, onCopied }: JsonTreeProps) {
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set(['$']));
 
   const rows = useMemo(() => {
@@ -55,13 +56,15 @@ export function JsonTree({ data, theme, query, onRenderMd }: JsonTreeProps) {
     });
   };
 
-  const copyPath = (path: string) => {
-    Clipboard.setStringAsync(path);
+  const copyPath = async (path: string) => {
+    await Clipboard.setStringAsync(path);
+    onCopied?.();
     Alert.alert('已复制 JSONPath', path);
   };
 
-  const copyValue = (row: JsonRow) => {
-    Clipboard.setStringAsync(jsonValueToClipboardText(row.value));
+  const copyValue = async (row: JsonRow) => {
+    await Clipboard.setStringAsync(jsonValueToClipboardText(row.value));
+    onCopied?.();
   };
 
   const renderItem = ({ item }: { item: JsonRow }) => {
