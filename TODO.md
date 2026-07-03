@@ -125,7 +125,7 @@
 - `[x]` D3.7 设计 AI 生产结果回流 — 生成 Markdown/JSON，保存版本，同步回手机/电脑。证据：`docs/design/ai-result-return-flow.md` 覆盖 CLI/MCP/API 回流入口、Markdown/JSON 结果模型、JSON 校验、保存为版本或新文档、用户确认、同步回手机/电脑、状态映射、冲突失败处理和不默认上传/不默认 AI 可读边界。
 
 **D4 数据模型与接口全量设计**
-- `[ ]` D4.1 设计本地数据模型 — DocumentRecord、PromptItem、CopyEvent、ConversionJob、InboxItem、Settings。
+- `[x]` D4.1 设计本地数据模型 — DocumentRecord、PromptItem、CopyEvent、ConversionJob、InboxItem、Settings。证据：`docs/design/local-data-model.md` 基于 `mobile/src/storage/recentDocs.ts`、`mobile/src/storage/prompts.ts`、`desktop/src/shared/ipc.ts` 和 `desktop/cli/src/index.ts` 梳理 DocumentRecord、PromptItem、CopyEvent、ConversionJob、InboxItem、Settings 目标模型与当前映射，保持文件内容默认本地。
 - `[ ]` D4.2 设计云端数据模型 — users、devices、prompts、documents、document_versions、file_objects、sync_events、conversion_jobs、ai_jobs。
 - `[~]` D4.3 设计文件状态机 — 已在本地 `DocumentStatus` 落地未处理、已阅读、已复制、已编辑、已转换、已分享、已归档、已同步、冲突；仍需和云端/MCP 状态模型统一。
 - `[ ]` D4.4 设计转换任务状态机 — pending、running、success、failed、cancelled、shared、saved。
