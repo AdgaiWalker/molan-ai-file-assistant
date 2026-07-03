@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   BackHandler,
   Linking,
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -15,13 +14,14 @@ import {
   useColorScheme,
   useWindowDimensions,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as DocumentPicker from 'expo-document-picker';
 import { File } from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as Clipboard from 'expo-clipboard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 import { Reader } from './src/components/Reader';
 import { JsonView } from './src/components/JsonView';
 import { ConvertSheet } from './src/components/ConvertSheet';
@@ -367,6 +367,7 @@ export default function App() {
         if (!seen) setOpenGuideVisible(true);
       })
       .catch(() => {});
+    SplashScreen.hideAsync().catch(() => {});
   }, []);
 
   const closeOpenGuide = useCallback(() => {

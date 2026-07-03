@@ -8,13 +8,12 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Sharing from 'expo-sharing';
 import { Theme } from '../theme';
 import { Reader } from './Reader';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface EditSheetProps {
   visible: boolean;

@@ -7,20 +7,19 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
-  SafeAreaView,
   StatusBar,
   useColorScheme,
   Animated,
   Pressable,
   useWindowDimensions,
 } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { marked, Token } from 'marked';
 import { renderBlock } from '../markdown/renderer';
 import { parseToc, TocItem } from '../markdown/toc';
 import { themes, ThemeMode, FONT_SCALES, DEFAULT_FONT_SCALE_INDEX } from '../theme';
 import { findMarkdownMatches } from '../markdown/search';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface ReaderProps {
   content: string;
