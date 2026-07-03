@@ -131,18 +131,6 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
     showToast('已导入当前文档');
   };
 
-  const importFragment = async () => {
-    // 从剪贴板读取以模拟"先复制片段再导入"的流程
-    const text = await Clipboard.getStringAsync();
-    if (!text || !text.trim()) {
-      showToast('请先在正文中复制要导入的片段');
-      return;
-    }
-    setImportContent(text);
-    setImportTitle(text.slice(0, 20));
-    setImporting(true);
-  };
-
   const copyAllResults = async () => {
     const items = results.length > 0 ? results : prompts;
     if (items.length === 0) {
@@ -194,9 +182,9 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
         >
           <View style={styles.headerRow}>
             <View style={{ flex: 1, minWidth: 0 }}>
-              <Text style={[styles.header, { color: theme.heading }]}>提示词库</Text>
+              <Text style={[styles.header, { color: theme.heading }]}>提示词快贴</Text>
               <Text style={[styles.hint, { color: theme.textSecondary }]}>
-                点按复制，搜索后也可以批量复制当前列表。
+                搜索后点按复制，或组合多条后一起复制。
               </Text>
             </View>
             <TouchableOpacity style={[styles.closeBtn, { borderColor: theme.border }]} onPress={onClose}>
@@ -204,48 +192,44 @@ export function PromptSheet({ visible, theme, onClose, currentContent, currentTi
             </TouchableOpacity>
           </View>
 
-          <View style={styles.searchRow}>
+          <View style={[styles.searchWrap, { backgroundColor: theme.background, borderColor: theme.border }]}>
+            <Text style={[styles.searchIcon, { color: theme.textSecondary }]}>⌕</Text>
             <TextInput
-              style={[
-                styles.search,
-                { color: theme.text, backgroundColor: theme.codeBackground, borderColor: theme.border },
-              ]}
-              placeholder="搜索标题 / 内容 / 标签"
+              style={[styles.search, { color: theme.text }]}
+              placeholder="搜索提示词"
               placeholderTextColor={theme.textSecondary}
               value={query}
               onChangeText={setQuery}
               returnKeyType="search"
             />
-            <View style={[styles.importActions, compact && styles.importActionsCompact]}>
+            {query.length > 0 ? (
+              <TouchableOpacity onPress={() => setQuery('')}>
+                <Text style={[styles.clearQuery, { color: theme.textSecondary }]}>清空</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+
+          <View style={[styles.importActions, compact && styles.importActionsCompact]}>
+            <TouchableOpacity
+              style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
+              onPress={copyAllResults}
+            >
+              <Text style={{ color: theme.text, fontSize: 13 }}>组合复制</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
+              onPress={startImport}
+            >
+              <Text style={{ color: theme.text, fontSize: 13 }}>从剪贴板导入</Text>
+            </TouchableOpacity>
+            {currentContent ? (
               <TouchableOpacity
                 style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
-                onPress={startImport}
+                onPress={importCurrent}
               >
-                <Text style={{ color: theme.text, fontSize: 13 }}>从剪贴板导入</Text>
+                <Text style={{ color: theme.text, fontSize: 13 }}>从当前文件导入</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
-                onPress={copyAllResults}
-              >
-                <Text style={{ color: theme.text, fontSize: 13 }}>复制列表全部</Text>
-              </TouchableOpacity>
-              {currentContent ? (
-                <>
-                  <TouchableOpacity
-                    style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
-                    onPress={importCurrent}
-                  >
-                    <Text style={{ color: theme.text, fontSize: 13 }}>导入当前文档</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.importBtn, { borderColor: theme.border, backgroundColor: theme.codeBackground }]}
-                    onPress={importFragment}
-                  >
-                    <Text style={{ color: theme.text, fontSize: 13 }}>导入剪贴板片段</Text>
-                  </TouchableOpacity>
-                </>
-              ) : null}
-            </View>
+            ) : null}
           </View>
 
           <FlatList
@@ -356,13 +340,28 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 12,
   },
+  searchWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 12,
+  },
+  searchIcon: {
+    fontSize: 18,
+    marginRight: 6,
+  },
   search: {
     flex: 1,
-    height: 36,
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    fontSize: 13,
+    height: 40,
+    fontSize: 14,
+  },
+  clearQuery: {
+    fontSize: 12,
+    fontWeight: '600',
+    paddingHorizontal: 4,
   },
   importBtn: {
     borderWidth: 1,
