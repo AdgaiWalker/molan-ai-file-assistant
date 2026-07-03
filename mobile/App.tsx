@@ -31,7 +31,6 @@ import { PromptSheet } from './src/components/PromptSheet';
 import { AiInsightSheet } from './src/components/AiInsightSheet';
 import { Theme, themes, ThemeMode } from './src/theme';
 import { loadRecentDocs, RecentDoc, saveRecentDoc, removeRecentDoc, DocSource, DocumentStatus, documentStatusText } from './src/storage/recentDocs';
-import { writeJsonFile, writeMdFile } from './src/converter/fileConvert';
 
 type DocKind = 'markdown' | 'json';
 
@@ -434,6 +433,7 @@ export default function App() {
     try {
       setLoading(true);
       const isJson = jsonRaw !== null;
+      const { writeJsonFile, writeMdFile } = await import('./src/converter/fileConvert');
       const result = isJson
         ? await writeJsonFile(jsonRaw, title || 'JSON')
         : await writeMdFile(content, title || '文档');

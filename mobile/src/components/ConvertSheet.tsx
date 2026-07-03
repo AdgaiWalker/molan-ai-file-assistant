@@ -14,14 +14,6 @@ import {
 import * as DocumentPicker from 'expo-document-picker';
 import * as Sharing from 'expo-sharing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  convertMdToDocxFile,
-  convertDocxFileToMd,
-  writeMdFile,
-  writeJsonFile,
-  exportPdfFile,
-  jsonToMarkdown,
-} from '../converter/fileConvert';
 import { themes } from '../theme';
 
 interface ConvertSheetProps {
@@ -54,12 +46,14 @@ export function ConvertSheet({
   const [msg, setMsg] = useState<string | null>(null);
 
   const baseName = (title || '文档').replace(/[\\/:*?"<>|]/g, '_');
-  const contentAsMarkdown = kind === 'json' ? jsonToMarkdown(content, title || 'JSON 文档') : content;
+  const loadConverter = () => import('../converter/fileConvert');
 
   // 当前文档 -> docx，分享；JSON 会先规则化为 Markdown。
   const toWord = async () => {
     setBusy(true);
     setMsg(null);
+    const { convertMdToDocxFile, jsonToMarkdown } = await loadConverter();
+    const contentAsMarkdown = kind === 'json' ? jsonToMarkdown(content, title || 'JSON 文档') : content;
     const r = await convertMdToDocxFile(contentAsMarkdown, baseName);
     if (r.ok && r.outputPath) {
       setMsg('已生成 Word 文件');
@@ -95,6 +89,7 @@ export function ConvertSheet({
         return;
       }
       const file = result.assets[0];
+      const { convertDocxFileToMd } = await loadConverter();
       const r = await convertDocxFileToMd(file.uri);
       if (r.ok && r.md) {
         const name = file.name.replace(/\.docx$/i, '');
@@ -115,6 +110,8 @@ export function ConvertSheet({
   const exportMd = async () => {
     setBusy(true);
     setMsg(null);
+    const { writeMdFile, jsonToMarkdown } = await loadConverter();
+    const contentAsMarkdown = kind === 'json' ? jsonToMarkdown(content, title || 'JSON 文档') : content;
     const r = await writeMdFile(contentAsMarkdown, baseName);
     if (r.ok && r.outputPath) {
       setMsg('已生成 .md 文件');
@@ -137,6 +134,7 @@ export function ConvertSheet({
     if (kind !== 'json') return;
     setBusy(true);
     setMsg(null);
+    const { writeJsonFile } = await loadConverter();
     const r = await writeJsonFile(content, baseName);
     if (r.ok && r.outputPath) {
       setMsg('已生成 .json 文件');
@@ -157,10 +155,17 @@ export function ConvertSheet({
 
   const loadJsonAsMd = () => {
     if (kind !== 'json') return;
-    onLoadMd(contentAsMarkdown, `${baseName}-json`);
-    onConverted?.(false);
-    setMsg('已转为 Markdown 并载入');
-    onClose();
+    setBusy(true);
+    setMsg(null);
+    loadConverter()
+      .then(({ jsonToMarkdown }) => {
+        onLoadMd(jsonToMarkdown(content, title || 'JSON 文档'), `${baseName}-json`);
+        onConverted?.(false);
+        setMsg('已转为 Markdown 并载入');
+        onClose();
+      })
+      .catch((e) => setMsg('转换失败：' + (e as Error).message))
+      .finally(() => setBusy(false));
   };
 
   const sharePlainText = async () => {
@@ -180,6 +185,8 @@ export function ConvertSheet({
   const exportPdf = async () => {
     setBusy(true);
     setMsg(null);
+    const { exportPdfFile, jsonToMarkdown } = await loadConverter();
+    const contentAsMarkdown = kind === 'json' ? jsonToMarkdown(content, title || 'JSON 文档') : content;
     const r = await exportPdfFile(contentAsMarkdown, baseName, themeMode);
     if (r.ok && r.outputPath) {
       setMsg('已生成 PDF');

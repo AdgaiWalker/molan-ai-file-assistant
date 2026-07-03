@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Sharing from 'expo-sharing';
-import { writeJsonFile, writeMdFile } from '../converter/fileConvert';
 import { Theme } from '../theme';
 import { Reader } from './Reader';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -111,6 +110,7 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
       savedRef.current = true;
       onSave(draft);
       AsyncStorage.removeItem(DRAFT_KEY).catch(() => {});
+      const { writeJsonFile, writeMdFile } = await import('../converter/fileConvert');
       const result = isJson
         ? await writeJsonFile(draft, title || 'JSON')
         : await writeMdFile(draft, title || '文档');
@@ -142,6 +142,7 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
     savedRef.current = true;
     const copyName = title ? `${title}（副本）` : '文档副本';
     try {
+      const { writeJsonFile, writeMdFile } = await import('../converter/fileConvert');
       const result = isJson ? await writeJsonFile(draft, copyName) : await writeMdFile(draft, copyName);
       if (!result.ok || !result.outputPath) {
         setMessage('保存副本失败：' + result.error);
