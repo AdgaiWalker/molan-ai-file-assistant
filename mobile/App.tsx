@@ -751,6 +751,13 @@ export default function App() {
         title={title}
         kind={jsonRaw !== null ? 'json' : 'markdown'}
         content={jsonRaw !== null ? jsonRaw : content}
+        onSave={() => {
+          const text = jsonRaw !== null ? jsonRaw : content;
+          if (text.trim()) {
+            remember(title, jsonRaw !== null ? 'json' : 'markdown', text, 'recent', ['copied']);
+            setError('已保存为 AI 可读资源，可在最近文档中查看');
+          }
+        }}
       />
       <OpenGuide
         visible={openGuideVisible && !hasDocument}

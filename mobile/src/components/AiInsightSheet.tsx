@@ -22,6 +22,7 @@ interface AiInsightSheetProps {
   kind: DocKind;
   theme: Theme;
   onClose: () => void;
+  onSave?: () => void;
 }
 
 interface Insight {
@@ -151,7 +152,7 @@ function buildInsight(title: string, content: string, kind: DocKind): Insight {
   };
 }
 
-export function AiInsightSheet({ visible, title, content, kind, theme, onClose }: AiInsightSheetProps) {
+export function AiInsightSheet({ visible, title, content, kind, theme, onClose, onSave }: AiInsightSheetProps) {
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
   const [copied, setCopied] = useState<string | null>(null);
@@ -198,8 +199,8 @@ export function AiInsightSheet({ visible, title, content, kind, theme, onClose }
         >
           <View style={styles.headerRow}>
             <View style={{ flex: 1, minWidth: 0 }}>
-              <Text style={[styles.header, { color: theme.heading }]}>AI 阅读卡片</Text>
-              <Text style={[styles.subhead, { color: theme.textSecondary }]}>本地识别预览，后续可接入真实 AI。</Text>
+              <Text style={[styles.header, { color: theme.heading }]}>AI 可读</Text>
+              <Text style={[styles.subhead, { color: theme.textSecondary }]}>本地识别预览，仅保存结构化内容，不上传。</Text>
             </View>
             <TouchableOpacity style={[styles.closeBtn, { borderColor: theme.border }]} onPress={onClose}>
               <Text style={{ color: theme.link, fontSize: 14 }}>关闭</Text>
@@ -213,11 +214,21 @@ export function AiInsightSheet({ visible, title, content, kind, theme, onClose }
               <Text style={[styles.advice, { color: theme.textSecondary }]}>{insight.saveAdvice}</Text>
             </View>
 
-            <Section label="内容摘要" items={insight.summary} empty="暂无摘要。" />
-            <Section label="提示词候选" items={insight.promptCandidates} empty="暂未识别到明显提示词。" />
+            <Section label="推荐提示词" items={insight.promptCandidates} empty="暂未识别到明显提示词。" />
+            <Section label="有效内容片段" items={insight.summary} empty="暂无有效内容片段。" />
             <Section label="待办候选" items={insight.todoCandidates} empty="暂未识别到待办。" />
-            <Section label="敏感字段提醒" items={insight.sensitiveHints} empty="暂未发现明显 token / secret / key 字段。" />
+            <Section label="敏感字段检测" items={insight.sensitiveHints} empty="暂未发现明显 token / secret / key 字段。" />
           </ScrollView>
+
+          <TouchableOpacity
+            style={[styles.saveBtn, { backgroundColor: theme.link }]}
+            onPress={() => {
+              onSave?.();
+              onClose();
+            }}
+          >
+            <Text style={styles.saveBtnText}>保存为 AI 可读资源</Text>
+          </TouchableOpacity>
         </Pressable>
       </Pressable>
     </Modal>
@@ -308,5 +319,17 @@ const styles = StyleSheet.create({
   empty: {
     fontSize: 13,
     lineHeight: 19,
+  },
+  saveBtn: {
+    minHeight: 50,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  saveBtnText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
   },
 });
