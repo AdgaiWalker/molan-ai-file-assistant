@@ -29,6 +29,7 @@ import { EditSheet } from './src/components/EditSheet';
 import { RecentSheet } from './src/components/RecentSheet';
 import { PromptSheet } from './src/components/PromptSheet';
 import { AiInsightSheet } from './src/components/AiInsightSheet';
+import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { Theme, themes, ThemeMode } from './src/theme';
 import { loadRecentDocs, RecentDoc, saveRecentDoc, removeRecentDoc, DocSource, DocumentStatus, documentStatusText } from './src/storage/recentDocs';
 
@@ -50,95 +51,192 @@ interface HomeScreenProps {
   onOpenGuide: () => void;
 }
 
+type HomeTab = 'today' | 'files' | 'prompts' | 'me';
+
+function HomeTabBar({
+  theme,
+  active,
+  onChange,
+  onOpenFile,
+}: {
+  theme: Theme;
+  active: HomeTab;
+  onChange: (tab: HomeTab) => void;
+  onOpenFile: () => void;
+}) {
+  const insets = useSafeAreaInsets();
+  return (
+    <View
+      style={[
+        styles.tabBar,
+        {
+          backgroundColor: theme.surface,
+          borderTopColor: theme.border,
+          paddingBottom: Math.max(8, insets.bottom),
+        },
+      ]}
+    >
+      <TouchableOpacity style={styles.tabItem} onPress={() => onChange('today')}>
+        <Text style={[styles.tabIcon, active === 'today' && { color: theme.link }]}>◐</Text>
+        <Text style={[styles.tabLabel, { color: active === 'today' ? theme.link : theme.textSecondary }]}>今天</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.tabItem} onPress={() => onChange('files')}>
+        <Text style={[styles.tabIcon, active === 'files' && { color: theme.link }]}>☰</Text>
+        <Text style={[styles.tabLabel, { color: active === 'files' ? theme.link : theme.textSecondary }]}>文件</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.tabCenter} onPress={onOpenFile}>
+        <View style={[styles.tabCenterCircle, { backgroundColor: theme.link }]}>
+          <Text style={styles.tabCenterIcon}>＋</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.tabItem} onPress={() => onChange('prompts')}>
+        <Text style={[styles.tabIcon, active === 'prompts' && { color: theme.link }]}>❐</Text>
+        <Text style={[styles.tabLabel, { color: active === 'prompts' ? theme.link : theme.textSecondary }]}>提示词</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.tabItem} onPress={() => onChange('me')}>
+        <Text style={[styles.tabIcon, active === 'me' && { color: theme.link }]}>○</Text>
+        <Text style={[styles.tabLabel, { color: active === 'me' ? theme.link : theme.textSecondary }]}>我的</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPrompts, onOpenDoc, onOpenGuide }: HomeScreenProps) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
+  const [activeTab, setActiveTab] = useState<HomeTab>('today');
   const maxWidth = Math.min(Math.max(width - 32, 260), 560);
-  const latest = recentDocs.slice(0, 3);
+  const latest = recentDocs.slice(0, 5);
 
   return (
     <SafeAreaView style={[styles.home, { backgroundColor: theme.background }]}>
+      <View style={styles.homeHeader}>
+        <View style={styles.homeTitleBlock}>
+          <Text style={[styles.homeTitle, { color: theme.heading }]}>墨览</Text>
+          <View style={styles.homeStatusRow}>
+            <View style={[styles.homeStatusDot, { backgroundColor: '#34C759' }]} />
+            <Text style={[styles.homeStatusText, { color: theme.textSecondary }]}>本地优先 · 可选云同步</Text>
+          </View>
+        </View>
+        <View style={styles.homeHeaderActions}>
+          <TouchableOpacity style={styles.homeHeaderBtn} onPress={onOpenGuide}>
+            <Text style={[styles.homeHeaderBtnText, { color: theme.textSecondary }]}>?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.homeHeaderBtn} onPress={onOpenRecentSheet}>
+            <Text style={[styles.homeHeaderBtnText, { color: theme.textSecondary }]}>☰</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.homeContent,
           {
-            paddingTop: Math.max(18, insets.top + 10),
-            paddingBottom: Math.max(28, insets.bottom + 24),
+            paddingBottom: Math.max(100, insets.bottom + 88),
             width: maxWidth,
           },
         ]}
       >
-        <View style={styles.homeTitleBlock}>
-          <Text style={[styles.homeTitle, { color: theme.heading }]}>墨览</Text>
-          <Text style={[styles.homeSubtitle, { color: theme.textSecondary }]}>Markdown / JSON 阅读器</Text>
-        </View>
-
-        <TouchableOpacity style={[styles.homePrimary, { backgroundColor: theme.link }]} onPress={onOpenFile}>
-          <Text style={styles.homePrimaryText}>打开文件</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.guideEntry} onPress={onOpenGuide}>
-          <Text style={[styles.guideEntryText, { color: theme.link }]}>微信 / QQ 里怎么打开？</Text>
-        </TouchableOpacity>
-
-        <View style={styles.homeQuickRow}>
-          <TouchableOpacity style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]} onPress={onOpenPrompts}>
-            <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>提示词</Text>
-            <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>一键复制</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]} onPress={onOpenRecentSheet}>
-            <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>最近</Text>
-            <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>{recentDocs.length} 个文件</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.homeSectionHeader}>
-          <Text style={[styles.homeSectionTitle, { color: theme.heading }]}>最近文档</Text>
-          {recentDocs.length > 3 ? (
-            <TouchableOpacity onPress={onOpenRecentSheet}>
-              <Text style={[styles.homeSectionAction, { color: theme.link }]}>全部</Text>
+        {activeTab === 'today' ? (
+          <>
+            <TouchableOpacity style={[styles.homePrimary, { backgroundColor: theme.link }]} onPress={onOpenFile}>
+              <Text style={styles.homePrimaryText}>打开文件</Text>
             </TouchableOpacity>
-          ) : null}
-        </View>
 
-        <View style={[styles.homeList, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-          {latest.length === 0 ? (
-            <Text style={[styles.homeEmpty, { color: theme.textSecondary }]}>暂无最近文档</Text>
-          ) : (
-            latest.map((doc, index) => (
+            <View style={styles.homeQuickRow}>
               <TouchableOpacity
-                key={doc.id}
-                accessibilityRole="button"
-                accessibilityLabel={`${doc.title}，${doc.kind === 'json' ? 'JSON' : 'Markdown'}，${new Date(doc.updatedAt).toLocaleDateString()}`}
-                style={[
-                  styles.homeDocRow,
-                  index < latest.length - 1 && { borderBottomColor: theme.border, borderBottomWidth: 1 },
-                ]}
-                onPress={() => onOpenDoc(doc)}
+                style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]}
+                onPress={onOpenPrompts}
               >
-                <View style={{ flex: 1, minWidth: 0 }}>
-                  <Text style={[styles.homeDocTitle, { color: theme.text }]} numberOfLines={1}>
-                    {doc.title}
-                  </Text>
-                  <Text style={[styles.homeDocMeta, { color: theme.textSecondary }]}>
-                    {doc.kind === 'json' ? 'JSON' : 'Markdown'} · {new Date(doc.updatedAt).toLocaleDateString()}
-                  </Text>
-                  <Text style={[styles.homeDocStatus, { color: theme.link }]} numberOfLines={1}>
-                    {documentStatusText(doc)}
-                  </Text>
-                </View>
-                <Text
-                  accessible={false}
-                  importantForAccessibility="no"
-                  style={[styles.homeDocArrow, { color: theme.textSecondary }]}
-                >
-                  ›
-                </Text>
+                <Text style={[styles.homeQuickIcon, { color: theme.link }]}>❐</Text>
+                <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>提示词快贴</Text>
+                <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>快速复制并组合提示词与模板</Text>
               </TouchableOpacity>
-            ))
-          )}
-        </View>
+              <TouchableOpacity
+                style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]}
+                onPress={onOpenRecentSheet}
+              >
+                <Text style={[styles.homeQuickIcon, { color: theme.link }]}>☁</Text>
+                <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>云端收件箱</Text>
+                <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>已同步到电脑，可供 AI 读取</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]}
+                onPress={() => onOpenDoc(recentDocs[0] || { id: 'placeholder', title: '占位', kind: 'markdown', content: '', updatedAt: Date.now() })}
+              >
+                <Text style={[styles.homeQuickIcon, { color: theme.link }]}>⇄</Text>
+                <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>转换中心</Text>
+                <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>PDF / Word / Markdown 转换</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.homeSectionHeader}>
+              <Text style={[styles.homeSectionTitle, { color: theme.heading }]}>最近文件</Text>
+              {recentDocs.length > 5 ? (
+                <TouchableOpacity onPress={onOpenRecentSheet}>
+                  <Text style={[styles.homeSectionAction, { color: theme.link }]}>全部</Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
+
+            <View style={[styles.homeList, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+              {latest.length === 0 ? (
+                <Text style={[styles.homeEmpty, { color: theme.textSecondary }]}>暂无最近文档</Text>
+              ) : (
+                latest.map((doc, index) => (
+                  <TouchableOpacity
+                    key={doc.id}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${doc.title}，${doc.kind === 'json' ? 'JSON' : 'Markdown'}，${new Date(doc.updatedAt).toLocaleDateString()}`}
+                    style={[
+                      styles.homeDocRow,
+                      index < latest.length - 1 && { borderBottomColor: theme.border, borderBottomWidth: 1 },
+                    ]}
+                    onPress={() => onOpenDoc(doc)}
+                  >
+                    <View style={{ flex: 1, minWidth: 0 }}>
+                      <Text style={[styles.homeDocTitle, { color: theme.text }]} numberOfLines={1}>
+                        {doc.title}
+                      </Text>
+                      <Text style={[styles.homeDocMeta, { color: theme.textSecondary }]}>
+                        {doc.kind === 'json' ? 'JSON' : 'Markdown'} · {new Date(doc.updatedAt).toLocaleDateString()}
+                      </Text>
+                      <Text style={[styles.homeDocStatus, { color: theme.link }]} numberOfLines={1}>
+                        {documentStatusText(doc)}
+                      </Text>
+                    </View>
+                    <Text
+                      accessible={false}
+                      importantForAccessibility="no"
+                      style={[styles.homeDocArrow, { color: theme.textSecondary }]}
+                    >
+                      ›
+                    </Text>
+                  </TouchableOpacity>
+                ))
+              )}
+            </View>
+          </>
+        ) : (
+          <View style={styles.homePlaceholder}>
+            <Text style={[styles.homePlaceholderText, { color: theme.textSecondary }]}>
+              {activeTab === 'files' && '文件管理页面，后续接入云端收件箱与本地文件浏览'}
+              {activeTab === 'prompts' && '提示词库页面，可点击底部“+”或首页“提示词快贴”进入'}
+              {activeTab === 'me' && '我的页面，后续接入设置、云同步与隐私说明'}
+            </Text>
+            {activeTab === 'prompts' ? (
+              <TouchableOpacity
+                style={[styles.homePrimary, { backgroundColor: theme.link, marginTop: 20 }]}
+                onPress={onOpenPrompts}
+              >
+                <Text style={styles.homePrimaryText}>打开提示词库</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+        )}
       </ScrollView>
+      <HomeTabBar theme={theme} active={activeTab} onChange={setActiveTab} onOpenFile={onOpenFile} />
     </SafeAreaView>
   );
 }
@@ -260,16 +358,7 @@ export default function App() {
   const dockEdge = Math.max(12, Math.round((width - dockWidth) / 2));
   const dockBottom = Math.max(12, insets.bottom + 12);
   const dockErrorOffset = hasDocument ? dockBottom + (compact || height < 680 ? 136 : 126) : Math.max(24, insets.bottom + 24);
-  const bottomOpacity = useRef(new Animated.Value(0)).current;
   const loadingRef = useRef(false);
-
-  useEffect(() => {
-    Animated.timing(bottomOpacity, {
-      toValue: immersive ? 0 : 1,
-      duration: 220,
-      useNativeDriver: true,
-    }).start();
-  }, [immersive, bottomOpacity]);
 
   useEffect(() => {
     loadRecentDocs().then(setRecentDocs).catch(() => {});
@@ -499,12 +588,26 @@ export default function App() {
     return false;
   }, [hasDocument, convertVisible, editVisible, recentVisible, promptVisible, aiVisible]);
 
+  const resetApp = useCallback(() => {
+    setHasDocument(false);
+    setContent('');
+    setJsonRaw(null);
+    setError(null);
+    setErrorAction(null);
+    setConvertVisible(false);
+    setEditVisible(false);
+    setRecentVisible(false);
+    setPromptVisible(false);
+    setAiVisible(false);
+  }, []);
+
   useEffect(() => {
     const handler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
     return () => handler.remove();
   }, [handleBackPress]);
 
   return (
+    <ErrorBoundary theme={theme} onReset={resetApp}>
     <View style={styles.container}>
       <StatusBar style={systemMode === 'night' ? 'light' : 'dark'} />
       {!hasDocument ? (
@@ -526,64 +629,61 @@ export default function App() {
           immersive={immersive}
           onToggleChrome={() => setImmersive((v) => !v)}
           onCopied={recordCopied}
+          onClose={() => {
+            setHasDocument(false);
+            setContent('');
+            setJsonRaw(null);
+            setError(null);
+            setErrorAction(null);
+          }}
         />
       )}
       {hasDocument ? (
-        <Animated.View
+        <View
           style={[
-            styles.bottomBar,
+            styles.readerDock,
             {
               left: dockEdge,
               right: dockEdge,
               bottom: dockBottom,
-              opacity: bottomOpacity,
               backgroundColor: systemMode === 'night' ? 'rgba(28,28,30,0.98)' : 'rgba(255,255,255,0.98)',
               borderColor: theme.border,
             },
           ]}
-          pointerEvents={immersive ? 'none' : 'auto'}
         >
-          <View style={styles.focusRow}>
-            <TouchableOpacity
-              style={[styles.copyAction, { backgroundColor: theme.link }, loading && styles.disabledAction]}
-              onPress={copyCurrent}
-              disabled={loading}
-            >
-              <Text style={styles.copyActionText}>{compact ? '复制' : '复制全文'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.secondaryAction, { backgroundColor: theme.surface, borderColor: theme.border }, loading && styles.disabledAction]}
-              onPress={shareCurrent}
-              disabled={loading}
-            >
-              {loading ? <ActivityIndicator color={theme.link} /> : <Text style={[styles.secondaryActionText, { color: theme.link }]}>分享</Text>}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.secondaryAction, { backgroundColor: theme.surface, borderColor: theme.border }, loading && styles.disabledAction]}
-              onPress={() => setConvertVisible(true)}
-              disabled={loading}
-            >
-              <Text style={[styles.secondaryActionText, { color: theme.link }]}>转换</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.utilityRow}>
-            <TouchableOpacity style={styles.utilityButton} onPress={() => setEditVisible(true)}>
-              <Text style={[styles.utilityText, { color: theme.textSecondary }]}>编辑</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.utilityButton} onPress={() => setAiVisible(true)}>
-              <Text style={[styles.utilityText, { color: theme.textSecondary }]}>AI</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.utilityButton} onPress={openFile} disabled={loading}>
-              <Text style={[styles.utilityText, { color: theme.textSecondary }]}>打开</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.utilityButton} onPress={() => setRecentVisible(true)}>
-              <Text style={[styles.utilityText, { color: theme.textSecondary }]}>最近</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.utilityButton} onPress={() => setPromptVisible(true)}>
-              <Text style={[styles.utilityText, { color: theme.textSecondary }]}>提示词</Text>
-            </TouchableOpacity>
-          </View>
-        </Animated.View>
+          <TouchableOpacity
+            style={[styles.readerDockBtn, loading && styles.disabledAction]}
+            onPress={copyCurrent}
+            disabled={loading}
+          >
+            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>❐</Text>
+            <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>复制</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.readerDockBtn} onPress={() => setEditVisible(true)}>
+            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>✎</Text>
+            <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>编辑</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.readerDockBtn} onPress={() => setAiVisible(true)}>
+            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>✦</Text>
+            <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>AI可读</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.readerDockBtn, loading && styles.disabledAction]}
+            onPress={() => setConvertVisible(true)}
+            disabled={loading}
+          >
+            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>⇄</Text>
+            <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>转换</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.readerDockBtn, loading && styles.disabledAction]}
+            onPress={shareCurrent}
+            disabled={loading}
+          >
+            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>↗</Text>
+            <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>分享</Text>
+          </TouchableOpacity>
+        </View>
       ) : null}
       <ConvertSheet
         visible={convertVisible}
@@ -658,6 +758,7 @@ export default function App() {
         </View>
       ) : null}
     </View>
+  </ErrorBoundary>
   );
 }
 
@@ -667,24 +768,57 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  homeContent: {
-    alignSelf: 'center',
+  homeHeader: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 8,
   },
   homeTitleBlock: {
-    marginTop: 10,
-    marginBottom: 28,
+    marginBottom: 20,
   },
   homeTitle: {
-    fontSize: 34,
-    lineHeight: 40,
+    fontSize: 32,
+    lineHeight: 38,
     fontWeight: '800',
-    letterSpacing: 0,
+    letterSpacing: -0.5,
   },
-  homeSubtitle: {
-    fontSize: 15,
-    lineHeight: 22,
-    marginTop: 4,
-    fontWeight: '500',
+  homeStatusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 6,
+    gap: 6,
+  },
+  homeStatusDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+  },
+  homeStatusText: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  homeHeaderActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  homeHeaderBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  homeHeaderBtnText: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  homeContent: {
+    alignSelf: 'center',
+    flexGrow: 1,
   },
   homePrimary: {
     minHeight: 54,
@@ -715,19 +849,25 @@ const styles = StyleSheet.create({
   },
   homeQuickAction: {
     flex: 1,
-    minHeight: 76,
+    minHeight: 96,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 14,
     justifyContent: 'center',
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+  },
+  homeQuickIcon: {
+    fontSize: 22,
+    marginBottom: 8,
   },
   homeQuickTitle: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: '700',
   },
   homeQuickMeta: {
-    fontSize: 12,
+    fontSize: 11,
     marginTop: 4,
+    lineHeight: 15,
   },
   homeSectionHeader: {
     minHeight: 32,
@@ -925,5 +1065,95 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 16,
+  },
+  readerDock: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.14,
+    shadowRadius: 10,
+    elevation: 6,
+  },
+  readerDockBtn: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 48,
+  },
+  readerDockIcon: {
+    fontSize: 18,
+    marginBottom: 2,
+  },
+  readerDockLabel: {
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  tabBar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-around',
+    borderTopWidth: 1,
+    paddingTop: 8,
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
+  },
+  tabIcon: {
+    fontSize: 18,
+    marginBottom: 3,
+    color: '#9CA3AF',
+  },
+  tabLabel: {
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  tabCenter: {
+    width: 72,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -10,
+  },
+  tabCenterCircle: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.18,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  tabCenterIcon: {
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontWeight: '300',
+    lineHeight: 30,
+  },
+  homePlaceholder: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 40,
+    minHeight: 300,
+  },
+  homePlaceholderText: {
+    fontSize: 14,
+    lineHeight: 22,
+    textAlign: 'center',
   },
 });

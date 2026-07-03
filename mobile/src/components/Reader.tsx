@@ -28,9 +28,10 @@ interface ReaderProps {
   immersive?: boolean;
   onToggleChrome?: () => void;
   onCopied?: () => void;
+  onClose?: () => void;
 }
 
-export function Reader({ content, title = '阅读', immersive = false, onToggleChrome, onCopied }: ReaderProps) {
+export function Reader({ content, title = '阅读', immersive = false, onToggleChrome, onCopied, onClose }: ReaderProps) {
   const systemMode: ThemeMode = useColorScheme() === 'dark' ? 'night' : 'day';
   const [override, setOverride] = useState<'day' | 'night' | null>(null);
   const [fontScaleIndex, setFontScaleIndex] = useState(DEFAULT_FONT_SCALE_INDEX);
@@ -174,14 +175,21 @@ export function Reader({ content, title = '阅读', immersive = false, onToggleC
         ]}
         pointerEvents={immersive ? 'none' : 'auto'}
       >
-        <TouchableOpacity style={styles.toolBtn} onPress={() => setTocVisible(true)}>
-          <Text style={[styles.toolText, { color: theme.text }]}>目录</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.toolBtn} onPress={() => setSearchVisible(true)}>
-          <Text style={[styles.toolText, { color: theme.text }]}>搜索</Text>
-        </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>{title}</Text>
+        <View style={styles.toolLeft}>
+          {onClose ? (
+            <TouchableOpacity style={styles.toolBtn} onPress={onClose}>
+              <Text style={[styles.toolText, { color: theme.text }]}>‹</Text>
+            </TouchableOpacity>
+          ) : null}
+          <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>{title}</Text>
+        </View>
         <View style={styles.toolRight}>
+          <TouchableOpacity style={styles.toolBtn} onPress={() => setTocVisible(true)}>
+            <Text style={[styles.toolText, { color: theme.text }]}>目录</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.toolBtn} onPress={() => setSearchVisible(true)}>
+            <Text style={[styles.toolText, { color: theme.text }]}>搜索</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.toolBtn} onPress={() => changeFont(-1)}>
             <Text style={[styles.toolText, { color: theme.text }]}>A-</Text>
           </TouchableOpacity>
@@ -276,6 +284,11 @@ const styles = StyleSheet.create({
   toolText: {
     fontSize: 16,
     fontWeight: '500',
+  },
+  toolLeft: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   toolRight: {
     flexDirection: 'row',
