@@ -53,5 +53,24 @@ Root:
 ## Notes
 - No lint/format config exists yet (no eslint/prettier/biome). Use `npm run typecheck` (desktop) as the main correctness check.
 - TypeScript versions differ: mobile `~6.0.3`, desktop `^5.6.0`.
-- Test suite: `mobile/` — vitest (toc, JSONPath), run `npm run test` inside `mobile/`.
+- Test suite: `mobile/` and `desktop/cli/` use vitest. Run `npm run test` inside each. Mobile tests cover markdown TOC parsing, JSON tree/path generation, and document status merging. CLI test covers the push/pull/read cloud roundtrip.
 - `build/`, `dist/`, `logs/`, `.expo/`, `out/`, `release/` are generated — don't edit.
+
+## Testing strategy (enforced)
+
+Tests slow you down when AI writes them reflexively. Don't write tests to "match features 1:1" or to hit coverage. Write tests only when they catch a bug that would otherwise hide. Judge each candidate by one question: **if this breaks, how fast will you notice without the test?**
+
+### Write tests for — do these immediately when the code lands
+- **Pure logic with rules and edge cases.** State machines, parsers, path/ID generators, normalization, merge/dedup rules, regex-driven behavior. Examples in this repo: `parseToc` (Chinese punctuation in IDs, inline token recursion), `mergeDocumentStatuses` (unprocessed-removal ordering), `buildJsonRows` (JSONPath with quoted keys/array indices). These have no UI, no side effects, break silently, and are trivial to get wrong.
+- **External output contracts.** Anything an AI or external consumer parses: `molan` CLI JSON output (`--json`), MCP responses, cloud/sync API schemas. `cloud.test.ts` is the model — it locks the push→pull→read roundtrip so a renamed field fails CI instead of silently breaking every AI consumer.
+
+### Do NOT write tests for
+- **Thin wrappers over the standard library.** Re-asserting what `JSON.parse`/`JSON.stringify` already guarantees is dead weight; TypeScript already covers the return shape. (We deleted `jsonFormat.test.ts` and `markdownSearch.test.ts` for exactly this.)
+- **Functions invented only to be tested.** If a helper has zero references in real code, delete the function, not "test it". (We deleted `jsonPath.test.ts` — `getByPath` was never called anywhere.)
+- **UI components, sheets, interactions, RN rendering.** V1 mocks cost more than they catch. Use the manual real-device acceptance checklist (TODO D5.1) and screenshot comparison instead.
+- **Type-enforceable invariants.** If `tsc` already proves it, a runtime assertion is redundant.
+
+### Pacing
+- Logic/contract tests: written in the same change as the code they cover. They ARE the first way you run that code.
+- UI/feature tests: deferred to V1.5+ at the earliest, behind a real acceptance script, never as mock-heavy unit tests.
+- Each test must fail-meaningfully: break the SUT in your head and confirm the assertion catches it. If it wouldn't, delete the test.
