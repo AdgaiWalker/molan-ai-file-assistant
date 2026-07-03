@@ -621,7 +621,18 @@ export default function App() {
           onOpenGuide={() => setOpenGuideVisible(true)}
         />
       ) : jsonRaw !== null ? (
-        <JsonView raw={jsonRaw} title={title} onCopied={recordCopied} />
+        <JsonView
+          raw={jsonRaw}
+          title={title}
+          onCopied={recordCopied}
+          onClose={() => {
+            setHasDocument(false);
+            setContent('');
+            setJsonRaw(null);
+            setError(null);
+            setErrorAction(null);
+          }}
+        />
       ) : (
         <Reader
           content={content}

@@ -23,9 +23,10 @@ interface JsonViewProps {
   raw: string;
   title?: string;
   onCopied?: () => void;
+  onClose?: () => void;
 }
 
-export function JsonView({ raw, title = 'JSON', onCopied }: JsonViewProps) {
+export function JsonView({ raw, title = 'JSON', onCopied, onClose }: JsonViewProps) {
   const systemMode: ThemeMode = useColorScheme() === 'dark' ? 'night' : 'day';
   const theme = themes[systemMode];
   const insets = useSafeAreaInsets();
@@ -92,7 +93,14 @@ export function JsonView({ raw, title = 'JSON', onCopied }: JsonViewProps) {
           },
         ]}
       >
-        <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>{title}</Text>
+        <View style={styles.toolLeft}>
+          {onClose ? (
+            <TouchableOpacity style={styles.toolBtn} onPress={onClose}>
+              <Text style={[styles.toolText, { color: theme.text }]}>‹</Text>
+            </TouchableOpacity>
+          ) : null}
+          <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>{title}</Text>
+        </View>
         <View style={styles.toolbarActions}>
           <TouchableOpacity style={[styles.toolPill, { borderColor: theme.border }]} onPress={copyPretty} disabled={parsed === null}>
             <Text style={{ color: parsed === null ? theme.textSecondary : theme.link, fontSize: 12 }}>复制美化</Text>
@@ -168,10 +176,26 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     flexDirection: 'column',
   },
+  toolLeft: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  toolBtn: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  toolText: {
+    fontSize: 22,
+    fontWeight: '300',
+    lineHeight: 26,
+  },
   title: {
     flex: 1,
     fontSize: 16,
     fontWeight: '600',
+    textAlign: 'center',
+    marginHorizontal: 4,
   },
   toolbarActions: {
     flexDirection: 'row',
