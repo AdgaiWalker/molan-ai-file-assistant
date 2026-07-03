@@ -93,7 +93,7 @@
 - `[v]` D1.2 设计 Markdown 阅读页 — 证据：`docs/design/mobile-markdown-reader-page.md` 已补页面结构、完整状态表和真机验收脚本；当前无连接设备，仍需补真机截图/录屏后改 `[x]`。
 - `[x]` D1.3 设计 JSON 阅读页 — 证据：`docs/design/mobile-json-reader-page.md` 覆盖树形、搜索、折叠、复制字段、复制 JSONPath、pretty/minify、Markdown 字段预览、大 JSON 状态和 JSONPath 规则。
 - `[x]` D1.4 设计编辑流程 — 证据：`docs/design/mobile-edit-flow.md` 覆盖 Markdown 编辑/预览、JSON 格式化/校验、错误提示、草稿恢复、保存副本、保存并分享，并明确非法 JSON 不覆盖原文件。
-- `[ ]` D1.5 设计复制系统 — 全文、选中段落、代码块、JSON 字段、JSONPath、多段组合复制、复制后动作建议。
+- `[x]` D1.5 设计复制系统 — 证据：`docs/design/mobile-copy-system.md` 覆盖全文、选中段落、代码块、JSON 字段、JSONPath、多段组合复制、复制后动作建议、反馈和隐私边界。
 - `[ ]` D1.6 设计提示词库 — 最近复制、收藏、标签/分组、搜索、一键复制、剪贴板导入、从当前文件导入。
 - `[ ]` D1.7 设计分享流程 — 原文件、纯文本、PDF、Word、最近分享目标、微信/QQ/系统面板、保存到本地。
 - `[ ]` D1.8 设计当前文件转换流程 — Markdown→PDF/Word、JSON→Markdown/PDF/Word、转换中、失败、成功后分享。
