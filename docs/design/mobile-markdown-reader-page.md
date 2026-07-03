@@ -1,0 +1,105 @@
+# 手机端 Markdown 阅读页设计
+
+版本：v1  
+日期：2026-07-04  
+对应任务：D1.2  
+依据：`mobile/src/components/Reader.tsx`、`mobile/src/markdown/renderer.tsx`、`mobile/src/markdown/toc.ts`、`mobile/src/markdown/search.ts`
+
+## 1. 当前能力基线
+
+| 能力 | 当前实现 | 证据 |
+|---|---|---|
+| 标题 / 段落 / 列表 / 引用 | marked token -> `renderBlock` | `renderer.tsx` |
+| 加粗 / 斜体 / 删除线 / 行内代码 | `renderInlineToken` | `renderer.tsx` |
+| 表格横向滚动 | `ScrollView horizontal` | `renderTable` |
+| 代码块横向滚动 | `ScrollView horizontal` | `CodeBlock` |
+| 代码块一键复制 | `expo-clipboard` | `CodeBlock` |
+| 链接点击 | `Linking.openURL` | `renderLink` |
+| 图片展示 | `expo-image` | `ImageBlock` |
+| 图片地址复制 | 长按 Alert | `ImageBlock` |
+| 深色模式 | system + override | `Reader.tsx` |
+| 字号调整 | `FONT_SCALES` | `Reader.tsx` |
+| 目录跳转 | `parseToc` + `scrollToIndex` | `toc.ts` / `Reader.tsx` |
+| 当前文件搜索 | `findMarkdownMatches` | `search.ts` |
+| 长文分块 | `FlatList<Token>` | `Reader.tsx` |
+| 滚动位置记忆 | `AsyncStorage readPos:*` | `Reader.tsx` |
+
+## 2. 页面结构
+
+```text
+Markdown 阅读页
+  顶部工具栏（沉浸态隐藏）
+    目录
+    搜索
+    标题
+    A- / A+ / 日夜自动
+  正文 FlatList
+    heading / paragraph / list / table / code / blockquote / image
+  底部操作栏（App 层）
+    复制全文
+    分享
+    转换
+    编辑 / AI / 打开 / 最近 / 提示词
+  弹层
+    目录抽屉
+    搜索抽屉
+```
+
+交互裁定：
+
+- 外部打开 Markdown 后默认沉浸阅读。
+- 轻点正文唤出或隐藏工具栏和底部操作栏。
+- 顶栏只放阅读相关动作；复制、分享、转换归 App 底部操作栏。
+- 长文使用 FlatList，不改回 ScrollView。
+
+## 3. 页面状态表
+
+| 状态 | 触发 | 页面表现 | 用户动作 | 验收 |
+|---|---|---|---|---|
+| 初始加载 | 外部 URI 或本地选择读取中 | App 层 loading | 等待 | 不白屏，不重复打开 |
+| 正常阅读 | Markdown 解析成功 | 正文首屏可读，工具栏按沉浸态隐藏 | 滚动、轻点唤出操作 | 5 秒内看到内容 |
+| 空文档 | 内容为空或仅空白 | 显示空正文，底部仍可打开文件 | 重新打开文件 | 不崩溃 |
+| 长文 | 1MB+ Markdown | FlatList 分块渲染 | 滚动、目录跳转、搜索 | 不明显卡死 |
+| 目录为空 | 没有 heading | 目录抽屉为空列表或后续补空态文案 | 返回阅读 | 不报错 |
+| 目录跳转 | 点击目录项 | 滚动到标题附近 | 继续阅读 | `scrollToIndexFailed` 能兜底 |
+| 搜索无结果 | 输入无匹配词 | 显示“没有找到匹配内容” | 修改关键词 | 不关闭弹层 |
+| 搜索有结果 | 输入匹配词 | 展示段落序号和摘要 | 点击跳转 | 跳到对应块 |
+| 字号最小 / 最大 | 连续点击 A- / A+ | 停在边界 | 继续阅读 | 文本不溢出 |
+| 自动 / 日 / 夜 | 点击主题按钮 | 自动 -> 日 -> 夜 -> 自动 | 切换阅读主题 | 跟随系统或覆盖 |
+| 代码块复制 | 点击代码块复制 | 按钮变“已复制” | 粘贴验证 | 复制代码文本 |
+| 表格宽内容 | 宽表格 | 表格横向滚动 | 横向滑动 | 不挤压正文 |
+| 图片加载 | Markdown 图片 | 图片等比 contain | 长按复制地址 | 不阻塞正文 |
+| 链接点击 | 点击链接 | 系统打开 URL | 返回 App | 异常由系统处理 |
+| 阅读位置恢复 | 重新打开同文档 | 滚到上次位置 | 继续阅读 | 位置大致恢复 |
+
+## 4. 真机验收脚本
+
+| 编号 | 样例 | 步骤 | 通过标准 | 证据 |
+|---|---|---|---|---|
+| M1 | `markdown-basic.md` | 打开含标题、段落、列表、引用的文件 | 排版可读 | 截图 |
+| M2 | `markdown-code-table.md` | 打开含宽代码块和宽表格的文件 | 二者均可横向滚动，代码可复制 | 录屏 |
+| M3 | `markdown-toc.md` | 打开多级标题文件，点目录跳转 | 跳转准确或落到标题附近 | 录屏 |
+| M4 | `markdown-search.md` | 搜索存在 / 不存在关键词 | 有结果可跳转，无结果有提示 | 录屏 |
+| M5 | `markdown-image-link.md` | 打开图片和链接文件 | 图片显示，链接可打开，图片地址可复制 | 截图 / 录屏 |
+| M6 | `markdown-long-1mb.md` | 打开 1MB+ 长文 | 不白屏，滚动稳定 | 录屏 + 耗时 |
+| M7 | 同一文件 | 滚动后退出再打开 | 阅读位置恢复 | 录屏 |
+| M8 | 任意文件 | 切换字号和日夜模式 | 文本不溢出，颜色可读 | 截图 |
+
+## 5. 待实现 / 待验收差距
+
+| 项目 | 当前状态 | 后续任务 |
+|---|---|---|
+| 真机截图验收 | 当前无连接设备 | 接入 Android 真机后补 M1-M8 证据 |
+| 目录空态文案 | 当前空列表 | D1.13 / S1-READ 可补 |
+| 图片保存 / 分享 | 当前仅展示和复制地址 | S1-MD-008 / S6 |
+| 链接长按复制 | 当前点击打开 | S6 增强 |
+| 阅读位置回填 RecentDoc | 当前 Reader 独立 AsyncStorage | S1-DATA-004 后续统一 |
+| 组件内 AsyncStorage | 违反数据下沉优先修复项 | 后续抽 `storage/readPosition.ts` |
+
+## 6. D1.2 关闭标准
+
+- 已列出 Markdown 阅读页结构。
+- 已覆盖标题、段落、目录、搜索、字号、深色、长文分块。
+- 已输出页面状态表。
+- 已输出真机验收脚本。
+- 待补真机截图 / 录屏后，从 `[v]` 改为 `[x]`。

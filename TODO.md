@@ -90,7 +90,7 @@
 
 **D1 手机端 UX / UI 全量设计**
 - `[v]` D1.1 设计微信/QQ/文件管理器打开文件流程 — 证据：`docs/design/mobile-open-flow.md` 已补微信/QQ/文件管理器流程图、失败状态和真机验证脚本；当前 `adb devices` 无连接设备，仍需补微信/QQ 真机截图或录屏后改 `[x]`。
-- `[~]` D1.2 设计 Markdown 阅读页 — 代码已覆盖标题/段落/目录/搜索/字号/深色模式/长文分块；仍需补完整页面状态表和真机截图验收。
+- `[v]` D1.2 设计 Markdown 阅读页 — 证据：`docs/design/mobile-markdown-reader-page.md` 已补页面结构、完整状态表和真机验收脚本；当前无连接设备，仍需补真机截图/录屏后改 `[x]`。
 - `[ ]` D1.3 设计 JSON 阅读页 — 树形、搜索、折叠、复制字段、复制 JSONPath、pretty/minify、Markdown 字段预览、大 JSON 状态。
 - `[ ]` D1.4 设计编辑流程 — Markdown 编辑/预览、JSON 格式化/校验、错误提示、草稿恢复、保存副本、保存并分享。
 - `[ ]` D1.5 设计复制系统 — 全文、选中段落、代码块、JSON 字段、JSONPath、多段组合复制、复制后动作建议。
