@@ -109,7 +109,7 @@
 **D2 电脑端 / CLI 全量设计**
 - `[x]` D2.1 设计 CLI 命令体系 — `molan convert/check/pull/read/push` 的参数、输出、错误码、退出码。证据：`docs/design/desktop-cli-command-contract.md` 覆盖五个命令的参数、JSON 公共结构、必须保留字段、错误码、退出码、后续扩展字段和契约测试要求；与现有 `desktop/cli/src/index.ts`、`converter.ts`、`cloud.test.ts` 对齐。
 - `[x]` D2.2 设计 Office/PDF/PPT/Excel→Markdown 转换规则 — 标题、表格、图片、代码、分页、元数据、失败策略。证据：`docs/design/desktop-office-to-markdown-rules.md` 覆盖 Word/PDF/PPT/Excel/CSV 到 Markdown 的标题、表格、图片、代码、分页、元数据、hash 扩展、失败隔离和真实 fixture 验收；明确 CLI/GUI 继续共用 `desktop/src/shared/converter.ts`。
-- `[ ]` D2.3 设计批量转换输出结构 — 成功/失败列表、输出路径、hash、可读性评分、AI 下一步建议。
+- `[x]` D2.3 设计批量转换输出结构 — 成功/失败列表、输出路径、hash、可读性评分、AI 下一步建议。证据：`docs/design/desktop-batch-conversion-output.md` 覆盖顶层 summary、单项结果、成功/失败派生、SHA256/size、可读性评分、AI 下一步建议、JSON 示例、GUI 映射和契约兼容规则。
 - `[ ]` D2.4 设计桌面 GUI 阅读与转换 — 拖拽、队列、输出目录、阅读预览、JSON 编辑、错误恢复。
 - `[ ]` D2.5 设计电脑端与云端收件箱交互 — 拉取手机保存文件、上传转换结果、打开本地输出。
 - `[ ]` D2.6 设计 AI 调用说明 — Codex/Claude Code/Cursor 如何通过 CLI 读取资料。
