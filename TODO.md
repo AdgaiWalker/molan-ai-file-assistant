@@ -111,7 +111,7 @@
 - `[x]` D2.2 设计 Office/PDF/PPT/Excel→Markdown 转换规则 — 标题、表格、图片、代码、分页、元数据、失败策略。证据：`docs/design/desktop-office-to-markdown-rules.md` 覆盖 Word/PDF/PPT/Excel/CSV 到 Markdown 的标题、表格、图片、代码、分页、元数据、hash 扩展、失败隔离和真实 fixture 验收；明确 CLI/GUI 继续共用 `desktop/src/shared/converter.ts`。
 - `[x]` D2.3 设计批量转换输出结构 — 成功/失败列表、输出路径、hash、可读性评分、AI 下一步建议。证据：`docs/design/desktop-batch-conversion-output.md` 覆盖顶层 summary、单项结果、成功/失败派生、SHA256/size、可读性评分、AI 下一步建议、JSON 示例、GUI 映射和契约兼容规则。
 - `[x]` D2.4 设计桌面 GUI 阅读与转换 — 拖拽、队列、输出目录、阅读预览、JSON 编辑、错误恢复。证据：`docs/design/desktop-gui-reader-converter.md` 基于 `App.tsx`、`ReaderPanel.tsx`、`ConvertPanel.tsx`、Electron IPC 设计阅读、转换队列、输出目录、转换日志、阅读预览、JSON 编辑、错误恢复与设置记忆。
-- `[ ]` D2.5 设计电脑端与云端收件箱交互 — 拉取手机保存文件、上传转换结果、打开本地输出。
+- `[x]` D2.5 设计电脑端与云端收件箱交互 — 拉取手机保存文件、上传转换结果、打开本地输出。证据：`docs/design/desktop-cloud-inbox-interaction.md` 覆盖本地模拟与真实云端阶段、手机保存到云端、电脑 CLI/GUI 拉取、上传转换结果、打开本地输出、状态映射、失败路径和隐私边界；明确 S7 前不写后端代码。
 - `[ ]` D2.6 设计 AI 调用说明 — Codex/Claude Code/Cursor 如何通过 CLI 读取资料。
 - `[ ]` D2.7 设计电脑端置顶快贴窗 — 侧边置顶、迷你模式、快捷命令模式、提示词详情、复制后回到开发窗口。
 
