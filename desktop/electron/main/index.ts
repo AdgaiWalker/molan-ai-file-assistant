@@ -9,6 +9,19 @@ let promptWindow: BrowserWindow | null = null;
 let pendingFile: string | null = null;
 const promptBoundsFile = path.join(app.getPath('userData'), 'prompt-window.json');
 
+// 按扩展名推断转换方向（默认 office→md）
+function inferDirection(ext: string): ConvertDirection {
+  switch (ext) {
+    case 'md': case 'markdown': return 'md2docx';
+    case 'docx': return 'docx2md';
+    case 'pdf': return 'pdf2md';
+    case 'pptx': return 'pptx2md';
+    case 'xlsx': return 'xlsx2md';
+    case 'csv': return 'csv2md';
+    default: return 'docx2md';
+  }
+}
+
 function createWindow(fileToOpen?: string) {
   mainWindow = new BrowserWindow({
     width: 960,
@@ -127,8 +140,8 @@ ipcMain.handle(ipcChannels.SELECT_FILES, async (): Promise<ConvertTask[]> => {
   });
   if (result.canceled) return [];
   return result.filePaths.map((p) => {
-    const ext = path.extname(p).toLowerCase();
-    const direction: ConvertDirection = ext === '.md' || ext === '.markdown' ? 'md2docx' : 'docx2md';
+    const ext = path.extname(p).toLowerCase().replace('.', '');
+    const direction = inferDirection(ext);
     return {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       inputPath: p,
@@ -175,7 +188,7 @@ ipcMain.handle(ipcChannels.CONVERT, async (_e, tasks: ConvertTask[], outputDir: 
   for (const task of tasks) {
     const t = { ...task, status: 'converting' as const };
     const outputFormat: ConvertFormat = t.direction === 'md2docx' ? 'docx' : 'md';
-    const result = await convertFile(t.inputPath, outputFormat, outputDir);
+    const result = await convertFile(t.inputPath, outputFormat, outputDir, { preserveImages: true });
     const done: ConvertTask = {
       ...t,
       status: result.ok ? 'success' : 'failed',

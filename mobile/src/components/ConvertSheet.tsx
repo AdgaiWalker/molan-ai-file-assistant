@@ -11,10 +11,12 @@ import {
   ScrollView,
   useWindowDimensions,
 } from 'react-native';
-import * as DocumentPicker from 'expo-document-picker';
-import * as Sharing from 'expo-sharing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { themes } from '../theme';
+import { X, ChevronRight, Sparkles, FileText, FileEdit } from 'lucide-react-native';
+import { pickBinaryFile } from '../platform/filePicker';
+import { shareFile, shareText } from '../platform/share';
+import { getShareUsage, setShareUsage, type ShareUsage } from '../storage/shareHistory';
 
 interface ConvertSheetProps {
   visible: boolean;
@@ -44,9 +46,20 @@ export function ConvertSheet({
   const { height } = useWindowDimensions();
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [lastUsage, setLastUsage] = useState<ShareUsage | null>(null);
 
   const baseName = (title || '文档').replace(/[\\/:*?"<>|]/g, '_');
   const loadConverter = () => import('../converter/fileConvert');
+
+  // 打开时读最近分享方式；分享成功后记录并刷新
+  React.useEffect(() => {
+    if (visible) getShareUsage().then(setLastUsage);
+  }, [visible]);
+  const rememberShare = (format: ShareUsage['format'], label: string) => {
+    const usage: ShareUsage = { format, label, at: Date.now() };
+    setShareUsage(usage);
+    setLastUsage(usage);
+  };
 
   // 当前文档 -> docx，分享；JSON 会先规则化为 Markdown。
   const toWord = async () => {
@@ -57,15 +70,13 @@ export function ConvertSheet({
     const r = await convertMdToDocxFile(contentAsMarkdown, baseName);
     if (r.ok && r.outputPath) {
       setMsg('已生成 Word 文件');
-      let shared = false;
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(r.outputPath, {
-          mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          dialogTitle: `${baseName}.docx`,
-        });
-        shared = true;
-      }
+      const { shared } = await shareFile(r.outputPath, {
+        filename: `${baseName}.docx`,
+        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        dialogTitle: `${baseName}.docx`,
+      });
       await onConverted?.(shared);
+      if (shared) rememberShare('docx', '当前文档 → Word');
     } else {
       setMsg('转换失败：' + r.error);
     }
@@ -77,22 +88,19 @@ export function ConvertSheet({
     setBusy(true);
     setMsg(null);
     try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: [
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          'application/octet-stream',
-        ],
-        copyToCacheDirectory: true,
-      });
-      if (result.canceled) {
+      const picked = await pickBinaryFile([
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/octet-stream',
+      ]);
+      if (!picked) {
         setBusy(false);
         return;
       }
-      const file = result.assets[0];
-      const { convertDocxFileToMd } = await loadConverter();
-      const r = await convertDocxFileToMd(file.uri);
+      const { convertDocxBytesToMd } = await loadConverter();
+      const bytes = await picked.arrayBuffer();
+      const r = await convertDocxBytesToMd(bytes);
       if (r.ok && r.md) {
-        const name = file.name.replace(/\.docx$/i, '');
+        const name = picked.name.replace(/\.docx$/i, '');
         onLoadMd(r.md, name);
         await onConverted?.(false);
         setMsg('转换成功，已载入');
@@ -115,15 +123,13 @@ export function ConvertSheet({
     const r = await writeMdFile(contentAsMarkdown, baseName);
     if (r.ok && r.outputPath) {
       setMsg('已生成 .md 文件');
-      let shared = false;
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(r.outputPath, {
-          mimeType: 'text/markdown',
-          dialogTitle: `${baseName}.md`,
-        });
-        shared = true;
-      }
+      const { shared } = await shareFile(r.outputPath, {
+        filename: `${baseName}.md`,
+        mimeType: 'text/markdown',
+        dialogTitle: `${baseName}.md`,
+      });
       await onConverted?.(shared);
+      if (shared) rememberShare('md', kind === 'json' ? 'JSON → Markdown' : '导出为 .md 文件');
     } else {
       setMsg('导出失败：' + r.error);
     }
@@ -138,15 +144,13 @@ export function ConvertSheet({
     const r = await writeJsonFile(content, baseName);
     if (r.ok && r.outputPath) {
       setMsg('已生成 .json 文件');
-      let shared = false;
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(r.outputPath, {
-          mimeType: 'application/json',
-          dialogTitle: `${baseName}.json`,
-        });
-        shared = true;
-      }
+      const { shared } = await shareFile(r.outputPath, {
+        filename: `${baseName}.json`,
+        mimeType: 'application/json',
+        dialogTitle: `${baseName}.json`,
+      });
       await onConverted?.(shared);
+      if (shared) rememberShare('original', '导出原 .json 文件');
     } else {
       setMsg('导出失败：' + r.error);
     }
@@ -172,8 +176,13 @@ export function ConvertSheet({
     setBusy(true);
     setMsg(null);
     try {
-      await Share.share({ title: baseName, message: content });
+      // web：复制到剪贴板；原生：platform/share 不处理纯文本，回落到 RN Share
+      const { shared } = await shareText(content, baseName);
+      if (!shared) {
+        await Share.share({ title: baseName, message: content });
+      }
       await onShared?.();
+      rememberShare('text', '分享纯文本');
       setMsg('已调起纯文本分享');
     } catch (e) {
       setMsg('分享失败：' + (e as Error).message);
@@ -190,15 +199,13 @@ export function ConvertSheet({
     const r = await exportPdfFile(contentAsMarkdown, baseName, themeMode);
     if (r.ok && r.outputPath) {
       setMsg('已生成 PDF');
-      let shared = false;
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(r.outputPath, {
-          mimeType: 'application/pdf',
-          dialogTitle: `${baseName}.pdf`,
-        });
-        shared = true;
-      }
+      const { shared } = await shareFile(r.outputPath, {
+        filename: `${baseName}.pdf`,
+        mimeType: 'application/pdf',
+        dialogTitle: `${baseName}.pdf`,
+      });
       await onConverted?.(shared);
+      if (shared) rememberShare('pdf', kind === 'json' ? 'JSON → PDF' : '导出为 PDF');
     } else {
       setMsg('导出失败：' + r.error);
     }
@@ -210,22 +217,31 @@ export function ConvertSheet({
     desc,
     onPress,
     disabled,
+    recent,
   }: {
     title: string;
     desc: string;
     onPress: () => void;
     disabled?: boolean;
+    recent?: boolean;
   }) => (
     <TouchableOpacity
-      style={[styles.action, { borderColor: theme.border, backgroundColor: theme.background }, disabled && styles.disabled]}
+      style={[styles.action, { borderColor: recent ? theme.link : theme.border, backgroundColor: theme.background }, disabled && styles.disabled]}
       onPress={onPress}
       disabled={disabled}
     >
       <View style={{ flex: 1, minWidth: 0 }}>
-        <Text style={[styles.actionText, { color: theme.text }]}>{actionTitle}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+          <Text style={[styles.actionText, { color: theme.text }]}>{actionTitle}</Text>
+          {recent ? (
+            <View style={[styles.recentBadge, { backgroundColor: `${theme.link}1A` }]}>
+              <Text style={[styles.recentBadgeText, { color: theme.link }]}>上次</Text>
+            </View>
+          ) : null}
+        </View>
         <Text style={[styles.actionDesc, { color: theme.textSecondary }]}>{desc}</Text>
       </View>
-      <Text style={[styles.actionArrow, { color: theme.textSecondary }]}>›</Text>
+      <ChevronRight size={22} color={theme.textSecondary} />
     </TouchableOpacity>
   );
 
@@ -250,20 +266,23 @@ export function ConvertSheet({
               </Text>
             </View>
             <TouchableOpacity style={[styles.closeBtn, { borderColor: theme.border }]} onPress={onClose}>
-              <Text style={{ color: theme.text, fontSize: 13 }}>关闭</Text>
+              <X size={18} color={theme.textSecondary} />
             </TouchableOpacity>
           </View>
 
           <View style={styles.purposeRow}>
             <View style={[styles.purposeChip, { backgroundColor: theme.link }]}>
+              <Sparkles size={18} color="#FFFFFF" />
               <Text style={styles.purposeChipText}>给 AI 读</Text>
               <Text style={styles.purposeChipMeta}>Markdown</Text>
             </View>
             <View style={[styles.purposeChip, { backgroundColor: theme.link + '22', borderColor: theme.link }]}>
+              <FileText size={18} color={theme.link} />
               <Text style={[styles.purposeChipText, { color: theme.link }]}>给别人看</Text>
               <Text style={[styles.purposeChipMeta, { color: theme.link }]}>PDF</Text>
             </View>
             <View style={[styles.purposeChip, { backgroundColor: theme.link + '22', borderColor: theme.link }]}>
+              <FileEdit size={18} color={theme.link} />
               <Text style={[styles.purposeChipText, { color: theme.link }]}>给别人改</Text>
               <Text style={[styles.purposeChipMeta, { color: theme.link }]}>Word</Text>
             </View>
@@ -276,6 +295,7 @@ export function ConvertSheet({
               desc="适合给 AI 或懂 Markdown 的人继续处理"
               onPress={exportMd}
               disabled={busy}
+              recent={lastUsage?.format === 'md'}
             />
             <Text style={[styles.groupTitle, { color: theme.textSecondary }]}>给别人看</Text>
             <ActionRow
@@ -283,12 +303,14 @@ export function ConvertSheet({
               desc="适合办公查看和微信/QQ 转发"
               onPress={exportPdf}
               disabled={busy}
+              recent={lastUsage?.format === 'pdf'}
             />
             <ActionRow
               title="分享纯文本"
               desc="直接把当前内容交给系统分享面板，不生成文件"
               onPress={sharePlainText}
               disabled={busy}
+              recent={lastUsage?.format === 'text'}
             />
             <Text style={[styles.groupTitle, { color: theme.textSecondary }]}>给别人改</Text>
             <ActionRow
@@ -296,6 +318,7 @@ export function ConvertSheet({
               desc="适合发给别人继续编辑"
               onPress={toWord}
               disabled={busy}
+              recent={lastUsage?.format === 'docx'}
             />
             {kind === 'json' ? (
               <>
@@ -376,12 +399,13 @@ const styles = StyleSheet.create({
   },
   purposeChip: {
     flex: 1,
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
-    paddingVertical: 10,
+    paddingVertical: 12,
     paddingHorizontal: 6,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 6,
   },
   purposeChipText: {
     color: '#FFFFFF',
@@ -391,7 +415,6 @@ const styles = StyleSheet.create({
   purposeChipMeta: {
     color: 'rgba(255,255,255,0.85)',
     fontSize: 11,
-    marginTop: 2,
   },
   groupTitle: {
     fontSize: 12,
@@ -429,5 +452,14 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 13,
     textAlign: 'center',
+  },
+  recentBadge: {
+    paddingVertical: 1,
+    paddingHorizontal: 6,
+    borderRadius: 6,
+  },
+  recentBadgeText: {
+    fontSize: 9,
+    fontWeight: '700',
   },
 });

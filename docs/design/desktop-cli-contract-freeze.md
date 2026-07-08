@@ -11,8 +11,8 @@
 
 详细设计见：
 - `docs/design/desktop-cli-command-contract.md`
-- `docs/design/desktop-ai-cli-usage.md`
-- `docs/design/desktop-batch-conversion-output.md`
+- `docs/design/archive/desktop-ai-cli-usage.md`
+- `docs/design/archive/desktop-batch-conversion-output.md`
 - `docs/design/ai-read-entrypoints.md`
 
 ## 2. 必须保留字段

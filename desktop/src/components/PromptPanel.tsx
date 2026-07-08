@@ -1,4 +1,20 @@
 import React, { useMemo, useState } from 'react';
+import {
+  Search,
+  Pin,
+  Settings,
+  Minimize2,
+  Maximize2,
+  Copy,
+  Check,
+  Plus,
+  ExternalLink,
+  FolderOpen,
+  Combine,
+  Pencil,
+  MoreHorizontal,
+  Sparkles,
+} from 'lucide-react';
 
 interface PromptItem {
   id: string;
@@ -97,32 +113,36 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
       <section className="prompt-main">
         <div className="prompt-header">
           <div>
-            <h2>墨览快贴</h2>
+            <h2><Sparkles size={18} className="header-icon" />墨览快贴</h2>
             <p className="sync-dot"><span className="sync-dot-icon" />已同步 · 手机与电脑</p>
           </div>
           <div className="prompt-actions">
             {!compact && (
-              <button className="btn-secondary" onClick={openPromptWindow}>
-                独立窗
+              <button className="btn-icon" onClick={openPromptWindow} title="独立窗">
+                <ExternalLink size={16} />
               </button>
             )}
-            <button className={pinned ? 'btn-primary' : 'btn-secondary'} onClick={togglePinned}>
-              {pinned ? '已置顶' : '置顶'}
+            <button className={`btn-icon ${pinned ? 'active' : ''}`} onClick={togglePinned} title={pinned ? '已置顶' : '置顶'}>
+              <Pin size={16} />
             </button>
-            <button className="btn-secondary" onClick={() => setMini((cur) => !cur)}>
-              {mini ? '展开' : 'Mini'}
+            <button className="btn-icon" onClick={() => setMini((cur) => !cur)} title={mini ? '展开' : 'Mini'}>
+              {mini ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+            </button>
+            <button className="btn-icon" title="设置">
+              <Settings size={16} />
             </button>
           </div>
         </div>
 
         <div className="prompt-search">
+          <Search size={16} className="search-icon" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="搜索提示词"
             autoFocus
           />
-          <span>Ctrl K</span>
+          <span className="kbd-shortcut">Ctrl K</span>
         </div>
 
         <div className="prompt-groups">
@@ -140,8 +160,8 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
                     <strong>{item.title}</strong>
                     <small>{item.content}</small>
                   </span>
-                  <em onClick={(event) => { event.stopPropagation(); copy(item); }}>
-                    {copiedId === item.id ? '已复制' : '复制'}
+                  <em onClick={(event) => { event.stopPropagation(); copy(item); }} title="复制">
+                    {copiedId === item.id ? <Check size={14} /> : <Copy size={14} />}
                   </em>
                 </button>
               ))}
@@ -155,7 +175,8 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
           <div className="detail-title">
             <h3>{selected.title}</h3>
             <button className="btn-primary" onClick={() => copy(selected)}>
-              {copiedId === selected.id ? '已复制' : '复制'}
+              {copiedId === selected.id ? <Check size={16} /> : <Copy size={16} />}
+              <span>{copiedId === selected.id ? '已复制' : '复制'}</span>
             </button>
           </div>
           <p>{selected.content}</p>
@@ -168,17 +189,17 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
             {selected.tags.map((tag) => <span key={tag}>#{tag}</span>)}
           </div>
           <div className="detail-actions">
-            <button className="btn-secondary">组合</button>
-            <button className="btn-secondary">编辑</button>
-            <button className="btn-secondary">...</button>
+            <button className="btn-secondary"><Combine size={14} />组合</button>
+            <button className="btn-secondary"><Pencil size={14} />编辑</button>
+            <button className="btn-secondary"><MoreHorizontal size={14} /></button>
           </div>
         </aside>
       )}
 
       <div className="prompt-footer">
-        <button className="btn-ghost">＋ 新建提示词</button>
-        <button className="btn-ghost" onClick={openPromptWindow}>打开墨览</button>
-        <button className="btn-ghost">打开输出文件夹</button>
+        <button className="btn-ghost"><Plus size={14} />新建提示词</button>
+        <button className="btn-ghost" onClick={openPromptWindow}><ExternalLink size={14} />打开墨览</button>
+        <button className="btn-ghost"><FolderOpen size={14} />打开输出文件夹</button>
       </div>
     </div>
   );

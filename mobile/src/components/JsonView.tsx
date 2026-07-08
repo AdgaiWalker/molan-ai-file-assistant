@@ -18,6 +18,7 @@ import { themes, ThemeMode } from '../theme';
 import { JsonTree } from './JsonTree';
 import { Reader } from './Reader';
 import { parseAndFormatJson } from '../json/format';
+import { ChevronLeft, Search, MoreHorizontal, X, Copy } from 'lucide-react-native';
 
 interface JsonViewProps {
   raw: string;
@@ -35,6 +36,7 @@ export function JsonView({ raw, title = 'JSON', onCopied, onClose }: JsonViewPro
   const [query, setQuery] = useState('');
   const [mdPreview, setMdPreview] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'tree' | 'pretty' | 'minified'>('tree');
+  const [moreVisible, setMoreVisible] = useState(false);
 
   const formatted = useMemo(() => parseAndFormatJson(raw), [raw]);
   const parsed = formatted.ok ? formatted.value : null;
@@ -96,17 +98,14 @@ export function JsonView({ raw, title = 'JSON', onCopied, onClose }: JsonViewPro
         <View style={styles.toolLeft}>
           {onClose ? (
             <TouchableOpacity style={styles.toolBtn} onPress={onClose}>
-              <Text style={[styles.toolText, { color: theme.text }]}>‹</Text>
+              <ChevronLeft size={24} color={theme.text} />
             </TouchableOpacity>
           ) : null}
           <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>{title}</Text>
         </View>
         <View style={styles.toolbarActions}>
-          <TouchableOpacity style={[styles.toolPill, { borderColor: theme.border }]} onPress={copyPretty} disabled={parsed === null}>
-            <Text style={{ color: parsed === null ? theme.textSecondary : theme.link, fontSize: 12 }}>复制美化</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.toolPill, { borderColor: theme.border }]} onPress={copyMinified} disabled={parsed === null}>
-            <Text style={{ color: parsed === null ? theme.textSecondary : theme.link, fontSize: 12 }}>复制压缩</Text>
+          <TouchableOpacity style={styles.toolBtn} onPress={() => setMoreVisible(true)}>
+            <MoreHorizontal size={22} color={theme.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -118,14 +117,17 @@ export function JsonView({ raw, title = 'JSON', onCopied, onClose }: JsonViewPro
           {modeButton('minified', '压缩')}
         </View>
         {viewMode === 'tree' ? (
-          <TextInput
-            style={[styles.search, { color: theme.text, backgroundColor: theme.codeBackground }]}
-            placeholder="搜索 key / 值"
-            placeholderTextColor={theme.textSecondary}
-            value={query}
-            onChangeText={setQuery}
-            returnKeyType="search"
-          />
+          <View style={[styles.searchBox, { backgroundColor: theme.codeBackground }]}>
+            <Search size={16} color={theme.textSecondary} />
+            <TextInput
+              style={[styles.search, { color: theme.text }]}
+              placeholder="搜索 key 或 value"
+              placeholderTextColor={theme.textSecondary}
+              value={query}
+              onChangeText={setQuery}
+              returnKeyType="search"
+            />
+          </View>
         ) : null}
       </View>
 
@@ -153,9 +155,34 @@ export function JsonView({ raw, title = 'JSON', onCopied, onClose }: JsonViewPro
         <View style={{ flex: 1 }}>
           <Reader content={mdPreview ?? ''} title="Markdown 片段" immersive onToggleChrome={() => {}} />
           <TouchableOpacity style={styles.closeFab} onPress={() => setMdPreview(null)}>
-            <Text style={styles.closeFabText}>✕ 关闭</Text>
+            <X size={14} color="#fff" />
+            <Text style={styles.closeFabText}> 关闭</Text>
           </TouchableOpacity>
         </View>
+      </Modal>
+
+      {/* 更多菜单：复制美化 / 压缩 */}
+      <Modal visible={moreVisible} animationType="fade" transparent={true} onRequestClose={() => setMoreVisible(false)}>
+        <TouchableOpacity style={styles.moreOverlay} activeOpacity={1} onPress={() => setMoreVisible(false)}>
+          <View style={[styles.morePanel, { backgroundColor: theme.surface, borderColor: theme.border, marginTop: insets.top + 52, marginRight: 12 }]}>
+            <TouchableOpacity
+              style={[styles.moreItem, { borderBottomColor: theme.border }]}
+              onPress={() => { setMoreVisible(false); copyPretty(); }}
+              disabled={parsed === null}
+            >
+              <Copy size={18} color={parsed === null ? theme.textSecondary : theme.text} />
+              <Text style={[styles.moreItemText, { color: parsed === null ? theme.textSecondary : theme.text }]}>复制美化 JSON</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.moreItem}
+              onPress={() => { setMoreVisible(false); copyMinified(); }}
+              disabled={parsed === null}
+            >
+              <Copy size={18} color={parsed === null ? theme.textSecondary : theme.text} />
+              <Text style={[styles.moreItemText, { color: parsed === null ? theme.textSecondary : theme.text }]}>复制压缩 JSON</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
       </Modal>
     </SafeAreaView>
   );
@@ -182,13 +209,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   toolBtn: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  toolText: {
-    fontSize: 22,
-    fontWeight: '300',
-    lineHeight: 26,
+    width: 38,
+    height: 38,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
   },
   title: {
     flex: 1,
@@ -228,11 +253,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
-  search: {
-    height: 36,
-    borderRadius: 8,
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 38,
+    borderRadius: 10,
     paddingHorizontal: 12,
+    gap: 8,
+  },
+  search: {
+    flex: 1,
     fontSize: 14,
+    paddingVertical: 0,
   },
   rawContent: {
     padding: 12,
@@ -254,8 +286,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     right: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.6)',
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 16,
     zIndex: 50,
@@ -263,5 +297,33 @@ const styles = StyleSheet.create({
   closeFabText: {
     color: '#fff',
     fontSize: 13,
+  },
+  moreOverlay: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  morePanel: {
+    minWidth: 180,
+    borderRadius: 14,
+    borderWidth: 1,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  moreItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    gap: 10,
+  },
+  moreItemText: {
+    fontSize: 15,
+    fontWeight: '500',
+    flex: 1,
   },
 });

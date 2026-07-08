@@ -8,9 +8,10 @@ import zipfile
 DEFAULT_OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "desktop", "resources")
 DEFAULT_VERSION = "3.10"
 
-# 占位常量：可从 pandoc 官方校验文件填入（https://github.com/jgm/pandoc/releases 下的 checksums）
+# 官方 SHA256（来源：GitHub Release API https://api.github.com/repos/jgm/pandoc/releases/tags/<version>，
+# asset digest 字段）。校验失败脚本直接退出非 0，避免下载到被篡改/不完整的 pandoc。
 EXPECTED_SHA256 = {
-    "3.10": "",
+    "3.10": "bb808d00fd58762299d64582a9b4c3e4b106cd929e62c5f19bcdcb496f1e54ae",
 }
 
 
@@ -83,14 +84,15 @@ def main():
         sys.exit(1)
 
     expected = EXPECTED_SHA256.get(version, "")
-    if expected:
-        actual = sha256_of(dst_zip)
-        if actual.lower() != expected.lower():
-            print(f"SHA256 校验失败\n  预期: {expected}\n  实际: {actual}")
-            sys.exit(1)
-        print(f"SHA256 校验通过: {actual}")
-    else:
-        print(f"未配置 {version} 的预期 SHA256，跳过校验")
+    if not expected:
+        # 未锁版本的 SHA256 视为不安全：拒绝继续，强制先登记官方哈希
+        print(f"未配置 pandoc {version} 的预期 SHA256。请先到 https://api.github.com/repos/jgm/pandoc/releases/tags/{version} 取 windows-x86_64.zip 的 digest，填入 EXPECTED_SHA256 后重试。")
+        sys.exit(1)
+    actual = sha256_of(dst_zip)
+    if actual.lower() != expected.lower():
+        print(f"SHA256 校验失败\n  预期: {expected}\n  实际: {actual}")
+        sys.exit(1)
+    print(f"SHA256 校验通过: {actual}")
 
     print("解压...")
     with zipfile.ZipFile(dst_zip) as z:

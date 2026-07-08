@@ -48,9 +48,14 @@ export function looksLikeMarkdown(value: string): boolean {
     || /(^|\n)\s{0,3}>/.test(value);
 }
 
-export function buildJsonRows(data: unknown, expanded: Set<string>): JsonRow[] {
+/** 默认最大渲染行数：超过则截断，避免大 JSON 全展开卡顿。 */
+export const JSON_MAX_ROWS = 2000;
+
+export function buildJsonRows(data: unknown, expanded: Set<string>, maxRows = JSON_MAX_ROWS): JsonRow[] {
   const rows: JsonRow[] = [];
+  let truncated = false;
   const walk = (value: unknown, path: string, key: string, depth: number) => {
+    if (rows.length >= maxRows) { truncated = true; return; }
     const type = typeOfJsonValue(value);
     const { preview, childCount } = summarizeJsonValue(value, type);
     const hasChildren = (type === 'object' || type === 'array') && childCount > 0;
@@ -69,15 +74,34 @@ export function buildJsonRows(data: unknown, expanded: Set<string>): JsonRow[] {
     });
     if (hasChildren && isExpanded) {
       if (type === 'array') {
-        (value as unknown[]).forEach((item, index) => walk(item, `${path}[${index}]`, String(index), depth + 1));
+        for (let index = 0; index < (value as unknown[]).length; index++) {
+          if (rows.length >= maxRows) { truncated = true; break; }
+          walk((value as unknown[])[index], `${path}[${index}]`, String(index), depth + 1);
+        }
       } else {
         for (const [childKey, childValue] of Object.entries(value as Record<string, unknown>)) {
+          if (rows.length >= maxRows) { truncated = true; break; }
           walk(childValue, `${path}${escapeJsonPathKey(childKey)}`, childKey, depth + 1);
         }
       }
     }
   };
   walk(data, '$', '$', 0);
+  if (truncated && rows.length > 0) {
+    // 末尾插一条提示行（用 object 占位，path 固定）
+    rows.push({
+      path: '$__truncated__',
+      key: '…',
+      depth: 0,
+      type: 'null',
+      preview: `（节点超过 ${maxRows}，已截断。请折叠部分分支或用搜索）`,
+      childCount: 0,
+      expanded: false,
+      hasChildren: false,
+      raw: undefined,
+      value: null,
+    });
+  }
   return rows;
 }
 

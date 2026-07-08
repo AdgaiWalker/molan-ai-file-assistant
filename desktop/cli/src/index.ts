@@ -121,22 +121,27 @@ program
   .option('--batch', '启用批量模式，输入可以是 glob 或目录')
   .option('--concurrency <n>', '批量并发数', '4')
   .option('--json', '以 JSON 格式输出结果到 stdout')
+  .option('--preserve-images', '把 Office 文档里的图片抽到 <输出目录>/media，Markdown 用相对路径引用')
   .action(async (inputs: string[], opts) => {
     const outputFormat = opts.to as ConvertFormat;
     const outputDir = path.resolve(opts.out);
     const asJson = opts.json;
     const isBatch = opts.batch || inputs.length > 1;
+    const preserveImages = !!opts.preserveImages;
 
     // 确保输出目录存在
     fs.mkdirSync(outputDir, { recursive: true });
 
-    // 展开 glob
+    // 展开 glob（fast-glob 要求正斜杠分隔符，path.join 在 Windows 会产出反斜杠导致匹配为空）
     let files: string[] = inputs;
-    if (isBatch && inputs.length === 1 && (inputs[0].includes('*') || fs.statSync(inputs[0]).isDirectory())) {
-      const pattern = fs.statSync(inputs[0]).isDirectory()
-        ? path.join(inputs[0], '**/*')
-        : inputs[0];
-      files = await fg([pattern], { onlyFiles: true, caseSensitiveMatch: false });
+    if (isBatch && inputs.length === 1) {
+      const input = inputs[0];
+      let isDir = false;
+      try { isDir = fs.statSync(input).isDirectory(); } catch { /* glob 或不存在 */ }
+      if (input.includes('*') || isDir) {
+        const pattern = isDir ? `${input.replace(/\\/g, '/')}/**/*` : input;
+        files = await fg([pattern], { onlyFiles: true, caseSensitiveMatch: false });
+      }
     }
 
     if (files.length === 0) {
@@ -158,9 +163,10 @@ program
 
     const inputs_ = valid.map((p) => ({ inputPath: p, fileName: path.basename(p) }));
 
+    const convertOptions = preserveImages ? { preserveImages: true } : undefined;
     const rawResults = isBatch
-      ? await convertBatch(inputs_, outputFormat, outputDir, Number(opts.concurrency))
-      : [await convertFile(inputs_[0].inputPath, outputFormat, outputDir)];
+      ? await convertBatch(inputs_, outputFormat, outputDir, Number(opts.concurrency), convertOptions)
+      : [await convertFile(inputs_[0].inputPath, outputFormat, outputDir, convertOptions)];
 
     const flatResults: ConvertResult[] = rawResults;
 

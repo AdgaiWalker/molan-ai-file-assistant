@@ -10,7 +10,6 @@ import {
   StatusBar,
   useColorScheme,
   Animated,
-  Pressable,
   useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,6 +19,7 @@ import { parseToc, TocItem } from '../markdown/toc';
 import { themes, ThemeMode, FONT_SCALES, DEFAULT_FONT_SCALE_INDEX } from '../theme';
 import { findMarkdownMatches } from '../markdown/search';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ChevronLeft, Search, MoreHorizontal, List, Minus, Plus, Sun, Moon, Monitor } from 'lucide-react-native';
 
 interface ReaderProps {
   content: string;
@@ -37,6 +37,7 @@ export function Reader({ content, title = '阅读', immersive = false, onToggleC
   const [tocVisible, setTocVisible] = useState(false);
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [moreVisible, setMoreVisible] = useState(false);
 
   const themeMode: ThemeMode = override ?? systemMode;
   const theme = themes[themeMode];
@@ -133,32 +134,35 @@ export function Reader({ content, title = '阅读', immersive = false, onToggleC
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <StatusBar barStyle={themeMode === 'day' ? 'dark-content' : 'light-content'} />
 
-      {/* 正文：轻点切换顶栏显隐；按 token 逐块渲染，FlatList 虚拟化长文 */}
-      <Pressable style={{ flex: 1 }} onPress={onToggleChrome}>
-        <FlatList
-          ref={scrollRef}
-          data={tokens}
-          keyExtractor={(_, index) => String(index)}
-          renderItem={renderBlockItem}
-          contentContainerStyle={[
-            styles.content,
-            {
-              backgroundColor: theme.background,
-              paddingHorizontal: compact ? 14 : 20,
-              paddingTop: insets.top + 56,
-              paddingBottom: compact ? 190 : 180,
-            },
-          ]}
-          onScrollToIndexFailed={onScrollToIndexFailed}
-          onScroll={({ nativeEvent: { contentOffset } }) => {
-            offsetRef.current = contentOffset.y;
-          }}
-          onScrollEndDrag={savePos}
-          onMomentumScrollEnd={savePos}
-          showsVerticalScrollIndicator
-          scrollEventThrottle={16}
-        />
-      </Pressable>
+      {/* 正文：FlatList 直接渲染，避免外层 Pressable 吞掉滚动手势。
+          滚动时自动唤出顶栏（immersive→false）；点顶栏标题切换沉浸态。 */}
+      <FlatList
+        ref={scrollRef}
+        data={tokens}
+        keyExtractor={(_, index) => String(index)}
+        renderItem={renderBlockItem}
+        contentContainerStyle={[
+          styles.content,
+          {
+            backgroundColor: theme.background,
+            paddingHorizontal: compact ? 14 : 20,
+            paddingTop: insets.top + 56,
+            paddingBottom: compact ? 190 : 180,
+          },
+        ]}
+        onScrollToIndexFailed={onScrollToIndexFailed}
+        onScroll={({ nativeEvent: { contentOffset } }) => {
+          offsetRef.current = contentOffset.y;
+        }}
+        onScrollBeginDrag={() => {
+          // 用户开始滚动时唤出顶栏（沉浸→非沉浸）
+          if (immersive && onToggleChrome) onToggleChrome();
+        }}
+        onScrollEndDrag={savePos}
+        onMomentumScrollEnd={savePos}
+        showsVerticalScrollIndicator
+        scrollEventThrottle={16}
+      />
 
       {/* 顶部工具栏：沉浸态淡出，轻点正文唤出 */}
       <Animated.View
@@ -177,28 +181,24 @@ export function Reader({ content, title = '阅读', immersive = false, onToggleC
         <View style={styles.toolLeft}>
           {onClose ? (
             <TouchableOpacity style={styles.toolBtn} onPress={onClose}>
-              <Text style={[styles.toolText, { color: theme.text }]}>‹</Text>
+              <ChevronLeft size={24} color={theme.text} />
             </TouchableOpacity>
           ) : null}
-          <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>{title}</Text>
+          <TouchableOpacity
+            style={styles.titleWrap}
+            onPress={onToggleChrome}
+            disabled={!onToggleChrome}
+            activeOpacity={0.6}
+          >
+            <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>{title}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.toolRight}>
-          <TouchableOpacity style={styles.toolBtn} onPress={() => setTocVisible(true)}>
-            <Text style={[styles.toolText, { color: theme.text }]}>目录</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.toolBtn} onPress={() => setSearchVisible(true)}>
-            <Text style={[styles.toolText, { color: theme.text }]}>搜索</Text>
+            <Search size={20} color={theme.text} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.toolBtn} onPress={() => changeFont(-1)}>
-            <Text style={[styles.toolText, { color: theme.text }]}>A-</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.toolBtn} onPress={() => changeFont(1)}>
-            <Text style={[styles.toolText, { color: theme.text, fontSize: 18 }]}>A+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.toolBtn} onPress={cycleTheme}>
-            <Text style={[styles.toolText, { color: theme.text }]}>
-              {override === 'day' ? '日' : override === 'night' ? '夜' : '自动'}
-            </Text>
+          <TouchableOpacity style={styles.toolBtn} onPress={() => setMoreVisible(true)}>
+            <MoreHorizontal size={22} color={theme.text} />
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -258,6 +258,39 @@ export function Reader({ content, title = '阅读', immersive = false, onToggleC
           </View>
         </TouchableOpacity>
       </Modal>
+
+      {/* 更多菜单：目录、字号、主题 */}
+      <Modal visible={moreVisible} animationType="fade" transparent={true} onRequestClose={() => setMoreVisible(false)}>
+        <TouchableOpacity style={styles.moreOverlay} activeOpacity={1} onPress={() => setMoreVisible(false)}>
+          <View style={[styles.morePanel, { backgroundColor: theme.surface, borderColor: theme.border, marginTop: insets.top + 48, marginRight: 12 }]}>
+            <TouchableOpacity
+              style={[styles.moreItem, { borderBottomColor: theme.border }]}
+              onPress={() => { setMoreVisible(false); setTocVisible(true); }}
+            >
+              <List size={18} color={theme.text} />
+              <Text style={[styles.moreItemText, { color: theme.text }]}>目录</Text>
+            </TouchableOpacity>
+            <View style={[styles.moreItem, { borderBottomColor: theme.border }]}>
+              <Minus size={18} color={theme.text} />
+              <Text style={[styles.moreItemText, { color: theme.text }]}>字号</Text>
+              <View style={styles.fontActions}>
+                <TouchableOpacity style={styles.fontBtn} onPress={() => changeFont(-1)}>
+                  <Minus size={16} color={theme.textSecondary} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.fontBtn} onPress={() => changeFont(1)}>
+                  <Plus size={16} color={theme.textSecondary} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <TouchableOpacity style={styles.moreItem} onPress={() => { setMoreVisible(false); cycleTheme(); }}>
+              {override === 'day' ? <Sun size={18} color={theme.text} /> : override === 'night' ? <Moon size={18} color={theme.text} /> : <Monitor size={18} color={theme.text} />}
+              <Text style={[styles.moreItemText, { color: theme.text }]}>
+                {override === 'day' ? '浅色模式' : override === 'night' ? '深色模式' : '跟随系统'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -277,12 +310,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   toolBtn: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  toolText: {
-    fontSize: 16,
-    fontWeight: '500',
+    width: 38,
+    height: 38,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
   },
   toolLeft: {
     flex: 1,
@@ -294,11 +326,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    flex: 1,
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
     marginHorizontal: 8,
+  },
+  titleWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   content: {
     paddingTop: 56,
@@ -369,5 +405,45 @@ const styles = StyleSheet.create({
   searchSnippet: {
     fontSize: 14,
     lineHeight: 20,
+  },
+  moreOverlay: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  morePanel: {
+    minWidth: 180,
+    borderRadius: 14,
+    borderWidth: 1,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  moreItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    gap: 10,
+  },
+  moreItemText: {
+    fontSize: 15,
+    fontWeight: '500',
+    flex: 1,
+  },
+  fontActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  fontBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

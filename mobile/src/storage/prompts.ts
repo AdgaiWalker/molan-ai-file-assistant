@@ -149,3 +149,10 @@ export async function recordCopy(id: string): Promise<void> {
   );
   await writeAll(next);
 }
+
+/** 删除分组时清掉引用了该分组的提示词的 folderId（避免悬空引用）。 */
+export async function clearFolder(folderId: string): Promise<void> {
+  const items = await readAll();
+  const next = items.map((p) => (p.folderId === folderId ? { ...p, folderId: undefined } : p));
+  await writeAll(next);
+}

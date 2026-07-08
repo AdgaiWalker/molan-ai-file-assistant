@@ -14,17 +14,38 @@ import {
   useColorScheme,
   useWindowDimensions,
 } from 'react-native';
+import { NativeModules } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import * as DocumentPicker from 'expo-document-picker';
-import { File } from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
+import { Platform } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
+import { pickFile } from './src/platform/filePicker';
+import { shareFile } from './src/platform/share';
+import { readUriText } from './src/platform/fileReader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
+import {
+  Search,
+  MoreHorizontal,
+  FolderOpen,
+  MessageSquareText,
+  Cloud,
+  ArrowRightLeft,
+  FileText,
+  Braces,
+  Home,
+  Folder,
+  Plus,
+  Sparkles,
+  User,
+  Copy,
+  Pencil,
+  Share,
+} from 'lucide-react-native';
 import { Reader } from './src/components/Reader';
 import { JsonView } from './src/components/JsonView';
 import { ConvertSheet } from './src/components/ConvertSheet';
+import { BatchConvertSheet } from './src/components/BatchConvertSheet';
 import { EditSheet } from './src/components/EditSheet';
 import { RecentSheet } from './src/components/RecentSheet';
 import { PromptSheet } from './src/components/PromptSheet';
@@ -48,6 +69,7 @@ interface HomeScreenProps {
   onOpenRecentSheet: () => void;
   onOpenPrompts: () => void;
   onOpenDoc: (doc: RecentDoc) => void;
+  onOpenBatch: () => void;
   onOpenGuide: () => void;
 }
 
@@ -77,31 +99,31 @@ function HomeTabBar({
       ]}
     >
       <TouchableOpacity style={styles.tabItem} onPress={() => onChange('today')}>
-        <Text style={[styles.tabIcon, active === 'today' && { color: theme.link }]}>◐</Text>
+        <Home size={22} strokeWidth={active === 'today' ? 2.5 : 2} color={active === 'today' ? theme.link : theme.textSecondary} />
         <Text style={[styles.tabLabel, { color: active === 'today' ? theme.link : theme.textSecondary }]}>今天</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.tabItem} onPress={() => onChange('files')}>
-        <Text style={[styles.tabIcon, active === 'files' && { color: theme.link }]}>☰</Text>
+        <Folder size={22} strokeWidth={active === 'files' ? 2.5 : 2} color={active === 'files' ? theme.link : theme.textSecondary} />
         <Text style={[styles.tabLabel, { color: active === 'files' ? theme.link : theme.textSecondary }]}>文件</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.tabCenter} onPress={onOpenFile}>
         <View style={[styles.tabCenterCircle, { backgroundColor: theme.link }]}>
-          <Text style={styles.tabCenterIcon}>＋</Text>
+          <Plus size={28} color="#FFFFFF" strokeWidth={2.5} />
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.tabItem} onPress={() => onChange('prompts')}>
-        <Text style={[styles.tabIcon, active === 'prompts' && { color: theme.link }]}>❐</Text>
+        <Sparkles size={22} strokeWidth={active === 'prompts' ? 2.5 : 2} color={active === 'prompts' ? theme.link : theme.textSecondary} />
         <Text style={[styles.tabLabel, { color: active === 'prompts' ? theme.link : theme.textSecondary }]}>提示词</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.tabItem} onPress={() => onChange('me')}>
-        <Text style={[styles.tabIcon, active === 'me' && { color: theme.link }]}>○</Text>
+        <User size={22} strokeWidth={active === 'me' ? 2.5 : 2} color={active === 'me' ? theme.link : theme.textSecondary} />
         <Text style={[styles.tabLabel, { color: active === 'me' ? theme.link : theme.textSecondary }]}>我的</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPrompts, onOpenDoc, onOpenGuide }: HomeScreenProps) {
+function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPrompts, onOpenDoc, onOpenBatch, onOpenGuide }: HomeScreenProps) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const [activeTab, setActiveTab] = useState<HomeTab>('today');
@@ -119,11 +141,11 @@ function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPr
           </View>
         </View>
         <View style={styles.homeHeaderActions}>
-          <TouchableOpacity style={styles.homeHeaderBtn} onPress={onOpenGuide}>
-            <Text style={[styles.homeHeaderBtnText, { color: theme.textSecondary }]}>?</Text>
+          <TouchableOpacity style={[styles.homeHeaderBtn, { backgroundColor: theme.surface, borderColor: theme.border }]} onPress={onOpenGuide}>
+            <Search size={20} color={theme.textSecondary} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.homeHeaderBtn} onPress={onOpenRecentSheet}>
-            <Text style={[styles.homeHeaderBtnText, { color: theme.textSecondary }]}>☰</Text>
+          <TouchableOpacity style={[styles.homeHeaderBtn, { backgroundColor: theme.surface, borderColor: theme.border }]} onPress={onOpenRecentSheet}>
+            <MoreHorizontal size={20} color={theme.textSecondary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -133,7 +155,7 @@ function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPr
         contentContainerStyle={[
           styles.homeContent,
           {
-            paddingBottom: Math.max(100, insets.bottom + 88),
+            paddingBottom: Math.max(120, insets.bottom + 100),
             width: maxWidth,
           },
         ]}
@@ -141,6 +163,7 @@ function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPr
         {activeTab === 'today' ? (
           <>
             <TouchableOpacity style={[styles.homePrimary, { backgroundColor: theme.link }]} onPress={onOpenFile}>
+              <FolderOpen size={22} color="#FFFFFF" style={{ marginRight: 10 }} />
               <Text style={styles.homePrimaryText}>打开文件</Text>
             </TouchableOpacity>
 
@@ -149,7 +172,9 @@ function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPr
                 style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]}
                 onPress={onOpenPrompts}
               >
-                <Text style={[styles.homeQuickIcon, { color: theme.link }]}>❐</Text>
+                <View style={[styles.homeQuickIconWrap, { backgroundColor: `${theme.link}12` }]}>
+                  <MessageSquareText size={18} color={theme.link} />
+                </View>
                 <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>提示词快贴</Text>
                 <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>快速复制并组合提示词与模板</Text>
               </TouchableOpacity>
@@ -157,17 +182,21 @@ function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPr
                 style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]}
                 onPress={onOpenRecentSheet}
               >
-                <Text style={[styles.homeQuickIcon, { color: theme.link }]}>☁</Text>
+                <View style={[styles.homeQuickIconWrap, { backgroundColor: `${theme.link}12` }]}>
+                  <Cloud size={18} color={theme.link} />
+                </View>
                 <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>云端收件箱</Text>
                 <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>已同步到电脑，可供 AI 读取</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.homeQuickAction, { backgroundColor: theme.surface, borderColor: theme.border }]}
-                onPress={() => onOpenDoc(recentDocs[0] || { id: 'placeholder', title: '占位', kind: 'markdown', content: '', updatedAt: Date.now() })}
+                onPress={onOpenBatch}
               >
-                <Text style={[styles.homeQuickIcon, { color: theme.link }]}>⇄</Text>
+                <View style={[styles.homeQuickIconWrap, { backgroundColor: `${theme.link}12` }]}>
+                  <ArrowRightLeft size={18} color={theme.link} />
+                </View>
                 <Text style={[styles.homeQuickTitle, { color: theme.heading }]}>转换中心</Text>
-                <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>PDF / Word / Markdown 转换</Text>
+                <Text style={[styles.homeQuickMeta, { color: theme.textSecondary }]}>批量转 PDF / Word / Markdown</Text>
               </TouchableOpacity>
             </View>
 
@@ -195,6 +224,13 @@ function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPr
                     ]}
                     onPress={() => onOpenDoc(doc)}
                   >
+                    <View style={[styles.homeDocIconWrap, { backgroundColor: doc.kind === 'json' ? `${theme.link}10` : '#E5E7EB' }]}>
+                      {doc.kind === 'json' ? (
+                        <Braces size={20} color={theme.link} />
+                      ) : (
+                        <FileText size={20} color={theme.textSecondary} />
+                      )}
+                    </View>
                     <View style={{ flex: 1, minWidth: 0 }}>
                       <Text style={[styles.homeDocTitle, { color: theme.text }]} numberOfLines={1}>
                         {doc.title}
@@ -202,17 +238,14 @@ function HomeScreen({ theme, recentDocs, onOpenFile, onOpenRecentSheet, onOpenPr
                       <Text style={[styles.homeDocMeta, { color: theme.textSecondary }]}>
                         {doc.kind === 'json' ? 'JSON' : 'Markdown'} · {new Date(doc.updatedAt).toLocaleDateString()}
                       </Text>
-                      <Text style={[styles.homeDocStatus, { color: theme.link }]} numberOfLines={1}>
-                        {documentStatusText(doc)}
-                      </Text>
                     </View>
-                    <Text
-                      accessible={false}
-                      importantForAccessibility="no"
-                      style={[styles.homeDocArrow, { color: theme.textSecondary }]}
+                    <TouchableOpacity
+                      style={styles.homeDocMore}
+                      onPress={() => onOpenRecentSheet()}
+                      hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                     >
-                      ›
-                    </Text>
+                      <MoreHorizontal size={20} color={theme.textSecondary} />
+                    </TouchableOpacity>
                   </TouchableOpacity>
                 ))
               )}
@@ -342,6 +375,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [errorAction, setErrorAction] = useState<'openFile' | null>(null);
   const [convertVisible, setConvertVisible] = useState(false);
+  const [batchVisible, setBatchVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [recentVisible, setRecentVisible] = useState(false);
   const [promptVisible, setPromptVisible] = useState(false);
@@ -438,11 +472,14 @@ export default function App() {
       setError(null);
       setErrorAction(null);
       const cleanUri = stripUriDecorations(uri);
-      const text = await new File(cleanUri).text();
+      console.warn('[molan] loadFromUri uri=', uri, 'clean=', cleanUri);
+      const text = await readUriText(cleanUri);
+      console.warn('[molan] readUriText OK len=', text.length);
       const fileName = getNameFromUri(cleanUri, '文档');
       const kind = getDocKind(fileName);
       await applyLoadedDoc({ title: titleFromName(fileName, kind), kind, text }, inferExternalSource(uri));
     } catch (e) {
+      console.warn('[molan] loadFromUri FAIL:', (e as Error)?.message ?? String(e));
       setError(friendlyOpenError(e, inferExternalSourceLabel(uri)));
       setErrorAction('openFile');
     } finally {
@@ -452,7 +489,29 @@ export default function App() {
   }, [remember]);
 
   useEffect(() => {
-    const handle = (url: string | null) => {
+    // 优先用原生 IntentTextReader（它在 Activity onCreate 时趁权限还在就读了内容）
+    // 原生模块在 Android 上才存在；web/iOS 走 Linking 兜底
+    const tryNativeIntent = async (): Promise<boolean> => {
+      const mod = (NativeModules as any).IntentTextReader;
+      if (!mod || typeof mod.consume !== 'function') return false;
+      try {
+        const data = await mod.consume();
+        if (data && typeof data.content === 'string' && data.content.length > 0) {
+          const fileName = data.fileName || 'shared';
+          const kind = getDocKind(fileName);
+          await applyLoadedDoc(
+            { title: titleFromName(fileName, kind), kind, text: data.content },
+            inferExternalSource('content://'),
+          );
+          return true;
+        }
+      } catch { /* 落到 Linking */ }
+      return false;
+    };
+
+    const handle = async (url: string | null) => {
+      const got = await tryNativeIntent();
+      if (got) return;
       if (url && (url.startsWith('file://') || url.startsWith('content://'))) {
         loadFromUri(url);
       }
@@ -467,15 +526,10 @@ export default function App() {
       setLoading(true);
       setError(null);
       setErrorAction(null);
-      const result = await DocumentPicker.getDocumentAsync({
-        type: ['text/markdown', 'text/plain', 'application/json', 'application/octet-stream'],
-        copyToCacheDirectory: true,
-      });
-      if (result.canceled) return;
-      const file = result.assets[0];
-      const text = await new File(file.uri).text();
-      const kind = getDocKind(file.name, file.mimeType);
-      await applyLoadedDoc({ title: titleFromName(file.name, kind), kind, text }, 'documentPicker');
+      const picked = await pickFile(['text/markdown', 'text/plain', 'application/json', 'application/octet-stream']);
+      if (!picked) return;
+      const kind = getDocKind(picked.name, picked.mimeType ?? undefined);
+      await applyLoadedDoc({ title: titleFromName(picked.name, kind), kind, text: picked.text }, 'documentPicker');
     } catch (e) {
       setError(friendlyOpenError(e, '本地文件选择器'));
       setErrorAction('openFile');
@@ -531,11 +585,12 @@ export default function App() {
         setError('分享失败：' + result.error);
         return;
       }
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(result.outputPath, {
-          mimeType: isJson ? 'application/json' : 'text/markdown',
-          dialogTitle: `${title || '文档'}.${isJson ? 'json' : 'md'}`,
-        });
+      const { shared } = await shareFile(result.outputPath, {
+        filename: `${title || '文档'}.${isJson ? 'json' : 'md'}`,
+        mimeType: isJson ? 'application/json' : 'text/markdown',
+        dialogTitle: `${title || '文档'}.${isJson ? 'json' : 'md'}`,
+      });
+      if (shared) {
         await remember(title, isJson ? 'json' : 'markdown', isJson ? jsonRaw : content, 'recent', ['shared']);
       } else {
         setError('当前环境不支持系统分享');
@@ -574,6 +629,7 @@ export default function App() {
   // Android 返回键：优先关 Sheet → 回到首页 → 不拦截让系统退出
   const handleBackPress = useCallback(() => {
     if (convertVisible) { setConvertVisible(false); return true; }
+    if (batchVisible)   { setBatchVisible(false);   return true; }
     if (editVisible)    { setEditVisible(false);    return true; }
     if (recentVisible)  { setRecentVisible(false);  return true; }
     if (promptVisible)  { setPromptVisible(false);  return true; }
@@ -587,7 +643,7 @@ export default function App() {
       return true;
     }
     return false;
-  }, [hasDocument, convertVisible, editVisible, recentVisible, promptVisible, aiVisible]);
+  }, [hasDocument, convertVisible, batchVisible, editVisible, recentVisible, promptVisible, aiVisible]);
 
   const resetApp = useCallback(() => {
     setHasDocument(false);
@@ -619,6 +675,7 @@ export default function App() {
           onOpenRecentSheet={() => setRecentVisible(true)}
           onOpenPrompts={() => setPromptVisible(true)}
           onOpenDoc={openRecent}
+          onOpenBatch={() => setBatchVisible(true)}
           onOpenGuide={() => setOpenGuideVisible(true)}
         />
       ) : jsonRaw !== null ? (
@@ -668,15 +725,15 @@ export default function App() {
             onPress={copyCurrent}
             disabled={loading}
           >
-            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>❐</Text>
+            <Copy size={22} color={theme.textSecondary} />
             <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>复制</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.readerDockBtn} onPress={() => setEditVisible(true)}>
-            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>✎</Text>
+            <Pencil size={22} color={theme.textSecondary} />
             <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>编辑</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.readerDockBtn} onPress={() => setAiVisible(true)}>
-            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>✦</Text>
+            <Sparkles size={22} color={theme.textSecondary} />
             <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>AI可读</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -684,7 +741,7 @@ export default function App() {
             onPress={() => setConvertVisible(true)}
             disabled={loading}
           >
-            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>⇄</Text>
+            <ArrowRightLeft size={22} color={theme.textSecondary} />
             <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>转换</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -692,7 +749,7 @@ export default function App() {
             onPress={shareCurrent}
             disabled={loading}
           >
-            <Text style={[styles.readerDockIcon, { color: theme.textSecondary }]}>↗</Text>
+            <Share size={22} color={theme.textSecondary} />
             <Text style={[styles.readerDockLabel, { color: theme.textSecondary }]}>分享</Text>
           </TouchableOpacity>
         </View>
@@ -719,6 +776,11 @@ export default function App() {
           ['shared'],
         )}
         themeMode={systemMode}
+      />
+      <BatchConvertSheet
+        visible={batchVisible}
+        onClose={() => setBatchVisible(false)}
+        theme={theme}
       />
       <EditSheet
         visible={editVisible}
@@ -825,26 +887,29 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   homeHeaderBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: 38,
+    height: 38,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  homeHeaderBtnText: {
-    fontSize: 18,
-    fontWeight: '700',
+    borderWidth: 1,
   },
   homeContent: {
     alignSelf: 'center',
     flexGrow: 1,
   },
   homePrimary: {
-    minHeight: 54,
-    borderRadius: 14,
+    minHeight: 56,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 14,
+    marginBottom: 16,
+    flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
+    elevation: 4,
   },
   homePrimaryText: {
     color: '#FFFFFF',
@@ -868,19 +933,28 @@ const styles = StyleSheet.create({
   },
   homeQuickAction: {
     flex: 1,
-    minHeight: 96,
+    minHeight: 108,
     borderWidth: 1,
-    borderRadius: 14,
-    justifyContent: 'center',
+    borderRadius: 16,
+    justifyContent: 'flex-start',
     paddingHorizontal: 12,
-    paddingVertical: 12,
+    paddingVertical: 14,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
   },
-  homeQuickIcon: {
-    fontSize: 22,
-    marginBottom: 8,
+  homeQuickIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
   },
   homeQuickTitle: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '700',
   },
   homeQuickMeta: {
@@ -913,12 +987,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   homeDocRow: {
-    minHeight: 64,
+    minHeight: 68,
     paddingHorizontal: 14,
     paddingVertical: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 12,
+  },
+  homeDocIconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   homeDocTitle: {
     fontSize: 15,
@@ -926,16 +1007,14 @@ const styles = StyleSheet.create({
   },
   homeDocMeta: {
     fontSize: 12,
-    marginTop: 4,
+    marginTop: 3,
   },
-  homeDocStatus: {
-    fontSize: 11,
-    marginTop: 4,
-    fontWeight: '700',
-  },
-  homeDocArrow: {
-    fontSize: 28,
-    lineHeight: 28,
+  homeDocMore: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomBar: {
     position: 'absolute',
@@ -1115,14 +1194,21 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
+    left: 16,
+    right: 16,
+    bottom: 12,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-around',
-    borderTopWidth: 1,
+    borderRadius: 24,
+    borderWidth: 1,
     paddingTop: 8,
+    paddingBottom: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 6,
   },
   tabItem: {
     flex: 1,
@@ -1130,38 +1216,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 44,
   },
-  tabIcon: {
-    fontSize: 18,
-    marginBottom: 3,
-    color: '#9CA3AF',
-  },
   tabLabel: {
     fontSize: 11,
     fontWeight: '600',
+    marginTop: 3,
   },
   tabCenter: {
     width: 72,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -10,
+    marginTop: -16,
   },
   tabCenterCircle: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.18,
-    shadowRadius: 6,
-    elevation: 5,
-  },
-  tabCenterIcon: {
-    color: '#FFFFFF',
-    fontSize: 28,
-    fontWeight: '300',
-    lineHeight: 30,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
+    elevation: 6,
   },
   homePlaceholder: {
     flex: 1,

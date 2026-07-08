@@ -4,6 +4,7 @@
 import { spawn } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs';
+import { cleanupMarkdown } from './mdCleanup';
 
 // ── 类型 ──
 
@@ -25,7 +26,7 @@ export interface ConvertResult {
 }
 
 export interface ConvertOptions {
-  outputDir: string;
+  outputDir?: string;
   preserveImages?: boolean;
 }
 
@@ -115,6 +116,8 @@ export function convertFile(
   outputDir: string,
   options?: ConvertOptions,
 ): Promise<ConvertResult> {
+  // 图片资源：preserveImages 时，pandoc 把图片抽到 <outDir>/media 并在 MD 里用相对路径引用
+  const mediaDir = options?.preserveImages ? path.join(outputDir, 'media') : undefined;
   const fileName = path.basename(inputPath);
   const inputFormat = detectFormat(inputPath);
 
@@ -132,10 +135,11 @@ export function convertFile(
     const outPath = makeOutputPath(inputPath, outputFormat, outputDir);
 
     if (outputFormat === 'md' && isOfficeToMarkdown(inputFormat)) {
-      // Office → Markdown
+      // Office → Markdown（转换后清理：去噪声/重复标题/多余空行）
       const { from } = pandocFormat(path.extname(inputPath));
       const args = [inputPath, '-o', outPath, '-f', from, '-t', 'gfm'];
-      runPandoc(p, args, inputPath, fileName, outPath, resolve);
+      if (mediaDir) args.push('--extract-media', mediaDir);
+      runPandoc(p, args, inputPath, fileName, outPath, resolve, true);
     } else if (inputFormat === 'md' && outputFormat === 'docx') {
       // Markdown → Word
       const args = [inputPath, '-o', outPath, '-f', 'markdown', '-t', 'docx'];
@@ -158,6 +162,7 @@ function runPandoc(
   fileName: string,
   outPath: string,
   resolve: (v: ConvertResult) => void,
+  postCleanup = false,
 ) {
   const proc = spawn(pandoc, args, { windowsHide: true, timeout: 120_000 });
 
@@ -175,6 +180,15 @@ function runPandoc(
 
   proc.on('close', (code) => {
     if (code === 0 && fs.existsSync(outPath)) {
+      // Office→MD 后清理噪声（多余空行/重复标题/YAML 块）
+      if (postCleanup) {
+        try {
+          const raw = fs.readFileSync(outPath, 'utf-8');
+          fs.writeFileSync(outPath, cleanupMarkdown(raw), 'utf-8');
+        } catch {
+          /* 清理失败不影响转换成功结果 */
+        }
+      }
       resolve({ inputPath, fileName, ok: true, outputPath: outPath, warnings: [] });
     } else {
       resolve({
@@ -211,19 +225,60 @@ function jsonConvert(
 
 // ── 批量转换 ──
 
+// 失败隔离：单文件 reject/抛错不扩散到整批，转成 ok:false 结果
+async function safeConvert(
+  input: ConvertInput,
+  outputFormat: ConvertFormat,
+  outputDir: string,
+  options?: ConvertOptions,
+): Promise<ConvertResult> {
+  try {
+    return await convertFile(input.inputPath, outputFormat, outputDir, options);
+  } catch (err: any) {
+    return {
+      inputPath: input.inputPath,
+      fileName: input.fileName,
+      ok: false,
+      errorCode: ERROR_CODES.CONVERT_FAILED,
+      error: `批量转换内部异常：${err?.message ?? String(err)}`,
+      warnings: [],
+    };
+  }
+}
+
 export async function convertBatch(
   inputs: ConvertInput[],
   outputFormat: ConvertFormat,
   outputDir: string,
   concurrency = 4,
+  options?: ConvertOptions,
 ): Promise<ConvertResult[]> {
-  const results: ConvertResult[] = [];
-  for (let i = 0; i < inputs.length; i += concurrency) {
-    const chunk = inputs.slice(i, i + concurrency);
-    const chunkResults = await Promise.all(
-      chunk.map((f) => convertFile(f.inputPath, outputFormat, outputDir)),
-    );
-    results.push(...chunkResults);
+  const results: ConvertResult[] = new Array(inputs.length);
+  let cursor = 0;
+
+  async function worker() {
+    while (true) {
+      const index = cursor++;
+      if (index >= inputs.length) return;
+      // allSettled 兜底：即使 safeConvert 内部再抛错也不污染整批
+      const settled = await Promise.allSettled([
+        safeConvert(inputs[index], outputFormat, outputDir, options),
+      ]);
+      const r = settled[0];
+      results[index] = r.status === 'fulfilled'
+        ? r.value
+        : {
+            inputPath: inputs[index].inputPath,
+            fileName: inputs[index].fileName,
+            ok: false,
+            errorCode: ERROR_CODES.CONVERT_FAILED,
+            error: `未捕获异常：${(r as PromiseRejectedResult).reason?.message ?? String((r as PromiseRejectedResult).reason)}`,
+            warnings: [],
+          };
+    }
   }
+
+  const poolSize = Math.max(1, Math.min(concurrency, inputs.length || 1));
+  await Promise.all(Array.from({ length: poolSize }, () => worker()));
   return results;
 }

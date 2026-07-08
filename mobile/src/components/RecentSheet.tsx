@@ -13,6 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RecentDoc, DocSource, documentStatusText } from '../storage/recentDocs';
 import { Theme } from '../theme';
+import { X, Search, FileText, Braces, Trash2 } from 'lucide-react-native';
 
 function sourceLabel(s: DocSource | string): string {
   switch (s) {
@@ -77,17 +78,20 @@ export function RecentSheet({ visible, docs, theme, onClose, onOpen, onRemove }:
               <Text style={[styles.subhead, { color: theme.textSecondary }]}>继续阅读、查找最近复制或编辑过的文件。</Text>
             </View>
             <TouchableOpacity style={[styles.closeBtn, { borderColor: theme.border }]} onPress={onClose}>
-              <Text style={{ color: theme.link, fontSize: 14 }}>关闭</Text>
+              <X size={18} color={theme.textSecondary} />
             </TouchableOpacity>
           </View>
-          <TextInput
-            value={query}
-            onChangeText={setQuery}
-            placeholder="搜索标题 / 来源 / 类型 / 状态"
-            placeholderTextColor={theme.textSecondary}
-            returnKeyType="search"
-            style={[styles.searchInput, { color: theme.text, backgroundColor: theme.background, borderColor: theme.border }]}
-          />
+          <View style={[styles.searchBox, { backgroundColor: theme.background, borderColor: theme.border }]}>
+            <Search size={16} color={theme.textSecondary} />
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder="搜索标题 / 来源 / 类型 / 状态"
+              placeholderTextColor={theme.textSecondary}
+              returnKeyType="search"
+              style={[styles.searchInput, { color: theme.text }]}
+            />
+          </View>
           {docs.length === 0 ? (
             <Text style={[styles.empty, { color: theme.textSecondary }]}>打开过的文档会出现在这里。</Text>
           ) : filteredDocs.length === 0 ? (
@@ -102,6 +106,13 @@ export function RecentSheet({ visible, docs, theme, onClose, onOpen, onRemove }:
                   onPress={() => onOpen(item)}
                   onLongPress={() => onRemove(item.id)}
                 >
+                  <View style={[styles.itemIconWrap, { backgroundColor: item.kind === 'json' ? `${theme.link}10` : '#E5E7EB' }]}>
+                    {item.kind === 'json' ? (
+                      <Braces size={20} color={theme.link} />
+                    ) : (
+                      <FileText size={20} color={theme.textSecondary} />
+                    )}
+                  </View>
                   <View style={{ flex: 1, minWidth: 0 }}>
                     <Text style={[styles.title, { color: theme.text }]} numberOfLines={1}>
                       {item.title}
@@ -113,7 +124,13 @@ export function RecentSheet({ visible, docs, theme, onClose, onOpen, onRemove }:
                       {documentStatusText(item)}
                     </Text>
                   </View>
-                  <Text style={{ color: theme.textSecondary, fontSize: 12 }}>长按移除</Text>
+                  <TouchableOpacity
+                    style={styles.removeBtn}
+                    onPress={() => onRemove(item.id)}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <Trash2 size={18} color={theme.textSecondary} />
+                  </TouchableOpacity>
                 </TouchableOpacity>
               )}
             />
@@ -163,13 +180,20 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     paddingVertical: 16,
   },
-  searchInput: {
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
     height: 40,
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 12,
     marginBottom: 10,
+    gap: 8,
+  },
+  searchInput: {
+    flex: 1,
     fontSize: 14,
+    paddingVertical: 0,
   },
   item: {
     flexDirection: 'row',
@@ -177,6 +201,20 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 12,
     borderBottomWidth: 1,
+  },
+  itemIconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  removeBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 15,

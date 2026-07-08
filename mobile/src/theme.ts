@@ -13,6 +13,8 @@ export interface Theme {
   codeText: string;
   border: string;
   link: string;
+  error: string;
+  success: string;
   quoteBackground: string;
   quoteBorder: string;
   tableHeaderBg: string;
@@ -31,6 +33,8 @@ export const themes: Record<ThemeMode, Theme> = {
     codeText: '#B42318',
     border: '#E5E7EB',
     link: '#007AFF',
+    error: '#B42318',
+    success: '#16A34A',
     quoteBackground: '#F3F6F8',
     quoteBorder: '#C9CED6',
     tableHeaderBg: '#F1F3F6',
@@ -47,6 +51,8 @@ export const themes: Record<ThemeMode, Theme> = {
     codeText: '#FF9F8A',
     border: '#303034',
     link: '#0A84FF',
+    error: '#FF6B6B',
+    success: '#34D399',
     quoteBackground: '#1F2023',
     quoteBorder: '#3A3A40',
     tableHeaderBg: '#242426',

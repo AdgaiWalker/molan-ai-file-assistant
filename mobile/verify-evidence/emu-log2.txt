@@ -1,0 +1,639 @@
+--------- beginning of main
+07-04 12:13:44.844  1838  5225 I gle.android.gms: AssetManager2(0x744d01df2558) locale list changing from [] to [en-US]
+07-04 12:13:44.846  1838  5798 I NearbyDiscovery: (REDACTED) processGrantSlicePermission: %s
+07-04 12:13:44.857  1838  5787 W SQLiteLog: (28) double-quoted string literal: "com.mdreader.app"
+07-04 12:13:44.935  1516  5795 I ProximityAuth: [RecentAppsMediator] Package added: (user=UserHandle{0}) com.mdreader.app
+07-04 12:13:44.952  1516  5795 I .gms.persistent: AssetManager2(0x744d01deed18) locale list changing from [] to [en-US]
+07-04 12:13:45.028  1516  5803 I Fitness : (REDACTED) FitCleanupIntentOperation received Intent %s
+07-04 12:13:45.029  1838  2496 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=AppsCorpus serviceId=36
+--------- beginning of system
+07-04 12:13:45.158   712   917 D BackgroundInstallControlService: Package event received: 0
+07-04 12:13:45.234  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <131:RUNNING:28%[28%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:45.234  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <131:RUNNING:28%[28%]>
+07-04 12:13:45.234  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <131:RUNNING:28%[28%]>
+07-04 12:13:45.234  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=131
+07-04 12:13:45.234  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=131, group_id=config.x86_64 reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 8257498/28488332
+07-04 12:13:45.235  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <131:RUNNING:28%[28%]>
+07-04 12:13:45.235  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <131:RUNNING:28%[28%]>
+07-04 12:13:45.238  3394  3454 I Finsky:background: [50] RM: getStatus resourceRequestId=5b4d5be0-d29c-4f3b-9529-3e782c30f1d3 requestId=131 package=com.google.android.youtube artifact=config.x86_64 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:45.239  3394  3454 I Finsky:background: [50] DSC: reviveDownload(131)
+07-04 12:13:45.239  3394  3454 I Finsky:background: [50] DS: reviveDownload(request_id=131)
+07-04 12:13:45.240  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=131, files_to_download=[config.x86_64(size:28488332)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=8257498, total_bytes=28488332, retry[count=0, next_retry=n/a])
+07-04 12:13:45.241  3394  3394 I Finsky:background: [2] RF: onProgress request_id=131 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:45.242  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=131 group=com.google.android.youtube artifact=config.x86_64 collectedBytes= 8257498 / 28488332
+07-04 12:13:45.242  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17079362 / 54854460 for 5 artifacts
+07-04 12:13:45.243  3394  3394 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+07-04 12:13:45.278  1838  5229 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+07-04 12:13:45.320   712  1916 W ActivityTaskManager: callingPackage for (uid=2000, pid=5809) has no WPC
+07-04 12:13:45.330  1838  2496 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=null serviceId=30
+07-04 12:13:45.335   712  1916 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@7a21cd46 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+07-04 12:13:45.336   712  1916 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_OVERRIDE
+07-04 12:13:45.336   712  1916 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_FULLSCREEN_OVERRIDE
+07-04 12:13:45.337   712  1916 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+07-04 12:13:45.338   712  1916 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+07-04 12:13:45.344  3180  3341 I Finsky  : [48] WM::SCH: Logging work initialize for 12-1
+07-04 12:13:45.353   712  1916 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+07-04 12:13:45.358   557   569 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: Unable to check Uri permission because caller is holding WM lock; assuming permission denied
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: java.lang.IllegalStateException: Unable to check Uri permission because caller is holding WM lock; assuming permission denied
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.am.ContentProviderHelper.checkContentProviderUriPermission(ContentProviderHelper.java:1195)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService$LocalService.checkContentProviderUriPermission(ActivityManagerService.java:16507)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.checkHoldingPermissionsInternalUnlocked(UriGrantsManagerService.java:1214)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.checkHoldingPermissionsUnlocked(UriGrantsManagerService.java:1124)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.checkContentUriPermissionFullUnlocked(UriGrantsManagerService.java:1511)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.-$$Nest$mcheckContentUriPermissionFullUnlocked(UriGrantsManagerService.java:0)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService$LocalService.checkUriPermission(UriGrantsManagerService.java:1721)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityCallerState.addContentUriIfUidHasPermission(ActivityCallerState.java:168)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityCallerState.computeCallerInfo(ActivityCallerState.java:114)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityRecord.computeCallerInfo(ActivityRecord.java:1819)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityRecord.computeInitialCallerInfo(ActivityRecord.java:1813)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.handleStartResult(ActivityStarter.java:1766)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.startActivityUnchecked(ActivityStarter.java:1707)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.executeRequest(ActivityStarter.java:1522)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.execute(ActivityStarter.java:870)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityTaskManagerService.startActivityAsUser(ActivityTaskManagerService.java:1315)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityTaskManagerService.startActivityAsUser(ActivityTaskManagerService.java:1259)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService.startActivityAsUserWithFeature(ActivityManagerService.java:3259)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerShellCommand.runStartActivity(ActivityManagerShellCommand.java:869)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerShellCommand.onCommand(ActivityManagerShellCommand.java:250)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.modules.utils.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:97)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at android.os.ShellCommand.exec(ShellCommand.java:38)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService.onShellCommand(ActivityManagerService.java:10418)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at android.os.Binder.shellCommand(Binder.java:1151)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at android.os.Binder.onTransact(Binder.java:953)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:5739)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2735)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at android.os.Binder.execTransactInternal(Binder.java:1426)
+07-04 12:13:45.381   712  1916 E ContentProviderHelper: 	at android.os.Binder.execTransact(Binder.java:1365)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: Unable to check Uri permission because caller is holding WM lock; assuming permission denied
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: java.lang.IllegalStateException: Unable to check Uri permission because caller is holding WM lock; assuming permission denied
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.am.ContentProviderHelper.checkContentProviderUriPermission(ContentProviderHelper.java:1195)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService$LocalService.checkContentProviderUriPermission(ActivityManagerService.java:16507)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.checkHoldingPermissionsInternalUnlocked(UriGrantsManagerService.java:1214)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.checkHoldingPermissionsUnlocked(UriGrantsManagerService.java:1124)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.checkContentUriPermissionFullUnlocked(UriGrantsManagerService.java:1511)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService.-$$Nest$mcheckContentUriPermissionFullUnlocked(UriGrantsManagerService.java:0)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.uri.UriGrantsManagerService$LocalService.checkUriPermission(UriGrantsManagerService.java:1721)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityCallerState.addContentUriIfUidHasPermission(ActivityCallerState.java:168)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityCallerState.computeCallerInfo(ActivityCallerState.java:117)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityRecord.computeCallerInfo(ActivityRecord.java:1819)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityRecord.computeInitialCallerInfo(ActivityRecord.java:1813)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.handleStartResult(ActivityStarter.java:1766)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.startActivityUnchecked(ActivityStarter.java:1707)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.executeRequest(ActivityStarter.java:1522)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityStarter.execute(ActivityStarter.java:870)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityTaskManagerService.startActivityAsUser(ActivityTaskManagerService.java:1315)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.wm.ActivityTaskManagerService.startActivityAsUser(ActivityTaskManagerService.java:1259)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService.startActivityAsUserWithFeature(ActivityManagerService.java:3259)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerShellCommand.runStartActivity(ActivityManagerShellCommand.java:869)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerShellCommand.onCommand(ActivityManagerShellCommand.java:250)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.modules.utils.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:97)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at android.os.ShellCommand.exec(ShellCommand.java:38)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService.onShellCommand(ActivityManagerService.java:10418)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at android.os.Binder.shellCommand(Binder.java:1151)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at android.os.Binder.onTransact(Binder.java:953)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:5739)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2735)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at android.os.Binder.execTransactInternal(Binder.java:1426)
+07-04 12:13:45.383   712  1916 E ContentProviderHelper: 	at android.os.Binder.execTransact(Binder.java:1365)
+07-04 12:13:45.389   712  1916 I ActivityTaskManager: START u0 {act=android.intent.action.VIEW dat=content://media/... typ=text/markdown flg=0x10000001 xflg=0x4 cmp=com.mdreader.app/.MainActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+07-04 12:13:45.395  1108  1108 W SplitSelectStateCtor: Missing session instanceIds
+07-04 12:13:45.395   963  1027 V WindowManagerShell: Transition requested (#16): android.os.BinderProxy@3bda2e TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=50 effectiveUid=10218 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.VIEW dat=content://media/... typ=text/markdown flg=0x10000001 cmp=com.mdreader.app/.MainActivity } baseActivity=ComponentInfo{com.mdreader.app/com.mdreader.app.MainActivity} topActivity=ComponentInfo{com.mdreader.app/com.mdreader.app.MainActivity} origActivity=null realActivity=ComponentInfo{com.mdreader.app/com.mdreader.app.MainActivity} numActivities=1 lastActiveTime=559387 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@38a19cf} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{ac43f5c com.mdreader.app.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(226, 555 - 585, 1365) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 810, 1920) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 16 }
+07-04 12:13:45.395   963  1027 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+07-04 12:13:45.399  1108  1108 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+07-04 12:13:45.400   963  1056 I ndroid.systemui: AssetManager2(0x744d01e12c18) locale list changing from [] to [en-US]
+07-04 12:13:45.410   557   557 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+07-04 12:13:45.411  3180  3349 I Finsky  : [52] SCH: Scheduling phonesky job Id: 12-1, CT: 1783167223259, Constraints: [{ L: 15000, D: 86400000, C: CHARGING_NONE, I: IDLE_NONE, N: NET_ANY, B: BATTERY_ANY }]
+07-04 12:13:45.417   712   727 W system_server: Suspending all threads took: 13.565ms
+07-04 12:13:45.430  3180  3354 I Finsky  : [56] SCH: Scheduling 1 system job(s)
+07-04 12:13:45.431  3180  3354 I Finsky  : [56] SCH: Scheduling system job Id: 9429, L: 12828, D: 81535992, C: false, I: false, N: 1
+07-04 12:13:45.456   712  1916 I AppsFilter: interaction: PackageSetting{6e3124e com.android.microdroid.empty_payload/10203} -> PackageSetting{4b1c955 com.mdreader.app/10218} BLOCKED
+07-04 12:13:45.459   712  3521 D CompatChangeReporter: Compat change id reported: 377864165; UID 10218; state: ENABLED
+07-04 12:13:45.467   963  1027 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=402
+07-04 12:13:45.479   963  1057 W HWUI    : Image decoding logging dropped!
+07-04 12:13:45.518   712   743 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@7a21cd46 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+07-04 12:13:45.522   712   743 W ActivityManager: Slow operation: 64ms so far, now at startProcess: done creating new process record
+07-04 12:13:45.522   712   743 W ActivityManager: Slow operation: 65ms so far, now at startProcess: stepping in to startProcess
+07-04 12:13:45.538   712   743 W ActivityManager: Slow operation: 81ms so far, now at startProcess: done starting proc!
+07-04 12:13:45.543   963  1057 W HWUI    : Image decoding logging dropped!
+07-04 12:13:45.623   481   481 D Zygote  : Forked child process 5812
+07-04 12:13:45.628   712   751 W ActivityManager: Slow operation: 105ms so far, now at startProcess: returned from zygote!
+07-04 12:13:45.635   963  1057 W HWUI    : Image decoding logging dropped!
+07-04 12:13:45.642   712   751 W ActivityManager: Slow operation: 119ms so far, now at startProcess: done updating battery stats
+07-04 12:13:45.642   712   751 W ActivityManager: Slow operation: 119ms so far, now at startProcess: building log message
+07-04 12:13:45.643   712   751 I ActivityManager: Start proc 5812:com.mdreader.app/u0a218 for next-top-activity {com.mdreader.app/com.mdreader.app.MainActivity}
+07-04 12:13:45.643   712   751 W ActivityManager: Slow operation: 120ms so far, now at startProcess: starting to update pids map
+07-04 12:13:45.651   712   751 I ActivityManager: ProcessObserver broadcast disabled
+07-04 12:13:45.651   712   751 W ActivityManager: Slow operation: 128ms so far, now at startProcess: done updating pids map
+07-04 12:13:45.661  5812  5812 I om.mdreader.app: Using CollectorTypeCMC GC.
+07-04 12:13:45.663  5812  5812 W om.mdreader.app: Unexpected CPU variant for x86: x86_64.
+07-04 12:13:45.663  5812  5812 W om.mdreader.app: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+07-04 12:13:45.688  3180  3338 I Finsky  : [45] [ContentSync] finished, scheduled=true
+07-04 12:13:45.694  5812  5812 E om.mdreader.app: Not starting debugger since process cannot load the jdwp agent.
+07-04 12:13:45.733  5812  5812 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+07-04 12:13:45.742   963  1057 W HWUI    : Image decoding logging dropped!
+07-04 12:13:45.795  1838  5229 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+07-04 12:13:45.876   712   834 I system_server: AssetManager2(0x744d01e7d658) locale list changing from [] to [en-US]
+07-04 12:13:45.883   712  3633 D CoreBackPreview: Window{712a5d1 u0 Splash Screen com.mdreader.app}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@ab7a541, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+07-04 12:13:45.932   712   834 I system_server: AssetManager2(0x744d01e74058) locale list changing from [] to [en-US]
+07-04 12:13:45.956   712   917 D BackgroundInstallControlService: Package event received: 0
+07-04 12:13:45.957   712   917 D BackgroundInstallControlService: Package event received: 0
+07-04 12:13:45.974   712   741 W Looper  : Slow dispatch took 152ms android.ui app=system_server main=false group=TOP_APP h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@14d5843 m=0
+07-04 12:13:46.003   712   740 V WindowManager: Sent Transition (#16) createdAt=07-04 12:13:45.339 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=50 effectiveUid=10218 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.VIEW dat=content://media/... typ=text/markdown flg=0x10000001 cmp=com.mdreader.app/.MainActivity } baseActivity=ComponentInfo{com.mdreader.app/com.mdreader.app.MainActivity} topActivity=ComponentInfo{com.mdreader.app/com.mdreader.app.MainActivity} origActivity=null realActivity=ComponentInfo{com.mdreader.app/com.mdreader.app.MainActivity} numActivities=1 lastActiveTime=559387 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{1360b1 Task{986f274 #50 type=standard A=10218:com.mdreader.app}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{99c4996 com.mdreader.app.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(226, 555 - 585, 1365) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 810, 1920) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 16 }
+07-04 12:13:46.003   712   740 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+07-04 12:13:46.004   712   740 V WindowManager:     info={id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+07-04 12:13:46.004   712   740 V WindowManager:         {WCT{RemoteToken{1360b1 Task{986f274 #50 type=standard A=10218:com.mdreader.app}}} m=OPEN f=NONE leash=Surface(name=Task=50)/@0x39c4aca sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},
+07-04 12:13:46.004   712   740 V WindowManager:         {WCT{RemoteToken{ca0dd81 Task{f70cf06 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x6e4f241 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},
+07-04 12:13:46.004   712   740 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2c2a02d showWhenLocked=false})/@0xe6ffd7c sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0}
+07-04 12:13:46.004   712   740 V WindowManager:     ]}
+07-04 12:13:46.007   963  2141 V WindowManagerShell: onTransitionReady(transaction=3058016715384)
+07-04 12:13:46.016   712   834 I system_server: AssetManager2(0x744d01e72438) locale list changing from [] to [en-US]
+07-04 12:13:46.027   963  1027 V WindowManagerShell: onTransitionReady (#16) android.os.BinderProxy@3bda2e: {id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+07-04 12:13:46.027   963  1027 V WindowManagerShell:         {m=OPEN f=NONE leash=Surface(name=Task=50)/@0x23a23c6 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},
+07-04 12:13:46.027   963  1027 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xacbbf87 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},
+07-04 12:13:46.027   963  1027 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2c2a02d showWhenLocked=false})/@0x685deb4 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0}
+07-04 12:13:46.027   963  1027 V WindowManagerShell:     ]}
+07-04 12:13:46.037   963  1027 V WindowManagerShell: Playing animation for (#16) android.os.BinderProxy@3bda2e@0
+07-04 12:13:46.040   963  1027 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+07-04 12:13:46.049  5812  5812 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+07-04 12:13:46.050   963  1027 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=NONE leash=Surface(name=Task=50)/@0x23a23c6 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xacbbf87 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2c2a02d showWhenLocked=false})/@0x685deb4 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0}]}
+07-04 12:13:46.050  5812  5812 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+07-04 12:13:46.050   963  1027 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@5370983 windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ba72700, appThread = android.app.IApplicationThread$Stub$Proxy@e0dcb39, debugName = overlayBackTransition }}
+07-04 12:13:46.055   963  1027 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6e1157e, appThread = android.app.IApplicationThread$Stub$Proxy@fd6badf, debugName = LauncherToDream }}
+07-04 12:13:46.055   963  1027 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@2d7b32c, appThread = android.app.IApplicationThread$Stub$Proxy@e76e1f5, debugName = QuickstepLaunchHome }}
+07-04 12:13:46.055   963  1027 V WindowManagerShell:  Delegate animation for (#16) to null
+07-04 12:13:46.055   963  1027 V WindowManagerShell: start default transition animation, info = {id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=NONE leash=Surface(name=Task=50)/@0x23a23c6 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xacbbf87 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2c2a02d showWhenLocked=false})/@0x685deb4 sb=Rect(0, 0 - 810, 1920) eb=Rect(0, 0 - 810, 1920) epz=Point(810, 1920) d=0}]}
+07-04 12:13:46.056   963  1027 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@11acd23 animAttr=0x13 type=OPEN isEntrance=false
+07-04 12:13:46.057   963  1027 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@efc3220 animAttr=0x12 type=OPEN isEntrance=true
+07-04 12:13:46.066   963  1027 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@ecb8305
+07-04 12:13:46.076   712   741 W Looper  : Slow dispatch took 102ms android.ui app=system_server main=false group=TOP_APP h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@14d5843 m=0
+07-04 12:13:46.084  5812  5812 D nativeloader: Configuring clns-9 for other apk /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/lib/x86_64:/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.mdreader.app
+07-04 12:13:46.101   963   989 I ndroid.systemui: Waiting for a blocking GC ProfileSaver
+07-04 12:13:46.135  5812  5812 I om.mdreader.app: AssetManager2(0x744d01dd6998) locale list changing from [] to [en-US]
+07-04 12:13:46.150  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <128:RUNNING:28%[28%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:46.150  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <128:RUNNING:28%[28%]>
+07-04 12:13:46.151  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <128:RUNNING:28%[28%]>
+07-04 12:13:46.151  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=128
+07-04 12:13:46.151  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=128, group_id=com.google.android.youtube.apk reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 6810554/24318038
+07-04 12:13:46.151  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <128:RUNNING:28%[28%]>
+07-04 12:13:46.151  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <128:RUNNING:28%[28%]>
+07-04 12:13:46.153  3394  3468 I Finsky:background: [55] RM: getStatus resourceRequestId=e49c5bf5-4c50-4620-920d-8226ed5e6cc6 requestId=128 package=com.google.android.youtube artifact=com.google.android.youtube.apk isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:46.154  3394  3468 I Finsky:background: [55] DSC: reviveDownload(128)
+07-04 12:13:46.154  3394  3468 I Finsky:background: [55] DS: reviveDownload(request_id=128)
+07-04 12:13:46.158  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=128, files_to_download=[com.google.android.youtube.apk(size:24318038)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=6810554, total_bytes=24318038, retry[count=0, next_retry=n/a])
+07-04 12:13:46.166  3394  3394 I Finsky:background: [2] RF: onProgress request_id=128 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:46.167  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=128 group=com.google.android.youtube artifact=com.google.android.youtube.apk collectedBytes= 6810554 / 24318038
+07-04 12:13:46.167  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17116142 / 54854460 for 5 artifacts
+07-04 12:13:46.187  3394  3394 I Finsky:background: [2] Updated time lastBroadcast=2026-07-04T12:13:43.535Z current=2026-07-04T12:13:46.187Z
+07-04 12:13:46.188  3394  3394 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 17116142 / 54854460 / 0.312028
+07-04 12:13:46.203   712  3633 W HWUI    : Image decoding logging dropped!
+07-04 12:13:46.227  3394  3458 I Finsky:background: [52] IV2: onTaskProgress com.google.android.youtube[iid:21] [isid:nHO2wAt_QxSHvD_RIxHYVA] status:RESOURCE_FETCH_PROGRESS, size: 17116142/54854460
+07-04 12:13:46.248  3394  4712 I Finsky:background: [107] IQ: Notifying installation update. [Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT5M29.993S, attempt=0
+07-04 12:13:46.285   712  5827 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+07-04 12:13:46.310  5812  5812 V GraphicsEnvironment: Currently set values for:
+07-04 12:13:46.310  5812  5812 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+07-04 12:13:46.310  5812  5812 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+07-04 12:13:46.311  5812  5812 V GraphicsEnvironment: com.mdreader.app is not listed in per-application setting
+07-04 12:13:46.311  5812  5812 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+07-04 12:13:46.311  5812  5812 V GraphicsEnvironment: com.mdreader.app is not listed in ANGLE allowlist or settings, returning default
+07-04 12:13:46.311  5812  5812 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+07-04 12:13:46.319  1838  5229 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+07-04 12:13:46.371  3394  3394 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.youtube, isid: nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:46.408   963  1027 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#16) android.os.BinderProxy@3bda2e@0
+07-04 12:13:46.440   712   740 V WindowManager: Finish Transition (#16): created at 07-04 12:13:45.339 collect-started=0.133ms request-sent=47.766ms started=56.664ms ready=593.039ms sent=652.261ms commit=81.234ms finished=1085.378ms
+07-04 12:13:46.451  1108  1108 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+07-04 12:13:46.459   963  1027 V WindowManagerShell: Track 0 became idle
+07-04 12:13:46.460   963  1027 V WindowManagerShell: All active transition animations finished
+07-04 12:13:46.480  3180  3180 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING]
+07-04 12:13:46.469  1108  1108 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+07-04 12:13:46.552  5812  5812 W SoLoader: Initializing SoLoader: 0
+07-04 12:13:46.556  5812  5812 W SoLoader: Recording new base apk path: /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk
+07-04 12:13:46.556  5812  5812 W SoLoader: Previously recorded 0 base apk paths.
+07-04 12:13:46.563  5812  5812 I SoLoader: Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+07-04 12:13:46.563  5812  5812 I SoLoader: Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+07-04 12:13:46.563  5812  5812 I SoLoader: Preparing SO source: DirectApkSoSource[root = [/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64]]
+07-04 12:13:46.567  5812  5812 I SoLoader: Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/lib/x86_64 flags = 0]]
+07-04 12:13:46.567  5812  5812 I SoLoader: init finish: 4 SO sources prepared
+07-04 12:13:46.568  5812  5812 W SoLoader: SoLoader initialized: 8
+07-04 12:13:46.590   712  1045 W ActivityTaskManager: takeTaskSnapshot: taskId=35 not found or not visible
+07-04 12:13:46.595  1838  5229 I Icing   : Indexing done com.google.android.gms-apps
+07-04 12:13:46.602  5812  5812 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libc++_shared.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:46.750   712   727 I system_server: Background concurrent mark compact GC freed 31MB AllocSpace bytes, 57(1292KB) LOS objects, 39% free, 36MB/60MB, paused 51.652ms,40.325ms total 4.754s
+07-04 12:13:46.771  5812  5812 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libjsi.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:46.776  5812  5812 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libfbjni.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:46.781  5812  5812 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libreactnative.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Entering merged library JNI_OnLoad.
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing 13 pre-merged libs (including stub)
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x744ba4934f80
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x744ba4a1aae0
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x744ba4a2d610
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x744ba4a695f0
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing to register libreact_tracingjni_so.  onload_func: 0x744ba4b71bd0
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x744ba4b76f30
+07-04 12:13:46.781  5812  5812 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x744ba4b83430
+07-04 12:13:46.782  5812  5812 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x744ba4b862a0
+07-04 12:13:46.782  5812  5812 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x744ba4bae3c0
+07-04 12:13:46.782  5812  5812 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x744ba4c5cf20
+07-04 12:13:46.782  5812  5812 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x744ba4c63e80
+07-04 12:13:46.782  5812  5812 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x744ba4c6b580
+07-04 12:13:46.783  5812  5812 D jni_lib_merge: About to register 12 actual methods.
+07-04 12:13:46.793  5812  5812 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libreact_codegen_rnsvg.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:46.793  5812  5812 D jni_lib_merge: Entering merged library JNI_OnLoad.
+07-04 12:13:46.793  5812  5812 D jni_lib_merge: Preparing 13 pre-merged libs (including stub)
+07-04 12:13:46.793  5812  5812 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x744ba4934f80
+07-04 12:13:46.793  5812  5812 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x744ba4a1aae0
+07-04 12:13:46.793  5812  5812 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x744ba4a2d610
+07-04 12:13:46.793  5812  5812 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x744ba4a695f0
+07-04 12:13:46.793  5812  5812 D jni_lib_merge: Preparing to register libreact_tracingjni_so.  onload_func: 0x744ba4b71bd0
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x744ba4b76f30
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x744ba4b83430
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x744ba4b862a0
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x744ba4bae3c0
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x744ba4c5cf20
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x744ba4c63e80
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x744ba4c6b580
+07-04 12:13:46.794  5812  5812 D jni_lib_merge: About to register 12 actual methods.
+07-04 12:13:46.798  5812  5812 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libreact_codegen_safeareacontext.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:46.800  5812  5812 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libappmodules.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:46.836   712   729 W System  : A resource failed to call close. 
+07-04 12:13:46.838   963   969 I ndroid.systemui: Background concurrent mark compact GC freed 4124KB AllocSpace bytes, 29(692KB) LOS objects, 50% free, 20MB/41MB, paused 12.459ms,15.279ms total 4.821s
+07-04 12:13:46.838   963   989 I ndroid.systemui: WaitForGcToComplete blocked ProfileSaver on Background for 737.770ms
+07-04 12:13:46.863   712  2052 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ENABLE_FAKE_FOCUS
+07-04 12:13:46.881   712   917 D BackgroundInstallControlService: Package event received: 0
+07-04 12:13:46.881   712   917 D BackgroundInstallControlService: Package event received: 0
+07-04 12:13:46.888  5812  5830 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+07-04 12:13:46.897  5812  5812 I om.mdreader.app: AssetManager2(0x744d01ddca78) locale list changing from [] to [en-US]
+07-04 12:13:46.905   963   971 W System  : A resource failed to call release. 
+07-04 12:13:46.905   963   971 W System  : A resource failed to call release. 
+07-04 12:13:46.906   963   971 W System  : A resource failed to call release. 
+07-04 12:13:46.907   963   971 W System  : A resource failed to call release. 
+07-04 12:13:46.907   963   971 W System  : A resource failed to call release. 
+07-04 12:13:46.975  5812  5812 D AppCompatDelegate: Checking for metadata for AppLocalesMetadataHolderService : Service not found
+07-04 12:13:46.979  5812  5812 I om.mdreader.app: AssetManager2(0x744d01dd6358) locale list changing from [] to [en-US]
+07-04 12:13:47.005  5812  5812 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+07-04 12:13:47.074  5812  5830 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+07-04 12:13:47.076  5812  5830 I EGL_emulation: Opening libGLESv2_emulation.so
+07-04 12:13:47.097  5812  5830 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+07-04 12:13:47.173  5812  5812 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Schedule
+07-04 12:13:47.173  5812  5812 W unknown:BridgelessReact: ReactHost{0}.attachSurface(surfaceId = 0)
+07-04 12:13:47.175  5812  5834 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+07-04 12:13:47.175  5812  5834 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Start
+07-04 12:13:47.175  5812  5834 W unknown:BridgelessReact: ReactHost{0}.getJSBundleLoader()
+07-04 12:13:47.179  5812  5834 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating BridgelessReactContext
+07-04 12:13:47.180  5812  5834 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+07-04 12:13:47.183  5812  5812 D CompatChangeReporter: Compat change id reported: 377864165; UID 10218; state: ENABLED
+07-04 12:13:47.188  5812  5812 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+07-04 12:13:47.211  5812  5834 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libhermesvm.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:47.214  5812  5812 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+07-04 12:13:47.214  5812  5812 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+07-04 12:13:47.217  5812  5834 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libhermestooling.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:47.217  5812  5834 D jni_lib_merge: Entering merged library JNI_OnLoad.
+07-04 12:13:47.223  5812  5834 D jni_lib_merge: Preparing 4 pre-merged libs (including stub)
+07-04 12:13:47.223  5812  5834 D jni_lib_merge: Preparing to register libhermes_executor_so.  onload_func: 0x744ba34e31d0
+07-04 12:13:47.223  5812  5834 D jni_lib_merge: Preparing to register libhermesinstancejni_so.  onload_func: 0x744ba34eab10
+07-04 12:13:47.223  5812  5834 D jni_lib_merge: Preparing to register libjsijniprofiler_so.  onload_func: 0x744ba34eb350
+07-04 12:13:47.223  5812  5834 D jni_lib_merge: About to register 3 actual methods.
+07-04 12:13:47.230  5812  5812 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+07-04 12:13:47.230  5812  5812 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+07-04 12:13:47.270  5812  5812 W HWUI    : Unknown dataspace 0
+07-04 12:13:47.331   712  1151 D CoreBackPreview: Window{a5ed164 u0 com.mdreader.app/com.mdreader.app.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@7fe2082, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+07-04 12:13:47.339  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <131:RUNNING:29%[29%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:47.339  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <131:RUNNING:29%[29%]>
+07-04 12:13:47.339  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <131:RUNNING:29%[29%]>
+07-04 12:13:47.339  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=131
+07-04 12:13:47.339  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=131, group_id=config.x86_64 reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 8285689/28488332
+07-04 12:13:47.350  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <131:RUNNING:29%[29%]>
+07-04 12:13:47.350  3394  3468 I Finsky:background: [55] RM: getStatus resourceRequestId=5b4d5be0-d29c-4f3b-9529-3e782c30f1d3 requestId=131 package=com.google.android.youtube artifact=config.x86_64 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:47.350  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <131:RUNNING:29%[29%]>
+07-04 12:13:47.351  3394  3468 I Finsky:background: [55] DSC: reviveDownload(131)
+07-04 12:13:47.351  3394  3468 I Finsky:background: [55] DS: reviveDownload(request_id=131)
+07-04 12:13:47.353  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=131, files_to_download=[config.x86_64(size:28488332)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=8285689, total_bytes=28488332, retry[count=0, next_retry=n/a])
+07-04 12:13:47.367  3394  3394 I Finsky:background: [2] RF: onProgress request_id=131 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:47.368  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=131 group=com.google.android.youtube artifact=config.x86_64 collectedBytes= 8285689 / 28488332
+07-04 12:13:47.368  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17144333 / 54854460 for 5 artifacts
+07-04 12:13:47.370  3394  3394 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+07-04 12:13:47.428   712  1475 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+07-04 12:13:47.570  5812  5834 I ExpoModulesCore: ✅ AppContext was initialized
+07-04 12:13:47.584   712   740 I ActivityTaskManager: Displayed com.mdreader.app/.MainActivity for user 0: +2s423ms
+07-04 12:13:47.601  1108  1108 D BaseDepthController: setSurface:
+07-04 12:13:47.601  1108  1108 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+07-04 12:13:47.601  1108  1108 D BaseDepthController: 	mBaseSurface: null
+07-04 12:13:47.602  1108  1108 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+07-04 12:13:47.603  1108  1108 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+07-04 12:13:47.603  1108  1108 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:4)
+07-04 12:13:47.603  1108  1108 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:1)
+07-04 12:13:47.603  1108  1108 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:34)
+07-04 12:13:47.623  1108  1108 D StatsLog: LAUNCHER_ONSTOP
+07-04 12:13:47.629  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de5a38) locale list changing from [] to [en-US]
+07-04 12:13:47.645  1108  1108 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+07-04 12:13:47.664  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01deed18) locale list changing from [] to [en-US]
+07-04 12:13:47.686   712   743 D OomAdjuster: Not killing cached processes
+07-04 12:13:47.704  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de9598) locale list changing from [] to [en-US]
+07-04 12:13:47.719  5812  5834 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+07-04 12:13:47.737   712   917 D BackgroundInstallControlService: Package event received: 0
+07-04 12:13:47.740  5812  5834 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+07-04 12:13:47.745  5812  5834 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+07-04 12:13:47.758  5812  5812 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+07-04 12:13:47.759  5812  5812 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+07-04 12:13:47.773  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df2878) locale list changing from [] to [en-US]
+07-04 12:13:47.817  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df2558) locale list changing from [] to [en-US]
+07-04 12:13:47.825  1516  4561 I FontLog : (REDACTED) Received query %s, URI %s
+07-04 12:13:47.845  1516  4561 I FontLog : (REDACTED) Query [%s] resolved to %s
+07-04 12:13:47.873   712   741 W Looper  : Slow dispatch took 170ms android.ui app=system_server main=false group=TOP_APP h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@14d5843 m=0
+07-04 12:13:47.897  1516  1876 W FontLog : https://fonts.gstatic.com/s/a/71ec2037f1a8c0f8654315498412fae4015f183afe0a109aafcd9f5602bc12f7.ttf Status{statusCode=Download aborted., resolution=null}; declaring failure [CONTEXT service_id=132 ]
+07-04 12:13:47.899  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df2eb8) locale list changing from [] to [en-US]
+07-04 12:13:47.899  1516  1876 W FontLog : Asked to forget https://fonts.gstatic.com/s/a/71ec2037f1a8c0f8654315498412fae4015f183afe0a109aafcd9f5602bc12f7.ttf but we weren't tracking it [CONTEXT service_id=132 ]
+07-04 12:13:47.900  1516  4561 I FontLog : (REDACTED) Fetch %s end status %s
+07-04 12:13:48.023   712   741 W Looper  : Slow dispatch took 149ms android.ui app=system_server main=false group=TOP_APP h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@14d5843 m=0
+07-04 12:13:48.030   712   741 W Looper  : Slow delivery took 259ms android.ui app=system_server main=false group=TOP_APP h=com.android.server.am.ActivityManagerService$UiHandler c=null m=31
+07-04 12:13:48.042  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df0f78) locale list changing from [] to [en-US]
+07-04 12:13:48.074   963  1056 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@b55ad8f
+07-04 12:13:48.079  5812  5835 D nativeloader: Load /data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!/lib/x86_64/libexpo-modules-core.so using class loader ns clns-9 (caller=/data/app/~~YMY9zAa1bNBoTgFlKbabvw==/com.mdreader.app-niBZV-e3TWoAVv2htZNWJA==/base.apk!classes2.dex): ok
+07-04 12:13:48.108  5812  5835 W BridgelessReactContext: [WARNING] Bridgeless doesn't support CatalystInstance. Accessing an API that's not part of the new architecture is not encouraged usage.
+07-04 12:13:48.154   712  1916 D CoreBackPreview: Window{712a5d1 u0 Splash Screen com.mdreader.app EXITING}: Setting back callback null
+07-04 12:13:48.177  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ded738) locale list changing from [] to [en-US]
+07-04 12:13:48.198  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01deda58) locale list changing from [] to [en-US]
+07-04 12:13:48.252  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dee6d8) locale list changing from [] to [en-US]
+07-04 12:13:48.285  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <128:RUNNING:28%[28%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:48.286  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <128:RUNNING:28%[28%]>
+07-04 12:13:48.286  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <128:RUNNING:28%[28%]>
+07-04 12:13:48.286  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=128
+07-04 12:13:48.287  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=128, group_id=com.google.android.youtube.apk reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 6851012/24318038
+07-04 12:13:48.287  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <128:RUNNING:28%[28%]>
+07-04 12:13:48.287  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <128:RUNNING:28%[28%]>
+07-04 12:13:48.291  3394  3478 I Finsky:background: [59] RM: getStatus resourceRequestId=e49c5bf5-4c50-4620-920d-8226ed5e6cc6 requestId=128 package=com.google.android.youtube artifact=com.google.android.youtube.apk isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:48.292  3394  3478 I Finsky:background: [59] DSC: reviveDownload(128)
+07-04 12:13:48.293  3394  3478 I Finsky:background: [59] DS: reviveDownload(request_id=128)
+07-04 12:13:48.295  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=128, files_to_download=[com.google.android.youtube.apk(size:24318038)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=6851012, total_bytes=24318038, retry[count=0, next_retry=n/a])
+07-04 12:13:48.306  3394  3394 I Finsky:background: [2] RF: onProgress request_id=128 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:48.306  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=128 group=com.google.android.youtube artifact=com.google.android.youtube.apk collectedBytes= 6851012 / 24318038
+07-04 12:13:48.306  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17184791 / 54854460 for 5 artifacts
+07-04 12:13:48.310  5812  5835 I ExpoModulesCore: ✅ JSI interop was installed
+07-04 12:13:48.311  3394  3394 I Finsky:background: [2] Updated time lastBroadcast=2026-07-04T12:13:46.188Z current=2026-07-04T12:13:48.309Z
+07-04 12:13:48.315  3394  3394 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 17184791 / 54854460 / 0.313280
+07-04 12:13:48.325  3394  3458 I Finsky:background: [52] IV2: onTaskProgress com.google.android.youtube[iid:21] [isid:nHO2wAt_QxSHvD_RIxHYVA] status:RESOURCE_FETCH_PROGRESS, size: 17184791/54854460
+07-04 12:13:48.331  5812  5835 I ExpoModulesCore: ✅ Constants were exported
+07-04 12:13:48.334  3394  4712 I Finsky:background: [107] IQ: Notifying installation update. [Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT5M32.078S, attempt=0
+07-04 12:13:48.359  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df4498) locale list changing from [] to [en-US]
+07-04 12:13:48.371  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df1f18) locale list changing from [] to [en-US]
+07-04 12:13:48.386  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+07-04 12:13:48.390  3394  3394 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.youtube, isid: nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:48.396  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df2238) locale list changing from [] to [en-US]
+07-04 12:13:48.407  3180  3180 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING]
+07-04 12:13:48.409  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+07-04 12:13:48.417  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class expo.modules.kotlin.views.GroupViewManagerWrapper
+07-04 12:13:48.419  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+07-04 12:13:48.419  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df1bf8) locale list changing from [] to [en-US]
+07-04 12:13:48.420  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+07-04 12:13:48.427  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dee9f8) locale list changing from [] to [en-US]
+07-04 12:13:48.434  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$DefsViewManager
+07-04 12:13:48.436  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.VirtualViewManager$RenderableShadowNode
+07-04 12:13:48.438  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeMergeManager
+07-04 12:13:48.443  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+07-04 12:13:48.449  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$LinearGradientManager
+07-04 12:13:48.452  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeGaussianBlurManager
+07-04 12:13:48.456  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+07-04 12:13:48.460  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+07-04 12:13:48.464  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df2b98) locale list changing from [] to [en-US]
+07-04 12:13:48.467  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+07-04 12:13:48.472  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeColorMatrixManager
+07-04 12:13:48.474  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+07-04 12:13:48.476  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ClipPathViewManager
+07-04 12:13:48.494  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$SymbolManager
+07-04 12:13:48.496  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$PatternManager
+07-04 12:13:48.499  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeBlendManager
+07-04 12:13:48.501  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df3818) locale list changing from [] to [en-US]
+07-04 12:13:48.501  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+07-04 12:13:48.503  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.SvgViewManager
+07-04 12:13:48.507  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+07-04 12:13:48.510  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$UseViewManager
+07-04 12:13:48.512  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$CircleViewManager
+07-04 12:13:48.515  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TSpanViewManager
+07-04 12:13:48.521  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FilterManager
+07-04 12:13:48.525  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$MarkerManager
+07-04 12:13:48.529  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+07-04 12:13:48.533  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ForeignObjectManager
+07-04 12:13:48.536  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$EllipseViewManager
+07-04 12:13:48.539  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$LineViewManager
+07-04 12:13:48.543  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeFloodManager
+07-04 12:13:48.546  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$GroupViewManager
+07-04 12:13:48.548  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TextViewManager
+07-04 12:13:48.551  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ImageViewManager
+07-04 12:13:48.554  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeCompositeManager
+07-04 12:13:48.554  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df0938) locale list changing from [] to [en-US]
+07-04 12:13:48.558  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+07-04 12:13:48.561  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$RadialGradientManager
+07-04 12:13:48.563  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$MaskManager
+07-04 12:13:48.566  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+07-04 12:13:48.569  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$RectViewManager
+07-04 12:13:48.572  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TextPathViewManager
+07-04 12:13:48.575  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df31d8) locale list changing from [] to [en-US]
+07-04 12:13:48.576  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+07-04 12:13:48.579  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeOffsetManager
+07-04 12:13:48.582  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$PathViewManager
+07-04 12:13:48.583  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01def358) locale list changing from [] to [en-US]
+07-04 12:13:48.585  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+07-04 12:13:48.590  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+07-04 12:13:48.594  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df47b8) locale list changing from [] to [en-US]
+07-04 12:13:48.596  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+07-04 12:13:48.602  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+07-04 12:13:48.604  5812  5835 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.virtual.view.ReactVirtualViewManager
+07-04 12:13:48.618  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df3b38) locale list changing from [] to [en-US]
+07-04 12:13:48.626  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df3e58) locale list changing from [] to [en-US]
+07-04 12:13:48.635  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01deed18) locale list changing from [] to [en-US]
+07-04 12:13:48.721  5812  5835 I ReactNativeJS: Running "main"
+07-04 12:13:48.991  5812  5836 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+07-04 12:13:48.991  5812  5836 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+07-04 12:13:49.003  5812  5835 W ReactNativeJS: '[墨览诊断] Linking url=', 'content://media/external/file/27'
+07-04 12:13:49.003  5812  5835 W ReactNativeJS: '[墨览诊断] loadFromUri uri=', 'content://media/external/file/27', 'clean=', 'content://media/external/file/27'
+07-04 12:13:49.032  5812  5836 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+07-04 12:13:49.225  5812  5836 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+07-04 12:13:49.362  5812  5836 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+07-04 12:13:49.379  5812  5835 W ReactNativeJS: '[墨览诊断] loadFromUri FAIL:', 'Call to function \'ExponentFileSystem.readAsStringAsync\' has been rejected.\n→ Caused by: java.io.IOException: Unsupported scheme for location \'content://media/external/file/27\'.'
+07-04 12:13:49.462  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01def038) locale list changing from [] to [en-US]
+07-04 12:13:49.467  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <131:RUNNING:29%[29%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:49.468  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <131:RUNNING:29%[29%]>
+07-04 12:13:49.468  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <131:RUNNING:29%[29%]>
+07-04 12:13:49.472  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=131
+07-04 12:13:49.472  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=131, group_id=config.x86_64 reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 8365372/28488332
+07-04 12:13:49.473  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <131:RUNNING:29%[29%]>
+07-04 12:13:49.473  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <131:RUNNING:29%[29%]>
+07-04 12:13:49.479  3394  3478 I Finsky:background: [59] RM: getStatus resourceRequestId=5b4d5be0-d29c-4f3b-9529-3e782c30f1d3 requestId=131 package=com.google.android.youtube artifact=config.x86_64 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:49.479  3394  3478 I Finsky:background: [59] DSC: reviveDownload(131)
+07-04 12:13:49.482  5812  5836 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+07-04 12:13:49.484  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df02f8) locale list changing from [] to [en-US]
+07-04 12:13:49.490  3394  3478 I Finsky:background: [59] DS: reviveDownload(request_id=131)
+07-04 12:13:49.491  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=131, files_to_download=[config.x86_64(size:28488332)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=8365372, total_bytes=28488332, retry[count=0, next_retry=n/a])
+07-04 12:13:49.491  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de5a38) locale list changing from [] to [en-US]
+07-04 12:13:49.499  3394  3394 I Finsky:background: [2] RF: onProgress request_id=131 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:49.500  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=131 group=com.google.android.youtube artifact=config.x86_64 collectedBytes= 8365372 / 28488332
+07-04 12:13:49.500  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17264474 / 54854460 for 5 artifacts
+07-04 12:13:49.502  3394  3394 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+07-04 12:13:49.511  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de8f58) locale list changing from [] to [en-US]
+07-04 12:13:49.538  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dec798) locale list changing from [] to [en-US]
+07-04 12:13:49.565  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01decab8) locale list changing from [] to [en-US]
+07-04 12:13:49.568  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de8c38) locale list changing from [] to [en-US]
+07-04 12:13:49.595  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de7658) locale list changing from [] to [en-US]
+07-04 12:13:49.615  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de9bd8) locale list changing from [] to [en-US]
+07-04 12:13:49.633  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de5d58) locale list changing from [] to [en-US]
+07-04 12:13:49.663  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df5118) locale list changing from [] to [en-US]
+07-04 12:13:49.732  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df15b8) locale list changing from [] to [en-US]
+07-04 12:13:49.744  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df4df8) locale list changing from [] to [en-US]
+07-04 12:13:49.808  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df0c58) locale list changing from [] to [en-US]
+07-04 12:13:49.826  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df4ad8) locale list changing from [] to [en-US]
+07-04 12:13:49.918   951   951 I wpa_supplicant: wlan0: CTRL-EVENT-BEACON-LOSS 
+07-04 12:13:49.929  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de37d8) locale list changing from [] to [en-US]
+07-04 12:13:49.966  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de21f8) locale list changing from [] to [en-US]
+07-04 12:13:49.981  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dde058) locale list changing from [] to [en-US]
+07-04 12:13:49.990  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de4a98) locale list changing from [] to [en-US]
+07-04 12:13:50.024  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de34b8) locale list changing from [] to [en-US]
+07-04 12:13:50.052  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dde9b8) locale list changing from [] to [en-US]
+07-04 12:13:50.085  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ddf638) locale list changing from [] to [en-US]
+07-04 12:13:50.092  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfabb8) locale list changing from [] to [en-US]
+07-04 12:13:50.227  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de0f38) locale list changing from [] to [en-US]
+07-04 12:13:50.248  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df7378) locale list changing from [] to [en-US]
+07-04 12:13:50.274  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfa578) locale list changing from [] to [en-US]
+07-04 12:13:50.295  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfcaf8) locale list changing from [] to [en-US]
+07-04 12:13:50.295  1106  1350 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+07-04 12:13:50.298   712  1045 W IPCThreadState: Sending oneway calls to frozen process.
+07-04 12:13:50.313  5812  5812 I Choreographer: Skipped 72 frames!  The application may be doing too much work on its main thread.
+07-04 12:13:50.313  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df7058) locale list changing from [] to [en-US]
+07-04 12:13:50.336  5812  5820 I HWUI    : Davey! duration=1299ms; Flags=0, FrameTimelineVsyncId=127479, IntendedVsync=563019452134, Vsync=563019452134, InputEventId=0, HandleInputStart=563023705900, AnimationStart=563023741100, PerformTraversalsStart=563049056300, DrawStart=563053896700, FrameDeadline=563036118800, FrameStartTime=563023621900, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=563085973300, SyncStart=563094234300, IssueDrawCommandsStart=563108911800, SwapBuffers=564198044900, FrameCompleted=564326731900, DequeueBufferDuration=37500, QueueBufferDuration=29396400, GpuCompleted=564326516800, SwapBuffersCompleted=564326731900, DisplayPresentTime=0, CommandSubmissionCompleted=564198044900, 
+07-04 12:13:50.367  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <128:RUNNING:28%[28%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:50.367  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <128:RUNNING:28%[28%]>
+07-04 12:13:50.367  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <128:RUNNING:28%[28%]>
+07-04 12:13:50.368  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=128
+07-04 12:13:50.368  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=128, group_id=com.google.android.youtube.apk reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 6890237/24318038
+07-04 12:13:50.370  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <128:RUNNING:28%[28%]>
+07-04 12:13:50.370  3394  3454 I Finsky:background: [50] RM: getStatus resourceRequestId=e49c5bf5-4c50-4620-920d-8226ed5e6cc6 requestId=128 package=com.google.android.youtube artifact=com.google.android.youtube.apk isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:50.370  3394  3454 I Finsky:background: [50] DSC: reviveDownload(128)
+07-04 12:13:50.370  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <128:RUNNING:28%[28%]>
+07-04 12:13:50.371  3394  3454 I Finsky:background: [50] DS: reviveDownload(request_id=128)
+07-04 12:13:50.374  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=128, files_to_download=[com.google.android.youtube.apk(size:24318038)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=6890237, total_bytes=24318038, retry[count=0, next_retry=n/a])
+07-04 12:13:50.376  5812  5812 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+07-04 12:13:50.376  5812  5812 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+07-04 12:13:50.378  3394  3394 I Finsky:background: [2] RF: onProgress request_id=128 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:50.378  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=128 group=com.google.android.youtube artifact=com.google.android.youtube.apk collectedBytes= 6890237 / 24318038
+07-04 12:13:50.378  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17303699 / 54854460 for 5 artifacts
+07-04 12:13:50.379  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfb838) locale list changing from [] to [en-US]
+07-04 12:13:50.380  3394  3394 I Finsky:background: [2] Updated time lastBroadcast=2026-07-04T12:13:48.311Z current=2026-07-04T12:13:50.380Z
+07-04 12:13:50.382  3394  3394 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 17303699 / 54854460 / 0.315447
+07-04 12:13:50.396  3394  3458 I Finsky:background: [52] IV2: onTaskProgress com.google.android.youtube[iid:21] [isid:nHO2wAt_QxSHvD_RIxHYVA] status:RESOURCE_FETCH_PROGRESS, size: 17303699/54854460
+07-04 12:13:50.398  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfa898) locale list changing from [] to [en-US]
+07-04 12:13:50.413  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df63d8) locale list changing from [] to [en-US]
+07-04 12:13:50.423  3394  4712 I Finsky:background: [107] IQ: Notifying installation update. [Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT5M34.168S, attempt=0
+07-04 12:13:50.449  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df98f8) locale list changing from [] to [en-US]
+07-04 12:13:50.472  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df5438) locale list changing from [] to [en-US]
+07-04 12:13:50.475   712  3633 D CoreBackPreview: Window{dcc9d00 u0 com.mdreader.app/com.mdreader.app.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@d3a7b7e, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+07-04 12:13:50.477  3394  3394 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.youtube, isid: nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:50.487  3180  3180 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING]
+07-04 12:13:50.493  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df5758) locale list changing from [] to [en-US]
+07-04 12:13:50.542  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df9c18) locale list changing from [] to [en-US]
+07-04 12:13:50.554  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfce18) locale list changing from [] to [en-US]
+07-04 12:13:50.615  5812  5824 I HWUI    : Davey! duration=1500ms; Flags=0, FrameTimelineVsyncId=127510, IntendedVsync=563119452130, Vsync=564319452082, InputEventId=0, HandleInputStart=564332863600, AnimationStart=564332895700, PerformTraversalsStart=564457551100, DrawStart=564457899700, FrameDeadline=564369452080, FrameStartTime=564328977600, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=564483821500, SyncStart=564485301700, IssueDrawCommandsStart=564487508400, SwapBuffers=564534542500, FrameCompleted=564621090100, DequeueBufferDuration=119700, QueueBufferDuration=754000, GpuCompleted=564621090100, SwapBuffersCompleted=564611996400, DisplayPresentTime=0, CommandSubmissionCompleted=564534542500, 
+07-04 12:13:50.619  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df7ff8) locale list changing from [] to [en-US]
+07-04 12:13:50.638  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de85f8) locale list changing from [] to [en-US]
+07-04 12:13:50.666  5812  5824 I HWUI    : Davey! duration=1546ms; Flags=1, FrameTimelineVsyncId=127510, IntendedVsync=563119452130, Vsync=564319452082, InputEventId=0, HandleInputStart=564332863600, AnimationStart=564332895700, PerformTraversalsStart=564457551100, DrawStart=564630436100, FrameDeadline=563136118796, FrameStartTime=564328977600, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=564640010200, SyncStart=564642143200, IssueDrawCommandsStart=564642267100, SwapBuffers=564651228100, FrameCompleted=564668307900, DequeueBufferDuration=119200, QueueBufferDuration=790000, GpuCompleted=564666372500, SwapBuffersCompleted=564668307900, DisplayPresentTime=1, CommandSubmissionCompleted=564651228100, 
+07-04 12:13:50.675  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df8638) locale list changing from [] to [en-US]
+07-04 12:13:50.750  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dec158) locale list changing from [] to [en-US]
+07-04 12:13:50.828  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de66b8) locale list changing from [] to [en-US]
+07-04 12:13:50.868  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de7c98) locale list changing from [] to [en-US]
+07-04 12:13:50.932  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01deb4d8) locale list changing from [] to [en-US]
+07-04 12:13:50.998  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de82d8) locale list changing from [] to [en-US]
+07-04 12:13:51.027  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de7018) locale list changing from [] to [en-US]
+07-04 12:13:51.032  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ded0f8) locale list changing from [] to [en-US]
+07-04 12:13:51.044  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de6078) locale list changing from [] to [en-US]
+07-04 12:13:51.064  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de98b8) locale list changing from [] to [en-US]
+07-04 12:13:51.070  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de6cf8) locale list changing from [] to [en-US]
+07-04 12:13:51.082  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01deb1b8) locale list changing from [] to [en-US]
+07-04 12:13:51.090  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dde378) locale list changing from [] to [en-US]
+07-04 12:13:51.111  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de9278) locale list changing from [] to [en-US]
+07-04 12:13:51.118  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de8918) locale list changing from [] to [en-US]
+07-04 12:13:51.132  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de7338) locale list changing from [] to [en-US]
+07-04 12:13:51.139  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de05d8) locale list changing from [] to [en-US]
+07-04 12:13:51.166  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de50d8) locale list changing from [] to [en-US]
+07-04 12:13:51.178  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ddda18) locale list changing from [] to [en-US]
+07-04 12:13:51.193  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dd6358) locale list changing from [] to [en-US]
+07-04 12:13:51.201  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ddfc78) locale list changing from [] to [en-US]
+07-04 12:13:51.206  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de5718) locale list changing from [] to [en-US]
+07-04 12:13:51.217  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de4778) locale list changing from [] to [en-US]
+07-04 12:13:51.231  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de0c18) locale list changing from [] to [en-US]
+07-04 12:13:51.241  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ddff98) locale list changing from [] to [en-US]
+07-04 12:13:51.268  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ddecd8) locale list changing from [] to [en-US]
+07-04 12:13:51.283  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ddeff8) locale list changing from [] to [en-US]
+07-04 12:13:51.298  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01ddf318) locale list changing from [] to [en-US]
+07-04 12:13:51.307  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dddd38) locale list changing from [] to [en-US]
+07-04 12:13:51.330  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de08f8) locale list changing from [] to [en-US]
+07-04 12:13:51.349  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de2b58) locale list changing from [] to [en-US]
+07-04 12:13:51.354  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de1898) locale list changing from [] to [en-US]
+07-04 12:13:51.359  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01de4db8) locale list changing from [] to [en-US]
+07-04 12:13:51.391  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df8c78) locale list changing from [] to [en-US]
+07-04 12:13:51.406  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df7cd8) locale list changing from [] to [en-US]
+07-04 12:13:51.428  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfaed8) locale list changing from [] to [en-US]
+07-04 12:13:51.436  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfc198) locale list changing from [] to [en-US]
+07-04 12:13:51.475  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfb1f8) locale list changing from [] to [en-US]
+07-04 12:13:51.482  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfbe78) locale list changing from [] to [en-US]
+07-04 12:13:51.509  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01df8958) locale list changing from [] to [en-US]
+07-04 12:13:51.514  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e03218) locale list changing from [] to [en-US]
+07-04 12:13:51.563  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e028b8) locale list changing from [] to [en-US]
+07-04 12:13:51.610  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfe3f8) locale list changing from [] to [en-US]
+07-04 12:13:51.614  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <131:RUNNING:29%[29%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:51.615  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <131:RUNNING:29%[29%]>
+07-04 12:13:51.615  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <131:RUNNING:29%[29%]>
+07-04 12:13:51.615  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=131
+07-04 12:13:51.615  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=131, group_id=config.x86_64 reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 8440153/28488332
+07-04 12:13:51.615  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <131:RUNNING:29%[29%]>
+07-04 12:13:51.615  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <131:RUNNING:29%[29%]>
+07-04 12:13:51.616  3394  3478 I Finsky:background: [59] RM: getStatus resourceRequestId=5b4d5be0-d29c-4f3b-9529-3e782c30f1d3 requestId=131 package=com.google.android.youtube artifact=config.x86_64 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:51.616  3394  3478 I Finsky:background: [59] DSC: reviveDownload(131)
+07-04 12:13:51.617  3394  3478 I Finsky:background: [59] DS: reviveDownload(request_id=131)
+07-04 12:13:51.622  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=131, files_to_download=[config.x86_64(size:28488332)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=8440153, total_bytes=28488332, retry[count=0, next_retry=n/a])
+07-04 12:13:51.622  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e02bd8) locale list changing from [] to [en-US]
+07-04 12:13:51.623  3394  3394 I Finsky:background: [2] RF: onProgress request_id=131 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:51.623  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=131 group=com.google.android.youtube artifact=config.x86_64 collectedBytes= 8440153 / 28488332
+07-04 12:13:51.623  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17378480 / 54854460 for 5 artifacts
+07-04 12:13:51.624  3394  3394 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+07-04 12:13:51.642  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfed58) locale list changing from [] to [en-US]
+07-04 12:13:51.672  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e03e98) locale list changing from [] to [en-US]
+07-04 12:13:51.696  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e00c98) locale list changing from [] to [en-US]
+07-04 12:13:51.706  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e00fb8) locale list changing from [] to [en-US]
+07-04 12:13:51.733  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfea38) locale list changing from [] to [en-US]
+07-04 12:13:51.744  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dffcf8) locale list changing from [] to [en-US]
+07-04 12:13:51.752  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e015f8) locale list changing from [] to [en-US]
+07-04 12:13:51.758  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e00658) locale list changing from [] to [en-US]
+07-04 12:13:51.771  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfd138) locale list changing from [] to [en-US]
+07-04 12:13:51.780  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfd778) locale list changing from [] to [en-US]
+07-04 12:13:51.785  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e047f8) locale list changing from [] to [en-US]
+07-04 12:13:51.834  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e03538) locale list changing from [] to [en-US]
+07-04 12:13:51.881  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfe0d8) locale list changing from [] to [en-US]
+07-04 12:13:51.884  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e00338) locale list changing from [] to [en-US]
+07-04 12:13:51.905  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e012d8) locale list changing from [] to [en-US]
+07-04 12:13:52.025  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfd458) locale list changing from [] to [en-US]
+07-04 12:13:52.042  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e00018) locale list changing from [] to [en-US]
+07-04 12:13:52.072  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e01918) locale list changing from [] to [en-US]
+07-04 12:13:52.092  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01dfe718) locale list changing from [] to [en-US]
+07-04 12:13:52.099  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e041b8) locale list changing from [] to [en-US]
+07-04 12:13:52.137  5154  5318 I .apps.wellbeing: AssetManager2(0x744d01e03b78) locale list changing from [] to [en-US]
+07-04 12:13:52.536  3394  4944 I Finsky:background: [111] DSC::L: Update all listeners for download <128:RUNNING:28%[28%]> in group com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:52.537  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::taw@2486bcb for download <128:RUNNING:28%[28%]>
+07-04 12:13:52.537  3394  4944 I Finsky:background: [111] DSC::L: Updating listener DownloadServiceManagerListener::apeg@6bc6208 for download <128:RUNNING:28%[28%]>
+07-04 12:13:52.537  3394  4944 I Finsky:background: [111] DS: Received onProgress request_id=128
+07-04 12:13:52.538  3394  4944 I Finsky:background: [111] RM: receive resource status onProgress download_request_id=128, group_id=com.google.android.youtube.apk reason: auto_update isid: nHO2wAt_QxSHvD_RIxHYVA, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 6920887/24318038
+07-04 12:13:52.539  3394  4944 I Finsky:background: [111] DSC::L: Updating listener vjo@3afefa8 for download <128:RUNNING:28%[28%]>
+07-04 12:13:52.539  3394  4944 I Finsky:background: [111] DS::IDC: updateWith: <128:RUNNING:28%[28%]>
+07-04 12:13:52.543  3394  3468 I Finsky:background: [55] RM: getStatus resourceRequestId=e49c5bf5-4c50-4620-920d-8226ed5e6cc6 requestId=128 package=com.google.android.youtube artifact=com.google.android.youtube.apk isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:52.543  3394  3468 I Finsky:background: [55] DSC: reviveDownload(128)
+07-04 12:13:52.544  3394  3468 I Finsky:background: [55] DS: reviveDownload(request_id=128)
+07-04 12:13:52.545  3394  4944 I Finsky:background: [111] DS: DS: onReviveDownload(request_id=128, files_to_download=[com.google.android.youtube.apk(size:24318038)], context[group_id=com.google.android.youtube:nHO2wAt_QxSHvD_RIxHYVA], display_data[invisible=true, title=YouTube], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=6920887, total_bytes=24318038, retry[count=0, next_retry=n/a])
+07-04 12:13:52.548  3394  3394 I Finsky:background: [2] RF: onProgress request_id=128 isid=nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:52.549  3394  3394 I Finsky:background: [2] RF: resourceStatus for request_id=128 group=com.google.android.youtube artifact=com.google.android.youtube.apk collectedBytes= 6920887 / 24318038
+07-04 12:13:52.549  3394  3394 I Finsky:background: [2] RF: Group=com.google.android.youtube totalBytesDownloaded= 17409130 / 54854460 for 5 artifacts
+07-04 12:13:52.552  3394  3394 I Finsky:background: [2] Updated time lastBroadcast=2026-07-04T12:13:50.380Z current=2026-07-04T12:13:52.552Z
+07-04 12:13:52.552  3394  3394 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 17409130 / 54854460 / 0.317369
+07-04 12:13:52.560  3394  3458 I Finsky:background: [52] IV2: onTaskProgress com.google.android.youtube[iid:21] [isid:nHO2wAt_QxSHvD_RIxHYVA] status:RESOURCE_FETCH_PROGRESS, size: 17409130/54854460
+07-04 12:13:52.566  3394  4712 I Finsky:background: [107] IQ: Notifying installation update. [Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT5M36.311S, attempt=0
+07-04 12:13:52.592  5812  5854 D ProfileInstaller: Installing profile for com.mdreader.app
+07-04 12:13:52.615  3394  3394 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.youtube, isid: nHO2wAt_QxSHvD_RIxHYVA
+07-04 12:13:52.650  3180  3180 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.youtube, isid:nHO2wAt_QxSHvD_RIxHYVA] state:DOWNLOADING]
+07-04 12:13:52.798   712  3633 D TelephonyManager: requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=566806 mSleepTimeMs=546 mIdleTimeMs=182 mActivityStatsTechSpecificInfo=[{mRat=UNKNOWN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[13, 39, 78, 104, 117],mRxTimeMs=117}]}
+07-04 12:13:53.562   712   749 D OomAdjuster: Not killing cached processes

@@ -1,6 +1,7 @@
 // 主进程与渲染进程共享的 IPC 契约
 
-export type ConvertDirection = 'md2docx' | 'docx2md';
+// 转换方向：office→md 统一为 toMd，md→docx 单列
+export type ConvertDirection = 'md2docx' | 'docx2md' | 'pdf2md' | 'pptx2md' | 'xlsx2md' | 'csv2md';
 
 export interface ConvertTask {
   id: string;

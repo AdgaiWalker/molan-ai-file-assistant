@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BookOpen, ArrowRightLeft, Sparkles } from 'lucide-react';
 import { ReadableFile } from './shared/ipc';
 import ConvertPanel from './components/ConvertPanel';
 import ReaderPanel from './components/ReaderPanel';
@@ -67,13 +68,13 @@ export default function App() {
     <div className="app">
       <nav className="sidebar-tabs">
         <button className={tab === 'reader' ? 'active' : ''} onClick={() => switchTab('reader')}>
-          阅读
+          <BookOpen size={16} />阅读
         </button>
         <button className={tab === 'convert' ? 'active' : ''} onClick={() => switchTab('convert')}>
-          转换
+          <ArrowRightLeft size={16} />转换
         </button>
         <button className={tab === 'prompt' ? 'active' : ''} onClick={() => switchTab('prompt')}>
-          快贴
+          <Sparkles size={16} />快贴
         </button>
       </nav>
       <main className="content">

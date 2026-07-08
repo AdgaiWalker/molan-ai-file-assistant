@@ -1,5 +1,26 @@
 import React, { useState, useCallback, useRef } from 'react';
-import type { ConvertTask } from '../shared/ipc';
+import type { ConvertTask, ConvertDirection } from '../shared/ipc';
+
+function inferDirection(ext: string): ConvertDirection {
+  switch (ext) {
+    case 'md': case 'markdown': return 'md2docx';
+    case 'docx': return 'docx2md';
+    case 'pdf': return 'pdf2md';
+    case 'pptx': return 'pptx2md';
+    case 'xlsx': return 'xlsx2md';
+    case 'csv': return 'csv2md';
+    default: return 'docx2md';
+  }
+}
+
+const DIRECTION_LABEL: Record<ConvertDirection, string> = {
+  md2docx: 'MD → Word',
+  docx2md: 'Word → MD',
+  pdf2md: 'PDF → MD',
+  pptx2md: 'PPT → MD',
+  xlsx2md: 'Excel → MD',
+  csv2md: 'CSV → MD',
+};
 
 interface Props {
   outputDir: string;
@@ -25,10 +46,10 @@ export default function ConvertPanel({ outputDir, setOutputDir }: Props) {
     setDragging(false);
     const dropped = Array.from(e.dataTransfer.files) as (File & { path: string })[];
     const newTasks: ConvertTask[] = dropped
-      .filter((f) => /\.(md|markdown|docx)$/i.test(f.name))
+      .filter((f) => /\.(md|markdown|docx|pdf|pptx|xlsx|csv)$/i.test(f.name))
       .map((f) => {
         const ext = f.name.split('.').pop()!.toLowerCase();
-        const direction = ext === 'docx' ? 'docx2md' : 'md2docx';
+        const direction = inferDirection(ext);
         return {
           id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           inputPath: f.path,
@@ -84,8 +105,8 @@ export default function ConvertPanel({ outputDir, setOutputDir }: Props) {
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
       >
-        <h2>拖拽 .md / .docx 到此处</h2>
-        <p>或点击下方按钮选择文件</p>
+        <h2>拖拽 Office / Markdown 到此处</h2>
+        <p>支持 .md .docx .pdf .pptx .xlsx .csv —— Office 自动转 Markdown</p>
         <div className="action-bar" style={{ justifyContent: 'center', marginTop: 16 }}>
           <button className="btn-primary" onClick={addFiles}>选择文件</button>
         </div>
@@ -103,7 +124,7 @@ export default function ConvertPanel({ outputDir, setOutputDir }: Props) {
             {tasks.map((t) => (
               <div key={t.id} className="task-item">
                 <span className={statusClass(t.status)}>
-                  {t.direction === 'md2docx' ? '→ Word' : '→ MD'}
+                  {DIRECTION_LABEL[t.direction]}
                 </span>
                 <div className="task-name">
                   <span className="main">{t.fileName}</span>

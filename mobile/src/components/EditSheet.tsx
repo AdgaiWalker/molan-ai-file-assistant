@@ -11,9 +11,10 @@ import {
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Sharing from 'expo-sharing';
 import { Theme } from '../theme';
 import { Reader } from './Reader';
+import { ChevronLeft, Wand2, Save, Copy, Share2, Check, Eye, Code2 } from 'lucide-react-native';
+import { shareFile } from '../platform/share';
 
 interface EditSheetProps {
   visible: boolean;
@@ -124,15 +125,12 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
         setMessage('导出失败：' + result.error);
         return;
       }
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(result.outputPath, {
-          mimeType: isJson ? 'application/json' : 'text/markdown',
-          dialogTitle: `${title || '文档'}.${isJson ? 'json' : 'md'}`,
-        });
-        setMessage('已生成临时文件并打开分享面板');
-      } else {
-        setMessage('当前环境不支持系统分享');
-      }
+      const { shared } = await shareFile(result.outputPath, {
+        filename: `${title || '文档'}.${isJson ? 'json' : 'md'}`,
+        mimeType: isJson ? 'application/json' : 'text/markdown',
+        dialogTitle: `${title || '文档'}.${isJson ? 'json' : 'md'}`,
+      });
+      setMessage(shared ? '已生成临时文件并打开分享面板' : '当前环境不支持系统分享');
     } finally {
       setBusy(false);
     }
@@ -155,15 +153,12 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
         return;
       }
       AsyncStorage.removeItem(DRAFT_KEY).catch(() => {});
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(result.outputPath, {
-          mimeType: isJson ? 'application/json' : 'text/markdown',
-          dialogTitle: `${copyName}.${isJson ? 'json' : 'md'}`,
-        });
-        setMessage('已生成副本，可保存到本地或分享');
-      } else {
-        setMessage('已生成副本，但当前环境不支持系统分享');
-      }
+      const { shared } = await shareFile(result.outputPath, {
+        filename: `${copyName}.${isJson ? 'json' : 'md'}`,
+        mimeType: isJson ? 'application/json' : 'text/markdown',
+        dialogTitle: `${copyName}.${isJson ? 'json' : 'md'}`,
+      });
+      setMessage(shared ? '已生成副本，可保存到本地或分享' : '已生成副本，但当前环境不支持系统分享');
     } finally {
       setBusy(false);
     }
@@ -196,7 +191,7 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
         >
           <View style={styles.toolLeft}>
             <TouchableOpacity onPress={onClose} style={styles.toolBtn}>
-              <Text style={[styles.backIcon, { color: theme.text }]}>‹</Text>
+              <ChevronLeft size={24} color={theme.text} />
             </TouchableOpacity>
             <Text style={[styles.title, { color: theme.heading }]} numberOfLines={1}>
               {title}
@@ -204,22 +199,27 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {savingDraft ? (
-              <Text style={[styles.draftHint, { color: theme.textSecondary }]}>自动保存中</Text>
+              <View style={styles.draftRow}>
+                <ActivityIndicator size="small" color={theme.textSecondary} />
+                <Text style={[styles.draftHint, { color: theme.textSecondary }]}>自动保存中</Text>
+              </View>
             ) : hasChanges ? (
               <Text style={[styles.draftHint, { color: theme.textSecondary }]}>未保存</Text>
             ) : null}
             {isJson ? (
               <TouchableOpacity onPress={formatJson} style={styles.toolBtn}>
-                <Text style={{ color: theme.link, fontSize: 14 }}>格式化</Text>
+                <Wand2 size={18} color={theme.link} />
               </TouchableOpacity>
             ) : null}
             <TouchableOpacity
               style={[styles.previewToggle, { backgroundColor: preview ? theme.link : theme.surface, borderColor: theme.border }]}
               onPress={() => setPreview((v) => !v)}
             >
-              <Text style={{ color: preview ? '#fff' : theme.text, fontSize: 13, fontWeight: '600' }}>
-                {preview ? '源码' : '预览'}
-              </Text>
+              {preview ? (
+                <Code2 size={16} color="#FFFFFF" />
+              ) : (
+                <Eye size={16} color={theme.text} />
+              )}
             </TouchableOpacity>
           </View>
         </View>
@@ -274,22 +274,31 @@ export function EditSheet({ visible, title, content, isJson, theme, onClose, onS
             onPress={save}
             disabled={busy || (isJson && !!jsonError)}
           >
-            <Text style={styles.primaryText}>{hasChanges ? '保存更改' : '保存'}</Text>
+            <Save size={18} color="#FFFFFF" />
+            <Text style={[styles.primaryText, { marginLeft: 8 }]}>{hasChanges ? '保存更改' : '保存'}</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.secondaryBtn, { borderColor: theme.border }]}
-            onPress={saveAsCopy}
-            disabled={busy || (isJson && !!jsonError)}
-          >
-            <Text style={{ color: theme.text }}>保存为副本</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.secondaryBtn, { borderColor: theme.border }]}
-            onPress={saveAndShare}
-            disabled={busy || (isJson && !!jsonError)}
-          >
-            {busy ? <ActivityIndicator /> : <Text style={{ color: theme.text }}>保存并分享</Text>}
-          </TouchableOpacity>
+          <View style={styles.footerRow}>
+            <TouchableOpacity
+              style={[styles.secondaryBtn, { borderColor: theme.border }]}
+              onPress={saveAsCopy}
+              disabled={busy || (isJson && !!jsonError)}
+            >
+              <Copy size={16} color={theme.text} />
+              <Text style={{ color: theme.text, marginLeft: 6 }}>保存为副本</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.secondaryBtn, { borderColor: theme.border }]}
+              onPress={saveAndShare}
+              disabled={busy || (isJson && !!jsonError)}
+            >
+              {busy ? <ActivityIndicator /> : (
+                <>
+                  <Share2 size={16} color={theme.text} />
+                  <Text style={{ color: theme.text, marginLeft: 6 }}>保存并分享</Text>
+                </>
+              )}
+            </TouchableOpacity>
+          </View>
           {message ? <Text style={[styles.message, { color: theme.textSecondary }]}>{message}</Text> : null}
         </View>
       </SafeAreaView>
@@ -337,11 +346,17 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginRight: 6,
   },
+  draftRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginRight: 4,
+  },
   previewToggle: {
-    minHeight: 30,
+    width: 34,
+    height: 34,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 12,
     borderRadius: 8,
     borderWidth: 1,
     marginRight: 4,
@@ -360,11 +375,16 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     gap: 10,
   },
+  footerRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
   primaryBtn: {
     height: 46,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   primaryText: {
     color: '#fff',
@@ -372,11 +392,13 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   secondaryBtn: {
+    flex: 1,
     height: 46,
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   message: {
     fontSize: 12,

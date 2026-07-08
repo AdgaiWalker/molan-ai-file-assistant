@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== 品牌变量（复用 desktop/src/styles.css 的配色，新增深色 Hero 色板）===== */
+:root {
+  /* 桌面端沿用色 */
+  --color-primary: #1a73e8;
+  --color-primary-hover: #1557b0;
+  --color-success: #1e8e3e;
+  --color-danger: #d93025;
+
+  /* 浅色内容区 */
+  --color-bg: #f7f7f8;
+  --color-surface: #ffffff;
+  --color-border: #e2e2e5;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #666;
+  --color-code-bg: #f0f0f0;
+
+  /* 深色 Hero 区（新增） */
+  --color-bg-dark: #0a0e1a;
+  --color-bg-dark-2: #121826;
+
+  /* 强调辅色 */
+  --color-glow: rgba(26, 115, 232, 0.35);
+
+  /* 圆角 token（与 src/lib/tokens.ts RADIUS 对应） */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei',
+    sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+/* ===== 无障碍：尊重用户的减少动效偏好 ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== 通用 utility ===== */
+.container-wide {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(210, 216, 226, 0.82);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.glass-dark {
+  background: rgba(18, 24, 38, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+/* 选中文本 */
+::selection {
+  background: rgba(26, 115, 232, 0.22);
+  color: inherit;
+}
+
+/* 流程连接线渐进绘制（FlowTimeline 用） */
+@keyframes flowline {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}

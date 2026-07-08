@@ -38,3 +38,17 @@ describe('json tree helpers', () => {
     expect(jsonValueToClipboardText({ a: 1 })).toBe('{\n  "a": 1\n}');
   });
 });
+
+describe('buildJsonRows 截断（大 JSON 虚拟化）', () => {
+  it('超过 maxRows 时截断并加提示行', () => {
+    const big = Array.from({ length: 500 }, (_, i) => ({ id: i, name: `项${i}` }));
+    const rows = buildJsonRows({ list: big }, new Set(['$', '$.list']), 50);
+    expect(rows.length).toBe(51); // 50 + 1 提示行
+    expect(rows[rows.length - 1].path).toBe('$__truncated__');
+    expect(rows[rows.length - 1].preview).toContain('已截断');
+  });
+  it('未超 maxRows 不截断', () => {
+    const rows = buildJsonRows({ a: 1, b: 2 }, new Set(['$']), 100);
+    expect(rows.some((r) => r.path === '$__truncated__')).toBe(false);
+  });
+});

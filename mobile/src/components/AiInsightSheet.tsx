@@ -12,6 +12,7 @@ import {
 import * as Clipboard from 'expo-clipboard';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Theme } from '../theme';
+import { X, Copy, Check, Sparkles, ShieldAlert, Save } from 'lucide-react-native';
 
 type DocKind = 'markdown' | 'json';
 
@@ -177,7 +178,11 @@ export function AiInsightSheet({ visible, title, content, kind, theme, onClose, 
             onPress={() => copyText(label, item)}
           >
             <Text style={[styles.itemText, { color: theme.text }]}>{item}</Text>
-            <Text style={[styles.itemAction, { color: theme.link }]}>{copied === label ? '已复制' : '复制'}</Text>
+            {copied === label ? (
+              <Check size={16} color="#34C759" />
+            ) : (
+              <Copy size={16} color={theme.link} />
+            )}
           </TouchableOpacity>
         ))
       )}
@@ -203,15 +208,21 @@ export function AiInsightSheet({ visible, title, content, kind, theme, onClose, 
               <Text style={[styles.subhead, { color: theme.textSecondary }]}>本地识别预览，仅保存结构化内容，不上传。</Text>
             </View>
             <TouchableOpacity style={[styles.closeBtn, { borderColor: theme.border }]} onPress={onClose}>
-              <Text style={{ color: theme.link, fontSize: 14 }}>关闭</Text>
+              <X size={18} color={theme.textSecondary} />
             </TouchableOpacity>
           </View>
 
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={[styles.fileCard, { backgroundColor: theme.background, borderColor: theme.border }]}>
-              <Text style={[styles.fileType, { color: theme.link }]}>{insight.fileType}</Text>
+              <View style={styles.fileTypeRow}>
+                <Sparkles size={14} color={theme.link} />
+                <Text style={[styles.fileType, { color: theme.link }]}>{insight.fileType}</Text>
+              </View>
               <Text style={[styles.fileTitle, { color: theme.heading }]} numberOfLines={2}>{title || '当前文件'}</Text>
-              <Text style={[styles.advice, { color: theme.textSecondary }]}>{insight.saveAdvice}</Text>
+              <View style={styles.adviceRow}>
+                <ShieldAlert size={13} color={theme.textSecondary} />
+                <Text style={[styles.advice, { color: theme.textSecondary }]}>{insight.saveAdvice}</Text>
+              </View>
             </View>
 
             <Section label="推荐提示词" items={insight.promptCandidates} empty="暂未识别到明显提示词。" />
@@ -227,7 +238,8 @@ export function AiInsightSheet({ visible, title, content, kind, theme, onClose, 
               onClose();
             }}
           >
-            <Text style={styles.saveBtnText}>保存为 AI 可读资源</Text>
+            <Save size={18} color="#FFFFFF" />
+            <Text style={[styles.saveBtnText, { marginLeft: 8 }]}>保存为 AI 可读资源</Text>
           </TouchableOpacity>
         </Pressable>
       </Pressable>
@@ -326,10 +338,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+    flexDirection: 'row',
   },
   saveBtnText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
+  },
+  fileTypeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 6,
+  },
+  adviceRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
+    marginTop: 8,
   },
 });

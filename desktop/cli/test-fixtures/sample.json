@@ -1,0 +1,17 @@
+{
+  "title": "测试JSON",
+  "items": [
+    {
+      "id": 1,
+      "name": "一"
+    },
+    {
+      "id": 2,
+      "name": "二"
+    }
+  ],
+  "meta": {
+    "author": "墨览",
+    "version": "1.0"
+  }
+}
