@@ -1,0 +1,156 @@
+--------- beginning of system
+07-04 22:43:08.762 28605 28605 I ActivityThread: Current dynamic renderEngine type=0
+07-04 22:43:08.774 28605 19611 D MiuiDownscaleImpl: set override inverted scale : 1.0
+07-04 22:43:08.815 28605 19615 I ActivityThread: TrafficStats init done
+07-04 22:43:08.821 28605 19615 I ActivityThread: Miui Feature Init done
+07-04 22:43:08.849 28605 28605 I ActivityThread: currentPkg not in xmlPackages
+07-04 22:43:08.850 28605 28605 D FramePredict: FramePredict init: true
+07-04 22:43:08.851 28605 19615 I ActivityThread: HardwareRenderer preload  done
+07-04 22:43:08.851 28605 19632 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+07-04 22:43:08.877 28605 28605 D WmSystemUiDebug: set navigation bar color,Alpha=0.0, RGB:0,0,0 caller:com.facebook.react.views.view.WindowUtilKt.enableEdgeToEdge:173 com.facebook.react.views.view.WindowUtilKt.updateEdgeToEdgeFeatureFlag:67 java.lang.reflect.Method.invoke:-2 expo.modules.kotlin.edgeToEdge.EdgeToEdgePackageKt.updateEdgeToEdgeFeatureFlag:27 expo.modules.kotlin.edgeToEdge.EdgeToEdgePackageKt.access$updateEdgeToEdgeFeatureFlag:1 expo.modules.kotlin.edgeToEdge.EdgeToEdgePackage$createReactActivityLifecycleListeners$1.onCreate:14 expo.modules.ReactActivityDelegateWrapper.onCreate:170 com.facebook.react.ReactActivity.onCreate:61 com.mdreader.app.MainActivity.onCreate:20 android.app.Activity.performCreate:9428 
+07-04 22:43:08.882 28605 28605 D Activity: Activity = ActivityInfo{2c00987 com.mdreader.app.MainActivity}, Resume onConfigurationChanged = {1.0 460mcc11mnc [zh_CN] ldltr sw384dp w384dp h853dp 600dpi nrml long hdr widecg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1440, 3200) mAppBounds=Rect(0, 0 - 1440, 3200) mMaxBounds=Rect(0, 0 - 1440, 3200) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0 mInSplitScreen=false letterBoxed=false foScaled=false isSpecificEmbedded=false embeddingScale=1.0} s.2 fontWeightAdjustment=0/d/o themeChanged=0 themeChangedFlags=0 display=0 extraData = Bundle[{}] screenType=0/o}
+07-04 22:43:08.888 28605 28605 D FramePredict: init success
+07-04 22:43:08.891 28605 19692 E FramePredict: registerContentObserver fail
+07-04 22:43:08.894 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.894 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.894 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.896 28605 28605 D DecorViewImmersiveImpl: onAttachedToWindow. pkg: com.mdreader.app
+07-04 22:43:08.896 28605 28605 D DecorViewImmersiveImpl: com.mdreader.app.MainActivity@b05c760 already set forced E2E by app
+07-04 22:43:08.896 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.896 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.896 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.896 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.901 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.901 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.901 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.920 28605 28605 I NativeTurboSchedManager: Load libmiui_runtime
+07-04 22:43:08.922 28605 28605 E TurboSchedMonitor: failed to find setSchedAffinity method com.mdreader.app
+07-04 22:43:08.922 28605 28605 E TurboSchedMonitor: failed to find setSchedAffinity method com.mdreader.app
+07-04 22:43:08.924 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.924 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.924 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.952 28605 19661 I ContentCatcher_TaplusBlackListHelper:  mActivities isEmpty
+07-04 22:43:08.959 28605 19661 I ContentCatcher_TaplusBlackListHelper:  blackList size: 15 package is com.mdreader.app isInTaplusWhiteList: true
+07-04 22:43:08.985 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.985 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:08.985 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:09.205 28605 28605 D VRI[MainActivity]: getMiuiFreeformStackInfo mTmpFrames.miuiFreeFormStackInfo: null
+07-04 22:43:10.210 28605 28605 I MIUIInput: [MotionEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', { action=ACTION_DOWN, id[0]=0, pointerCount=1, eventTime=862660692, downTime=862660692, phoneEventTime=1783176190203 } moveCount:0
+07-04 22:43:10.213 28605 28605 D VRI[MainActivity]: getMiuiFreeformStackInfo mTmpFrames.miuiFreeFormStackInfo: null
+07-04 22:43:10.309 28605 28605 I MIUIInput: [MotionEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', { action=ACTION_UP, id[0]=0, pointerCount=1, eventTime=862660794, downTime=862660692, phoneEventTime=1783176190304 } moveCount:4
+07-04 22:43:10.863 28605 28605 I MIUIInput: [MotionEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', { action=ACTION_DOWN, id[0]=0, pointerCount=1, eventTime=862661350, downTime=862661350, phoneEventTime=1783176190860 } moveCount:0
+07-04 22:43:10.863 28605 28605 D VRI[MainActivity]: getMiuiFreeformStackInfo mTmpFrames.miuiFreeFormStackInfo: null
+07-04 22:43:10.924 28605 28605 I MIUIInput: [MotionEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', { action=ACTION_UP, id[0]=0, pointerCount=1, eventTime=862661407, downTime=862661350, phoneEventTime=1783176190917 } moveCount:3
+07-04 22:43:11.406 28605 28605 I MIUIInput: [KeyEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', KeyEvent { action=ACTION_DOWN, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x48, repeatCount=0, eventTime=862661757000000, downTime=862661757000000, deviceId=-1, source=0x101, displayId=0 }, phoneEventTime=1783176191267
+07-04 22:43:11.414 28605 28605 I MIUIInput: back key event finish by ViewPostImeInputStage, handled: true
+07-04 22:43:11.415 28605 28605 I MIUIInput: [KeyEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x48, repeatCount=0, eventTime=862661891000000, downTime=862661757000000, deviceId=-1, source=0x101, displayId=0 }, phoneEventTime=1783176191402
+07-04 22:43:11.416 28605 28605 W MIUIInput: Back key is intercepted by the app
+07-04 22:43:11.416 28605 28605 I MIUIInput: back key event finish by ViewPostImeInputStage, handled: true
+07-04 22:43:12.436 28605 28605 I MIUIInput: [KeyEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', KeyEvent { action=ACTION_DOWN, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x48, repeatCount=0, eventTime=862662832000000, downTime=862662832000000, deviceId=-1, source=0x101, displayId=0 }, phoneEventTime=1783176192343
+07-04 22:43:12.439 28605 28605 I MIUIInput: back key event finish by ViewPostImeInputStage, handled: true
+07-04 22:43:12.439 28605 28605 I MIUIInput: [KeyEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x48, repeatCount=0, eventTime=862662922000000, downTime=862662832000000, deviceId=-1, source=0x101, displayId=0 }, phoneEventTime=1783176192432
+07-04 22:43:12.441 28605 28605 W MIUIInput: Back key is intercepted by the app
+07-04 22:43:12.441 28605 28605 I MIUIInput: back key event finish by ViewPostImeInputStage, handled: true
+07-04 22:43:12.556 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:12.557 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:12.557 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:12.604 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:12.604 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:12.604 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:13.414 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:13.414 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:13.414 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:13.426 28605 28605 D DecorViewImmersiveImpl: onDetachedFromWindow
+07-04 22:43:13.440 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:13.440 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:13.440 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.572 28605 19615 I ActivityThread: HardwareRenderer preload  done
+07-04 22:43:14.589 28605 28605 D WmSystemUiDebug: set navigation bar color,Alpha=0.0, RGB:0,0,0 caller:com.facebook.react.views.view.WindowUtilKt.enableEdgeToEdge:173 com.facebook.react.views.view.WindowUtilKt.updateEdgeToEdgeFeatureFlag:67 java.lang.reflect.Method.invoke:-2 expo.modules.kotlin.edgeToEdge.EdgeToEdgePackageKt.updateEdgeToEdgeFeatureFlag:27 expo.modules.kotlin.edgeToEdge.EdgeToEdgePackageKt.access$updateEdgeToEdgeFeatureFlag:1 expo.modules.kotlin.edgeToEdge.EdgeToEdgePackage$createReactActivityLifecycleListeners$1.onCreate:14 expo.modules.ReactActivityDelegateWrapper.onCreate:170 com.facebook.react.ReactActivity.onCreate:61 com.mdreader.app.MainActivity.onCreate:20 android.app.Activity.performCreate:9428 
+07-04 22:43:14.592 28605 28605 D Activity: Activity = ActivityInfo{182333d com.mdreader.app.MainActivity}, Resume onConfigurationChanged = {1.0 460mcc11mnc [zh_CN] ldltr sw384dp w384dp h853dp 600dpi nrml long hdr widecg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1440, 3200) mAppBounds=Rect(0, 0 - 1440, 3200) mMaxBounds=Rect(0, 0 - 1440, 3200) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0 mInSplitScreen=false letterBoxed=false foScaled=false isSpecificEmbedded=false embeddingScale=1.0} s.2 fontWeightAdjustment=0/d/o themeChanged=0 themeChangedFlags=0 display=0 extraData = Bundle[{}] screenType=0/o}
+07-04 22:43:14.599 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.599 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.599 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.600 28605 19661 I ContentCatcher_TaplusBlackListHelper:  mActivities isEmpty
+07-04 22:43:14.600 28605 19661 I ContentCatcher_TaplusBlackListHelper:  blackList size: 15 package is com.mdreader.app isInTaplusWhiteList: true
+07-04 22:43:14.602 28605 28605 D DecorViewImmersiveImpl: onAttachedToWindow. pkg: com.mdreader.app
+07-04 22:43:14.602 28605 28605 D DecorViewImmersiveImpl: com.mdreader.app.MainActivity@9a943ff already set forced E2E by app
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.602 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.611 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.611 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.611 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.631 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.631 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.631 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.667 28605 28605 D VRI[MainActivity]: getMiuiFreeformStackInfo mTmpFrames.miuiFreeFormStackInfo: null
+07-04 22:43:14.672 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.672 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:14.672 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:15.558 28605 28605 I MIUIInput: [KeyEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', KeyEvent { action=ACTION_DOWN, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x48, repeatCount=0, eventTime=862665969000000, downTime=862665969000000, deviceId=-1, source=0x101, displayId=0 }, phoneEventTime=1783176195479
+07-04 22:43:15.561 28605 28605 I MIUIInput: back key event finish by ViewPostImeInputStage, handled: true
+07-04 22:43:15.561 28605 28605 I MIUIInput: [KeyEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x48, repeatCount=0, eventTime=862666044000000, downTime=862665969000000, deviceId=-1, source=0x101, displayId=0 }, phoneEventTime=1783176195555
+07-04 22:43:15.562 28605 28605 W MIUIInput: Back key is intercepted by the app
+07-04 22:43:15.562 28605 28605 I MIUIInput: back key event finish by ViewPostImeInputStage, handled: true
+07-04 22:43:16.777 28605 28605 I MIUIInput: [MotionEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', { action=ACTION_DOWN, id[0]=0, pointerCount=1, eventTime=862667263, downTime=862667263, phoneEventTime=1783176196774 } moveCount:0
+07-04 22:43:16.778 28605 28605 D VRI[MainActivity]: getMiuiFreeformStackInfo mTmpFrames.miuiFreeFormStackInfo: null
+07-04 22:43:17.234 28605 28605 I MIUIInput: [MotionEvent] ViewRootImpl windowName 'com.mdreader.app/com.mdreader.app.MainActivity', { action=ACTION_UP, id[0]=0, pointerCount=1, eventTime=862667720, downTime=862667263, phoneEventTime=1783176197231 } moveCount:23
+07-04 22:43:20.897 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:20.897 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:20.897 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:21.015 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:21.015 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:21.015 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:21.787 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:21.788 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:21.788 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.484 28605 28605 D Activity: Activity = ActivityInfo{182333d com.mdreader.app.MainActivity}, Resume onConfigurationChanged = {1.0 460mcc11mnc [zh_CN] ldltr sw384dp w384dp h853dp 600dpi nrml long hdr widecg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1440, 3200) mAppBounds=Rect(0, 0 - 1440, 3200) mMaxBounds=Rect(0, 0 - 1440, 3200) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0 mInSplitScreen=false letterBoxed=false foScaled=false isSpecificEmbedded=false embeddingScale=1.0} s.2 fontWeightAdjustment=0/d/o themeChanged=0 themeChangedFlags=0 display=0 extraData = Bundle[{}] screenType=0/o}
+07-04 22:43:51.496 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.496 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.496 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.522 28605 19661 I ContentCatcher_TaplusBlackListHelper:  mActivities isEmpty
+07-04 22:43:51.522 28605 19661 I ContentCatcher_TaplusBlackListHelper:  blackList size: 15 package is com.mdreader.app isInTaplusWhiteList: true
+07-04 22:43:51.527 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.527 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.527 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.569 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.569 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:43:51.569 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:01.507 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:01.507 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:01.507 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:01.577 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:01.577 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:01.577 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:02.438 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:02.438 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:44:02.438 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+--------- beginning of main
+07-04 22:53:05.721 28605 28605 D ViewRootImpl: Skipping stats log for color mode
+07-04 22:53:05.734 28605 28605 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+07-04 22:53:05.734 28605 28605 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+07-04 22:53:05.736 28605 28605 D Activity: Activity = ActivityInfo{182333d com.mdreader.app.MainActivity}, Resume onConfigurationChanged = {1.0 460mcc11mnc [zh_CN] ldltr sw384dp w384dp h853dp 600dpi nrml long hdr widecg port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1440, 3200) mAppBounds=Rect(0, 0 - 1440, 3200) mMaxBounds=Rect(0, 0 - 1440, 3200) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0 mInSplitScreen=false letterBoxed=false foScaled=false isSpecificEmbedded=false embeddingScale=1.0} s.2 fontWeightAdjustment=0/d/o themeChanged=0 themeChangedFlags=0 display=0 extraData = Bundle[{}] screenType=0/o}
+07-04 22:53:05.761 28605 19661 I ContentCatcher: SettingTrigger : register screen QA status observer com.mdreader.app.MainActivity
+07-04 22:53:05.783 28605 19661 I ContentCatcher: SettingTrigger : register global collect status observer com.mdreader.app.MainActivity
+07-04 22:53:05.784 28605 19661 I ContentCatcher: SettingTrigger : registerUIAgentListener com.mdreader.app.MainActivity, uid:10498
+07-04 22:53:05.785 28605 19661 I ContentCatcher_TaplusBlackListHelper:  mActivities isEmpty
+07-04 22:53:05.785 28605 19661 I ContentCatcher_TaplusBlackListHelper:  blackList size: 15 package is com.mdreader.app isInTaplusWhiteList: true
+07-04 22:53:05.811 28605 28605 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+07-04 22:53:05.811 28605 28605 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+07-04 22:53:05.824 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:53:05.824 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:53:05.824 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:53:05.833 28605 28605 D VRI[MainActivity]: vri.Setup new sync=wmsSync-VRI[MainActivity]#6
+07-04 22:53:05.856 28605 28605 D VRI[MainActivity]: vri.reportDrawFinished 0 0 Rect(0, 0 - 1440, 3200)
+07-04 22:53:05.975 28605 28605 I HandWritingStubImpl: refreshLastKeyboardType: 1
+07-04 22:53:05.975 28605 28605 I HandWritingStubImpl: getCurrentKeyboardType: 1
+07-04 22:53:05.982 28605 28605 D InsetsController: hide(ime(), fromIme=false)
+07-04 22:53:05.982 28605 28605 I ImeTracker: com.mdreader.app:e2666889: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+07-04 22:53:06.012 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:53:06.012 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false
+07-04 22:53:06.012 28605 28605 W InsetsSource: Has no intersection or mTmpFrame.height(), return Insets.NONE mTmpFrame.height() =0 hasIntersection =false

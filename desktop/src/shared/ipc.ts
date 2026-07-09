@@ -1,6 +1,7 @@
 // 主进程与渲染进程共享的 IPC 契约
 
-export type ConvertDirection = 'md2docx' | 'docx2md';
+// 转换方向：office→md 统一为 toMd，md→docx 单列
+export type ConvertDirection = 'md2docx' | 'docx2md' | 'pdf2md' | 'pptx2md' | 'xlsx2md' | 'csv2md';
 
 export interface ConvertTask {
   id: string;
@@ -36,14 +37,24 @@ export interface ReadableFile {
   content: string;
 }
 
+export interface SaveTextRequest {
+  defaultName: string;
+  content: string;
+  kind: 'markdown' | 'json';
+}
+
 export const ipcChannels = {
   SELECT_FILES: 'select-files',
   SELECT_READER_FILE: 'select-reader-file',
   SELECT_OUTPUT_DIR: 'select-output-dir',
   CONVERT: 'convert',
   READ_MD: 'read-md',
-  RUN_AI: 'run-ai',
   OPEN_PATH: 'open-path',
+  COPY_TEXT: 'copy-text',
+  SET_ALWAYS_ON_TOP: 'set-always-on-top',
+  OPEN_PROMPT_WINDOW: 'open-prompt-window',
+  SAVE_TEXT_AS: 'save-text-as',
   SAVE_SETTINGS: 'save-settings',
   LOAD_SETTINGS: 'load-settings',
+  GET_PENDING_FILE: 'get-pending-file',
 } as const;

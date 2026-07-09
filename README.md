@@ -5,16 +5,17 @@ AI 产物阅读器项目，面向收到 `.md` / `.json` 后无法顺畅阅读、
 ## 项目结构
 
 - `mobile/`：主线产品，Expo + React Native。负责手机端 `.md` / `.json` 阅读、轻量编辑、分享与离线转换。
-- `desktop/`：辅助产品，Electron + Vite + React。负责高质量 `md <-> word` 转换、桌面阅读和 AI CLI 调用。
-- `mdconvert.py`：早期 Python 原型，验证 pandoc 转换与拖拽命令行流程。保留为 legacy prototype，不再作为主产品承载新功能。
+- `desktop/`：桌面 GUI，Electron + Vite + React。两个 tab：阅读 + 转换。Office↔Markdown 转换使用共享引擎。
+- `desktop/cli/`：命令行工具（`molan convert`）。Office/PDF/PPT/Excel → Markdown，供 AI / agent 调用。
+- root — 构建脚本与项目配置。
 
 ## 产品与发布文档
 
 - [PRD.md](PRD.md)：产品需求文档。
-- [全量方案.md](全量方案.md)：基于 PRD 的产品、架构、技术栈、实施与验收全量方案。
 - [TODO.md](TODO.md)：按优先级拆解的任务清单。
-- [MARKET_RESEARCH.md](MARKET_RESEARCH.md)：国内 AI 使用与产品机会调研。
-- [DISTRIBUTION.md](DISTRIBUTION.md)：GitHub、官网、国内镜像与安装包发布策略。
+- [docs/full-plan.md](docs/full-plan.md)：基于 PRD 的产品、架构、技术栈、实施与验收全量方案。
+- [docs/market-research.md](docs/market-research.md)：国内 AI 使用与产品机会调研。
+- [docs/distribution.md](docs/distribution.md)：GitHub、官网、国内镜像与安装包发布策略。
 
 ## 常用命令
 
@@ -26,9 +27,11 @@ npm run start
 npm run android
 npm run ios
 npm run web
+npm run typecheck
+npm run test
 ```
 
-### desktop
+### desktop GUI
 
 ```powershell
 cd desktop
@@ -37,14 +40,29 @@ npm run typecheck
 npm run build
 ```
 
-### root prototype
+### desktop CLI
 
 ```powershell
-python mdconvert.py <file...>
-pyinstaller mdconvert.spec
+cd desktop/cli
+npm run typecheck
+npm run build
+node dist/index.js check                  # 检查 pandoc 是否可用
+node dist/index.js convert <文件> --json  # Office → Markdown
+node dist/index.js pull --json            # 查看本地 AI 文件收件箱
+node dist/index.js read <id或标题> --json # 读取收件箱文件，供 AI 使用
+node dist/index.js push <文件> --json     # 把文件保存到本地 AI 收件箱
+node dist/index.js convert --help         # 查看所有选项
 ```
 
-根原型依赖 `pypandoc` 和系统 PATH 中可用的 pandoc。桌面正式版使用 `desktop/resources/pandoc.exe` 或打包资源中的 pandoc。
+桌面版使用 `desktop/resources/pandoc.exe` 或打包资源中的 pandoc。下载 pandoc 请运行 `python scripts/download_pandoc.py`。
+
+## CI 验收
+
+GitHub Actions 会运行：
+
+- `mobile`: `npm run typecheck`、`npm run test`
+- `desktop`: `npm run typecheck`、`npm run build`
+- `desktop/cli`: `npm run typecheck`、`npm run build`、`npm run test`
 
 ## 边界
 

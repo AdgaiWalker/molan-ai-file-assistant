@@ -1,0 +1,25 @@
+{
+  "name": "molan-cli",
+  "version": "1.0.0",
+  "description": "墨览 CLI — Office/PDF/PPT/Excel → Markdown，供 AI 调用",
+  "main": "dist/index.js",
+  "bin": {
+    "molan": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "commander": "^13.0.0",
+    "fast-glob": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.21.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  },
+  "private": true
+}

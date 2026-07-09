@@ -16,10 +16,11 @@ import { Theme, BASE_FONT_SIZE } from '../theme';
 const fs = (base: number, scale: number) => Math.round(base * scale);
 
 // 代码块：横向滚动 + 一键复制
-function CodeBlock({ token, theme, scale }: { token: Tokens.Code; theme: Theme; scale: number }) {
+function CodeBlock({ token, theme, scale, onCopied }: { token: Tokens.Code; theme: Theme; scale: number; onCopied?: () => void }) {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     await Clipboard.setStringAsync(token.text);
+    onCopied?.();
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
@@ -75,12 +76,13 @@ function renderBlocks(
   tokens: Token[],
   theme: Theme,
   scale: number,
+  onCopied?: () => void,
 ): ReactNode[] {
   const out: ReactNode[] = [];
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
     const key = `block-${i}`;
-    out.push(renderBlock(token, key, theme, scale));
+    out.push(renderBlock(token, key, theme, scale, onCopied));
   }
   return out;
 }
@@ -90,6 +92,7 @@ export function renderBlock(
   key: string,
   theme: Theme,
   scale: number,
+  onCopied?: () => void,
 ): ReactNode {
   switch (token.type) {
     case 'heading':
@@ -107,11 +110,11 @@ export function renderBlock(
     case 'list':
       return renderList(token as Tokens.List, key, theme, scale);
     case 'code':
-      return <CodeBlock key={key} token={token as Tokens.Code} theme={theme} scale={scale} />;
+      return <CodeBlock key={key} token={token as Tokens.Code} theme={theme} scale={scale} onCopied={onCopied} />;
     case 'table':
       return renderTable(token as Tokens.Table, key, theme, scale);
     case 'blockquote':
-      return renderBlockquote(token as Tokens.Blockquote, key, theme, scale);
+      return renderBlockquote(token as Tokens.Blockquote, key, theme, scale, onCopied);
     case 'hr':
       return <View key={key} style={[styles.hr, { borderColor: theme.border }]} />;
     case 'space':
@@ -205,8 +208,9 @@ function renderBlockquote(
   key: string,
   theme: Theme,
   scale: number,
+  onCopied?: () => void,
 ): ReactNode {
-  const inner = renderBlocks(token.tokens, theme, scale);
+  const inner = renderBlocks(token.tokens, theme, scale, onCopied);
   return (
     <View key={key} style={[styles.blockquote, { backgroundColor: theme.quoteBackground, borderLeftColor: theme.quoteBorder }]}>
       {inner}

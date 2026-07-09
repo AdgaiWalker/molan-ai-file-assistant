@@ -13,6 +13,8 @@ export interface Theme {
   codeText: string;
   border: string;
   link: string;
+  error: string;
+  success: string;
   quoteBackground: string;
   quoteBorder: string;
   tableHeaderBg: string;
@@ -22,35 +24,39 @@ export interface Theme {
 export const themes: Record<ThemeMode, Theme> = {
   day: {
     mode: 'day',
-    background: '#FAFAFA',
+    background: '#F7F8FA',
     surface: '#FFFFFF',
-    text: '#1A1A1A',
-    textSecondary: '#666666',
-    heading: '#111111',
-    codeBackground: '#F0F0F0',
-    codeText: '#C7254E',
-    border: '#E0E0E0',
-    link: '#1A73E8',
-    quoteBackground: '#F7F7F7',
-    quoteBorder: '#CCCCCC',
-    tableHeaderBg: '#EEEEEE',
-    tableRowAltBg: '#F7F7F7',
+    text: '#1F2328',
+    textSecondary: '#6B7280',
+    heading: '#0B0F19',
+    codeBackground: '#F2F4F7',
+    codeText: '#B42318',
+    border: '#E5E7EB',
+    link: '#007AFF',
+    error: '#B42318',
+    success: '#16A34A',
+    quoteBackground: '#F3F6F8',
+    quoteBorder: '#C9CED6',
+    tableHeaderBg: '#F1F3F6',
+    tableRowAltBg: '#FAFBFC',
   },
   night: {
     mode: 'night',
-    background: '#1C1C1E',
-    surface: '#2C2C2E',
-    text: '#E5E5E5',
-    textSecondary: '#AEAEB2',
+    background: '#111113',
+    surface: '#1C1C1E',
+    text: '#F2F2F7',
+    textSecondary: '#A1A1AA',
     heading: '#FFFFFF',
-    codeBackground: '#2C2C2E',
-    codeText: '#FF8AB4',
-    border: '#38383A',
-    link: '#66A3FF',
-    quoteBackground: '#262628',
-    quoteBorder: '#3A3A3C',
-    tableHeaderBg: '#2C2C2E',
-    tableRowAltBg: '#242424',
+    codeBackground: '#242426',
+    codeText: '#FF9F8A',
+    border: '#303034',
+    link: '#0A84FF',
+    error: '#FF6B6B',
+    success: '#34D399',
+    quoteBackground: '#1F2023',
+    quoteBorder: '#3A3A40',
+    tableHeaderBg: '#242426',
+    tableRowAltBg: '#18181B',
   },
 };
 
