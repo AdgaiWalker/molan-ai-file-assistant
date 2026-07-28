@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:18.4-alpine3.24
+    environment:
+      POSTGRES_DB: molan
+      POSTGRES_USER: molan
+      POSTGRES_PASSWORD: molan-local
+      PGDATA: /var/lib/postgresql/18/docker
+    ports:
+      - "54320:5432"
+    volumes:
+      - molan-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U molan -d molan"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  sync-server:
+    build: .
+    environment:
+      MOLAN_SERVER_HOST: 0.0.0.0
+      MOLAN_SERVER_PORT: 43120
+      MOLAN_DATABASE_URL: postgres://molan:molan-local@postgres:5432/molan
+      MOLAN_OBJECT_DIR: /var/lib/molan/objects
+      MOLAN_LOG_LEVEL: info
+      MOLAN_LOCAL_AUTH_CODE: "246810"
+    ports:
+      - "43120:43120"
+    volumes:
+      - molan-objects:/var/lib/molan/objects
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:43120/v1/health').then(r=>{if(!r.ok)process.exit(1)})"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  molan-postgres:
+  molan-objects:

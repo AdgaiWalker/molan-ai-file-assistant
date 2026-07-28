@@ -56,7 +56,7 @@ interface ConversionJob {
   inputDocumentId?: string;
   inputPath?: string;
   inputName: string;
-  inputKind: 'markdown' | 'json' | 'office_source' | 'converted';
+  inputFormatId: string;
   outputFormat: 'md' | 'json' | 'pdf' | 'docx';
   status: ConversionJobStatus;
   attempt: number;
@@ -107,7 +107,7 @@ CLI JSON 契约不因本地任务状态扩展而改变，仍保留 `ok/results/o
 
 ## 7. 测试判定
 
-转换任务状态机属于 TODO §20.2 状态机范围。实现代码落地时需要测试：
+转换任务状态机属于 `TODO.md` 阶段 A 的跨端契约范围。实现代码落地时需要测试：
 - `pending -> running -> success`。
 - `running -> failed` 且保留错误码。
 - `failed -> pending` 重试。

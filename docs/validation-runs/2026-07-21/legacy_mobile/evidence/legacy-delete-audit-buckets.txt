@@ -1,0 +1,52 @@
+生成时间：2026-07-21
+用途：旧 mobile 引用分桶结果；真正删除前后可直接对照这些文件是否已清零或仍可保留。
+
+必须移除：
+- 文件：docs/validation-runs/README.md
+  - 第 81 行：- `node scripts/legacy_mobile_run_sheet.mjs --out default` 会把旧 React Native mobile 删除拆成删除前置、真实删除、删除后验证和最终回写的逐行执行表；
+- 文件：scripts/legacy_mobile_run_sheet.mjs
+  - 第 65 行：action: '确认 G-002～G-007 已全部关闭，发布产物可获取，回滚方案不依赖旧 React Native 应用。',
+  - 第 75 行：passRule: '主流程、README、AGENTS、CI、站点和活跃文档不再引用 mobile/、Expo 或 React Native。',
+  - 第 92 行：action: '删除旧 mobile/ 目录。',
+  - 第 93 行：passRule: '只有 readyToDelete=true 时才执行；删除后工作区不再存在旧 React Native 工程。',
+  - 第 110 行：action: '全文搜索 mobile/、Expo、React Native、expo start 等旧移动端关键词。',
+  - 第 211 行：const markdown = `# 旧 React Native mobile 删除逐项执行清单
+- 文件：scripts/minimal_external_inputs.mjs
+  - 第 120 行：title: '旧 React Native mobile 最终清理窗口',
+- 文件：scripts/next_remaining_action.mjs
+  - 第 211 行：title: '第 5 波：删除旧 React Native 端',
+  - 第 216 行：executeCommand: '确认 G-002～G-007 全部改成 [x] 后，再按 legacy-delete-checklist.txt 删除 mobile/ 并重跑构建',
+
+可保留历史证据：
+- 文件：TODO.md
+  - 第 144 行：- 旧 `mobile/` 不得在Android和iOS均达到替代标准前删除；
+  - 第 175 行：| 19 | G-008 | `[~]` | 最后删除旧 React Native 工程和断链引用 | 原生端已发布且仓库全量构建通过 |
+  - 第 183 行：| `mobile/` | Expo/React Native，已有Markdown、JSON、编辑、转换、提示词和批量能力 | 只作为行为与验收参考，不继续扩展主功能 |
+  - 第 194 行：- **前置**：无；只读检查现有 `mobile/` 和真机证据。
+  - 第 767 行：### [~] G-008 `[P1]` 删除旧React Native移动端
+  - 其余 7 行命中见 legacy-mobile-retirement-audit.md/json
+- 文件：docs/design/conversion-recipes.md
+  - 第 41 行：| Markdown -> PDF | `mobile/src/converter/fileConvert.ts` `exportPdfFile` |
+- 文件：docs/design/mobile-reading-acceptance-matrix.md
+  - 第 9 行：本矩阵冻结旧 `mobile/` 的可观察行为，作为 Android 与 iOS 原生实现的共同验收基线。结论只使用以下三种：
+  - 第 15 行：旧 React Native 代码只提供行为参考，不作为原生端的实现依赖。未被真机证据覆盖的项目明确标为“未解决”，不能据此关闭 B/C 阶段任务。
+  - 第 21 行：| 外部入口 | Android 从微信、QQ、浏览器或文件管理器通过系统“打开方式”进入正文 | `mobile/app.json`；`mobile/verify-evidence/VERIFY.md`；`verify-md-grant.png`；`verify-json-clean.png` | Android 模拟器已证明 Intent 注册和 `content://` 读取；微信/QQ 真机 UI 未验证 | 沿用 | 每个来源各打开 Markdown、JSON、TXT；记录系统版本、耗时和录屏 |
+  - 第 22 行：| 外部入口 | iOS 从微信、QQ、Safari、文件 App 打开正文 | `mobile/app.json` 的文档类型声明 | 无 iOS 真机证据，Share Extension 也未形成稳定链路 | 重做 | iPhone 与 iPad 各验证 Document Picker、Open in Place 和分享入口 |
+  - 第 23 行：| 文件选择 | 用户在应用内选择文件；取消后留在原页面且不报错 | `mobile/src/platform/filePicker.ts`；`mobile/App.tsx` 的 `openFile` | 原生和 Web 都把取消返回为 `null`；Android 模拟器有正文证据 | 沿用 | 选择成功、取消、权限撤销分别验收 |
+  - 其余 18 行命中见 legacy-mobile-retirement-audit.md/json
+- 文件：scripts/prepare_legacy_mobile_wave.mjs
+  - 第 121 行：'- 删除 mobile/ 目录',
+  - 第 125 行：'- 运行全文搜索，确认主流程不再引用 mobile/ / Expo / React Native',
+  - 第 142 行：'- rg -n "mobile/|React Native|\\bExpo\\b|expo start" README.md AGENTS.md .github docs/CLAUDE.md docs/validation-runs/README.md site scripts',
+  - 第 193 行：title: '旧 React Native mobile 删除逐项执行清单',
+  - 第 230 行：'删除 mobile/ 及只为其存在的依赖、脚本、CI 和文档引用',
+- 文件：scripts/remaining_dependency_matrix.mjs
+  - 第 131 行：'仓库主流程不再依赖旧 React Native 基线',
+- 文件：scripts/remaining_execution_dashboard.mjs
+  - 第 149 行：title: '第 5 波：删除旧 React Native 端',
+- 文件：scripts/remaining_todo_fast_path.mjs
+  - 第 223 行：title: '第 5 波：删除旧 React Native 端',
+  - 第 227 行：'删除 mobile/ 及其专属依赖、文档、CI 引用',
+  - 第 234 行：'仓库全文搜索无对 mobile/ 的残留主流程引用',
+  - 第 240 行：'删除 mobile/ 及只为其存在的依赖、脚本、CI 和文档引用',
+  - 第 244 行：'全文搜索不再有旧 React Native 主流程残留引用',

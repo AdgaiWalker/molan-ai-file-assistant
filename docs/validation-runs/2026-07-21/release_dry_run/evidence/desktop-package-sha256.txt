@@ -1,0 +1,34 @@
+生成时间：2026-07-21
+用途：当前桌面 / CLI 候选包与 SHA256 记录，可直接作为 G-004 / G-005 / G-007 演练前的初始证据。
+
+平台：Windows
+本地候选产物：desktop/release/墨览-1.0.0-setup.exe
+SHA256：fe1adb655b159914a8a49a290c1709d21ffabbad780120121ab902a6f45bd182
+文件大小：110647343 B
+修改时间：2026-07-21T22:14:46.899Z
+官网状态：准备中
+官网入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+备注：本地已产出 NSIS 安装包与 win-unpacked 包，但全新 Windows 手测、下载渠道与升级/回滚验收仍未关闭。
+
+平台：macOS
+本地候选产物：desktop/release/墨览-1.0.0-arm64.dmg
+SHA256：25b7b13a130db8564b82bb4dfdb70d836d826b932889e4fa5724a6c0ee0d29ca
+文件大小：106062472 B
+修改时间：2026-07-21T22:09:59.003Z
+官网状态：准备中
+官网入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+备注：本地已产出 arm64 DMG / ZIP，但签名、公证、Gatekeeper 与正式下载入口仍未完成。
+
+平台：CLI
+本地候选产物：desktop/cli/dist/molan-cli-1.0.0.tgz
+SHA256：ac1fcb3de274db4f4b7137a23fc77244609b4ec74322f17a491758c7ef0f710f
+文件大小：64268 B
+修改时间：2026-07-21T22:02:03.963Z
+官网状态：可用
+官网入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/tree/main/desktop/cli
+备注：当前可从仓库拉取 `desktop/cli` 并本地构建体验。
+
+待补真实演练：
+- Windows 全新环境安装 / 升级 / 回滚 / 卸载
+- macOS 签名 / 公证 / Gatekeeper
+- CLI 对外下载说明与官网入口替换

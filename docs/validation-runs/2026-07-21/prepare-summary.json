@@ -1,0 +1,257 @@
+{
+  "validationDate": "2026-07-21",
+  "pendingBatchCount": 4,
+  "prepared": [
+    {
+      "kind": "public_surface_check",
+      "id": "public_surface_sync",
+      "title": "公开面与 TODO 总自检",
+      "tasks": [
+        "A-007",
+        "G-001",
+        "G-006",
+        "G-007",
+        "G-008"
+      ],
+      "output": "node scripts/public_surface_sync_check.mjs"
+    },
+    {
+      "kind": "identity_prepare_summary",
+      "id": "identity_prepare_summary",
+      "title": "身份与账号统一准备摘要",
+      "tasks": [
+        "A-007",
+        "G-001"
+      ],
+      "output": "docs/validation-runs/2026-07-21/identity_and_accounts/identity-prep-summary.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/identity_and_accounts/identity-prep-summary.json",
+      "extraOutputs": [
+        "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/current-product-identity.json",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/current-identity-values.txt",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/public-doc-placeholders.txt",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/identity-readiness-findings.txt",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/engineering-identity-values.txt",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/identity-checklist-seed.txt",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/identity-evidence-templates.txt"
+      ]
+    },
+    {
+      "kind": "identity_template",
+      "id": "identity_and_accounts",
+      "title": "身份、账号与责任主体清单",
+      "tasks": [
+        "A-007",
+        "G-001"
+      ],
+      "output": "docs/validation-runs/2026-07-21/identity_and_accounts/identity-and-accounts-checklist.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/identity_and_accounts/identity-and-accounts-checklist.json"
+    },
+    {
+      "kind": "identity_snapshot",
+      "id": "identity_readiness",
+      "title": "身份与公开入口当前状态快照",
+      "tasks": [
+        "A-007",
+        "G-001"
+      ],
+      "output": "docs/validation-runs/2026-07-21/identity_and_accounts/identity-readiness-snapshot.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/identity_and_accounts/identity-readiness-snapshot.json"
+    },
+    {
+      "kind": "engineering_identity",
+      "id": "engineering_identity",
+      "title": "工程身份一致性快照",
+      "tasks": [
+        "A-007",
+        "G-001"
+      ],
+      "output": "docs/validation-runs/2026-07-21/identity_and_accounts/engineering-identity-snapshot.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/identity_and_accounts/engineering-identity-snapshot.json"
+    },
+    {
+      "kind": "mobile_true_device_prepare_summary",
+      "id": "mobile_true_device_prepare_summary",
+      "title": "移动真机批次统一准备摘要",
+      "tasks": [
+        "B-002",
+        "B-004",
+        "B-008",
+        "B-009",
+        "C-002",
+        "C-004",
+        "C-008",
+        "C-009"
+      ],
+      "output": "docs/validation-runs/2026-07-21/mobile_true_device/mobile-true-device-prep-summary.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/mobile_true_device/mobile-true-device-prep-summary.json",
+      "extraOutputs": [
+        "docs/validation-runs/2026-07-21/mobile_true_device/mobile-device-run-sheet.md",
+        "docs/validation-runs/2026-07-21/mobile_true_device/evidence/mobile-device-matrix.txt",
+        "docs/validation-runs/2026-07-21/mobile_true_device/evidence/mobile-sample-checksums.txt",
+        "docs/validation-runs/2026-07-21/mobile_true_device/evidence/mobile-evidence-paths.txt",
+        "docs/validation-runs/2026-07-21/mobile_true_device/evidence/mobile-report-fields.txt",
+        "docs/validation-runs/2026-07-21/mobile_true_device/evidence/mobile-run-checklist.txt"
+      ]
+    },
+    {
+      "kind": "mobile_true_device",
+      "id": "mobile_true_device",
+      "title": "移动真机批次（B/C）",
+      "tasks": [
+        "B-002",
+        "B-004",
+        "B-008",
+        "B-009",
+        "C-002",
+        "C-004",
+        "C-008",
+        "C-009"
+      ],
+      "output": "docs/validation-runs/2026-07-21/mobile_true_device/mobile-true-device-report.md"
+    },
+    {
+      "kind": "sync_ai_prepare_summary",
+      "id": "sync_ai_prepare_summary",
+      "title": "同步 / AI 读取 / 结果回流统一准备摘要",
+      "tasks": [
+        "D-010",
+        "F-005"
+      ],
+      "output": "docs/validation-runs/2026-07-21/sync_ai_return/sync-ai-prep-summary.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/sync_ai_return/sync-ai-prep-summary.json",
+      "extraOutputs": [
+        "docs/validation-runs/2026-07-21/sync_ai_return/sync-ai-run-sheet.md",
+        "docs/validation-runs/2026-07-21/gate_d_sync/evidence/postgres18-native-integration.txt",
+        "docs/validation-runs/2026-07-21/gate_f_result_return/evidence/codex-mcp-result-write-confirm.txt",
+        "docs/validation-runs/2026-07-21/sync_ai_return/evidence/sync-ai-environment-checklist.txt",
+        "docs/validation-runs/2026-07-21/sync_ai_return/evidence/sync-ai-sample-checksums.txt",
+        "docs/validation-runs/2026-07-21/sync_ai_return/evidence/sync-ai-run-order.txt",
+        "docs/validation-runs/2026-07-21/sync_ai_return/evidence/gate-d-evidence-paths.txt",
+        "docs/validation-runs/2026-07-21/sync_ai_return/evidence/gate-e-evidence-paths.txt",
+        "docs/validation-runs/2026-07-21/sync_ai_return/evidence/gate-f-evidence-paths.txt"
+      ]
+    },
+    {
+      "kind": "gate_d_sync",
+      "id": "gate_d_sync",
+      "title": "Gate D 外部批次（D-010）",
+      "tasks": [
+        "D-010"
+      ],
+      "output": "docs/validation-runs/2026-07-21/gate_d_sync/gate-d-sync-report.md"
+    },
+    {
+      "kind": "gate_f_result_return",
+      "id": "gate_f_result_return",
+      "title": "Gate F 外部批次（F-005）",
+      "tasks": [
+        "F-005"
+      ],
+      "output": "docs/validation-runs/2026-07-21/gate_f_result_return/gate-f-result-return-report.md"
+    },
+    {
+      "kind": "release_prepare_summary",
+      "id": "release_prepare_summary",
+      "title": "发布波次统一准备摘要",
+      "tasks": [
+        "G-002",
+        "G-003",
+        "G-004",
+        "G-005",
+        "G-006",
+        "G-007"
+      ],
+      "output": "docs/validation-runs/2026-07-21/release_dry_run/release-prep-summary.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/release_dry_run/release-prep-summary.json",
+      "extraOutputs": [
+        "docs/validation-runs/2026-07-21/release_dry_run/release-run-sheet.md",
+        "docs/validation-runs/2026-07-21/release_dry_run/evidence/release-candidate-manifest.json",
+        "docs/validation-runs/2026-07-21/release_dry_run/evidence/android-release-sha256.txt",
+        "docs/validation-runs/2026-07-21/release_dry_run/evidence/ios-testflight-build.txt",
+        "docs/validation-runs/2026-07-21/release_dry_run/evidence/desktop-package-sha256.txt",
+        "docs/validation-runs/2026-07-21/release_dry_run/evidence/site-links-check.txt",
+        "docs/validation-runs/2026-07-21/release_dry_run/evidence/rollback-record.txt"
+      ]
+    },
+    {
+      "kind": "release_snapshot",
+      "id": "release_readiness",
+      "title": "发布就绪快照",
+      "tasks": [
+        "G-002",
+        "G-003",
+        "G-004",
+        "G-005",
+        "G-006",
+        "G-007"
+      ],
+      "output": "docs/validation-runs/2026-07-21/release_dry_run/release-readiness-snapshot.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/release_dry_run/release-readiness-snapshot.json"
+    },
+    {
+      "kind": "release_dry_run",
+      "id": "release_dry_run",
+      "title": "发布前演练批次（G-007）",
+      "tasks": [
+        "G-007"
+      ],
+      "output": "docs/validation-runs/2026-07-21/release_dry_run/release-dry-run-report.md"
+    },
+    {
+      "kind": "legacy_mobile_prepare_summary",
+      "id": "legacy_mobile_prepare_summary",
+      "title": "旧 mobile 删除波次统一准备摘要",
+      "tasks": [
+        "G-008"
+      ],
+      "output": "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-prep-summary.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-prep-summary.json",
+      "extraOutputs": [
+        "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-run-sheet.md",
+        "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-ready-state.json",
+        "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-blockers.txt",
+        "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-audit-buckets.txt",
+        "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-checklist.txt",
+        "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-post-delete-verification.txt"
+      ]
+    },
+    {
+      "kind": "legacy_mobile_audit",
+      "id": "legacy_mobile",
+      "title": "旧 mobile 基线删除前审计",
+      "tasks": [
+        "G-008"
+      ],
+      "output": "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.md",
+      "jsonOutput": "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.json"
+    }
+  ],
+  "fastPath": {
+    "markdown": "docs/validation-runs/2026-07-21/fastest-remaining-path.md",
+    "json": "docs/validation-runs/2026-07-21/fastest-remaining-path.json"
+  },
+  "nextAction": {
+    "markdown": "docs/validation-runs/2026-07-21/next-remaining-action.md",
+    "json": "docs/validation-runs/2026-07-21/next-remaining-action.json"
+  },
+  "dashboard": {
+    "markdown": "docs/validation-runs/2026-07-21/remaining-execution-dashboard.md",
+    "json": "docs/validation-runs/2026-07-21/remaining-execution-dashboard.json"
+  },
+  "dependencyMatrix": {
+    "markdown": "docs/validation-runs/2026-07-21/remaining-dependency-matrix.md",
+    "json": "docs/validation-runs/2026-07-21/remaining-dependency-matrix.json"
+  },
+  "reportCheck": {
+    "markdown": "docs/validation-runs/2026-07-21/validation-report-check.md",
+    "json": "docs/validation-runs/2026-07-21/validation-report-check.json"
+  },
+  "completionAudit": {
+    "markdown": "docs/validation-runs/2026-07-21/remaining-completion-audit.md",
+    "json": "docs/validation-runs/2026-07-21/remaining-completion-audit.json"
+  },
+  "minimalExternalInputs": {
+    "markdown": "docs/validation-runs/2026-07-21/minimal-external-inputs.md",
+    "json": "docs/validation-runs/2026-07-21/minimal-external-inputs.json"
+  }
+}

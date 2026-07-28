@@ -1,0 +1,18 @@
+生成时间：2026-07-21
+用途：当前产品身份配置与工程实际值对照，可直接作为 A-007 / G-001 的起始证据。
+
+品牌名：墨览
+品牌 slug：molan
+Android applicationId：com.molan.reader
+Android 显示名：墨览
+iOS Bundle ID：com.molan.reader
+iOS URL Scheme：molan
+iOS App Group ID：group.com.molan.reader
+桌面 App ID：com.molan.desktop
+桌面 packageName：molan-desktop
+
+待补正式信息：
+- 正式产品名
+- 正式 Android applicationId
+- 正式 iOS Bundle ID / URL Scheme / App Group ID
+- 正式桌面 App ID

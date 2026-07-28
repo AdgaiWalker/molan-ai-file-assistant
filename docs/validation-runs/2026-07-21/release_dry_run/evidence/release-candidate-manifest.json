@@ -1,0 +1,77 @@
+[
+  {
+    "id": "android",
+    "name": "Android",
+    "publicStatus": "coming",
+    "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+    "publicCta": "查看进度",
+    "publicDetail": "真机与渠道验收未关闭，公开下载仍准备中。",
+    "artifactCount": 1,
+    "preferredArtifact": {
+      "relativePath": "native/androidApp/build/outputs/apk/debug/androidApp-debug.apk",
+      "sizeBytes": 12567943,
+      "modifiedAt": "2026-07-21T22:51:44.513Z",
+      "sha256": "f4b8aa5f100a144dab2095145f1172688c79243f61ef66b26e427b6c463e1d77"
+    },
+    "missingNote": "当前还没有可公开分发的 Android release 包；正式签名和渠道构建仍未完成。"
+  },
+  {
+    "id": "ios",
+    "name": "iPhone / iPad",
+    "publicStatus": "coming",
+    "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+    "publicCta": "查看进度",
+    "publicDetail": "TestFlight 与真机入口矩阵仍在集中验收中。",
+    "artifactCount": 0,
+    "preferredArtifact": null,
+    "missingNote": "当前还没有可公开分发的 iOS Archive / IPA；正式签名、Archive 和 TestFlight 仍未完成。"
+  },
+  {
+    "id": "windows",
+    "name": "Windows",
+    "publicStatus": "coming",
+    "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+    "publicCta": "查看进度",
+    "publicDetail": "本地已产出 NSIS 安装包与 win-unpacked 包，但全新 Windows 手测、下载渠道与升级/回滚验收仍未关闭。",
+    "artifactCount": 2,
+    "preferredArtifact": {
+      "relativePath": "desktop/release/墨览-1.0.0-setup.exe",
+      "sizeBytes": 110647343,
+      "modifiedAt": "2026-07-21T22:14:46.899Z",
+      "sha256": "fe1adb655b159914a8a49a290c1709d21ffabbad780120121ab902a6f45bd182"
+    },
+    "missingNote": "当前还没有可对外发布的 Windows 安装包。"
+  },
+  {
+    "id": "macos",
+    "name": "macOS",
+    "publicStatus": "coming",
+    "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+    "publicCta": "查看进度",
+    "publicDetail": "本地已产出 arm64 DMG / ZIP，但签名、公证、Gatekeeper 与正式下载入口仍未完成。",
+    "artifactCount": 2,
+    "preferredArtifact": {
+      "relativePath": "desktop/release/墨览-1.0.0-arm64.dmg",
+      "sizeBytes": 106062472,
+      "modifiedAt": "2026-07-21T22:09:59.003Z",
+      "sha256": "25b7b13a130db8564b82bb4dfdb70d836d826b932889e4fa5724a6c0ee0d29ca"
+    },
+    "missingNote": "当前还没有可对外发布的 macOS DMG / ZIP。"
+  },
+  {
+    "id": "cli",
+    "name": "CLI",
+    "publicStatus": "available",
+    "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/tree/main/desktop/cli",
+    "publicCta": "查看 CLI",
+    "publicDetail": "当前可从仓库拉取 `desktop/cli` 并本地构建体验。",
+    "artifactCount": 1,
+    "preferredArtifact": {
+      "relativePath": "desktop/cli/dist/molan-cli-1.0.0.tgz",
+      "sizeBytes": 64268,
+      "modifiedAt": "2026-07-21T22:02:03.963Z",
+      "sha256": "ac1fcb3de274db4f4b7137a23fc77244609b4ec74322f17a491758c7ef0f710f"
+    },
+    "missingNote": "当前还没有可对外发布的 CLI 压缩包。"
+  }
+]

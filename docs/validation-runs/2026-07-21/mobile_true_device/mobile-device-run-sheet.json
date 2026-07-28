@@ -1,0 +1,1459 @@
+{
+  "validationDate": "2026-07-21",
+  "generatedFrom": "scripts/mobile_true_device_run_sheet.mjs",
+  "batch": {
+    "id": "mobile_true_device",
+    "title": "移动真机批次（B/C）",
+    "tasks": [
+      "B-002",
+      "B-004",
+      "B-008",
+      "B-009",
+      "C-002",
+      "C-004",
+      "C-008",
+      "C-009"
+    ]
+  },
+  "summary": {
+    "rowCount": 48,
+    "groupCount": 4,
+    "evidenceDir": "docs/validation-runs/2026-07-21/mobile_true_device/evidence"
+  },
+  "groupSummary": [
+    {
+      "group": "Android 外部来源打开",
+      "rowCount": 12,
+      "tasks": [
+        "B-002",
+        "B-009"
+      ]
+    },
+    {
+      "group": "Android 性能与恢复",
+      "rowCount": 2,
+      "tasks": [
+        "B-004",
+        "B-008",
+        "B-009"
+      ]
+    },
+    {
+      "group": "iOS / iPadOS 外部来源打开",
+      "rowCount": 30,
+      "tasks": [
+        "C-002",
+        "C-009"
+      ]
+    },
+    {
+      "group": "iOS / iPadOS 性能与恢复",
+      "rowCount": 4,
+      "tasks": [
+        "C-004",
+        "C-008",
+        "C-009"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "id": "android-open-wechat-normal-md",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-wechat-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-wechat-normal-json",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-wechat-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-wechat-utf8-txt",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-wechat-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-qq-normal-md",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-qq-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-qq-normal-json",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-qq-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-qq-utf8-txt",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-qq-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-browser-normal-md",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "浏览器",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-browser-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-browser-normal-json",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "浏览器",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-browser-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-browser-utf8-txt",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "浏览器",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-browser-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-file-manager-normal-md",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "文件管理器",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-file-manager-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-file-manager-normal-json",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "文件管理器",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-file-manager-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-open-file-manager-utf8-txt",
+      "group": "Android 外部来源打开",
+      "tasks": [
+        "B-002",
+        "B-009"
+      ],
+      "deviceSlot": "Android 真机 A；另用真机 B 抽查微信 / 文件管理器",
+      "platform": "Android",
+      "source": "文件管理器",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，进入阅读页后返回，再次打开同一文件。",
+      "passRule": "5 秒内出现首屏或明确错误；返回和再次打开不白屏；临时打开不自动收集。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-file-manager-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-performance-large-1mb-md",
+      "group": "Android 性能与恢复",
+      "tasks": [
+        "B-004",
+        "B-008",
+        "B-009"
+      ],
+      "deviceSlot": "中低端 Android 真机；至少覆盖两个国产品牌中的一台",
+      "platform": "Android",
+      "source": "文件管理器或浏览器下载目录",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/large-1mb.md",
+        "sizeBytes": 1512031,
+        "sha256": "6edb341c9924a33d7af8f511d825b3214eb975ff414d7a8edb1acf3ffb1ab256"
+      },
+      "action": "打开大样例，记录首屏、滚动、横竖屏、退后台、杀进程恢复和内存。",
+      "passRule": "外部打开到正文 5 秒内；1 MB Markdown / 5 MB JSON 不 ANR；恢复后不串文件。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-performance-large-1mb-md.txt",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "android-performance-large-5mb-json",
+      "group": "Android 性能与恢复",
+      "tasks": [
+        "B-004",
+        "B-008",
+        "B-009"
+      ],
+      "deviceSlot": "中低端 Android 真机；至少覆盖两个国产品牌中的一台",
+      "platform": "Android",
+      "source": "文件管理器或浏览器下载目录",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/large-5mb.json",
+        "sizeBytes": 5243566,
+        "sha256": "a56fa9b549895042de2e131317696bdb389636b1378755f6ad4c8d1139934f0e"
+      },
+      "action": "打开大样例，记录首屏、滚动、横竖屏、退后台、杀进程恢复和内存。",
+      "passRule": "外部打开到正文 5 秒内；1 MB Markdown / 5 MB JSON 不 ANR；恢复后不串文件。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-performance-large-5mb-json.txt",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-wechat-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-wechat-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-wechat-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-wechat-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-wechat-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-wechat-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-qq-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-qq-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-qq-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-qq-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-qq-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-qq-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-safari-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "Safari",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-safari-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-safari-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "Safari",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-safari-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-safari-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "Safari",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-safari-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-files-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "“文件”App",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-files-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-files-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "“文件”App",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-files-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-files-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "“文件”App",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-files-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-share-sheet-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-share-sheet-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-share-sheet-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-share-sheet-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-open-share-sheet-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-share-sheet-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-wechat-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-wechat-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-wechat-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-wechat-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-wechat-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "微信",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-wechat-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-qq-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-qq-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-qq-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-qq-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-qq-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "QQ",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-qq-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-safari-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "Safari",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-safari-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-safari-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "Safari",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-safari-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-safari-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "Safari",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-safari-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-files-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "“文件”App",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-files-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-files-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "“文件”App",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-files-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-files-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "“文件”App",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-files-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-share-sheet-normal-md",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/normal.md",
+        "sizeBytes": 292,
+        "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-share-sheet-normal-md.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-share-sheet-normal-json",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/normal.json",
+        "sizeBytes": 167,
+        "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-share-sheet-normal-json.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-open-share-sheet-utf8-txt",
+      "group": "iOS / iPadOS 外部来源打开",
+      "tasks": [
+        "C-002",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/text/utf8.txt",
+        "sizeBytes": 77,
+        "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+      },
+      "action": "从真实来源打开样例，确认 Share Extension / 主应用交接，再返回并再次打开。",
+      "passRule": "5 秒内显示正文或明确进度 / 错误；扩展只复制 / 排队，不重解析；重复分享不白屏。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-share-sheet-utf8-txt.mp4",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-performance-large-1mb-md",
+      "group": "iOS / iPadOS 性能与恢复",
+      "tasks": [
+        "C-004",
+        "C-008",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "“文件”App 或系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/large-1mb.md",
+        "sizeBytes": 1512031,
+        "sha256": "6edb341c9924a33d7af8f511d825b3214eb975ff414d7a8edb1acf3ffb1ab256"
+      },
+      "action": "打开大样例，记录首屏、滚动、后台返回、系统终止后恢复和内存。",
+      "passRule": "可用内容尽快首屏；大 Markdown / 大 JSON 不崩溃、不长时间冻结；恢复不串文件。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-performance-large-1mb-md.txt",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "iphone-performance-large-5mb-json",
+      "group": "iOS / iPadOS 性能与恢复",
+      "tasks": [
+        "C-004",
+        "C-008",
+        "C-009"
+      ],
+      "deviceSlot": "iPhone 真机",
+      "platform": "iOS",
+      "source": "“文件”App 或系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/large-5mb.json",
+        "sizeBytes": 5243566,
+        "sha256": "a56fa9b549895042de2e131317696bdb389636b1378755f6ad4c8d1139934f0e"
+      },
+      "action": "打开大样例，记录首屏、滚动、后台返回、系统终止后恢复和内存。",
+      "passRule": "可用内容尽快首屏；大 Markdown / 大 JSON 不崩溃、不长时间冻结；恢复不串文件。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/iphone-performance-large-5mb-json.txt",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-performance-large-1mb-md",
+      "group": "iOS / iPadOS 性能与恢复",
+      "tasks": [
+        "C-004",
+        "C-008",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "“文件”App 或系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/markdown/large-1mb.md",
+        "sizeBytes": 1512031,
+        "sha256": "6edb341c9924a33d7af8f511d825b3214eb975ff414d7a8edb1acf3ffb1ab256"
+      },
+      "action": "打开大样例，记录首屏、滚动、后台返回、系统终止后恢复和内存。",
+      "passRule": "可用内容尽快首屏；大 Markdown / 大 JSON 不崩溃、不长时间冻结；恢复不串文件。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-performance-large-1mb-md.txt",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    },
+    {
+      "id": "ipad-performance-large-5mb-json",
+      "group": "iOS / iPadOS 性能与恢复",
+      "tasks": [
+        "C-004",
+        "C-008",
+        "C-009"
+      ],
+      "deviceSlot": "iPad 真机",
+      "platform": "iPadOS",
+      "source": "“文件”App 或系统分享面板",
+      "sample": {
+        "path": "fixtures/mobile-reading/json/large-5mb.json",
+        "sizeBytes": 5243566,
+        "sha256": "a56fa9b549895042de2e131317696bdb389636b1378755f6ad4c8d1139934f0e"
+      },
+      "action": "打开大样例，记录首屏、滚动、后台返回、系统终止后恢复和内存。",
+      "passRule": "可用内容尽快首屏；大 Markdown / 大 JSON 不崩溃、不长时间冻结；恢复不串文件。",
+      "evidence": "docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-performance-large-5mb-json.txt",
+      "resultFields": [
+        "设备型号 / 系统版本",
+        "来源 App / 版本",
+        "墨览版本 / 构建号",
+        "首屏耗时",
+        "滚动表现",
+        "峰值内存或系统内存记录",
+        "截图 / 录屏路径",
+        "是否通过"
+      ]
+    }
+  ]
+}

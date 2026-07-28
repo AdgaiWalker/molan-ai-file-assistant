@@ -1,0 +1,220 @@
+#!/usr/bin/env node
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { validationDate, validationRelativePath } from './v2_validation_data.mjs';
+import {
+  getIdentityInputState,
+  getIdentityWaveAction,
+  identityApplyCommand,
+  identityCheckCommand,
+  identityLocalInputPath,
+} from './identity_wave_status_lib.mjs';
+import { getRepoRoot } from './todo_status_lib.mjs';
+
+const repoRoot = getRepoRoot(import.meta.url);
+const args = process.argv.slice(2);
+const jsonOnly = args.includes('--json');
+const outIndex = args.indexOf('--out');
+const defaultDir = path.join(repoRoot, 'docs/validation-runs', validationDate, 'identity_and_accounts');
+const defaultMarkdownPath = path.join(defaultDir, 'identity-sync-targets.md');
+const defaultJsonPath = path.join(defaultDir, 'identity-sync-targets.json');
+
+function writeOutput(targetPath, content) {
+  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  fs.writeFileSync(targetPath, content, 'utf-8');
+}
+
+const inputState = getIdentityInputState(repoRoot);
+const nextAction = getIdentityWaveAction(repoRoot);
+
+const allInputLabels = inputState.fields.map((field) => field.label);
+const publicIdentityLabels = [
+  '正式主体名称',
+  '支持邮箱',
+  '正式域名',
+  '账号 / 数据删除入口 URL',
+];
+
+const targets = [
+  {
+    id: 'release_identity_inputs',
+    title: '本地身份输入源',
+    type: 'manual_edit',
+    where: [identityLocalInputPath],
+    fields: allInputLabels,
+    refresh: '直接编辑本地输入文件；填写完成后先跑预检。',
+    command: identityCheckCommand,
+    evidence: ['填写完成后的本地 JSON 文件', '预检输出结果'],
+  },
+  {
+    id: 'product_identity_config',
+    title: '统一公开身份配置',
+    type: 'auto_generated',
+    where: ['config/product-identity.json'],
+    fields: publicIdentityLabels,
+    refresh: `执行 ${identityApplyCommand} 后自动回写。`,
+    command: identityApplyCommand,
+    evidence: ['config/product-identity.json 的更新结果'],
+  },
+  {
+    id: 'public_markdown_docs',
+    title: '公开文案 Markdown',
+    type: 'auto_generated',
+    where: [
+      'docs/public/privacy-policy.md',
+      'docs/public/terms-of-service.md',
+      'docs/public/account-and-data-deletion.md',
+      'docs/public/support.md',
+    ],
+    fields: publicIdentityLabels,
+    refresh: '公开身份配置更新后，由统一准备流自动回写。',
+    command: 'node scripts/prepare_identity_and_accounts.mjs --out default',
+    evidence: ['四份 docs/public 文档不再含待补占位'],
+  },
+  {
+    id: 'site_public_identity_generated',
+    title: '站点公开身份常量',
+    type: 'auto_generated',
+    where: ['site/src/lib/publicIdentity.generated.ts'],
+    fields: publicIdentityLabels,
+    refresh: '公开身份配置更新后，由 render_public_docs 自动回写。',
+    command: 'node scripts/render_public_docs.mjs',
+    evidence: ['site/src/lib/publicIdentity.generated.ts 已同步真实值'],
+  },
+  {
+    id: 'site_public_entrypoints',
+    title: '官网公开入口与路由',
+    type: 'manual_verify',
+    where: [
+      'site/src/lib/constants.ts',
+      'site/src/components/PublicDocPage.tsx',
+      'site/src/components/ReleaseStatus.tsx',
+      'site/src/App.tsx',
+    ],
+    fields: ['支持邮箱', '正式域名', '账号 / 数据删除入口 URL'],
+    refresh: '公开身份配置更新后，打开站点验证 #/privacy #/terms #/deletion #/support 与发布状态区块。',
+    command: 'node scripts/public_surface_sync_check.mjs',
+    evidence: ['官网页面截图', '本地站点或线上站点验证记录'],
+  },
+  {
+    id: 'application_internal_entrypoints',
+    title: '应用内入口与截图',
+    type: 'manual_evidence',
+    where: [
+      'Android / iOS 应用内“隐私 / 支持 / 删除账号”入口',
+      '桌面端相应入口（如发布版本提供）',
+    ],
+    fields: ['支持邮箱', '账号 / 数据删除入口 URL'],
+    refresh: '真实发布前在应用内逐项打开并截图。',
+    command: '人工真机 / 桌面取证',
+    evidence: ['应用内入口截图路径', '真机录屏或截图'],
+  },
+  {
+    id: 'store_backends',
+    title: '商店后台与开发者资料',
+    type: 'manual_evidence',
+    where: [
+      'Apple Developer / App Store Connect',
+      'Google Play Console',
+      'Microsoft / Windows 发布后台',
+      '域名注册商或 DNS 后台',
+    ],
+    fields: [
+      '正式主体名称',
+      'Apple 开发者账号主体',
+      'Google Play 开发者账号主体',
+      'Windows / Microsoft 发布主体',
+      '域名持有人',
+      '支持邮箱',
+    ],
+    refresh: '真实账号资料到位后，在后台完成信息填写并截图。',
+    command: '人工后台回填',
+    evidence: ['后台截图路径', '审核备注 / 资料链接'],
+  },
+  {
+    id: 'progress_and_evidence_docs',
+    title: '进度记录与证据索引',
+    type: 'manual_sync',
+    where: [
+      'TODO.md',
+      'README.md',
+      validationRelativePath('identity_and_accounts', 'identity-and-accounts-checklist.md'),
+      validationRelativePath('identity_and_accounts', 'identity-input-status.md'),
+      validationRelativePath('identity_and_accounts', 'identity-readiness-snapshot.md'),
+    ],
+    fields: ['全部 8 个字段的最终状态与证据位置'],
+    refresh: '真实资料落地后，把最终状态和证据位置同步回这些记录口径。',
+    command: 'node scripts/prepare_identity_and_accounts.mjs --out default',
+    evidence: ['更新后的进度记录与证据路径'],
+  },
+];
+
+const payload = {
+  validationDate,
+  generatedFrom: 'scripts/identity_sync_targets.mjs',
+  source: identityLocalInputPath,
+  summary: {
+    targetCount: targets.length,
+    manualEditCount: targets.filter((item) => item.type === 'manual_edit').length,
+    autoGeneratedCount: targets.filter((item) => item.type === 'auto_generated').length,
+    manualEvidenceCount: targets.filter((item) => item.type === 'manual_evidence' || item.type === 'manual_verify' || item.type === 'manual_sync').length,
+    nextCommand: nextAction.command,
+  },
+  targets,
+};
+
+const markdown = `# 身份信息逐位置回填清单
+
+日期：${validationDate}
+
+来源：\`${identityLocalInputPath}\`
+
+用途：说明填完身份字段后，还需要同步到哪些位置；区分“脚本自动回写”和“必须人工补截图 / 链接 / 商店后台”的目标。
+
+## 汇总
+
+- 目标位置数：${payload.summary.targetCount}
+- 手工填写源：${payload.summary.manualEditCount}
+- 自动回写目标：${payload.summary.autoGeneratedCount}
+- 人工验收 / 证据目标：${payload.summary.manualEvidenceCount}
+- 当前默认下一条命令：\`${payload.summary.nextCommand}\`
+
+## 目标清单
+
+${targets.map((target) => `### ${target.title}
+
+- 类型：\`${target.type}\`
+- 位置：
+${target.where.map((item) => `  - \`${item}\``).join('\n')}
+- 涉及字段：${target.fields.join('、')}
+- 如何同步：${target.refresh}
+- 默认命令 / 动作：${target.command}
+- 建议证据：${target.evidence.join('、')}
+`).join('\n')}
+`;
+
+if (jsonOnly) {
+  const text = `${JSON.stringify(payload, null, 2)}\n`;
+  if (outIndex !== -1 && args[outIndex + 1]) {
+    const rawTarget = args[outIndex + 1];
+    const target = rawTarget === 'default' ? defaultJsonPath : path.resolve(rawTarget);
+    writeOutput(target, text);
+  } else {
+    process.stdout.write(text);
+  }
+  process.exit(0);
+}
+
+if (outIndex !== -1 && args[outIndex + 1]) {
+  const rawTarget = args[outIndex + 1];
+  const target = rawTarget === 'default' ? defaultMarkdownPath : path.resolve(rawTarget);
+  writeOutput(target, `${markdown}\n`);
+  if (rawTarget === 'default') {
+    writeOutput(defaultJsonPath, `${JSON.stringify(payload, null, 2)}\n`);
+  }
+  console.log(`已写入 ${target}`);
+  process.exit(0);
+}
+
+process.stdout.write(`${markdown}\n`);

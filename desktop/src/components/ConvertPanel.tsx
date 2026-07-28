@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { ArrowRightLeft, FolderOpen } from 'lucide-react';
+import { strings } from '../constants/strings';
 import type { ConvertTask, ConvertDirection } from '../shared/ipc';
 
 function inferDirection(ext: string): ConvertDirection {
@@ -14,24 +16,32 @@ function inferDirection(ext: string): ConvertDirection {
 }
 
 const DIRECTION_LABEL: Record<ConvertDirection, string> = {
-  md2docx: 'MD → Word',
-  docx2md: 'Word → MD',
-  pdf2md: 'PDF → MD',
-  pptx2md: 'PPT → MD',
-  xlsx2md: 'Excel → MD',
-  csv2md: 'CSV → MD',
+  md2docx: strings.convert.directions.md2docx,
+  docx2md: strings.convert.directions.docx2md,
+  pdf2md: strings.convert.directions.pdf2md,
+  pptx2md: strings.convert.directions.pptx2md,
+  xlsx2md: strings.convert.directions.xlsx2md,
+  csv2md: strings.convert.directions.csv2md,
 };
 
 interface Props {
   outputDir: string;
   setOutputDir: (dir: string) => void;
+  seedTasks?: ConvertTask[];
+  onSeedConsumed?: () => void;
 }
 
-export default function ConvertPanel({ outputDir, setOutputDir }: Props) {
+export default function ConvertPanel({ outputDir, setOutputDir, seedTasks = [], onSeedConsumed }: Props) {
   const [tasks, setTasks] = useState<ConvertTask[]>([]);
   const [converting, setConverting] = useState(false);
   const [dragging, setDragging] = useState(false);
   const dropRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (seedTasks.length === 0) return;
+    setTasks((prev) => mergeTasks(prev, seedTasks));
+    onSeedConsumed?.();
+  }, [onSeedConsumed, seedTasks]);
 
   const addFiles = useCallback(async () => {
     const files = await window.api.selectFiles();
@@ -97,7 +107,16 @@ export default function ConvertPanel({ outputDir, setOutputDir }: Props) {
   const failCount = tasks.filter((t) => t.status === 'failed').length;
 
   return (
-    <div className="convert-panel">
+    <section className="panel-shell convert-panel" aria-busy={converting}>
+      <header className="panel-hero">
+        <div>
+          <span className="panel-eyebrow">{strings.convert.eyebrow}</span>
+          <h1>{strings.convert.title}</h1>
+          <p>{strings.convert.description}</p>
+        </div>
+        {tasks.length > 0 && <span className="panel-count">{strings.convert.taskCount(tasks.length)}</span>}
+      </header>
+
       <div
         ref={dropRef}
         className={`drop-zone ${dragging ? 'dragging' : ''}`}
@@ -105,19 +124,21 @@ export default function ConvertPanel({ outputDir, setOutputDir }: Props) {
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
       >
-        <h2>拖拽 Office / Markdown 到此处</h2>
-        <p>支持 .md .docx .pdf .pptx .xlsx .csv —— Office 自动转 Markdown</p>
-        <div className="action-bar" style={{ justifyContent: 'center', marginTop: 16 }}>
-          <button className="btn-primary" onClick={addFiles}>选择文件</button>
-        </div>
+        <span className="drop-zone-icon"><ArrowRightLeft size={26} strokeWidth={1.6} /></span>
+        <h2>{strings.convert.dropTitle}</h2>
+        <p>{strings.convert.dropDescription}</p>
+        <button className="btn-primary btn-with-icon" onClick={addFiles}>
+          <FolderOpen size={17} />
+          {strings.convert.chooseFiles}
+        </button>
       </div>
 
       {tasks.length > 0 && (
         <>
-          <div className="output-bar">
-            <span>输出目录：</span>
-            <span className="path">{outputDir || '（未选择）'}</span>
-            <button className="btn-secondary" onClick={chooseOutputDir}>选择</button>
+          <div className="output-bar surface-card">
+            <span className="output-label">{strings.convert.outputTitle}</span>
+            <span className="path" title={outputDir}>{outputDir || strings.convert.outputUnset}</span>
+            <button className="btn-secondary" onClick={chooseOutputDir}>{strings.convert.chooseOutput}</button>
           </div>
 
           <div className="task-list">
@@ -131,35 +152,41 @@ export default function ConvertPanel({ outputDir, setOutputDir }: Props) {
                   <span className="sub">
                     {t.status === 'success' && t.outputPath ? t.outputPath : ''}
                     {t.status === 'failed' && t.error ? t.error : ''}
-                    {t.status === 'pending' ? '等待转换' : ''}
-                    {t.status === 'converting' ? '转换中…' : ''}
+                    {t.status === 'pending' ? strings.convert.waiting : ''}
+                    {t.status === 'converting' ? strings.convert.converting : ''}
                   </span>
                 </div>
                 {t.status === 'success' && t.outputPath ? (
-                  <button className="btn-secondary" onClick={() => openResult(t.outputPath!)}>打开</button>
+                  <button className="btn-secondary" onClick={() => openResult(t.outputPath!)}>
+                    {strings.convert.openResult}
+                  </button>
                 ) : null}
                 {t.status === 'pending' || t.status === 'failed' ? (
-                  <button className="btn-danger" onClick={() => removeTask(t.id)} disabled={converting}>移除</button>
+                  <button className="btn-ghost" onClick={() => removeTask(t.id)} disabled={converting}>
+                    {strings.convert.remove}
+                  </button>
                 ) : null}
               </div>
             ))}
           </div>
 
-          <div className="action-bar">
+          <div className="action-bar convert-actions">
             <button className="btn-primary" onClick={runConvert} disabled={converting || !outputDir}>
-              {converting ? '转换中…' : `开始转换（${tasks.length} 个）`}
+              {converting ? strings.convert.converting : strings.convert.start}
             </button>
-            <button className="btn-secondary" onClick={clearAll} disabled={converting}>清空</button>
-            <button className="btn-secondary" onClick={openOutput} disabled={!outputDir}>打开输出目录</button>
+            <button className="btn-secondary" onClick={openOutput} disabled={!outputDir}>
+              {strings.convert.openOutput}
+            </button>
+            <button className="btn-ghost" onClick={clearAll} disabled={converting}>{strings.convert.clear}</button>
             {(successCount > 0 || failCount > 0) && !converting && (
-              <span style={{ alignSelf: 'center', color: '#666' }}>
-                成功 {successCount} / 失败 {failCount}
+              <span className="result-summary" role="status">
+                {strings.convert.resultSummary(successCount, failCount)}
               </span>
             )}
           </div>
         </>
       )}
-    </div>
+    </section>
   );
 }
 

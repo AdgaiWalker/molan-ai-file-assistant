@@ -10,7 +10,7 @@
 - 给开发 / Agent 配置：保留 JSON 或转 Markdown。
 - 给提示词使用：提取 prompt / rules / system message / 命令片段。
 
-配方用于手机端当前文件转换、V1.5 批量转换中心、电脑端 GUI/快贴窗和 CLI 文档说明。
+配方用于原生手机端轻量转换、电脑端 GUI/快贴窗和 CLI 文档说明。
 
 ## 2. 默认推荐
 
@@ -30,7 +30,7 @@
 | 输入 | 给 AI 读 | 给别人看 | 给别人改 | 给开发 / Agent | 备注 |
 |---|---|---|---|---|---|
 | Markdown | 原 Markdown / `.md` | PDF | Word `.docx` | Markdown | 已由 `ConvertSheet` 支持 |
-| JSON | Markdown | PDF 后置 / 可由 JSON -> Markdown -> PDF | Word 后置 / 可由 JSON -> Markdown -> Word | 原 `.json` | V1 优先 JSON -> Markdown 和原 JSON 分享 |
+| JSON | Markdown | PDF 后置 / 可由 JSON -> Markdown -> PDF | Word 后置 / 可由 JSON -> Markdown -> Word | 原 `.json` | 优先 JSON -> Markdown 和原 JSON 分享 |
 | Word `.docx` | Markdown | 不在手机端主推 | 不在手机端主推 | Markdown | 手机端只做临时 Word -> Markdown 阅读 |
 | PDF / PPT / Excel | 不在手机端做重转换 | 不在手机端做 | 不在手机端做 | 不在手机端做 | 交给电脑端 CLI / GUI |
 
@@ -47,7 +47,7 @@
 
 ## 4. 电脑端重转换
 
-电脑端承担 Office / PDF / PPT / Excel 到 Markdown 的重转换，转换引擎必须继续共用 `desktop/src/shared/converter.ts`，CLI 和 Electron GUI 不复制 pandoc 调用逻辑。
+电脑端承担 Office / PDF / PPT / Excel 到 Markdown 的重转换，转换引擎必须继续共用 `desktop/src/shared/converter.ts`：DOCX、PPTX、CSV 与 Markdown 复用 pandoc 调用路径，PDF 与 XLSX 使用共享引擎内的专用解析器；CLI 和 Electron GUI 不复制转换逻辑。
 
 | 输入 | 推荐输出 | 使用场景 |
 |---|---|---|
@@ -90,7 +90,7 @@ JSON 是一等格式，转换时不能粗暴 stringify 给普通用户。
 | 给开发 / Agent | JSON 原文件 / Markdown | JSON、配置、API 响应 |
 | 提取提示词 | 文本 / Markdown 片段 | Markdown、JSON |
 
-V1 可以保留当前按钮式入口；V1.5 批量转换中心和分享前面板应使用配方文案。
+当前实现可以保留按钮式入口；原生移动端和电脑端后续的转换入口应统一使用配方文案。
 
 ## 7. 文件命名
 

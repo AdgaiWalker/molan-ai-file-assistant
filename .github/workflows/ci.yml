@@ -7,6 +7,36 @@ on:
     branches: [main]
 
 jobs:
+  contracts-and-server:
+    name: Contracts & PostgreSQL sync server
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18.4-alpine3.24
+        env:
+          POSTGRES_USER: molan
+          POSTGRES_PASSWORD: molan-local
+          POSTGRES_DB: molan
+        ports:
+          - 54320:5432
+        options: >-
+          --health-cmd "pg_isready -U molan -d molan"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify contracts
+        run: node --test contracts/test/*.test.mjs && node contracts/src/check.mjs
+      - name: Verify server with PostgreSQL
+        working-directory: server
+        env:
+          MOLAN_TEST_DATABASE_URL: postgres://molan:molan-local@127.0.0.1:54320/molan
+        run: corepack pnpm install --frozen-lockfile && corepack pnpm run typecheck && corepack pnpm test
+
   desktop:
     name: Desktop typecheck & build
     runs-on: windows-latest
@@ -17,11 +47,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: npm
           cache-dependency-path: desktop/package-lock.json
       - run: npm ci
       - run: npm run typecheck
+      - run: npm test
       - run: npm run build
 
   desktop-cli:
@@ -42,19 +73,30 @@ jobs:
       - run: npm run build
       - run: npm run test
 
-  mobile:
-    name: Mobile typecheck & tests
+  native-android:
+    name: Native Android build & tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: mobile
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: npm
-          cache-dependency-path: mobile/package-lock.json
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm test
+      - name: Verify shared core & Android app
+        working-directory: native
+        run: ./gradlew :shared:allTests :androidApp:assembleDebug :androidApp:testDebugUnitTest
+
+  native-ios:
+    name: Native iOS simulator build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify iOS app builds without codesign
+        run: xcodebuild -project native/iosApp/Molan.xcodeproj -scheme Molan -destination 'generic/platform=iOS Simulator' -derivedDataPath native/iosApp/build/ios-simulator CODE_SIGNING_ALLOWED=NO build

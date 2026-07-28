@@ -1,12 +1,15 @@
-import { app, BrowserWindow, ipcMain, dialog, shell, clipboard, globalShortcut, type Rectangle } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell, clipboard, globalShortcut, safeStorage, type Rectangle } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { ipcChannels, ConvertTask, ConvertDirection, ReadableFile, SaveTextRequest } from '../../src/shared/ipc';
 import { convertFile, type ConvertFormat } from '../../src/shared/converter';
+import type { ConflictResolution, DeleteScope, DesktopSyncLoginRequest } from '../../src/shared/sync';
+import { DesktopSyncClient } from './desktopSyncClient';
 
 let mainWindow: BrowserWindow | null = null;
 let promptWindow: BrowserWindow | null = null;
 let pendingFile: string | null = null;
+let desktopSync: Promise<DesktopSyncClient> | null = null;
 const promptBoundsFile = path.join(app.getPath('userData'), 'prompt-window.json');
 
 // 按扩展名推断转换方向（默认 office→md）
@@ -188,13 +191,41 @@ ipcMain.handle(ipcChannels.CONVERT, async (_e, tasks: ConvertTask[], outputDir: 
   for (const task of tasks) {
     const t = { ...task, status: 'converting' as const };
     const outputFormat: ConvertFormat = t.direction === 'md2docx' ? 'docx' : 'md';
+    const startedAt = Date.now();
     const result = await convertFile(t.inputPath, outputFormat, outputDir, { preserveImages: true });
-    const done: ConvertTask = {
-      ...t,
-      status: result.ok ? 'success' : 'failed',
-      outputPath: result.outputPath,
-      error: result.error,
-    };
+    let artifactError: string | null = null;
+    if (result.ok && result.outputPath) {
+      try {
+        await (await requireDesktopSync()).recordConversionArtifact({
+          inputPath: t.inputPath,
+          outputPath: result.outputPath,
+          outputFormat,
+          generatorName: 'molan-desktop-converter',
+          generatorVersion: app.getVersion(),
+          warnings: result.warnings,
+          durationMs: Date.now() - startedAt,
+          mediaDirectory: outputFormat === 'md'
+            ? mediaDirectoryFor(result.outputPath)
+            : null,
+          createdAt: new Date().toISOString(),
+        });
+      } catch (error) {
+        artifactError = error instanceof Error ? error.message : String(error);
+      }
+    }
+    const done: ConvertTask = artifactError
+      ? {
+          ...t,
+          status: 'failed',
+          outputPath: result.outputPath,
+          error: `转换文件已生成，但派生记录写入失败：${artifactError}`,
+        }
+      : {
+          ...t,
+          status: result.ok ? 'success' : 'failed',
+          outputPath: result.outputPath,
+          error: result.error,
+        };
     results.push(done);
   }
   return results;
@@ -261,12 +292,80 @@ ipcMain.handle(ipcChannels.LOAD_SETTINGS, async (): Promise<unknown> => {
   }
 });
 
+ipcMain.handle(ipcChannels.SYNC_SNAPSHOT, async () => (await requireDesktopSync()).snapshot());
+ipcMain.handle(ipcChannels.SYNC_LOGIN, async (_event, request: DesktopSyncLoginRequest) =>
+  (await requireDesktopSync()).login(request));
+ipcMain.handle(ipcChannels.SYNC_LOGOUT, async () => (await requireDesktopSync()).logout());
+ipcMain.handle(ipcChannels.SYNC_RUN, async () => (await requireDesktopSync()).sync());
+ipcMain.handle(ipcChannels.SYNC_OPEN_DOCUMENT, async (_event, documentId: string): Promise<void> => {
+  const filePath = (await requireDesktopSync()).readablePath(documentId);
+  if (!filePath) throw new Error('同步文件内容不存在');
+  const error = await shell.openPath(filePath);
+  if (error) throw new Error(error);
+});
+ipcMain.handle(ipcChannels.SYNC_OPEN_READABLE_DOCUMENT, async (_event, documentId: string): Promise<void> => {
+  const filePath = (await requireDesktopSync()).preferredReadablePath(documentId);
+  if (!filePath) throw new Error('当前没有可供 AI 读取的正文副本，请先完成转换。');
+  const error = await shell.openPath(filePath);
+  if (error) throw new Error(error);
+});
+ipcMain.handle(ipcChannels.SYNC_DOCUMENT_FAMILY, async (_event, documentId: string) =>
+  (await requireDesktopSync()).documentFamily(documentId));
+ipcMain.handle(ipcChannels.SYNC_SET_AI_ACCESS, async (_event, scope: 'document' | 'collection', key: string, allowed: boolean) =>
+  (await requireDesktopSync()).setAiReadAccess(scope, key, allowed));
+ipcMain.handle(ipcChannels.SYNC_ARCHIVE_DOCUMENT, async (_event, documentId: string) =>
+  (await requireDesktopSync()).archiveDocument(documentId));
+ipcMain.handle(ipcChannels.SYNC_DELETE_DOCUMENT, async (_event, documentId: string, scope: DeleteScope) =>
+  (await requireDesktopSync()).deleteDocument(documentId, scope));
+ipcMain.handle(ipcChannels.SYNC_RESTORE_DOCUMENT, async (_event, documentId: string, scope: 'current_device' | 'cloud') =>
+  (await requireDesktopSync()).restoreDocument(documentId, scope));
+ipcMain.handle(ipcChannels.SYNC_RESOLVE_CONFLICT, async (_event, conflictId: string, resolution: ConflictResolution) =>
+  (await requireDesktopSync()).resolveConflict(conflictId, resolution));
+ipcMain.handle(ipcChannels.SYNC_EXPORT_CONFLICT_VERSION, async (_event, versionId: string): Promise<boolean> => {
+  const item = (await requireDesktopSync()).conflictVersionFile(versionId);
+  if (!item || !fs.existsSync(item.localPath)) throw new Error('冲突版本文件不存在');
+  const extension = syncFormatExtension(item.format);
+  const stem = path.basename(item.title, path.extname(item.title)) || 'molan';
+  const options = { defaultPath: `${stem}-${versionId.slice(-8)}.${extension}` };
+  const result = mainWindow
+    ? await dialog.showSaveDialog(mainWindow, options)
+    : await dialog.showSaveDialog(options);
+  if (result.canceled || !result.filePath) return false;
+  await fs.promises.copyFile(item.localPath, result.filePath);
+  return true;
+});
+
 app.whenReady().then(() => {
+  desktopSync = createDesktopSync();
   createWindow();
   globalShortcut.register('CommandOrControl+Shift+M', () => {
     createPromptWindow();
   });
 });
+
+async function createDesktopSync(): Promise<DesktopSyncClient> {
+  if (!safeStorage.isEncryptionAvailable()) throw new Error('系统安全存储不可用');
+  return DesktopSyncClient.open(app.getPath('userData'), {
+    seal: (value) => safeStorage.encryptString(value),
+    open: (value) => safeStorage.decryptString(value),
+  });
+}
+
+function requireDesktopSync(): Promise<DesktopSyncClient> {
+  if (!desktopSync) throw new Error('电脑同步尚未初始化');
+  return desktopSync;
+}
+
+function syncFormatExtension(format: string): string {
+  if (format === 'markdown') return 'md';
+  if (format === 'text') return 'txt';
+  return format;
+}
+
+function mediaDirectoryFor(outputPath: string): string | null {
+  const directory = path.join(path.dirname(outputPath), 'media');
+  return fs.existsSync(directory) ? directory : null;
+}
 
 // Windows: 通过"打开方式"或文件关联启动时，解析文件路径
 app.on('open-file', (_event, filePath) => {

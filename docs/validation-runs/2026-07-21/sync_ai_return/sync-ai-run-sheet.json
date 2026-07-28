@@ -1,0 +1,630 @@
+{
+  "validationDate": "2026-07-21",
+  "generatedFrom": "scripts/sync_ai_run_sheet.mjs",
+  "summary": {
+    "rowCount": 18,
+    "groupCount": 3,
+    "tasks": [
+      "D-010",
+      "E-007",
+      "F-005"
+    ]
+  },
+  "groupSummary": [
+    {
+      "batchId": "gate_d_sync",
+      "title": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "rowCount": 8
+    },
+    {
+      "batchId": "gate_e_ai_read",
+      "title": "Gate E 外部批次（E-007）",
+      "task": "E-007",
+      "rowCount": 5
+    },
+    {
+      "batchId": "gate_f_result_return",
+      "title": "Gate F 外部批次（F-005）",
+      "task": "F-005",
+      "rowCount": 5
+    }
+  ],
+  "rows": [
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d01-postgres-compose-health",
+      "phase": "D-010 环境启动",
+      "environment": "server/ PostgreSQL 18 Compose + desktop/ + Android/iOS 真机",
+      "samples": [],
+      "action": "启动 PostgreSQL 18 Compose，同步服务完成迁移和健康检查，再启动桌面端与移动端登录会话。",
+      "passRule": "健康检查返回数据库和对象存储可用；日志不含正文、token 或私密路径。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/postgres-compose-health.txt",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d02-android-collect-markdown-json",
+      "phase": "D-010 Android 收集上传",
+      "environment": "Android 真机 + 真实同步服务",
+      "samples": [
+        {
+          "path": "fixtures/mobile-reading/markdown/normal.md",
+          "sizeBytes": 292,
+          "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        }
+      ],
+      "action": "Android 收集 Markdown 与 JSON，显式入库并等待上传完成。",
+      "passRule": "生成稳定 Document / Version / FileObject；同 hash 不重复上传；失败可重试。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/android-sync-start.mp4",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d03-ios-collect-text",
+      "phase": "D-010 iOS 收集上传",
+      "environment": "iPhone 真机 + 真实同步服务",
+      "samples": [
+        {
+          "path": "fixtures/mobile-reading/text/utf8.txt",
+          "sizeBytes": 77,
+          "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+        }
+      ],
+      "action": "iOS 收集 TXT，显式入库并等待上传完成。",
+      "passRule": "App Group / 受控目录交接后可离线读；上传后版本关系与 Android 语义一致。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/ios-sync-start.mp4",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d04-desktop-pull-three-device",
+      "phase": "D-010 桌面拉取",
+      "environment": "desktop/ 真实收件箱",
+      "samples": [
+        {
+          "path": "fixtures/mobile-reading/markdown/normal.md",
+          "sizeBytes": 292,
+          "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        },
+        {
+          "path": "fixtures/mobile-reading/text/utf8.txt",
+          "sizeBytes": 77,
+          "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+        }
+      ],
+      "action": "桌面 pull 同步 Android / iOS 上传对象，确认原件、版本、hash 与来源关系。",
+      "passRule": "三份对象在桌面收件箱可见；重启桌面后索引仍可读；游标不重复消费。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/desktop-three-device-sync.png",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d05-office-pdf-sync",
+      "phase": "D-010 Office / PDF 同步",
+      "environment": "Android 或 iOS 真机 + desktop/ 转换读取",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.xlsx",
+          "sizeBytes": 4941,
+          "sha256": "6c8972a832dfa8bfed1015ca9799fd7bcad3a4dfeb00b867584460057b2a5119"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pptx",
+          "sizeBytes": 29172,
+          "sha256": "1deaac9db9546da9337535d0121f843b842db340d9f915fd9fb7fb202cef71d6"
+        }
+      ],
+      "action": "补 docx / pdf / xlsx / pptx 原件同步，桌面端确认原件对象和可派生关系。",
+      "passRule": "桌面能看到原件，保留来源关系；Office/PDF hash 与固定样例一致。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/desktop-office-objects.png",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d06-weak-network-long-offline",
+      "phase": "D-010 弱网 / 长离线",
+      "environment": "Android/iOS 真机 + 可控网络",
+      "samples": [
+        {
+          "path": "fixtures/mobile-reading/markdown/normal.md",
+          "sizeBytes": 292,
+          "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        },
+        {
+          "path": "fixtures/mobile-reading/text/utf8.txt",
+          "sizeBytes": 77,
+          "sha256": "1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014"
+        }
+      ],
+      "action": "执行弱网、断网排队、一周长离线等价压测或可解释缩短版，并恢复同步。",
+      "passRule": "队列不丢、不乱序；恢复后对象、版本、hash 与本地状态一致。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/weak-network-log.txt",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d07-device-revoke-delete-restore",
+      "phase": "D-010 设备撤销 / 删除恢复",
+      "environment": "服务端设备列表 + Android/iOS/desktop",
+      "samples": [
+        {
+          "path": "fixtures/mobile-reading/markdown/normal.md",
+          "sizeBytes": 292,
+          "sha256": "4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5"
+        }
+      ],
+      "action": "撤销设备后验证拒绝同步；执行删除、恢复并观察三端最终状态。",
+      "passRule": "被撤销设备立即拒绝；删除后不可读，恢复后版本关系仍正确。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/device-revoke-delete-restore-log.txt",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_d_sync",
+      "batchTitle": "Gate D 外部批次（D-010）",
+      "task": "D-010",
+      "id": "d08-conflict-resolution",
+      "phase": "D-010 双端冲突",
+      "environment": "Android + iOS 或 desktop 双端并发",
+      "samples": [
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        }
+      ],
+      "action": "制造双端编辑 / 删除冲突，拉取后确认双方版本保留和冲突状态。",
+      "passRule": "不静默覆盖；冲突双方均可追溯；最终解除冲突后同步收敛。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_d_sync/evidence/conflict-resolution-log.txt",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_e_ai_read",
+      "batchTitle": "Gate E 外部批次（E-007）",
+      "task": "E-007",
+      "id": "e01-sync-source-docx-pdf",
+      "phase": "E-007 原件同步",
+      "environment": "手机真机 + desktop/ 真实收件箱",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        }
+      ],
+      "action": "手机收集 docx / pdf 原件并同步到桌面真实收件箱。",
+      "passRule": "桌面看到原件 ID、版本 ID、hash；原件默认不可被 AI 直接读取。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/desktop-source-docs.png",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_e_ai_read",
+      "batchTitle": "Gate E 外部批次（E-007）",
+      "task": "E-007",
+      "id": "e02-generate-markdown-derivatives",
+      "phase": "E-007 派生副本",
+      "environment": "desktop/ converter + inbox",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        }
+      ],
+      "action": "桌面生成 Markdown 派生副本，记录来源版本与派生对象 hash。",
+      "passRule": "派生对象与来源版本关联稳定；Markdown 内容可供授权读取。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/desktop-derivatives.png",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_e_ai_read",
+      "batchTitle": "Gate E 外部批次（E-007）",
+      "task": "E-007",
+      "id": "e03-ai-read-before-authorize",
+      "phase": "E-007 授权前拒绝",
+      "environment": "真实 AI 客户端（CLI 或 MCP）",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        }
+      ],
+      "action": "未授权状态下让 AI 客户端读取派生正文。",
+      "passRule": "读取被拒绝；审计记录不包含正文、token 或私密路径。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/desktop-authorize-before.png",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_e_ai_read",
+      "batchTitle": "Gate E 外部批次（E-007）",
+      "task": "E-007",
+      "id": "e04-ai-read-after-authorize",
+      "phase": "E-007 授权后可读",
+      "environment": "真实 AI 客户端（CLI 或 MCP）",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        }
+      ],
+      "action": "授权 AI 读取，再通过真实 AI 客户端走 CLI 或 MCP 读取正文。",
+      "passRule": "授权后可读；返回内容来自派生 Markdown；记录客户端名称、入口和日志。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/ai-client-read-success.mp4",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_e_ai_read",
+      "batchTitle": "Gate E 外部批次（E-007）",
+      "task": "E-007",
+      "id": "e05-ai-read-after-revoke",
+      "phase": "E-007 撤回后拒绝",
+      "environment": "真实 AI 客户端（CLI 或 MCP）",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        }
+      ],
+      "action": "撤回授权后立即再次读取同一对象。",
+      "passRule": "撤回立即生效；再次读取被拒绝；审计链路可解释。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/ai-client-read-revoked.mp4",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_f_result_return",
+      "batchTitle": "Gate F 外部批次（F-005）",
+      "task": "F-005",
+      "id": "f01-ai-generate-result",
+      "phase": "F-005 AI 生成结果",
+      "environment": "真实 AI 客户端 + 已授权来源",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        }
+      ],
+      "action": "真实 AI 客户端读取已授权样例，生成 Markdown / JSON 结果。",
+      "passRule": "结果明确关联来源文档与来源版本；结果内容不覆盖原件。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_f_result_return/evidence/ai-client-generate-result.mp4",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_f_result_return",
+      "batchTitle": "Gate F 外部批次（F-005）",
+      "task": "F-005",
+      "id": "f02-write-result",
+      "phase": "F-005 写回桌面",
+      "environment": "desktop/ CLI 或 MCP",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        }
+      ],
+      "action": "通过 `molan write-result` 或 MCP `write_result` 写回结果。",
+      "passRule": "写回成功返回结果 ID；保存为新版本或独立文档；失败路径有明确错误。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_f_result_return/evidence/desktop-write-result-log.txt",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_f_result_return",
+      "batchTitle": "Gate F 外部批次（F-005）",
+      "task": "F-005",
+      "id": "f03-air-event-desktop",
+      "phase": "F-005 结果事件",
+      "environment": "desktop/ + sync server",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        }
+      ],
+      "action": "桌面推送 `air_` 事件并确认同步服务可拉取。",
+      "passRule": "`air_` 事件含结果 ID、来源文档、来源版本；不会泄漏正文到日志。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_f_result_return/evidence/desktop-air-event-log.txt",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_f_result_return",
+      "batchTitle": "Gate F 外部批次（F-005）",
+      "task": "F-005",
+      "id": "f04-android-result-return",
+      "phase": "F-005 Android 回流",
+      "environment": "Android 真机",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        }
+      ],
+      "action": "Android 拉到结果卡片，打开结果并回到来源。",
+      "passRule": "结果卡片可见；阅读页可打开；来源跳转正确；复制 / 分享 / 保存副本可用。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_f_result_return/evidence/android-result-open.mp4",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "batchId": "gate_f_result_return",
+      "batchTitle": "Gate F 外部批次（F-005）",
+      "task": "F-005",
+      "id": "f05-ios-result-return",
+      "phase": "F-005 iOS 回流",
+      "environment": "iPhone 真机",
+      "samples": [
+        {
+          "path": "desktop/cli/test-fixtures/sample.docx",
+          "sizeBytes": 36796,
+          "sha256": "032df5f6f1c5e33f945c3824d68ea1c1f30259fd0da280d95d69267d31e61570"
+        },
+        {
+          "path": "desktop/cli/test-fixtures/sample.pdf",
+          "sizeBytes": 1722,
+          "sha256": "84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9"
+        },
+        {
+          "path": "fixtures/mobile-reading/json/normal.json",
+          "sizeBytes": 167,
+          "sha256": "51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98"
+        }
+      ],
+      "action": "iOS 拉到结果卡片，打开结果并回到来源。",
+      "passRule": "结果卡片可见；阅读页可打开；来源跳转正确；复制 / 分享 / 保存副本可用。",
+      "evidence": "docs/validation-runs/2026-07-21/gate_f_result_return/evidence/ios-result-open.mp4",
+      "resultFields": [
+        "执行环境 / 版本",
+        "输入文档 ID / 版本 / hash",
+        "输出对象 / 事件 ID",
+        "命令或入口",
+        "截图 / 录屏 / 日志路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    }
+  ]
+}

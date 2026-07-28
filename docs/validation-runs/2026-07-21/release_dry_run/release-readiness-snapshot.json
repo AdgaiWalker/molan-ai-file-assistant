@@ -1,0 +1,424 @@
+{
+  "reportDate": "2026-07-21",
+  "generatedFrom": "scripts/release_readiness_report.mjs",
+  "publicReleaseChannels": [
+    {
+      "id": "source",
+      "name": "源码 / GitHub",
+      "status": "available",
+      "detail": "仓库、README、TODO、契约和验证样例已可直接查看。",
+      "href": "https://github.com/AdgaiWalker/molan-ai-file-assistant",
+      "cta": "查看仓库"
+    },
+    {
+      "id": "cli",
+      "name": "CLI 源码",
+      "status": "available",
+      "detail": "当前可从仓库拉取 `desktop/cli` 并本地构建体验。",
+      "href": "https://github.com/AdgaiWalker/molan-ai-file-assistant/tree/main/desktop/cli",
+      "cta": "查看 CLI"
+    },
+    {
+      "id": "android",
+      "name": "Android",
+      "status": "coming",
+      "detail": "真机与渠道验收未关闭，公开下载仍准备中。",
+      "href": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "cta": "查看进度"
+    },
+    {
+      "id": "ios",
+      "name": "iPhone / iPad",
+      "status": "coming",
+      "detail": "TestFlight 与真机入口矩阵仍在集中验收中。",
+      "href": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "cta": "查看进度"
+    },
+    {
+      "id": "windows",
+      "name": "Windows",
+      "status": "coming",
+      "detail": "本地已产出 NSIS 安装包与 win-unpacked 包，但全新 Windows 手测、下载渠道与升级/回滚验收仍未关闭。",
+      "href": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "cta": "查看进度"
+    },
+    {
+      "id": "macos",
+      "name": "macOS",
+      "status": "coming",
+      "detail": "本地已产出 arm64 DMG / ZIP，但签名、公证、Gatekeeper 与正式下载入口仍未完成。",
+      "href": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "cta": "查看进度"
+    },
+    {
+      "id": "fixtures",
+      "name": "Office / PDF 固定样例",
+      "status": "available",
+      "detail": "已补齐 docx / xlsx / pptx / pdf 固定对象，可直接用于同步与 AI 读取验收。",
+      "href": "https://github.com/AdgaiWalker/molan-ai-file-assistant/tree/main/desktop/cli/test-fixtures",
+      "cta": "查看样例"
+    }
+  ],
+  "deliveryManifest": [
+    {
+      "id": "android",
+      "name": "Android",
+      "publicStatus": "coming",
+      "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "publicCta": "查看进度",
+      "publicDetail": "真机与渠道验收未关闭，公开下载仍准备中。",
+      "artifactCount": 1,
+      "preferredArtifact": {
+        "relativePath": "native/androidApp/build/outputs/apk/debug/androidApp-debug.apk",
+        "sizeBytes": 12567943,
+        "modifiedAt": "2026-07-21T22:51:44.513Z",
+        "sha256": "f4b8aa5f100a144dab2095145f1172688c79243f61ef66b26e427b6c463e1d77"
+      },
+      "missingNote": "当前还没有可公开分发的 Android release 包；正式签名和渠道构建仍未完成。"
+    },
+    {
+      "id": "ios",
+      "name": "iPhone / iPad",
+      "publicStatus": "coming",
+      "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "publicCta": "查看进度",
+      "publicDetail": "TestFlight 与真机入口矩阵仍在集中验收中。",
+      "artifactCount": 0,
+      "preferredArtifact": null,
+      "missingNote": "当前还没有可公开分发的 iOS Archive / IPA；正式签名、Archive 和 TestFlight 仍未完成。"
+    },
+    {
+      "id": "windows",
+      "name": "Windows",
+      "publicStatus": "coming",
+      "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "publicCta": "查看进度",
+      "publicDetail": "本地已产出 NSIS 安装包与 win-unpacked 包，但全新 Windows 手测、下载渠道与升级/回滚验收仍未关闭。",
+      "artifactCount": 2,
+      "preferredArtifact": {
+        "relativePath": "desktop/release/墨览-1.0.0-setup.exe",
+        "sizeBytes": 110647343,
+        "modifiedAt": "2026-07-21T22:14:46.899Z",
+        "sha256": "fe1adb655b159914a8a49a290c1709d21ffabbad780120121ab902a6f45bd182"
+      },
+      "missingNote": "当前还没有可对外发布的 Windows 安装包。"
+    },
+    {
+      "id": "macos",
+      "name": "macOS",
+      "publicStatus": "coming",
+      "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md",
+      "publicCta": "查看进度",
+      "publicDetail": "本地已产出 arm64 DMG / ZIP，但签名、公证、Gatekeeper 与正式下载入口仍未完成。",
+      "artifactCount": 2,
+      "preferredArtifact": {
+        "relativePath": "desktop/release/墨览-1.0.0-arm64.dmg",
+        "sizeBytes": 106062472,
+        "modifiedAt": "2026-07-21T22:09:59.003Z",
+        "sha256": "25b7b13a130db8564b82bb4dfdb70d836d826b932889e4fa5724a6c0ee0d29ca"
+      },
+      "missingNote": "当前还没有可对外发布的 macOS DMG / ZIP。"
+    },
+    {
+      "id": "cli",
+      "name": "CLI",
+      "publicStatus": "available",
+      "publicHref": "https://github.com/AdgaiWalker/molan-ai-file-assistant/tree/main/desktop/cli",
+      "publicCta": "查看 CLI",
+      "publicDetail": "当前可从仓库拉取 `desktop/cli` 并本地构建体验。",
+      "artifactCount": 1,
+      "preferredArtifact": {
+        "relativePath": "desktop/cli/dist/molan-cli-1.0.0.tgz",
+        "sizeBytes": 64268,
+        "modifiedAt": "2026-07-21T22:02:03.963Z",
+        "sha256": "ac1fcb3de274db4f4b7137a23fc77244609b4ec74322f17a491758c7ef0f710f"
+      },
+      "missingNote": "当前还没有可对外发布的 CLI 压缩包。"
+    }
+  ],
+  "sections": [
+    {
+      "id": "android",
+      "title": "Android",
+      "config": {
+        "packageId": "com.molan.reader",
+        "namespace": "com.molan.reader",
+        "versionName": "0.1.0-dev",
+        "versionCode": "1",
+        "artifactRoot": "native/androidApp/build/outputs"
+      },
+      "nextSteps": [
+        "cd native && ./gradlew :androidApp:assembleDebug :androidApp:testDebugUnitTest",
+        "准备 release 签名后再执行 AAB / Release APK 构建"
+      ],
+      "artifacts": {
+        "total": 2,
+        "items": [
+          {
+            "relativePath": "native/androidApp/build/outputs/apk/debug/androidApp-debug.apk",
+            "sizeBytes": 12567943,
+            "modifiedAt": "2026-07-21T22:51:44.513Z",
+            "sha256": "f4b8aa5f100a144dab2095145f1172688c79243f61ef66b26e427b6c463e1d77"
+          },
+          {
+            "relativePath": "native/androidApp/build/outputs/apk/debug/output-metadata.json",
+            "sizeBytes": 411,
+            "modifiedAt": "2026-07-21T22:51:44.520Z",
+            "sha256": "d3c0819b8b9e1c3f968b6045c4e4d37f6eecbd60252be981611d61901dbe1ef7"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "id": "ios",
+      "title": "iOS / iPadOS",
+      "config": {
+        "bundleId": "com.molan.reader",
+        "displayName": "墨览",
+        "urlScheme": "molan",
+        "deploymentTarget": "17.0",
+        "versionName": "1.0",
+        "buildNumber": "1",
+        "artifactRoot": "native/iosApp/build"
+      },
+      "nextSteps": [
+        "xcodebuild -project native/iosApp/Molan.xcodeproj -scheme Molan -destination 'generic/platform=iOS Simulator' build",
+        "准备正式 Team / Profile / App Groups 后再做 Archive 与 TestFlight"
+      ],
+      "artifacts": {
+        "total": 3,
+        "items": [
+          {
+            "relativePath": "native/iosApp/build/ios-conflict-export/Build/Products/Debug-iphonesimulator/Molan.app/Info.plist",
+            "sizeBytes": 1561,
+            "modifiedAt": "2026-07-18T16:35:12.631Z",
+            "sha256": "235fe317cd8ab161ac8cdc5608779cbf3d58b018e521f7fa29831b542fd1642a"
+          },
+          {
+            "relativePath": "native/iosApp/build/ios-conflict-export/Build/Products/Debug-iphonesimulator/Molan.app/PlugIns/MolanShare.appex/Info.plist",
+            "sizeBytes": 1183,
+            "modifiedAt": "2026-07-18T16:35:15.730Z",
+            "sha256": "cab8561798a0518e05ba29d7290826c9a2ce5f6e0a8f839f37babebe07e84df8"
+          },
+          {
+            "relativePath": "native/iosApp/build/ios-conflict-export/Build/Products/Debug-iphonesimulator/MolanShare.appex/Info.plist",
+            "sizeBytes": 1183,
+            "modifiedAt": "2026-07-18T16:34:57.913Z",
+            "sha256": "cab8561798a0518e05ba29d7290826c9a2ce5f6e0a8f839f37babebe07e84df8"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "id": "desktop",
+      "title": "桌面 GUI",
+      "config": {
+        "appId": "com.molan.desktop",
+        "productName": "墨览",
+        "version": "1.0.0",
+        "artifactRoot": "desktop/release",
+        "windowsArtifactPattern": "${productName}-${version}-setup.${ext}",
+        "bundledPandocWindows": "desktop/resources/pandoc.exe",
+        "bundledPandocMacLike": "未准备；当前依赖系统 PATH 中的 pandoc"
+      },
+      "nextSteps": [
+        "cd desktop && npm run typecheck && npm run build",
+        "在目标平台执行 cd desktop && npm run build:dist，生成对应平台发布包",
+        "Windows 随包 pandoc 已准备；正式发布前确认其来源版本、SHA256 与签名策略",
+        "macOS 当前仍依赖系统 PATH 中的 pandoc；若后续要随包携带，再单独补原生 pandoc 资源",
+        "Windows 侧补安装、升级、回滚与下载渠道验收；macOS 侧补签名、公证与 Gatekeeper 验证"
+      ],
+      "artifacts": {
+        "total": 14,
+        "items": [
+          {
+            "relativePath": "desktop/release/win-unpacked/resources/pandoc.exe",
+            "sizeBytes": 231772424,
+            "modifiedAt": "2026-07-21T22:14:06.871Z",
+            "sha256": "0e5d21f8b10537048ad5ba31d575d0792286fe682172fe67ea7267bccd1cabf8"
+          },
+          {
+            "relativePath": "desktop/release/win-unpacked/墨览.exe",
+            "sizeBytes": 188784128,
+            "modifiedAt": "2026-07-21T22:14:07.021Z",
+            "sha256": "7d4f6bc4df43640ca4fd805b6f4abd1ab667f4435098bef8fae3de5d54b64d48"
+          },
+          {
+            "relativePath": "desktop/release/墨览-1.0.0-arm64-mac.zip",
+            "sizeBytes": 106094291,
+            "modifiedAt": "2026-07-21T22:10:00.821Z",
+            "sha256": "621f338897299059016797a68e183388d34defd1b0a42613f356f48b8ed68ef6"
+          },
+          {
+            "relativePath": "desktop/release/墨览-1.0.0-arm64-mac.zip.blockmap",
+            "sizeBytes": 111124,
+            "modifiedAt": "2026-07-21T22:10:06.901Z",
+            "sha256": "6d4c4149f64c8cae87559888d8700dab5c62235089a8905ef32098ce7aeacbd1"
+          },
+          {
+            "relativePath": "desktop/release/墨览-1.0.0-arm64.dmg",
+            "sizeBytes": 106062472,
+            "modifiedAt": "2026-07-21T22:09:59.003Z",
+            "sha256": "25b7b13a130db8564b82bb4dfdb70d836d826b932889e4fa5724a6c0ee0d29ca"
+          },
+          {
+            "relativePath": "desktop/release/墨览-1.0.0-arm64.dmg.blockmap",
+            "sizeBytes": 112809,
+            "modifiedAt": "2026-07-21T22:10:04.646Z",
+            "sha256": "42340e9446a50af24cd1517a508f29b27b07427769f288cd94754be4e0a0d1ec"
+          },
+          {
+            "relativePath": "desktop/release/墨览-1.0.0-setup.exe",
+            "sizeBytes": 110647343,
+            "modifiedAt": "2026-07-21T22:14:46.899Z",
+            "sha256": "fe1adb655b159914a8a49a290c1709d21ffabbad780120121ab902a6f45bd182"
+          },
+          {
+            "relativePath": "desktop/release/墨览-1.0.0-setup.exe.blockmap",
+            "sizeBytes": 116345,
+            "modifiedAt": "2026-07-21T22:14:50.438Z",
+            "sha256": "0ab1293c3d9d5f1f48aa3516dfa8d16c1a1c3e179bc5badfbe80f53c7bb78651"
+          },
+          {
+            "relativePath": "desktop/out/main/index.js",
+            "sizeBytes": 100689,
+            "modifiedAt": "2026-07-23T21:36:00.056Z",
+            "sha256": "90981c05c540590b93d2cea4d7275748afc1db3a123b10b00c69aed39c864a84"
+          },
+          {
+            "relativePath": "desktop/out/preload/index.js",
+            "sizeBytes": 3902,
+            "modifiedAt": "2026-07-23T21:36:00.073Z",
+            "sha256": "ef343cf9466506ca849aba24342b0422e8d7d5e184259f8c8f60d56d6fae40f1"
+          },
+          {
+            "relativePath": "desktop/out/renderer/assets/index-Cenlgfk0.css",
+            "sizeBytes": 16030,
+            "modifiedAt": "2026-07-23T21:36:01.173Z",
+            "sha256": "29e8befad1025d8058fa07ddb035751ea84a0e724a64e7fe1b8090b674306572"
+          },
+          {
+            "relativePath": "desktop/out/renderer/assets/index-uYr4TmEU.js",
+            "sizeBytes": 647350,
+            "modifiedAt": "2026-07-23T21:36:01.173Z",
+            "sha256": "5e577ce9ea118194b6997a0d7f6b5b5a38fbe90814ee51a0b48ff944602bec0f"
+          },
+          {
+            "relativePath": "desktop/out/renderer/index.html",
+            "sizeBytes": 411,
+            "modifiedAt": "2026-07-23T21:36:01.172Z",
+            "sha256": "6663001dca23ab89f748c9cdc10c8bb28b82ef5bfef5fb4785180a62b6b34c7b"
+          },
+          {
+            "relativePath": "desktop/resources/pandoc.exe",
+            "sizeBytes": 231772424,
+            "modifiedAt": "2026-07-21T22:12:16.493Z",
+            "sha256": "0e5d21f8b10537048ad5ba31d575d0792286fe682172fe67ea7267bccd1cabf8"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "id": "cli",
+      "title": "CLI",
+      "config": {
+        "packageName": "molan-cli",
+        "version": "1.0.0",
+        "artifactRoot": "desktop/cli/dist"
+      },
+      "nextSteps": [
+        "cd desktop/cli && npm run typecheck && npm run build && npm run test && npm run pack:dist",
+        "如需公开下载，再补发布说明、SHA256 和官网入口"
+      ],
+      "artifacts": {
+        "total": 2,
+        "items": [
+          {
+            "relativePath": "desktop/cli/dist/index.js",
+            "sizeBytes": 319785,
+            "modifiedAt": "2026-07-23T21:35:08.144Z",
+            "sha256": "cf25fec951e2374b134970db2c88918c713e046ebf2467cea865d7905890604a"
+          },
+          {
+            "relativePath": "desktop/cli/dist/molan-cli-1.0.0.tgz",
+            "sizeBytes": 64268,
+            "modifiedAt": "2026-07-21T22:02:03.963Z",
+            "sha256": "ac1fcb3de274db4f4b7137a23fc77244609b4ec74322f17a491758c7ef0f710f"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "id": "site",
+      "title": "官网",
+      "config": {
+        "packageName": "molan-site",
+        "version": "0.1.0",
+        "artifactRoot": "site/dist"
+      },
+      "nextSteps": [
+        "cd site && npm run typecheck && npm run build",
+        "真实渠道就绪后再把下载链接、SHA256 和教程截图补上"
+      ],
+      "artifacts": {
+        "total": 4,
+        "items": [
+          {
+            "relativePath": "site/dist/assets/index-BFx8wg5_.css",
+            "sizeBytes": 21024,
+            "modifiedAt": "2026-07-21T22:18:16.255Z",
+            "sha256": "60e8212c4f00ddfbd11a24eb00262e0e21adeba6c588ea7e1793c43b67dc5bbd"
+          },
+          {
+            "relativePath": "site/dist/assets/index-C6odM_wr.js",
+            "sizeBytes": 529459,
+            "modifiedAt": "2026-07-21T22:18:16.255Z",
+            "sha256": "98d2418040f7e0ea2a0bab3452c025119568c25d40dbc0352a68848d68969b48"
+          },
+          {
+            "relativePath": "site/dist/index.html",
+            "sizeBytes": 722,
+            "modifiedAt": "2026-07-21T22:18:16.255Z",
+            "sha256": "4bb24103d3d3192c561a4080a02eb2a545937261fd6de6e4332172631f13393d"
+          },
+          {
+            "relativePath": "site/dist/logo.png",
+            "sizeBytes": 725407,
+            "modifiedAt": "2026-07-21T22:18:15.958Z",
+            "sha256": "467a686f0b033923823d3eebdaaa9246b4b8020f3461a6c74763f77fb13eb1f7"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    {
+      "id": "server",
+      "title": "同步后端",
+      "config": {
+        "packageName": "@molan/sync-server",
+        "version": "0.1.0",
+        "artifactRoot": "server/dist"
+      },
+      "nextSteps": [
+        "cd server && npm run typecheck && npm test",
+        "正式部署前补 PostgreSQL 18 Compose / 生产部署 / 回滚演练证据"
+      ],
+      "artifacts": {
+        "total": 1,
+        "items": [
+          {
+            "relativePath": "server/dist/index.js",
+            "sizeBytes": 76446,
+            "modifiedAt": "2026-07-21T19:25:22.707Z",
+            "sha256": "b1e6d2e0169c5f7a934fcbcfacac67d65017d9425361e4d28e8eb0f885429482"
+          }
+        ],
+        "truncated": false
+      }
+    }
+  ]
+}

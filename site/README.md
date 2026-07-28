@@ -2,7 +2,7 @@
 
 墨览产品官网，定位：**让 AI 能读取你散落在各处的文件**。
 
-独立于 `mobile/` 和 `desktop/`，纯静态站点，可部署到 Vercel / Netlify / GitHub Pages。
+独立于原生应用与桌面客户端，纯静态站点，可部署到 Vercel / Netlify / GitHub Pages。
 
 ## 开发
 
@@ -32,7 +32,7 @@ npm run preview    # 预览构建产物
 | 流转 timeline | `FlowTimeline.tsx` | 竖滚 → 横向 pin 推进 |
 | 能力网格 | `FeatureGrid.tsx` | spotlight 光晕跟随 + 3D tilt + 滚动入场 |
 | 信任区 | `TrustBadges.tsx` | GSAP 滚动揭示 |
-| 下载 | `Download.tsx` | 磁性按钮（`useMagnetic`）+ 滚动入场 |
+| 发布状态 | `ReleaseStatus.tsx` | 真实可用链接 + 准备中状态卡 |
 | Footer/FAQ | `Footer.tsx` | 原生 details 折叠 |
 
 ## 动效 hooks（`src/hooks/`）
@@ -46,7 +46,7 @@ npm run preview    # 预览构建产物
 - **文案集中**：所有用户可见字符串在 `src/lib/constants.ts`（遵循 AGENTS.md §分离原则 #3）
 - **配色复用**：`globals.css` 的 CSS 变量沿用 `desktop/src/styles.css` 品牌色
 - **无障碍**：所有动效尊重 `prefers-reduced-motion`；移动端（< 768px）禁用横向 pin，改为垂直流
-- **下载链接占位**：`constants.ts` 中 `DOWNLOADS` 的 `href` 先用 `#`，发布时替换真实地址
+- **状态优先**：不放假下载按钮；已可用入口给真实链接，未完成的平台明确标注“准备中”
 
 ## 部署
 

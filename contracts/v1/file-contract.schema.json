@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://molan.app/contracts/v1/file-contract.schema.json",
+  "title": "Molan file and version contract",
+  "description": "墨览文件、版本、字节对象、AI可读副本和AI结果的唯一跨端核心契约。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "documents",
+    "versions",
+    "fileObjects",
+    "derivedArtifacts",
+    "aiResults"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "documents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/document" }
+    },
+    "versions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/documentVersion" }
+    },
+    "fileObjects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fileObject" }
+    },
+    "derivedArtifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/derivedArtifact" }
+    },
+    "aiResults": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/aiResult" }
+    }
+  },
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+    },
+    "nullableTimestamp": {
+      "oneOf": [
+        { "$ref": "#/$defs/timestamp" },
+        { "type": "null" }
+      ]
+    },
+    "uuidV7": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "documentId": {
+      "type": "string",
+      "pattern": "^doc_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "versionId": {
+      "type": "string",
+      "pattern": "^ver_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "fileObjectId": {
+      "type": "string",
+      "pattern": "^obj_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "artifactId": {
+      "type": "string",
+      "pattern": "^art_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "aiResultId": {
+      "type": "string",
+      "pattern": "^air_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "deviceId": {
+      "type": "string",
+      "pattern": "^dev_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "contentHash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "formatId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._+-]{0,63}$"
+    },
+    "localRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "locator"],
+      "properties": {
+        "kind": {
+          "enum": ["temporary", "external_bookmark", "app_private"]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      }
+    },
+    "objectStorageRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "bucket", "objectKey", "encryption"],
+      "properties": {
+        "provider": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "bucket": { "type": "string", "minLength": 1, "maxLength": 255 },
+        "objectKey": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "etag": { "type": ["string", "null"], "maxLength": 255 },
+        "encryption": { "enum": ["provider_managed", "customer_managed"] }
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "version": { "type": "string", "minLength": 1, "maxLength": 64 }
+      }
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sourceDeviceId",
+        "title",
+        "originalFormat",
+        "currentVersionId",
+        "createdAt",
+        "updatedAt",
+        "deletedAt"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/documentId" },
+        "sourceDeviceId": { "$ref": "#/$defs/deviceId" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "originalFormat": { "$ref": "#/$defs/formatId" },
+        "currentVersionId": {
+          "oneOf": [
+            { "$ref": "#/$defs/versionId" },
+            { "type": "null" }
+          ]
+        },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" },
+        "deletedAt": { "$ref": "#/$defs/nullableTimestamp" }
+      }
+    },
+    "documentVersion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "documentId",
+        "sourceDeviceId",
+        "originalFormat",
+        "contentHash",
+        "sizeBytes",
+        "fileObjectId",
+        "parentVersionId",
+        "createdAt",
+        "updatedAt",
+        "deletedAt"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/versionId" },
+        "documentId": { "$ref": "#/$defs/documentId" },
+        "sourceDeviceId": { "$ref": "#/$defs/deviceId" },
+        "originalFormat": { "$ref": "#/$defs/formatId" },
+        "contentHash": { "$ref": "#/$defs/contentHash" },
+        "sizeBytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "fileObjectId": { "$ref": "#/$defs/fileObjectId" },
+        "parentVersionId": {
+          "oneOf": [
+            { "$ref": "#/$defs/versionId" },
+            { "type": "null" }
+          ]
+        },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" },
+        "deletedAt": { "$ref": "#/$defs/nullableTimestamp" }
+      }
+    },
+    "fileObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sourceDeviceId",
+        "role",
+        "format",
+        "mediaType",
+        "contentHash",
+        "sizeBytes",
+        "localRef",
+        "objectStorageRef",
+        "createdAt",
+        "updatedAt",
+        "deletedAt"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/fileObjectId" },
+        "sourceDeviceId": { "$ref": "#/$defs/deviceId" },
+        "role": { "enum": ["original", "derived_artifact", "ai_result"] },
+        "format": { "$ref": "#/$defs/formatId" },
+        "mediaType": { "type": "string", "minLength": 1, "maxLength": 255 },
+        "contentHash": { "$ref": "#/$defs/contentHash" },
+        "sizeBytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "localRef": {
+          "oneOf": [
+            { "$ref": "#/$defs/localRef" },
+            { "type": "null" }
+          ]
+        },
+        "objectStorageRef": {
+          "oneOf": [
+            { "$ref": "#/$defs/objectStorageRef" },
+            { "type": "null" }
+          ]
+        },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" },
+        "deletedAt": { "$ref": "#/$defs/nullableTimestamp" }
+      },
+      "anyOf": [
+        { "properties": { "localRef": { "$ref": "#/$defs/localRef" } } },
+        { "properties": { "objectStorageRef": { "$ref": "#/$defs/objectStorageRef" } } }
+      ]
+    },
+    "derivedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "documentId",
+        "sourceVersionId",
+        "sourceDeviceId",
+        "fileObjectId",
+        "format",
+        "generator",
+        "createdAt",
+        "updatedAt",
+        "deletedAt"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/artifactId" },
+        "documentId": { "$ref": "#/$defs/documentId" },
+        "sourceVersionId": { "$ref": "#/$defs/versionId" },
+        "sourceDeviceId": { "$ref": "#/$defs/deviceId" },
+        "fileObjectId": { "$ref": "#/$defs/fileObjectId" },
+        "format": { "$ref": "#/$defs/formatId" },
+        "generator": { "$ref": "#/$defs/generator" },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" },
+        "deletedAt": { "$ref": "#/$defs/nullableTimestamp" }
+      }
+    },
+    "aiResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "documentId",
+        "sourceVersionId",
+        "sourceArtifactId",
+        "sourceDeviceId",
+        "fileObjectId",
+        "resultType",
+        "format",
+        "generator",
+        "createdAt",
+        "updatedAt",
+        "deletedAt"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/aiResultId" },
+        "documentId": { "$ref": "#/$defs/documentId" },
+        "sourceVersionId": { "$ref": "#/$defs/versionId" },
+        "sourceArtifactId": {
+          "oneOf": [
+            { "$ref": "#/$defs/artifactId" },
+            { "type": "null" }
+          ]
+        },
+        "sourceDeviceId": { "$ref": "#/$defs/deviceId" },
+        "fileObjectId": { "$ref": "#/$defs/fileObjectId" },
+        "resultType": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$" },
+        "format": { "$ref": "#/$defs/formatId" },
+        "generator": { "$ref": "#/$defs/generator" },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" },
+        "deletedAt": { "$ref": "#/$defs/nullableTimestamp" }
+      }
+    }
+  }
+}

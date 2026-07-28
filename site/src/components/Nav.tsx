@@ -30,6 +30,7 @@ export default function Nav() {
           <a href="#platforms" className="hover:text-white transition-colors">三端</a>
           <a href="#flow" className="hover:text-white transition-colors">流程</a>
           <a href="#features" className="hover:text-white transition-colors">能力</a>
+          <a href="#status" className="hover:text-white transition-colors">状态</a>
         </div>
 
         <div className="flex items-center gap-3">

@@ -1,0 +1,30 @@
+任务：D-010 PostgreSQL 18 数据库主链预验证
+执行日期：2026-07-24
+执行环境：macOS arm64，PostgreSQL 18.4（Postgres.app）
+
+边界：
+- 本证据验证真实 PostgreSQL 18.4 数据库、迁移和同步服务仓储逻辑。
+- 本机没有 Docker，因此不声称 Docker Compose 编排、容器健康检查或数据卷隔离已通过。
+- 本文件只记录 2026-07-24 的 PostgreSQL 18.4 原生批次；Office/PDF、离线恢复、设备撤销和双端冲突已于 2026-07-26 在 Gate D 本地验收报告中关闭。
+
+执行方式：
+1. 使用 initdb 在 /tmp 创建一次性 PostgreSQL 18.4 数据目录。
+2. 使用 pg_ctl 监听 127.0.0.1:55432。
+3. 设置 MOLAN_TEST_DATABASE_URL=postgresql://127.0.0.1:55432/postgres。
+4. 设置 MOLAN_PG_TEST_CONCURRENCY=20。
+5. 执行 npm exec vitest -- run test/postgres.integration.test.ts。
+6. 查询 select version() 与 select count(*) from sync_events。
+7. 使用 pg_ctl -m fast 正常停止实例。
+
+结果：
+- Test Files：1 passed
+- Tests：1 passed
+- Duration：370ms
+- PostgreSQL：18.4
+- 并发幂等同步：20 路请求返回同一事件 ID
+- 覆盖主链：迁移、登录、上传、下载、并发幂等、游标拉取、删除后不可读、恢复后可读
+- 最终 sync_events：4
+- 停机：fast shutdown 完成
+
+结论：
+真实 PostgreSQL 18.4 数据库主链通过。Docker Compose 与发布编排已从当前本地 TODO 删除；本证据不外推到容器或生产部署。

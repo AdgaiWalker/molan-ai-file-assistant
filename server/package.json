@@ -1,0 +1,27 @@
+{
+  "name": "@molan/sync-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --format=esm --target=node24 --packages=external --outfile=dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:postgres:local": "node test/run-pglite-integration.mjs",
+    "dev:local": "npm run build && node test/run-pglite-server.mjs",
+    "migrate": "node dist/index.js migrate",
+    "start": "node dist/index.js serve"
+  },
+  "dependencies": {
+    "pg": "8.22.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.4",
+    "@electric-sql/pglite-socket": "0.2.7",
+    "@types/node": "24.10.13",
+    "@types/pg": "8.20.0",
+    "esbuild": "0.28.1",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

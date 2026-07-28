@@ -1,0 +1,122 @@
+{
+  "validationDate": "2026-07-21",
+  "tasks": [
+    "A-007",
+    "G-001"
+  ],
+  "generatedFrom": "scripts/identity_readiness_report.mjs",
+  "currentIdentity": {
+    "brandName": "墨览",
+    "brandSlug": "molan",
+    "android": {
+      "applicationId": "com.molan.reader",
+      "versionName": "0.1.0-dev",
+      "displayName": "墨览"
+    },
+    "ios": {
+      "bundleId": "com.molan.reader",
+      "displayName": "墨览",
+      "urlScheme": "molan",
+      "urlName": "com.molan.reader.inbox",
+      "appGroupId": "group.com.molan.reader",
+      "versionName": "1.0",
+      "buildNumber": "1"
+    },
+    "desktop": {
+      "appId": "com.molan.desktop",
+      "productName": "墨览",
+      "version": "1.0.0",
+      "packageName": "molan-desktop"
+    },
+    "cli": {
+      "packageName": "molan-cli",
+      "version": "1.0.0"
+    }
+  },
+  "publicDocs": [
+    {
+      "id": "privacy_policy",
+      "title": "隐私说明",
+      "relativePath": "docs/public/privacy-policy.md",
+      "siteUrl": "#/privacy",
+      "placeholderCount": 4,
+      "placeholders": [
+        "[待补正式主体]",
+        "[待补支持邮箱]",
+        "[待补正式域名]",
+        "[待补支持邮箱]"
+      ]
+    },
+    {
+      "id": "terms_of_service",
+      "title": "服务条款",
+      "relativePath": "docs/public/terms-of-service.md",
+      "siteUrl": "#/terms",
+      "placeholderCount": 3,
+      "placeholders": [
+        "[待补正式主体]",
+        "[待补支持邮箱]",
+        "[待补支持邮箱]"
+      ]
+    },
+    {
+      "id": "account_and_data_deletion",
+      "title": "账号与数据删除说明",
+      "relativePath": "docs/public/account-and-data-deletion.md",
+      "siteUrl": "#/deletion",
+      "placeholderCount": 2,
+      "placeholders": [
+        "[待补支持邮箱]",
+        "[待补正式域名]"
+      ]
+    },
+    {
+      "id": "support",
+      "title": "支持与反馈",
+      "relativePath": "docs/public/support.md",
+      "siteUrl": "#/support",
+      "placeholderCount": 2,
+      "placeholders": [
+        "[待补支持邮箱]",
+        "[待补正式域名]"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "scope": "public_docs",
+      "severity": "medium",
+      "title": "隐私说明 仍有待补占位",
+      "detail": "文件 `docs/public/privacy-policy.md` 当前还有 4 个占位：[待补正式主体]、[待补支持邮箱]、[待补正式域名]、[待补支持邮箱]。"
+    },
+    {
+      "scope": "public_docs",
+      "severity": "medium",
+      "title": "服务条款 仍有待补占位",
+      "detail": "文件 `docs/public/terms-of-service.md` 当前还有 3 个占位：[待补正式主体]、[待补支持邮箱]、[待补支持邮箱]。"
+    },
+    {
+      "scope": "public_docs",
+      "severity": "medium",
+      "title": "账号与数据删除说明 仍有待补占位",
+      "detail": "文件 `docs/public/account-and-data-deletion.md` 当前还有 2 个占位：[待补支持邮箱]、[待补正式域名]。"
+    },
+    {
+      "scope": "public_docs",
+      "severity": "high",
+      "title": "支持与反馈 仍有待补占位",
+      "detail": "文件 `docs/public/support.md` 当前还有 2 个占位：[待补支持邮箱]、[待补正式域名]。"
+    }
+  ],
+  "summary": {
+    "findingCount": 4,
+    "highCount": 1,
+    "mediumCount": 3,
+    "publicPlaceholderCount": 11
+  },
+  "stopWhen": [
+    "正式产品名、Android applicationId、iOS Bundle ID、URL Scheme、App Group ID、桌面 App ID 都已切到可发布值",
+    "公开隐私、条款、删除和支持页不再包含待补占位",
+    "官网、应用内和商店后台展示同一套主体、域名、支持邮箱和发布入口"
+  ]
+}

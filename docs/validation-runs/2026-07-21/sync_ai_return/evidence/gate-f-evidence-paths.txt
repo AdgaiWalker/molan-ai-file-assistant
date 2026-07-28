@@ -1,0 +1,22 @@
+生成时间：2026-07-21
+用途：Gate F 外部批次 的建议证据文件名、目录与必留字段。
+
+默认批次证据目录：docs/validation-runs/2026-07-21/gate_f_result_return/evidence
+现有证据目录：
+- native/androidApp/verify-evidence
+- native/iosApp/verify-evidence
+- desktop/verify-evidence
+
+建议证据文件名：
+- docs/validation-runs/2026-07-21/gate_f_result_return/evidence/desktop-write-result-log.txt
+- docs/validation-runs/2026-07-21/gate_f_result_return/evidence/desktop-air-event-log.txt
+- docs/validation-runs/2026-07-21/gate_f_result_return/evidence/android-result-open.mp4
+- docs/validation-runs/2026-07-21/gate_f_result_return/evidence/android-result-back-to-source.mp4
+- docs/validation-runs/2026-07-21/gate_f_result_return/evidence/ios-result-open.mp4
+- docs/validation-runs/2026-07-21/gate_f_result_return/evidence/ios-result-back-to-source.mp4
+
+必留证据：
+- 结果 ID / 来源文档 / 来源版本
+- 桌面写回确认结果与 `air_` 事件痕迹
+- Android 结果卡片与来源跳转录屏
+- iOS 结果卡片与来源跳转录屏

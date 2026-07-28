@@ -1,0 +1,41 @@
+{
+  "validationDate": "2026-07-21",
+  "generatedFrom": "scripts/next_remaining_action.mjs",
+  "summary": {
+    "remainingTasks": 19,
+    "blockedTasks": 2,
+    "verifyTasks": 16,
+    "inProgressTasks": 1
+  },
+  "nextWave": {
+    "id": "identity_and_accounts",
+    "title": "第 1 波：身份、账号与责任主体",
+    "tasks": [
+      "A-007",
+      "G-001"
+    ],
+    "canDoNow": false,
+    "needsExternal": true,
+    "action": "补齐真实身份字段并预检",
+    "command": "node scripts/apply_release_identity_inputs.mjs --check",
+    "followup": "字段补齐后先运行 node scripts/apply_release_identity_inputs.mjs --check / node scripts/apply_release_identity_inputs.mjs --dry-run，确认无误后再执行 node scripts/apply_release_identity_inputs.mjs。",
+    "why": "这一波已经不缺工程改造，只缺真实主体、域名、邮箱和各平台账号主体。",
+    "blockers": [
+      "正式主体名称（当前：[待补正式主体]）",
+      "支持邮箱（当前：[待补支持邮箱]）",
+      "正式域名（当前：[待补正式域名]）",
+      "账号 / 数据删除入口 URL（当前：[待补正式域名]/account/delete（待确认））",
+      "Apple 开发者账号主体",
+      "Google Play 开发者账号主体",
+      "Windows / Microsoft 发布主体",
+      "域名持有人"
+    ],
+    "evidence": [
+      "config/release-identity-inputs.json",
+      "docs/validation-runs/2026-07-21/identity_and_accounts/identity-and-accounts-checklist.md",
+      "docs/validation-runs/2026-07-21/identity_and_accounts/identity-readiness-snapshot.md",
+      "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/identity-checklist-seed.txt",
+      "docs/validation-runs/2026-07-21/identity_and_accounts/evidence/identity-evidence-templates.txt"
+    ]
+  }
+}

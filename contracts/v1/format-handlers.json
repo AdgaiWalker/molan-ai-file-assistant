@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0.0",
+  "fallbackFormatId": "text",
+  "handlers": [
+    {
+      "formatId": "markdown",
+      "extensions": ["md", "markdown"],
+      "mimeTypes": ["text/markdown", "text/x-markdown"],
+      "detection": { "kind": "text" },
+      "reader": "markdown",
+      "mobileAction": "read",
+      "capabilities": { "search": true, "edit": true, "copy": true, "format": false, "collect": true, "mobileConvert": true, "desktopConvert": true },
+      "limits": { "maxMobileReadBytes": 8388608, "performanceTargetBytes": 1048576, "encodings": ["utf-8", "utf-8-bom"] },
+      "desktopAiFormats": ["markdown"]
+    },
+    {
+      "formatId": "json",
+      "extensions": ["json"],
+      "mimeTypes": ["application/json", "text/json"],
+      "detection": { "kind": "json" },
+      "reader": "json",
+      "mobileAction": "read",
+      "capabilities": { "search": true, "edit": true, "copy": true, "format": true, "collect": true, "mobileConvert": true, "desktopConvert": true },
+      "limits": { "maxMobileReadBytes": 16777216, "performanceTargetBytes": 5242880, "encodings": ["utf-8", "utf-8-bom", "utf-16le-bom", "utf-16be-bom"] },
+      "desktopAiFormats": ["json", "markdown"]
+    },
+    {
+      "formatId": "text",
+      "extensions": ["txt"],
+      "mimeTypes": ["text/plain"],
+      "detection": { "kind": "text" },
+      "reader": "text",
+      "mobileAction": "read",
+      "capabilities": { "search": true, "edit": true, "copy": true, "format": false, "collect": true, "mobileConvert": true, "desktopConvert": true },
+      "limits": { "maxMobileReadBytes": 8388608, "performanceTargetBytes": 1048576, "encodings": ["utf-8", "utf-8-bom", "utf-16le-bom", "utf-16be-bom", "gbk"] },
+      "desktopAiFormats": ["text", "markdown"]
+    },
+    {
+      "formatId": "pdf",
+      "extensions": ["pdf"],
+      "mimeTypes": ["application/pdf"],
+      "detection": { "kind": "signature", "hexPrefixes": ["25504446"] },
+      "reader": "system_preview",
+      "mobileAction": "preview_or_collect",
+      "capabilities": { "search": false, "edit": false, "copy": false, "format": false, "collect": true, "mobileConvert": false, "desktopConvert": true },
+      "limits": { "maxMobileReadBytes": 104857600, "performanceTargetBytes": 10485760, "encodings": [] },
+      "desktopAiFormats": ["markdown"]
+    },
+    {
+      "formatId": "docx",
+      "extensions": ["docx"],
+      "mimeTypes": ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+      "detection": { "kind": "zip_container", "hexPrefixes": ["504b0304", "504b0506", "504b0708"] },
+      "reader": "system_preview",
+      "mobileAction": "preview_or_collect",
+      "capabilities": { "search": false, "edit": false, "copy": false, "format": false, "collect": true, "mobileConvert": false, "desktopConvert": true },
+      "limits": { "maxMobileReadBytes": 104857600, "performanceTargetBytes": 10485760, "encodings": [] },
+      "desktopAiFormats": ["markdown"]
+    },
+    {
+      "formatId": "pptx",
+      "extensions": ["pptx"],
+      "mimeTypes": ["application/vnd.openxmlformats-officedocument.presentationml.presentation"],
+      "detection": { "kind": "zip_container", "hexPrefixes": ["504b0304", "504b0506", "504b0708"] },
+      "reader": "system_preview",
+      "mobileAction": "preview_or_collect",
+      "capabilities": { "search": false, "edit": false, "copy": false, "format": false, "collect": true, "mobileConvert": false, "desktopConvert": true },
+      "limits": { "maxMobileReadBytes": 104857600, "performanceTargetBytes": 10485760, "encodings": [] },
+      "desktopAiFormats": ["markdown"]
+    },
+    {
+      "formatId": "xlsx",
+      "extensions": ["xlsx"],
+      "mimeTypes": ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"],
+      "detection": { "kind": "zip_container", "hexPrefixes": ["504b0304", "504b0506", "504b0708"] },
+      "reader": "system_preview",
+      "mobileAction": "preview_or_collect",
+      "capabilities": { "search": false, "edit": false, "copy": false, "format": false, "collect": true, "mobileConvert": false, "desktopConvert": true },
+      "limits": { "maxMobileReadBytes": 104857600, "performanceTargetBytes": 10485760, "encodings": [] },
+      "desktopAiFormats": ["markdown", "json"]
+    }
+  ]
+}

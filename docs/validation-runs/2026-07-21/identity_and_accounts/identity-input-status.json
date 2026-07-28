@@ -1,0 +1,127 @@
+{
+  "validationDate": "2026-07-21",
+  "generatedFrom": "scripts/identity_input_status.mjs",
+  "source": "config/release-identity-inputs.json",
+  "summary": {
+    "total": 8,
+    "resolved": 0,
+    "unresolved": 8,
+    "nextCommand": "node scripts/apply_release_identity_inputs.mjs --check"
+  },
+  "rows": [
+    {
+      "key": "publicIdentity.legalEntityName",
+      "label": "正式主体名称",
+      "current": "[待补正式主体]",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "A-007",
+        "G-001",
+        "G-002",
+        "G-003",
+        "G-004",
+        "G-005",
+        "G-006",
+        "G-007"
+      ],
+      "status": "待补",
+      "renderedValue": "[待补正式主体]"
+    },
+    {
+      "key": "publicIdentity.supportEmail",
+      "label": "支持邮箱",
+      "current": "[待补支持邮箱]",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "A-007",
+        "G-001",
+        "G-006"
+      ],
+      "status": "待补",
+      "renderedValue": "[待补支持邮箱]"
+    },
+    {
+      "key": "publicIdentity.officialDomain",
+      "label": "正式域名",
+      "current": "[待补正式域名]",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "A-007",
+        "G-001",
+        "G-006"
+      ],
+      "status": "待补",
+      "renderedValue": "[待补正式域名]"
+    },
+    {
+      "key": "publicIdentity.accountDeletionUrl",
+      "label": "账号 / 数据删除入口 URL",
+      "current": "[待补正式域名]/account/delete（待确认）",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "G-001",
+        "G-006"
+      ],
+      "status": "待补",
+      "renderedValue": "[待补正式域名]/account/delete（待确认）"
+    },
+    {
+      "key": "releaseOwners.appleDeveloperOwner",
+      "label": "Apple 开发者账号主体",
+      "current": "",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "A-007",
+        "G-001",
+        "G-003",
+        "G-005"
+      ],
+      "status": "待补",
+      "renderedValue": "未填写"
+    },
+    {
+      "key": "releaseOwners.googlePlayOwner",
+      "label": "Google Play 开发者账号主体",
+      "current": "",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "A-007",
+        "G-001",
+        "G-002"
+      ],
+      "status": "待补",
+      "renderedValue": "未填写"
+    },
+    {
+      "key": "releaseOwners.windowsPublisherOwner",
+      "label": "Windows / Microsoft 发布主体",
+      "current": "",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "A-007",
+        "G-001",
+        "G-004"
+      ],
+      "status": "待补",
+      "renderedValue": "未填写"
+    },
+    {
+      "key": "releaseOwners.domainOwner",
+      "label": "域名持有人",
+      "current": "",
+      "source": "config/release-identity-inputs.json",
+      "requiredFor": [
+        "A-007",
+        "G-001",
+        "G-006"
+      ],
+      "status": "待补",
+      "renderedValue": "未填写"
+    }
+  ],
+  "nextAction": {
+    "action": "补齐真实身份字段并预检",
+    "command": "node scripts/apply_release_identity_inputs.mjs --check",
+    "followup": "字段补齐后先运行 node scripts/apply_release_identity_inputs.mjs --check / node scripts/apply_release_identity_inputs.mjs --dry-run，确认无误后再执行 node scripts/apply_release_identity_inputs.mjs。"
+  }
+}

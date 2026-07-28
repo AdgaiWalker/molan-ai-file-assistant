@@ -3,13 +3,143 @@
  * 文案口吻：专业冷静。所有用户可见字符串集中在此，不散落在 JSX（遵循 AGENTS.md §分离原则 #3）。
  */
 
+import { PUBLIC_IDENTITY } from './publicIdentity.generated';
+import { RELEASE_CHANNELS } from './releaseChannels.generated';
+
 export const BRAND = {
   name: '墨览',
   slug: 'molan',
   tagline: '让 AI 能读你的文件',
-  github: 'https://github.com/AdgaiWalker/.md',
+  github: 'https://github.com/AdgaiWalker/molan-ai-file-assistant',
   description:
     '墨览把微信、QQ、GitHub、电脑里散落的 .md / .json / Office 文件，整成 AI 能读的格式。手机阅读，电脑转换，云端汇聚。',
+} as const;
+
+export const DOC_LINKS = {
+  repo: BRAND.github,
+  readme: `${BRAND.github}/blob/main/README.md`,
+  cli: `${BRAND.github}/tree/main/desktop/cli`,
+  privacy: '#/privacy',
+  terms: '#/terms',
+  deletion: '#/deletion',
+  support: '#/support',
+  license: `${BRAND.github}/blob/main/LICENSE`,
+  todo: `${BRAND.github}/blob/main/TODO.md`,
+  evidence: `${BRAND.github}/tree/main/desktop/cli/test-fixtures`,
+} as const;
+
+export const PUBLIC_DOC_PAGES = {
+  privacy: {
+    title: '隐私说明',
+    intro: '墨览默认按“本地优先、显式授权、分层可撤回”工作。临时打开不等于上传，AI 读取也不是默认开启。',
+    badge: PUBLIC_IDENTITY.statusLabel,
+    summary: [
+      '不登录也能阅读本地文件；临时打开不会自动上传。',
+      '“收集到墨览”“同步到电脑 / 云端”“允许 AI 读取”是三个分开的动作。',
+      '日志只记录请求、状态、错误码和耗时，不记录文件正文、提示词正文或密钥原文。',
+    ],
+    sections: [
+      {
+        heading: '当前仍待补的正式信息',
+        bullets: [
+          `主体名称：${PUBLIC_IDENTITY.legalEntityName}`,
+          `支持邮箱：${PUBLIC_IDENTITY.supportEmail}`,
+          `官方域名：${PUBLIC_IDENTITY.officialDomain}`,
+        ],
+      },
+      {
+        heading: '默认数据边界',
+        bullets: [
+          '本地打开、阅读、复制、编辑、分享优先在当前设备完成。',
+          '只有你明确同步的文件、副本、派生 Markdown 或 AI 结果才会进入云端链路。',
+          'AI 读取权限独立于同步权限，可以单独授权、单独撤回。',
+        ],
+      },
+      {
+        heading: '删除与撤回',
+        bullets: [
+          '支持区分删除当前设备副本、删除云端副本、向所有设备同步删除、撤回 AI 读取和注销账号。',
+          '正式删除入口与导出入口仍待在账号与域名确定后补齐。',
+        ],
+      },
+    ],
+  },
+  terms: {
+    title: '服务条款',
+    intro: '墨览提供文件阅读、转换、同步、AI 授权读取与结果回流能力，但 AI 输出仍需要你自行审核，不会静默覆盖原文件。',
+    badge: PUBLIC_IDENTITY.statusLabel,
+    summary: [
+      '你需要确保自己有权处理、同步、分享或授权 AI 读取相关文件。',
+      'AI 输出不保证绝对正确，重要文件仍应保留原件与备份。',
+      '平台、渠道、同步和公开发布范围会随着验收进度继续调整。',
+    ],
+    sections: [
+      {
+        heading: '当前仍待补的正式信息',
+        bullets: [`主体名称：${PUBLIC_IDENTITY.legalEntityName}`, `支持邮箱：${PUBLIC_IDENTITY.supportEmail}`],
+      },
+      {
+        heading: '使用边界',
+        bullets: [
+          '墨览帮助你把文件整理成 AI 更易读取的格式，但不替代你对文件内容和 AI 结果的最终判断。',
+          '如果某个平台仍标记为“准备中”，表示它还不是正式对外承诺的发布结果。',
+        ],
+      },
+    ],
+  },
+  deletion: {
+    title: '删除与注销说明',
+    intro: '墨览会区分“删本机”“删云端”“删全部设备”“撤回 AI 权限”“撤销设备”“注销账号”几类动作，避免用户以为所有删除都是一回事。',
+    badge: PUBLIC_IDENTITY.statusLabel,
+    summary: [
+      '删本机：只删当前设备副本，不影响其他设备和云端。',
+      '删云端：清理云端副本，其他设备本地已存在的文件会按各自状态保留。',
+      '删全部设备 / 注销账号：会进入更大范围的数据清理流程，需要明确提示影响范围。',
+    ],
+    sections: [
+      {
+        heading: '当前仍待补的正式信息',
+        bullets: [
+          `支持邮箱：${PUBLIC_IDENTITY.supportEmail}`,
+          `正式删除入口 URL：${PUBLIC_IDENTITY.accountDeletionUrl}`,
+        ],
+      },
+      {
+        heading: '发布前仍需补齐',
+        bullets: [
+          '应用内“删除账号 / 删除数据 / 撤回设备”入口截图。',
+          '商店审核所需的删除流程文本与演示账号。',
+        ],
+      },
+    ],
+  },
+  support: {
+    title: '支持与反馈',
+    intro: '如果遇到文件打不开、同步不到电脑、AI 无法读取、结果回流异常、安装升级失败等问题，可以按统一模板反馈。',
+    badge: PUBLIC_IDENTITY.statusLabel,
+    summary: [
+      `支持邮箱：${PUBLIC_IDENTITY.supportEmail}`,
+      `官方域名：${PUBLIC_IDENTITY.officialDomain}`,
+      '仓库入口：GitHub 已公开，可用于查看源码、契约和当前进度。',
+    ],
+    sections: [
+      {
+        heading: '反馈时请尽量附带',
+        bullets: [
+          '平台与设备、系统版本、墨览版本、来源 App',
+          '文件格式和大小、操作步骤、预期结果、实际结果',
+          '截图或录屏，以及可安全共享的最小复现对象',
+        ],
+      },
+      {
+        heading: '不要直接发送',
+        bullets: [
+          '完整账号密码、API Key、Token、Secret、私钥',
+          '不适合外发的完整文件正文',
+        ],
+      },
+    ],
+  },
 } as const;
 
 /** Hero 区文案 —— antfu 风格：一段话，无标题/副标题分层 */
@@ -123,6 +253,8 @@ export const TRUST = [
   { id: 'local', title: '本地优先', desc: '客户端是事实来源，云端只是汇聚点。' },
 ] as const;
 
+export { RELEASE_CHANNELS };
+
 /** 预约/候补区文案 —— 放在 Hero 之后，是主转化入口 */
 export const EARLY_ACCESS = {
   eyebrow: '抢先体验',
@@ -168,12 +300,15 @@ export const FOOTER_LINKS = {
     { label: '三端', href: '#platforms' },
   ],
   resource: [
-    { label: 'GitHub', href: BRAND.github },
-    { label: 'CLI 文档', href: '#' },
-    { label: '使用教程', href: '#' },
+    { label: 'GitHub', href: DOC_LINKS.repo },
+    { label: 'CLI 文档', href: DOC_LINKS.cli },
+    { label: '使用教程', href: DOC_LINKS.readme },
+    { label: '支持与反馈', href: DOC_LINKS.support },
   ],
   legal: [
-    { label: '隐私说明', href: '#' },
-    { label: '开源协议', href: '#' },
+    { label: '隐私说明', href: DOC_LINKS.privacy },
+    { label: '服务条款', href: DOC_LINKS.terms },
+    { label: '删除与注销', href: DOC_LINKS.deletion },
+    { label: '开源协议', href: DOC_LINKS.license },
   ],
 } as const;

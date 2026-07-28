@@ -1,0 +1,18 @@
+生成时间：2026-07-21
+用途：当前 iOS / TestFlight 发布前置状态记录，可直接作为 G-003 / G-007 演练前的初始证据。
+
+平台：iPhone / iPad
+本地候选产物：当前无本地候选包
+官网状态：准备中
+官网入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+备注：当前还没有可公开分发的 iOS Archive / IPA；正式签名、Archive 和 TestFlight 仍未完成。
+
+当前 Bundle ID：com.molan.reader
+当前 URL Scheme：molan
+当前版本号：1.0
+当前构建号：1
+
+待补真实演练：
+- Apple Team / Profile / App Groups
+- Archive / TestFlight 构建号
+- 真机入口、账号删除与审核材料截图

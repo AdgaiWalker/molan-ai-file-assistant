@@ -1,0 +1,47 @@
+生成时间：2026-07-21
+
+用途：当前官网公开入口清单，可直接作为 G-006 / G-007 演练前的初始对照。
+
+
+
+渠道：源码 / GitHub
+状态：可用
+入口：https://github.com/AdgaiWalker/molan-ai-file-assistant
+CTA：查看仓库
+说明：仓库、README、TODO、契约和验证样例已可直接查看。
+
+渠道：CLI 源码
+状态：可用
+入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/tree/main/desktop/cli
+CTA：查看 CLI
+说明：当前可从仓库拉取 `desktop/cli` 并本地构建体验。
+
+渠道：Android
+状态：准备中
+入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+CTA：查看进度
+说明：真机与渠道验收未关闭，公开下载仍准备中。
+
+渠道：iPhone / iPad
+状态：准备中
+入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+CTA：查看进度
+说明：TestFlight 与真机入口矩阵仍在集中验收中。
+
+渠道：Windows
+状态：准备中
+入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+CTA：查看进度
+说明：本地已产出 NSIS 安装包与 win-unpacked 包，但全新 Windows 手测、下载渠道与升级/回滚验收仍未关闭。
+
+渠道：macOS
+状态：准备中
+入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+CTA：查看进度
+说明：本地已产出 arm64 DMG / ZIP，但签名、公证、Gatekeeper 与正式下载入口仍未完成。
+
+渠道：Office / PDF 固定样例
+状态：可用
+入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/tree/main/desktop/cli/test-fixtures
+CTA：查看样例
+说明：已补齐 docx / xlsx / pptx / pdf 固定对象，可直接用于同步与 AI 读取验收。

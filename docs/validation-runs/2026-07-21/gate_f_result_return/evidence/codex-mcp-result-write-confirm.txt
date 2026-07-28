@@ -1,0 +1,44 @@
+任务：F-005 真实 AI 客户端生成结果与电脑确认预验收
+执行日期：2026-07-24
+真实 AI 客户端：Codex CLI 0.144.6
+入口：molan MCP stdio / write_result
+客户端任务：
+- Markdown / 首次 JSON 尝试：019f90e8-b18e-7e02-9c5b-49742825a49d
+- JSON 成功写入：019f90e9-b154-7282-81c1-ac630f83ae16
+
+来源：
+- documentId：doc_019c0018-0000-7000-8000-000000000007
+- sourceVersionId：ver_019c0018-0000-7000-8000-000000000007
+- sourceArtifactId：art_019c0018-0000-7000-8000-000000000007
+- 原件 SHA256：84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9
+
+Markdown 结果：
+- draftId：draft_mry17fnd_5j7yrjoa
+- requestId：req-e007-md
+- saveMode：new_version
+- 电脑显式确认：成功
+- documentId：doc_019c0018-0000-7000-8000-000000000007
+- versionId：ver_019f90e8-e3e2-71b9-ae16-c62c64f4d9b3
+- aiResultId：air_019f90e8-e3e3-7daf-acca-3fd17e548baa
+- 文件：../gate_e_ai_read/evidence/real-client-trial/sync-inbox/ai-results/air_019f90e8-e3e3-7daf-acca-3fd17e548baa.md
+- SHA256：2e8dc38315b4c2274c0888faa9c2f55e6e4caa8ecaa286d1f8f65f6dc2c97097
+
+JSON 结果：
+- 首次调用使用无效 resultType=extraction，被契约拒绝：E_AI_RESULT_INPUT_REQUIRED
+- 第二次遗漏 documentId，被来源关系约束拒绝：E_AI_RESULT_INPUT_REQUIRED
+- 修正为 resultType=structured_json 并补 documentId 后成功
+- draftId：draft_mry18t31_yreh3cl0
+- requestId：req-e007-json-v3
+- saveMode：new_document
+- 电脑显式确认：成功
+- documentId：doc_019f90e9-de2b-70dc-833f-f68fa7971219
+- versionId：ver_019f90e9-de29-7e49-acca-04b1bd38b6fd
+- aiResultId：air_019f90e9-de2a-70b8-8586-b5935edb070e
+- 文件：../gate_e_ai_read/evidence/real-client-trial/sync-inbox/ai-results/air_019f90e9-de2a-70b8-8586-b5935edb070e.json
+- SHA256：e990c93d6e4c402b7742308d71067de112aa585fd071369d5803c57ef3641ed6
+
+结论：
+- 真实 AI 客户端已分别生成 Markdown 与 JSON 结果草稿。
+- 无效结果类型和不完整来源关系均被外部契约拒绝，修正后成功。
+- 两份草稿都由电脑端 CLI 显式确认，并生成可追溯的 AiResult、版本和结果文件。
+- F-005 仍不关闭：还需 Android / iOS 真机收到结果、打开、复制、分享、保存副本、本机删除和回到来源的录屏证据。

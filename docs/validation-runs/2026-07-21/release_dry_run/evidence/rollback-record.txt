@@ -1,0 +1,18 @@
+生成时间：2026-07-21
+用途：发布演练回滚记录占位；真正执行时直接在本文件补时间线、触发原因与结果。
+
+当前本地候选包：
+- Android：native/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+- iPhone / iPad：当前无本地候选包
+- Windows：desktop/release/墨览-1.0.0-setup.exe
+- macOS：desktop/release/墨览-1.0.0-arm64.dmg
+- CLI：desktop/cli/dist/molan-cli-1.0.0.tgz
+
+待补字段：
+触发时间：
+触发原因：
+问题版本 / 构建号：
+回滚入口：
+回滚动作：
+回滚后验证结果：
+对外说明：

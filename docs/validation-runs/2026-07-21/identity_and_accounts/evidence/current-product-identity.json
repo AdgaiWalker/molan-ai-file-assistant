@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-07-21",
+  "source": "config/product-identity.json",
+  "productIdentity": {
+    "brand": {
+      "name": "墨览",
+      "slug": "molan"
+    },
+    "public": {
+      "updatedDate": "2026-07-21",
+      "statusLabel": "发布草案",
+      "legalEntityName": "[待补正式主体]",
+      "supportEmail": "[待补支持邮箱]",
+      "officialDomain": "[待补正式域名]",
+      "accountDeletionUrl": "[待补正式域名]/account/delete（待确认）"
+    },
+    "engineering": {
+      "android": {
+        "applicationId": "com.molan.reader",
+        "displayName": "墨览"
+      },
+      "ios": {
+        "bundleId": "com.molan.reader",
+        "testBundleId": "com.molan.reader.tests",
+        "shareBundleId": "com.molan.reader.share",
+        "displayName": "墨览",
+        "urlName": "com.molan.reader.inbox",
+        "urlScheme": "molan",
+        "appGroupId": "group.com.molan.reader",
+        "keychainService": "com.molan.reader.sync",
+        "backgroundSessionIdentifier": "com.molan.reader.sync-upload",
+        "appGroupOpenUrl": "molan://inbox"
+      },
+      "desktop": {
+        "appId": "com.molan.desktop",
+        "packageName": "molan-desktop",
+        "productName": "墨览"
+      }
+    }
+  },
+  "readinessSummary": {
+    "findingCount": 4,
+    "highCount": 1,
+    "mediumCount": 3,
+    "publicPlaceholderCount": 11
+  },
+  "stopWhen": [
+    "A-007 与 G-001 需要的正式 ID、域名、主体与入口都已可证明",
+    "应用内、官网、商店后台对外展示的信息一致",
+    "不再存在 .dev / 占位 ID 被误当正式发布配置的情况"
+  ]
+}

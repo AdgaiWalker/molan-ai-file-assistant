@@ -1,0 +1,22 @@
+{
+  "draftId": "draft_mry18t31_yreh3cl0",
+  "requestId": "req-e007-json-v3",
+  "confirmed": true,
+  "confirmedAt": "2026-07-23T21:38:03.919Z",
+  "discardedAt": null,
+  "envelope": {
+    "schemaVersion": "1.0.0",
+    "sourceDocumentId": "doc_019c0018-0000-7000-8000-000000000007",
+    "sourceVersionId": "ver_019c0018-0000-7000-8000-000000000007",
+    "sourceArtifactId": "art_019c0018-0000-7000-8000-000000000007",
+    "title": "Codex JSON 回流",
+    "resultType": "structured_json",
+    "format": "json",
+    "content": "{\"summary\":\"真实 AI 客户端生成的 JSON 结果\"}",
+    "saveMode": "new_document",
+    "createdBy": "mcp",
+    "modelName": "codex-cli-0.144.6",
+    "promptTextHash": null,
+    "createdAt": "2026-07-23T21:37:53.701Z"
+  }
+}

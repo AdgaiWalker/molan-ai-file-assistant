@@ -1,9 +1,11 @@
 // 共享转换引擎 —— CLI 和 Electron 共用
-// Office/PDF/PPT/Excel → Markdown / docx，基于 pandoc
+// Office/PDF/PPT/Excel/JSON → Markdown / docx；Office 走 pandoc，PDF/XLSX 走专用解析器
 
-import { spawn } from 'child_process';
+import { spawn, spawnSync } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs';
+import ExcelJS from 'exceljs';
+import { extractText } from 'unpdf';
 import { cleanupMarkdown } from './mdCleanup';
 
 // ── 类型 ──
@@ -42,17 +44,75 @@ export const ERROR_CODES = {
 
 // ── pandoc 路径解析 ──
 
-export function pandocPath(): string {
-  // CLI 优先级：环境变量 > resources/ > 系统 PATH
-  if (process.env['PANDOC_PATH'] && fs.existsSync(process.env['PANDOC_PATH'])) {
-    return process.env['PANDOC_PATH'];
+export function pandocPath(options?: {
+  env?: NodeJS.ProcessEnv;
+  resourcesPath?: string | undefined;
+  baseDir?: string;
+  existsSync?: (target: string) => boolean;
+  platform?: NodeJS.Platform;
+}): string {
+  const env = options?.env ?? process.env;
+  const resourcesPath = options?.resourcesPath
+    ?? ('resourcesPath' in process && typeof process.resourcesPath === 'string'
+      ? process.resourcesPath
+      : undefined);
+  const baseDir = options?.baseDir ?? __dirname;
+  const existsSync = options?.existsSync ?? fs.existsSync;
+  const platform = options?.platform ?? process.platform;
+
+  if (env['PANDOC_PATH'] && existsSync(env['PANDOC_PATH'])) {
+    return env['PANDOC_PATH'];
   }
-  // 从本文件位置推断 resources/
-  const devPath = path.join(__dirname, '../../resources/pandoc.exe');
-  if (fs.existsSync(devPath)) return devPath;
-  const cliAdjacent = path.join(__dirname, '../../resources/pandoc.exe');
-  if (fs.existsSync(cliAdjacent)) return cliAdjacent;
+
+  const candidates = (
+    platform === 'win32'
+      ? [
+          resourcesPath ? path.join(resourcesPath, 'pandoc.exe') : null,
+          resourcesPath ? path.join(resourcesPath, 'pandoc') : null,
+          path.join(baseDir, '../../resources/pandoc.exe'),
+          path.join(baseDir, '../../resources/pandoc'),
+        ]
+      : [
+          resourcesPath ? path.join(resourcesPath, 'pandoc') : null,
+          path.join(baseDir, '../../resources/pandoc'),
+        ]
+  ).filter((item): item is string => Boolean(item));
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return candidate;
+  }
+
   return 'pandoc';
+}
+
+export function pandocStatus(): {
+  ok: boolean;
+  pandocPath: string;
+  reason?: string;
+} {
+  const p = pandocPath();
+  const probe = spawnSync(p, ['--version'], {
+    encoding: 'utf-8',
+    windowsHide: true,
+  });
+  if (probe.error) {
+    return {
+      ok: false,
+      pandocPath: p,
+      reason: probe.error.message,
+    };
+  }
+  if (probe.status !== 0) {
+    return {
+      ok: false,
+      pandocPath: p,
+      reason: (probe.stderr || probe.stdout || `pandoc exited with code ${probe.status}`).trim(),
+    };
+  }
+  return {
+    ok: true,
+    pandocPath: p,
+  };
 }
 
 // ── 格式→文件扩展名 ──
@@ -134,7 +194,13 @@ export function convertFile(
     const p = pandocPath();
     const outPath = makeOutputPath(inputPath, outputFormat, outputDir);
 
-    if (outputFormat === 'md' && isOfficeToMarkdown(inputFormat)) {
+    if (outputFormat === 'md' && inputFormat === 'pdf') {
+      void pdfToMarkdown(inputPath, fileName, outPath).then(resolve);
+    } else if (outputFormat === 'md' && inputFormat === 'xlsx') {
+      void xlsxToMarkdown(inputPath, fileName, outPath).then(resolve);
+    } else if (outputFormat === 'md' && inputFormat === 'json') {
+      void jsonToMarkdown(inputPath, fileName, outPath).then(resolve);
+    } else if (outputFormat === 'md' && isOfficeToMarkdown(inputFormat)) {
       // Office → Markdown（转换后清理：去噪声/重复标题/多余空行）
       const { from } = pandocFormat(path.extname(inputPath));
       const args = [inputPath, '-o', outPath, '-f', from, '-t', 'gfm'];
@@ -153,6 +219,140 @@ export function convertFile(
       runPandoc(p, args, inputPath, fileName, outPath, resolve);
     }
   });
+}
+
+async function pdfToMarkdown(
+  inputPath: string,
+  fileName: string,
+  outPath: string,
+): Promise<ConvertResult> {
+  try {
+    const { text } = await extractText(
+      new Uint8Array(fs.readFileSync(inputPath)),
+      { mergePages: true },
+    );
+    const markdown = cleanupMarkdown(`# ${fileName}\n\n${text}\n`);
+    fs.writeFileSync(outPath, markdown, 'utf-8');
+    return { inputPath, fileName, ok: true, outputPath: outPath, warnings: [] };
+  } catch (error) {
+    return conversionFailure(inputPath, fileName, outPath, error);
+  }
+}
+
+async function xlsxToMarkdown(
+  inputPath: string,
+  fileName: string,
+  outPath: string,
+): Promise<ConvertResult> {
+  try {
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(inputPath);
+    const sections = workbook.worksheets.map((worksheet) => {
+      const rows = Array.from({ length: worksheet.rowCount }, (_, rowIndex) =>
+        Array.from(
+          { length: worksheet.columnCount },
+          (_, columnIndex) => markdownTableCell(
+            worksheet.getCell(rowIndex + 1, columnIndex + 1).text,
+          ),
+        ),
+      );
+      if (rows.length === 0 || worksheet.columnCount === 0) {
+        return `## ${worksheet.name}\n\n_空工作表_`;
+      }
+      const header = `| ${rows[0].join(' | ')} |`;
+      const separator = `| ${rows[0].map(() => '---').join(' | ')} |`;
+      const body = rows.slice(1).map((row) => `| ${row.join(' | ')} |`);
+      return [`## ${worksheet.name}`, '', header, separator, ...body].join('\n');
+    });
+    const markdown = cleanupMarkdown(
+      [`# ${fileName}`, '', ...sections].join('\n\n'),
+    );
+    fs.writeFileSync(outPath, markdown, 'utf-8');
+    return { inputPath, fileName, ok: true, outputPath: outPath, warnings: [] };
+  } catch (error) {
+    return conversionFailure(inputPath, fileName, outPath, error);
+  }
+}
+
+async function jsonToMarkdown(
+  inputPath: string,
+  fileName: string,
+  outPath: string,
+): Promise<ConvertResult> {
+  try {
+    const content = fs.readFileSync(inputPath, 'utf-8');
+    let markdown: string;
+    try {
+      const value: unknown = JSON.parse(content);
+      markdown = `# ${fileName}\n\n${jsonValueToMarkdown(value)}\n`;
+    } catch {
+      markdown = `# ${fileName}\n\nJSON 解析失败，以下为原始内容：\n\n${fencedCode(content, 'json')}\n`;
+    }
+    fs.writeFileSync(outPath, markdown, 'utf-8');
+    return { inputPath, fileName, ok: true, outputPath: outPath, warnings: [] };
+  } catch (error) {
+    return conversionFailure(inputPath, fileName, outPath, error);
+  }
+}
+
+function jsonValueToMarkdown(value: unknown, depth = 2): string {
+  if (depth > 8) return fencedCode(JSON.stringify(value, null, 2), 'json');
+  const heading = '#'.repeat(Math.min(depth, 6));
+  if (value === null) return '`null`';
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (!trimmed) return '""';
+    const looksLikeMarkdown = /(^|\n)\s{0,3}#{1,6}\s/.test(trimmed)
+      || /(^|\n)\s{0,3}[-*+]\s/.test(trimmed)
+      || /\*\*[^*]+\*\*/.test(trimmed);
+    return looksLikeMarkdown ? trimmed : trimmed.replace(/\n{3,}/g, '\n\n');
+  }
+  if (typeof value === 'number' || typeof value === 'boolean') {
+    return `\`${String(value)}\``;
+  }
+  if (Array.isArray(value)) {
+    if (value.length === 0) return '[]';
+    return value.map((item, index) => {
+      const body = jsonValueToMarkdown(item, depth + 1);
+      return typeof item === 'object' && item !== null
+        ? `${heading} 第 ${index + 1} 项\n\n${body}`
+        : `- ${body}`;
+    }).join('\n\n');
+  }
+  const entries = Object.entries(value as Record<string, unknown>);
+  if (entries.length === 0) return '{}';
+  return entries.map(([key, item]) => {
+    const body = jsonValueToMarkdown(item, depth + 1);
+    return typeof item === 'object' && item !== null
+      ? `${heading} ${key.replace(/\r?\n/g, ' ')}\n\n${body}`
+      : `- **${key}**：${body}`;
+  }).join('\n\n');
+}
+
+function fencedCode(content: string, language: string): string {
+  const ticks = content.includes('```') ? '````' : '```';
+  return `${ticks}${language}\n${content}\n${ticks}`;
+}
+
+function markdownTableCell(value: string): string {
+  return value.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/\r?\n/g, '<br>');
+}
+
+function conversionFailure(
+  inputPath: string,
+  fileName: string,
+  outPath: string,
+  error: unknown,
+): ConvertResult {
+  return {
+    inputPath,
+    fileName,
+    ok: false,
+    outputPath: outPath,
+    errorCode: ERROR_CODES.CONVERT_FAILED,
+    error: error instanceof Error ? error.message : String(error),
+    warnings: [],
+  };
 }
 
 function runPandoc(

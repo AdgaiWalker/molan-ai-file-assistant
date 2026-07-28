@@ -43,6 +43,14 @@ export interface SaveTextRequest {
   kind: 'markdown' | 'json';
 }
 
+export type {
+  DesktopDocumentFamilySnapshot,
+  DesktopInboxDocument,
+  DesktopSyncLoginRequest,
+  DesktopSyncSnapshot,
+  DesktopSyncStatus,
+} from './sync';
+
 export const ipcChannels = {
   SELECT_FILES: 'select-files',
   SELECT_READER_FILE: 'select-reader-file',
@@ -57,4 +65,17 @@ export const ipcChannels = {
   SAVE_SETTINGS: 'save-settings',
   LOAD_SETTINGS: 'load-settings',
   GET_PENDING_FILE: 'get-pending-file',
+  SYNC_SNAPSHOT: 'sync-snapshot',
+  SYNC_LOGIN: 'sync-login',
+  SYNC_LOGOUT: 'sync-logout',
+  SYNC_RUN: 'sync-run',
+  SYNC_OPEN_DOCUMENT: 'sync-open-document',
+  SYNC_OPEN_READABLE_DOCUMENT: 'sync-open-readable-document',
+  SYNC_DOCUMENT_FAMILY: 'sync-document-family',
+  SYNC_SET_AI_ACCESS: 'sync-set-ai-access',
+  SYNC_ARCHIVE_DOCUMENT: 'sync-archive-document',
+  SYNC_DELETE_DOCUMENT: 'sync-delete-document',
+  SYNC_RESTORE_DOCUMENT: 'sync-restore-document',
+  SYNC_RESOLVE_CONFLICT: 'sync-resolve-conflict',
+  SYNC_EXPORT_CONFLICT_VERSION: 'sync-export-conflict-version',
 } as const;

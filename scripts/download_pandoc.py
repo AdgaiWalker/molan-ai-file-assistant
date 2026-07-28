@@ -1,22 +1,63 @@
+#!/usr/bin/env python3
+
 import argparse
 import hashlib
 import os
+import platform
+import shutil
 import sys
 import urllib.request
 import zipfile
+from dataclasses import dataclass
 
-DEFAULT_OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "desktop", "resources")
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_OUT = os.path.join(REPO_ROOT, "desktop", "resources")
 DEFAULT_VERSION = "3.10"
 
-# 官方 SHA256（来源：GitHub Release API https://api.github.com/repos/jgm/pandoc/releases/tags/<version>，
-# asset digest 字段）。校验失败脚本直接退出非 0，避免下载到被篡改/不完整的 pandoc。
-EXPECTED_SHA256 = {
-    "3.10": "bb808d00fd58762299d64582a9b4c3e4b106cd929e62c5f19bcdcb496f1e54ae",
+
+@dataclass(frozen=True)
+class Release:
+    filename: str
+    binary_name: str
+    sha256: str
+
+
+# 官方 SHA256 来自 GitHub Release 资产的 digest 字段。校验失败直接退出，
+# 避免把被篡改或下载不完整的二进制打进桌面应用。
+RELEASES = {
+    ("3.10", "darwin", "arm64"): Release(
+        filename="pandoc-3.10-arm64-macOS.zip",
+        binary_name="pandoc",
+        sha256="d9cad01d96ae774a0dc8c8c45bb1ad3e4c5ff2cc2e24f45958f5f9b7974aee34",
+    ),
+    ("3.10", "darwin", "x86_64"): Release(
+        filename="pandoc-3.10-x86_64-macOS.zip",
+        binary_name="pandoc",
+        sha256="6334f4d9af7c9e37e761dfad56fa5507685f6d29724ebf31c4be6d5c654a3161",
+    ),
+    ("3.10", "windows", "amd64"): Release(
+        filename="pandoc-3.10-windows-x86_64.zip",
+        binary_name="pandoc.exe",
+        sha256="bb808d00fd58762299d64582a9b4c3e4b106cd929e62c5f19bcdcb496f1e54ae",
+    ),
 }
 
 
-def build_mirrors(version):
-    filename = f"pandoc-{version}-windows-x86_64.zip"
+def resolve_release(version, system_name=None, machine=None):
+    key = (
+        version,
+        (system_name or platform.system()).lower(),
+        (machine or platform.machine()).lower(),
+    )
+    release = RELEASES.get(key)
+    if release is None:
+        raise ValueError(
+            f"不支持的平台或版本: system={key[1]}, arch={key[2]}, pandoc={version}"
+        )
+    return release
+
+
+def build_mirrors(version, filename):
     return [
         f"https://kkgithub.com/jgm/pandoc/releases/download/{version}/{filename}",
         f"https://ghproxy.net/https://github.com/jgm/pandoc/releases/download/{version}/{filename}",
@@ -56,19 +97,25 @@ def sha256_of(path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="下载并校验 pandoc Windows 版")
+    parser = argparse.ArgumentParser(description="下载并校验当前桌面平台的 pandoc")
     parser.add_argument("--out", default=DEFAULT_OUT, help="输出目录（默认 %(default)s）")
     parser.add_argument("--pandoc-version", default=DEFAULT_VERSION, help="pandoc 版本号（默认 %(default)s）")
     args = parser.parse_args()
 
     out_dir = args.out
     version = args.pandoc_version
+    try:
+        release = resolve_release(version)
+    except ValueError as error:
+        print(error)
+        sys.exit(1)
+
     os.makedirs(out_dir, exist_ok=True)
     dst_zip = os.path.join(out_dir, "pandoc.zip")
-    dst_dir = os.path.join(out_dir, "pandoc")
+    dst_dir = os.path.join(out_dir, "pandoc-extracted")
 
     ok = False
-    for url in build_mirrors(version):
+    for url in build_mirrors(version, release.filename):
         try:
             size = download(url, dst_zip)
             if size < 1_000_000:
@@ -83,18 +130,14 @@ def main():
         print("所有镜像都失败")
         sys.exit(1)
 
-    expected = EXPECTED_SHA256.get(version, "")
-    if not expected:
-        # 未锁版本的 SHA256 视为不安全：拒绝继续，强制先登记官方哈希
-        print(f"未配置 pandoc {version} 的预期 SHA256。请先到 https://api.github.com/repos/jgm/pandoc/releases/tags/{version} 取 windows-x86_64.zip 的 digest，填入 EXPECTED_SHA256 后重试。")
-        sys.exit(1)
     actual = sha256_of(dst_zip)
-    if actual.lower() != expected.lower():
-        print(f"SHA256 校验失败\n  预期: {expected}\n  实际: {actual}")
+    if actual.lower() != release.sha256.lower():
+        print(f"SHA256 校验失败\n  预期: {release.sha256}\n  实际: {actual}")
         sys.exit(1)
     print(f"SHA256 校验通过: {actual}")
 
     print("解压...")
+    shutil.rmtree(dst_dir, ignore_errors=True)
     with zipfile.ZipFile(dst_zip) as z:
         z.extractall(dst_dir)
     print("解压完成")
@@ -102,12 +145,18 @@ def main():
     found = None
     for root, dirs, files in os.walk(dst_dir):
         for f in files:
-            if f.lower() == "pandoc.exe":
+            if f == release.binary_name:
                 found = os.path.join(root, f)
-                print("pandoc.exe 位置:", found)
+                print("pandoc 位置:", found)
     if not found:
-        print("未找到 pandoc.exe")
+        print(f"未找到 {release.binary_name}")
         sys.exit(1)
+
+    final_binary = os.path.join(out_dir, release.binary_name)
+    shutil.copy2(found, final_binary)
+    if release.binary_name == "pandoc":
+        os.chmod(final_binary, 0o755)
+    print("已复制到:", final_binary)
 
 
 if __name__ == "__main__":

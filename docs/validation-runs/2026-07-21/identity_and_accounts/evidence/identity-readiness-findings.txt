@@ -1,0 +1,20 @@
+生成时间：2026-07-21
+用途：当前身份与公开面高/中优先级问题清单；真正回填正式主体时可逐条勾掉。
+
+1. [medium] 隐私说明 仍有待补占位
+   范围：public_docs
+   说明：文件 `docs/public/privacy-policy.md` 当前还有 4 个占位：[待补正式主体]、[待补支持邮箱]、[待补正式域名]、[待补支持邮箱]。
+2. [medium] 服务条款 仍有待补占位
+   范围：public_docs
+   说明：文件 `docs/public/terms-of-service.md` 当前还有 3 个占位：[待补正式主体]、[待补支持邮箱]、[待补支持邮箱]。
+3. [medium] 账号与数据删除说明 仍有待补占位
+   范围：public_docs
+   说明：文件 `docs/public/account-and-data-deletion.md` 当前还有 2 个占位：[待补支持邮箱]、[待补正式域名]。
+4. [high] 支持与反馈 仍有待补占位
+   范围：public_docs
+   说明：文件 `docs/public/support.md` 当前还有 2 个占位：[待补支持邮箱]、[待补正式域名]。
+
+停止条件：
+- 正式产品名、Android applicationId、iOS Bundle ID、URL Scheme、App Group ID、桌面 App ID 都已切到可发布值
+- 公开隐私、条款、删除和支持页不再包含待补占位
+- 官网、应用内和商店后台展示同一套主体、域名、支持邮箱和发布入口

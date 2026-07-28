@@ -1,0 +1,45 @@
+生成时间：2026-07-21
+用途：身份信息逐位置回填清单；对照自动回写目标和人工补证据目标，避免遗漏官网 / 应用内 / 商店后台。
+
+本地身份输入源
+- 类型：manual_edit
+- 位置：config/release-identity-inputs.json
+- 涉及字段：正式主体名称、支持邮箱、正式域名、账号 / 数据删除入口 URL、Apple 开发者账号主体、Google Play 开发者账号主体、Windows / Microsoft 发布主体、域名持有人
+- 默认命令 / 动作：node scripts/apply_release_identity_inputs.mjs --check
+统一公开身份配置
+- 类型：auto_generated
+- 位置：config/product-identity.json
+- 涉及字段：正式主体名称、支持邮箱、正式域名、账号 / 数据删除入口 URL
+- 默认命令 / 动作：node scripts/apply_release_identity_inputs.mjs
+公开文案 Markdown
+- 类型：auto_generated
+- 位置：docs/public/privacy-policy.md；docs/public/terms-of-service.md；docs/public/account-and-data-deletion.md；docs/public/support.md
+- 涉及字段：正式主体名称、支持邮箱、正式域名、账号 / 数据删除入口 URL
+- 默认命令 / 动作：node scripts/prepare_identity_and_accounts.mjs --out default
+站点公开身份常量
+- 类型：auto_generated
+- 位置：site/src/lib/publicIdentity.generated.ts
+- 涉及字段：正式主体名称、支持邮箱、正式域名、账号 / 数据删除入口 URL
+- 默认命令 / 动作：node scripts/render_public_docs.mjs
+官网公开入口与路由
+- 类型：manual_verify
+- 位置：site/src/lib/constants.ts；site/src/components/PublicDocPage.tsx；site/src/components/ReleaseStatus.tsx；site/src/App.tsx
+- 涉及字段：支持邮箱、正式域名、账号 / 数据删除入口 URL
+- 默认命令 / 动作：node scripts/public_surface_sync_check.mjs
+应用内入口与截图
+- 类型：manual_evidence
+- 位置：Android / iOS 应用内“隐私 / 支持 / 删除账号”入口；桌面端相应入口（如发布版本提供）
+- 涉及字段：支持邮箱、账号 / 数据删除入口 URL
+- 默认命令 / 动作：人工真机 / 桌面取证
+商店后台与开发者资料
+- 类型：manual_evidence
+- 位置：Apple Developer / App Store Connect；Google Play Console；Microsoft / Windows 发布后台；域名注册商或 DNS 后台
+- 涉及字段：正式主体名称、Apple 开发者账号主体、Google Play 开发者账号主体、Windows / Microsoft 发布主体、域名持有人、支持邮箱
+- 默认命令 / 动作：人工后台回填
+进度记录与证据索引
+- 类型：manual_sync
+- 位置：TODO.md；README.md；docs/validation-runs/2026-07-21/identity_and_accounts/identity-and-accounts-checklist.md；docs/validation-runs/2026-07-21/identity_and_accounts/identity-input-status.md；docs/validation-runs/2026-07-21/identity_and_accounts/identity-readiness-snapshot.md
+- 涉及字段：全部 8 个字段的最终状态与证据位置
+- 默认命令 / 动作：node scripts/prepare_identity_and_accounts.mjs --out default
+
+当前默认命令：node scripts/apply_release_identity_inputs.mjs --check

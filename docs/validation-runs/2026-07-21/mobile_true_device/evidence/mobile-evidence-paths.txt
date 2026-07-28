@@ -1,0 +1,15 @@
+生成时间：2026-07-21
+用途：移动真机批次证据落盘位置与建议文件名。
+
+默认批次证据目录：docs/validation-runs/2026-07-21/mobile_true_device/evidence
+现有端内证据目录：
+- native/androidApp/verify-evidence
+- native/iosApp/verify-evidence
+
+建议证据文件名：
+- docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-wechat-open.mp4
+- docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-qq-open.mp4
+- docs/validation-runs/2026-07-21/mobile_true_device/evidence/ios-files-open.mp4
+- docs/validation-runs/2026-07-21/mobile_true_device/evidence/ipad-share-extension.mp4
+- docs/validation-runs/2026-07-21/mobile_true_device/evidence/android-large-json-memory.txt
+- docs/validation-runs/2026-07-21/mobile_true_device/evidence/ios-large-markdown-memory.txt

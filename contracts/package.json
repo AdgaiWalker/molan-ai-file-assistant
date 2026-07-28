@@ -1,0 +1,10 @@
+{
+  "name": "@molan/contracts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node src/check.mjs",
+    "generate:native": "node src/generate-native-contracts.mjs"
+  }
+}

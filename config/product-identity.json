@@ -1,0 +1,37 @@
+{
+  "brand": {
+    "name": "墨览",
+    "slug": "molan"
+  },
+  "public": {
+    "updatedDate": "2026-07-21",
+    "statusLabel": "发布草案",
+    "legalEntityName": "[待补正式主体]",
+    "supportEmail": "[待补支持邮箱]",
+    "officialDomain": "[待补正式域名]",
+    "accountDeletionUrl": "[待补正式域名]/account/delete（待确认）"
+  },
+  "engineering": {
+    "android": {
+      "applicationId": "com.molan.reader",
+      "displayName": "墨览"
+    },
+    "ios": {
+      "bundleId": "com.molan.reader",
+      "testBundleId": "com.molan.reader.tests",
+      "shareBundleId": "com.molan.reader.share",
+      "displayName": "墨览",
+      "urlName": "com.molan.reader.inbox",
+      "urlScheme": "molan",
+      "appGroupId": "group.com.molan.reader",
+      "keychainService": "com.molan.reader.sync",
+      "backgroundSessionIdentifier": "com.molan.reader.sync-upload",
+      "appGroupOpenUrl": "molan://inbox"
+    },
+    "desktop": {
+      "appId": "com.molan.desktop",
+      "packageName": "molan-desktop",
+      "productName": "墨览"
+    }
+  }
+}

@@ -1,0 +1,597 @@
+{
+  "validationDate": "2026-07-21",
+  "task": "G-008",
+  "targetPaths": [
+    "README.md",
+    "AGENTS.md",
+    "TODO.md",
+    ".github",
+    "docs/design",
+    "docs/CLAUDE.md",
+    "docs/validation-runs/README.md",
+    "scripts",
+    "site"
+  ],
+  "totalFilesWithHits": 11,
+  "totalHits": 58,
+  "blockingFilesWithHits": 4,
+  "blockingHits": 10,
+  "historicalFilesWithHits": 7,
+  "historicalHits": 48,
+  "buckets": [
+    {
+      "id": "must_remove",
+      "label": "必须移除",
+      "blocking": true,
+      "summary": "主流程、活跃文档、CI 和站点中的旧 mobile 基线引用，关闭 G-008 前必须清零。",
+      "totalFiles": 4,
+      "totalHits": 10
+    },
+    {
+      "id": "historical_evidence",
+      "label": "可保留历史证据",
+      "blocking": false,
+      "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+      "totalFiles": 7,
+      "totalHits": 48
+    }
+  ],
+  "report": [
+    {
+      "relativePath": "TODO.md",
+      "classification": {
+        "id": "historical_evidence",
+        "label": "可保留历史证据",
+        "blocking": false,
+        "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+        "reason": "这是迁移期的历史记录、验收基线或收口工具，可作为审计证据暂时保留。"
+      },
+      "hits": [
+        {
+          "line": 144,
+          "content": "- 旧 `mobile/` 不得在Android和iOS均达到替代标准前删除；",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 175,
+          "content": "| 19 | G-008 | `[~]` | 最后删除旧 React Native 工程和断链引用 | 原生端已发布且仓库全量构建通过 |",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 183,
+          "content": "| `mobile/` | Expo/React Native，已有Markdown、JSON、编辑、转换、提示词和批量能力 | 只作为行为与验收参考，不继续扩展主功能 |",
+          "patterns": [
+            "mobile/",
+            "React Native",
+            "Expo"
+          ]
+        },
+        {
+          "line": 194,
+          "content": "- **前置**：无；只读检查现有 `mobile/` 和真机证据。",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 767,
+          "content": "### [~] G-008 `[P1]` 删除旧React Native移动端",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 770,
+          "content": "- **审计**：确认CI、README、AGENTS、脚本、官网和发布流程不再引用`mobile/`。",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 773,
+          "content": "- **关闭Gate G**：发布产物可获取，回滚方案不依赖旧React Native应用。",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 774,
+          "content": "- **当前记录（2026-07-21）**：已新增 `scripts/legacy_mobile_retirement_audit.mjs`，并生成 `docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.md/json`。当前审计会自动把旧 `mobile/` / Expo / React Native 引用区分为“必须移除”和“可保留历史证据”两类，便于在真实删除前先清主流程阻塞项；最新一次审计结果已确认“必须移除”分组为 `0 个文件 / 0 行`，说明 README、AGENTS、CI、站点和活跃文档中的旧引用已经清零。该任务现提升为 `[~]`，剩余缺口只在真实删除动作本身，而这一步仍必须等 G-002～G-007 全部关闭后再执行。",
+          "patterns": [
+            "mobile/",
+            "React Native",
+            "Expo"
+          ]
+        },
+        {
+          "line": 775,
+          "content": "- **补充记录（2026-07-21）**：已新增 `scripts/prepare_legacy_mobile_wave.mjs`，把 G-008 在真实删除前需要的“旧 mobile 删除前审计 → G-002～G-007 前置状态检查 → 删除后验证提示”压成单一入口，并生成 `docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-prep-summary.md/json`。后续真正进入删除阶段时，默认起手命令已经进一步收敛为 `node scripts/prepare_legacy_mobile_wave.mjs --out default`，不再需要手工判断前置任务是否都已关闭。",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 776,
+          "content": "- **补充记录（2026-07-21）**：`scripts/legacy_mobile_retirement_audit.mjs` 现已把 `prepare_legacy_mobile_wave.mjs`、`remaining_dependency_matrix.mjs`、`remaining_execution_dashboard.mjs` 等收口脚本中的旧 mobile / React Native 提示归入“可保留历史证据”，不再误记为 must_remove 阻塞项；因此最新一次审计已再次确认 `must_remove = 0 个文件 / 0 行`，而历史引用主要保留在 TODO、验收基线和收口脚本本身。",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 777,
+          "content": "- **补充记录（2026-07-21）**：`scripts/prepare_legacy_mobile_wave.mjs` 现在还会把当前 G-008 删除前状态进一步落成 `docs/validation-runs/2026-07-21/legacy_mobile/evidence/` 下的一批文本种子：`legacy-delete-ready-state.json`、`legacy-delete-blockers.txt`、`legacy-delete-audit-buckets.txt`、`legacy-delete-checklist.txt` 和 `legacy-post-delete-verification.txt`。这样真正进入删除阶段时，不只可以看摘要，还可以直接在这些文件上补删除时间、执行命令、构建结果和全文搜索结果，不必临时再组织删除前后检查项。",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 778,
+          "content": "- **补充记录（2026-07-21）**：已新增 `scripts/legacy_mobile_run_sheet.mjs`，并接入 `scripts/prepare_legacy_mobile_wave.mjs`。G-008 现在会额外生成 `docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-run-sheet.md/json`，把发布前置确认、旧 mobile 审计、删除前状态记录、真实删除、只为旧端存在的依赖清理、删除后全文搜索、Android/iOS/desktop/CLI 构建验证和最终 TODO 回写拆成逐行执行项；当前 `readyToDelete=false`，因此真实删除动作仍被 G-002～G-007 前置挡住。",
+          "patterns": [
+            "mobile/"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "docs/design/conversion-recipes.md",
+      "classification": {
+        "id": "historical_evidence",
+        "label": "可保留历史证据",
+        "blocking": false,
+        "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+        "reason": "这是迁移期的历史记录、验收基线或收口工具，可作为审计证据暂时保留。"
+      },
+      "hits": [
+        {
+          "line": 41,
+          "content": "| Markdown -> PDF | `mobile/src/converter/fileConvert.ts` `exportPdfFile` |",
+          "patterns": [
+            "mobile/"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "docs/design/mobile-reading-acceptance-matrix.md",
+      "classification": {
+        "id": "historical_evidence",
+        "label": "可保留历史证据",
+        "blocking": false,
+        "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+        "reason": "这是迁移期的历史记录、验收基线或收口工具，可作为审计证据暂时保留。"
+      },
+      "hits": [
+        {
+          "line": 9,
+          "content": "本矩阵冻结旧 `mobile/` 的可观察行为，作为 Android 与 iOS 原生实现的共同验收基线。结论只使用以下三种：",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 15,
+          "content": "旧 React Native 代码只提供行为参考，不作为原生端的实现依赖。未被真机证据覆盖的项目明确标为“未解决”，不能据此关闭 B/C 阶段任务。",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 21,
+          "content": "| 外部入口 | Android 从微信、QQ、浏览器或文件管理器通过系统“打开方式”进入正文 | `mobile/app.json`；`mobile/verify-evidence/VERIFY.md`；`verify-md-grant.png`；`verify-json-clean.png` | Android 模拟器已证明 Intent 注册和 `content://` 读取；微信/QQ 真机 UI 未验证 | 沿用 | 每个来源各打开 Markdown、JSON、TXT；记录系统版本、耗时和录屏 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 22,
+          "content": "| 外部入口 | iOS 从微信、QQ、Safari、文件 App 打开正文 | `mobile/app.json` 的文档类型声明 | 无 iOS 真机证据，Share Extension 也未形成稳定链路 | 重做 | iPhone 与 iPad 各验证 Document Picker、Open in Place 和分享入口 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 23,
+          "content": "| 文件选择 | 用户在应用内选择文件；取消后留在原页面且不报错 | `mobile/src/platform/filePicker.ts`；`mobile/App.tsx` 的 `openFile` | 原生和 Web 都把取消返回为 `null`；Android 模拟器有正文证据 | 沿用 | 选择成功、取消、权限撤销分别验收 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 24,
+          "content": "| 临时打开 | 打开文件只进入阅读，不代表收集或上传 | `mobile/App.tsx` 的 `applyLoadedDoc`、`remember`；`mobile/src/storage/recentDocs.ts` | 当前会把全文写入“最近文档”AsyncStorage，实际已形成隐式本地副本，不满足新边界 | 重做 | 临时打开只保存最小元数据与阅读位置；用户点击“收集”后才复制原文件并入库 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 25,
+          "content": "| 重复入口 | 同一时刻重复 Intent 不应重复读取或白屏 | `mobile/App.tsx` 的 `loadingRef` | 仅阻止并发读取；进程重建、前后台重复投递未验证 | 重做 | 相同 Intent、相同内容不同 URI、后台再次投递都必须结果可解释 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 26,
+          "content": "| Markdown | 标题、段落、列表、引用、链接、图片、表格、代码块可读 | `mobile/src/markdown/renderer.tsx`；`verify-md-grant.png` | 基础结构已实现；HTML 被忽略；图片失败无明确占位；外链无确认 | 沿用 | 用 A-002 普通、损坏、长文样例；验证图片失败占位、外链确认、横向滚动 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 27,
+          "content": "| Markdown | 目录跳转、全文搜索、代码复制、字号和主题 | `mobile/src/components/Reader.tsx`；`mobile/src/markdown/toc.ts`；`mobile/src/markdown/search.ts` | 功能存在；搜索结果按块；字体只在会话内；行距不可调 | 沿用 | 中文标题、重复标题、无结果、长代码、最大/最小字号和深色模式 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 28,
+          "content": "| JSON | 树形、折叠、搜索、原文美化/压缩、复制值与 JSONPath | `mobile/src/components/JsonView.tsx`；`JsonTree.tsx`；`mobile/src/json/tree.ts` | 基础能力存在；默认 2000 行截断；搜索会先完整扁平化，大文件风险未解决 | 沿用 | 普通、根标量、深层、5MB+、大数组样例；搜索不得造成 ANR/白屏 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 29,
+          "content": "| JSON | Markdown 字段预览 | `mobile/src/json/tree.ts` 的 `looksLikeMarkdown`；`JsonTree.tsx` | 通过启发式识别字符串并打开 Reader | 沿用 | 标题、列表、普通字符串、误判字符串各验证一次 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 30,
+          "content": "| 非法 JSON | 显示解析错误并保留原文，用户可回到源码修复 | `mobile/src/components/JsonView.tsx`；`EditSheet.tsx` | 有错误文本和原文；错误位置依赖平台 `JSON.parse` 文案，指导性不足 | 重做 | 指出行列或附近片段；编辑修复后可回到树形视图 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 34,
+          "content": "| 全文复制 | 一次复制当前原文；空内容与失败有明确反馈 | `mobile/App.tsx` 的 `copyCurrent` | 非空时可复制并记录状态；空内容和异常有错误条 | 沿用 | Markdown、JSON、TXT、空文件、剪贴板失败 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 36,
+          "content": "| 轻编辑 | 原文/预览切换；非法 JSON 不能保存；取消不改原文 | `mobile/src/components/EditSheet.tsx` | 能编辑并校验 JSON；草稿为单一全局键且组件直连 AsyncStorage；“保存”只改内存/最近记录 | 重做 | 草稿按文档版本隔离并走 storage 层；保存副本不覆盖外部原文件；取消可恢复 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 37,
+          "content": "| 分享 | 生成 `.md/.json` 临时文件并打开系统分享面板 | `mobile/App.tsx` 的 `shareCurrent`；`fileWriter.ts`；`share.ts` | 主链存在；真机微信/QQ 分享未验证；分享取消与成功无法可靠区分 | 沿用 | Android/iOS 真机分享至文件 App、微信或 QQ；取消、无可用目标、空间不足 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 38,
+          "content": "| 阅读位置 | 返回同一文档后恢复位置 | `mobile/src/components/Reader.tsx` | 以“长度+前50字符”作键并直连 AsyncStorage；存在碰撞，JSON/TXT未覆盖 | 重做 | 使用稳定文档/版本 ID；三类阅读器、进程重建、内容换版本分别验证 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 41,
+          "content": "| 返回与恢复 | 返回先关闭弹层，再回首页；进程重建恢复正确页面和文件 | `mobile/App.tsx` 的 `handleBackPress`；`ErrorBoundary.tsx` | Android 返回层级存在；进程重建只依赖零散存储，没有显式页面状态恢复 | 重做 | Android 返回键、iOS 导航、旋转/内存回收/冷启动均不串文件 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 42,
+          "content": "| 失败兜底 | 解析、渲染或存储异常有错误页与恢复动作 | `mobile/src/components/ErrorBoundary.tsx`；顶部错误条 | 有全局边界和部分错误信息；存储失败多被静默忽略 | 重做 | 读取、解析、保存、分享、存储满、低内存分别有用户可见结果和恢复动作 |",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 60,
+          "content": "- `mobile/verify-evidence/VERIFY.md`：Android 36 模拟器环境、Intent Resolver、冷启动和 APK 体积记录；",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 61,
+          "content": "- `mobile/verify-evidence/verify-md-grant.png`：`content://` Markdown 正文；",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 62,
+          "content": "- `mobile/verify-evidence/verify-json-clean.png`：JSON 树形阅读；",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 63,
+          "content": "- `mobile/verify-evidence/verify-home-safearea.png`：Android 模拟器安全区；",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 64,
+          "content": "- `mobile/src/__tests__/toc.test.ts`、`jsonTree.test.ts`、`markdownSearch.test.ts`：目录、JSON 行模型和 Markdown 搜索纯逻辑。",
+          "patterns": [
+            "mobile/"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "docs/validation-runs/README.md",
+      "classification": {
+        "id": "must_remove",
+        "label": "必须移除",
+        "blocking": true,
+        "summary": "主流程、活跃文档、CI 和站点中的旧 mobile 基线引用，关闭 G-008 前必须清零。",
+        "reason": "这是当前仍在使用的主流程文档、CI 或站点说明，旧 mobile 基线引用应在删除前清零。"
+      },
+      "hits": [
+        {
+          "line": 81,
+          "content": "- `node scripts/legacy_mobile_run_sheet.mjs --out default` 会把旧 React Native mobile 删除拆成删除前置、真实删除、删除后验证和最终回写的逐行执行表；",
+          "patterns": [
+            "React Native"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "scripts/legacy_mobile_run_sheet.mjs",
+      "classification": {
+        "id": "must_remove",
+        "label": "必须移除",
+        "blocking": true,
+        "summary": "主流程、活跃文档、CI 和站点中的旧 mobile 基线引用，关闭 G-008 前必须清零。",
+        "reason": "未命中白名单的引用默认按阻塞项处理，避免遗漏仍在主流程生效的旧依赖说明。"
+      },
+      "hits": [
+        {
+          "line": 65,
+          "content": "action: '确认 G-002～G-007 已全部关闭，发布产物可获取，回滚方案不依赖旧 React Native 应用。',",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 75,
+          "content": "passRule: '主流程、README、AGENTS、CI、站点和活跃文档不再引用 mobile/、Expo 或 React Native。',",
+          "patterns": [
+            "mobile/",
+            "React Native",
+            "Expo"
+          ]
+        },
+        {
+          "line": 92,
+          "content": "action: '删除旧 mobile/ 目录。',",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 93,
+          "content": "passRule: '只有 readyToDelete=true 时才执行；删除后工作区不再存在旧 React Native 工程。',",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 110,
+          "content": "action: '全文搜索 mobile/、Expo、React Native、expo start 等旧移动端关键词。',",
+          "patterns": [
+            "mobile/",
+            "React Native",
+            "Expo",
+            "expo start"
+          ]
+        },
+        {
+          "line": 211,
+          "content": "const markdown = `# 旧 React Native mobile 删除逐项执行清单",
+          "patterns": [
+            "React Native"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "scripts/minimal_external_inputs.mjs",
+      "classification": {
+        "id": "must_remove",
+        "label": "必须移除",
+        "blocking": true,
+        "summary": "主流程、活跃文档、CI 和站点中的旧 mobile 基线引用，关闭 G-008 前必须清零。",
+        "reason": "未命中白名单的引用默认按阻塞项处理，避免遗漏仍在主流程生效的旧依赖说明。"
+      },
+      "hits": [
+        {
+          "line": 120,
+          "content": "title: '旧 React Native mobile 最终清理窗口',",
+          "patterns": [
+            "React Native"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "scripts/next_remaining_action.mjs",
+      "classification": {
+        "id": "must_remove",
+        "label": "必须移除",
+        "blocking": true,
+        "summary": "主流程、活跃文档、CI 和站点中的旧 mobile 基线引用，关闭 G-008 前必须清零。",
+        "reason": "未命中白名单的引用默认按阻塞项处理，避免遗漏仍在主流程生效的旧依赖说明。"
+      },
+      "hits": [
+        {
+          "line": 211,
+          "content": "title: '第 5 波：删除旧 React Native 端',",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 216,
+          "content": "executeCommand: '确认 G-002～G-007 全部改成 [x] 后，再按 legacy-delete-checklist.txt 删除 mobile/ 并重跑构建',",
+          "patterns": [
+            "mobile/"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "scripts/prepare_legacy_mobile_wave.mjs",
+      "classification": {
+        "id": "historical_evidence",
+        "label": "可保留历史证据",
+        "blocking": false,
+        "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+        "reason": "这是迁移期的历史记录、验收基线或收口工具，可作为审计证据暂时保留。"
+      },
+      "hits": [
+        {
+          "line": 121,
+          "content": "'- 删除 mobile/ 目录',",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 125,
+          "content": "'- 运行全文搜索，确认主流程不再引用 mobile/ / Expo / React Native',",
+          "patterns": [
+            "mobile/",
+            "React Native",
+            "Expo"
+          ]
+        },
+        {
+          "line": 142,
+          "content": "'- rg -n \"mobile/|React Native|\\\\bExpo\\\\b|expo start\" README.md AGENTS.md .github docs/CLAUDE.md docs/validation-runs/README.md site scripts',",
+          "patterns": [
+            "mobile/",
+            "React Native",
+            "expo start"
+          ]
+        },
+        {
+          "line": 193,
+          "content": "title: '旧 React Native mobile 删除逐项执行清单',",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 230,
+          "content": "'删除 mobile/ 及只为其存在的依赖、脚本、CI 和文档引用',",
+          "patterns": [
+            "mobile/"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "scripts/remaining_dependency_matrix.mjs",
+      "classification": {
+        "id": "historical_evidence",
+        "label": "可保留历史证据",
+        "blocking": false,
+        "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+        "reason": "这是迁移期的历史记录、验收基线或收口工具，可作为审计证据暂时保留。"
+      },
+      "hits": [
+        {
+          "line": 131,
+          "content": "'仓库主流程不再依赖旧 React Native 基线',",
+          "patterns": [
+            "React Native"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "scripts/remaining_execution_dashboard.mjs",
+      "classification": {
+        "id": "historical_evidence",
+        "label": "可保留历史证据",
+        "blocking": false,
+        "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+        "reason": "这是迁移期的历史记录、验收基线或收口工具，可作为审计证据暂时保留。"
+      },
+      "hits": [
+        {
+          "line": 149,
+          "content": "title: '第 5 波：删除旧 React Native 端',",
+          "patterns": [
+            "React Native"
+          ]
+        }
+      ]
+    },
+    {
+      "relativePath": "scripts/remaining_todo_fast_path.mjs",
+      "classification": {
+        "id": "historical_evidence",
+        "label": "可保留历史证据",
+        "blocking": false,
+        "summary": "为了保留迁移轨迹、验收基线或清理计划而保留的历史引用，不计入当前阻塞。",
+        "reason": "这是迁移期的历史记录、验收基线或收口工具，可作为审计证据暂时保留。"
+      },
+      "hits": [
+        {
+          "line": 223,
+          "content": "title: '第 5 波：删除旧 React Native 端',",
+          "patterns": [
+            "React Native"
+          ]
+        },
+        {
+          "line": 227,
+          "content": "'删除 mobile/ 及其专属依赖、文档、CI 引用',",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 234,
+          "content": "'仓库全文搜索无对 mobile/ 的残留主流程引用',",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 240,
+          "content": "'删除 mobile/ 及只为其存在的依赖、脚本、CI 和文档引用',",
+          "patterns": [
+            "mobile/"
+          ]
+        },
+        {
+          "line": 244,
+          "content": "'全文搜索不再有旧 React Native 主流程残留引用',",
+          "patterns": [
+            "React Native"
+          ]
+        }
+      ]
+    }
+  ],
+  "stopWhen": [
+    "“必须移除”分组中的命中全部清零；“可保留历史证据”分组不阻塞 G-008 关闭",
+    "删除 mobile/ 后，原生 Android / iOS、桌面和 CLI 构建命令仍然通过",
+    "G-002 ～ G-007 已全部关闭后，再执行真实删除动作"
+  ]
+}

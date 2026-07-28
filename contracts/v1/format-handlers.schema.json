@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://molan.app/contracts/v1/format-handlers.schema.json",
+  "title": "Molan format handler registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "fallbackFormatId", "handlers"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "fallbackFormatId": { "type": "string", "minLength": 1 },
+    "handlers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/formatHandler" }
+    }
+  },
+  "$defs": {
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["search", "edit", "copy", "format", "collect", "mobileConvert", "desktopConvert"],
+      "properties": {
+        "search": { "type": "boolean" },
+        "edit": { "type": "boolean" },
+        "copy": { "type": "boolean" },
+        "format": { "type": "boolean" },
+        "collect": { "type": "boolean" },
+        "mobileConvert": { "type": "boolean" },
+        "desktopConvert": { "type": "boolean" }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxMobileReadBytes", "performanceTargetBytes", "encodings"],
+      "properties": {
+        "maxMobileReadBytes": { "type": "integer", "minimum": 0 },
+        "performanceTargetBytes": { "type": "integer", "minimum": 0 },
+        "encodings": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["utf-8", "utf-8-bom", "utf-16le-bom", "utf-16be-bom", "gbk"] }
+        }
+      }
+    },
+    "detection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["text", "json", "signature", "zip_container"] },
+        "hexPrefixes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" }
+        }
+      }
+    },
+    "formatHandler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["formatId", "extensions", "mimeTypes", "detection", "reader", "mobileAction", "capabilities", "limits", "desktopAiFormats"],
+      "properties": {
+        "formatId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._+-]{0,63}$" },
+        "extensions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9]+$" } },
+        "mimeTypes": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[^/]+/[^/]+$" } },
+        "detection": { "$ref": "#/$defs/detection" },
+        "reader": { "enum": ["markdown", "json", "text", "system_preview", "none"] },
+        "mobileAction": { "enum": ["read", "preview_or_collect", "collect_only"] },
+        "capabilities": { "$ref": "#/$defs/capabilities" },
+        "limits": { "$ref": "#/$defs/limits" },
+        "desktopAiFormats": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

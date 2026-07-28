@@ -1,0 +1,60 @@
+{
+  "validationDate": "2026-07-21",
+  "tasks": [
+    "G-008"
+  ],
+  "generatedFrom": "scripts/prepare_legacy_mobile_wave.mjs",
+  "readyToDelete": false,
+  "pendingReleaseTasks": [
+    "G-002",
+    "G-003",
+    "G-004",
+    "G-005",
+    "G-006",
+    "G-007"
+  ],
+  "outputs": [
+    "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-prep-summary.md",
+    "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.md",
+    "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-run-sheet.md",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-ready-state.json",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-blockers.txt",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-audit-buckets.txt",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-checklist.txt",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-post-delete-verification.txt"
+  ],
+  "seededEvidenceOutputs": [
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-ready-state.json",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-blockers.txt",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-audit-buckets.txt",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-checklist.txt",
+    "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-post-delete-verification.txt"
+  ],
+  "executed": [
+    {
+      "id": "legacy_mobile_audit",
+      "title": "旧 mobile 基线删除前审计",
+      "command": "node scripts/legacy_mobile_retirement_audit.mjs --out default",
+      "output": "已写入 /Users/happy/Desktop/molan-ai-file-assistant/docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.md",
+      "outputs": [
+        "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.md",
+        "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.json"
+      ]
+    },
+    {
+      "id": "legacy_mobile_run_sheet",
+      "title": "旧 React Native mobile 删除逐项执行清单",
+      "command": "node scripts/legacy_mobile_run_sheet.mjs --out default",
+      "output": "已写入 /Users/happy/Desktop/molan-ai-file-assistant/docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-run-sheet.md",
+      "outputs": [
+        "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-run-sheet.md",
+        "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-run-sheet.json"
+      ]
+    }
+  ],
+  "nextSteps": [
+    "当前仍需先关闭这些前置发布任务：G-002、G-003、G-004、G-005、G-006、G-007",
+    "在这些任务全部改成 [x] 之前，不执行真实删除动作",
+    "可继续把 legacy-mobile-retirement-audit 作为删除前阻塞面板使用"
+  ]
+}

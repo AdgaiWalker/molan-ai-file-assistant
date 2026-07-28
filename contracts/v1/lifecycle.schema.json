@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://molan.app/contracts/v1/lifecycle.schema.json",
+  "title": "Molan lifecycle and sync contract",
+  "oneOf": [
+    { "$ref": "#/$defs/lifecycleRecord" },
+    { "$ref": "#/$defs/syncEvent" }
+  ],
+  "$defs": {
+    "lifecycleState": {
+      "enum": [
+        "temporary_open",
+        "read",
+        "collected",
+        "sync_pending",
+        "synced",
+        "conversion_pending",
+        "ai_readable",
+        "ai_read",
+        "ai_result_ready",
+        "archived",
+        "failed",
+        "cancelled",
+        "conflict",
+        "deleted"
+      ]
+    },
+    "errorCode": {
+      "enum": [
+        "E_PERMISSION_DENIED",
+        "E_SOURCE_MISSING",
+        "E_UNSUPPORTED_FORMAT",
+        "E_BINARY_CONTENT",
+        "E_FILE_TOO_LARGE",
+        "E_DECODE_FAILED",
+        "E_STORAGE_FULL",
+        "E_SYNC_NETWORK",
+        "E_SYNC_METADATA_COMMIT",
+        "E_DEVICE_REVOKED",
+        "E_BASE_VERSION_CONFLICT",
+        "E_OBJECT_MISSING",
+        "E_DOCUMENT_DELETED",
+        "E_CANCELLED",
+        "E_CLIENT_MUTATION_REUSED",
+        "E_UNKNOWN"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+    },
+    "versionId": {
+      "type": "string",
+      "pattern": "^ver_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "conflictRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseVersionId", "localVersionId", "incomingVersionId", "preservedVersionIds", "resolution"],
+      "properties": {
+        "baseVersionId": {
+          "oneOf": [{ "$ref": "#/$defs/versionId" }, { "type": "null" }]
+        },
+        "localVersionId": { "$ref": "#/$defs/versionId" },
+        "incomingVersionId": { "$ref": "#/$defs/versionId" },
+        "preservedVersionIds": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/versionId" }
+        },
+        "resolution": { "enum": ["unresolved", "keep_local", "keep_incoming", "keep_both", "merged", "deleted"] }
+      }
+    },
+    "tombstone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["documentId", "deletedAt", "deletedByDeviceId", "baseVersionId"],
+      "properties": {
+        "documentId": { "type": "string", "pattern": "^doc_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+        "deletedAt": { "$ref": "#/$defs/timestamp" },
+        "deletedByDeviceId": { "type": "string", "pattern": "^dev_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+        "baseVersionId": {
+          "oneOf": [{ "$ref": "#/$defs/versionId" }, { "type": "null" }]
+        }
+      }
+    },
+    "documentActionPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["documentId"],
+      "properties": {
+        "documentId": { "type": "string", "pattern": "^doc_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+        "scope": { "enum": ["current_device", "cloud", "all_devices"] }
+      }
+    },
+    "syncPayload": {
+      "oneOf": [
+        { "$ref": "file-contract.schema.json#/$defs/document" },
+        { "$ref": "file-contract.schema.json#/$defs/documentVersion" },
+        { "$ref": "file-contract.schema.json#/$defs/fileObject" },
+        { "$ref": "#/$defs/tombstone" },
+        { "$ref": "#/$defs/documentActionPayload" }
+      ]
+    },
+    "lifecycleRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "errorCode", "recoveryState", "userMessageKey", "recoveryAction", "conflict", "tombstone", "updatedAt"],
+      "properties": {
+        "state": { "$ref": "#/$defs/lifecycleState" },
+        "errorCode": { "oneOf": [{ "$ref": "#/$defs/errorCode" }, { "type": "null" }] },
+        "recoveryState": { "oneOf": [{ "$ref": "#/$defs/lifecycleState" }, { "type": "null" }] },
+        "userMessageKey": { "type": ["string", "null"] },
+        "recoveryAction": { "type": ["string", "null"] },
+        "conflict": { "oneOf": [{ "$ref": "#/$defs/conflictRecord" }, { "type": "null" }] },
+        "tombstone": { "oneOf": [{ "$ref": "#/$defs/tombstone" }, { "type": "null" }] },
+        "updatedAt": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "syncEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "clientMutationId",
+        "deviceId",
+        "documentId",
+        "versionId",
+        "baseVersionId",
+        "operation",
+        "phase",
+        "cursor",
+        "retryCount",
+        "payload",
+        "objectStorageRef",
+        "tombstone",
+        "errorCode",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^evt_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+        "clientMutationId": { "type": "string", "pattern": "^mut_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+        "deviceId": { "type": "string", "pattern": "^dev_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+        "documentId": { "type": "string", "pattern": "^doc_[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" },
+        "versionId": { "oneOf": [{ "$ref": "#/$defs/versionId" }, { "type": "null" }] },
+        "baseVersionId": { "oneOf": [{ "$ref": "#/$defs/versionId" }, { "type": "null" }] },
+        "operation": { "enum": ["upsert", "delete", "archive", "restore"] },
+        "phase": { "enum": ["queued", "content_uploaded", "committed", "failed", "conflict", "cancelled"] },
+        "cursor": { "type": ["string", "null"], "minLength": 1, "maxLength": 512 },
+        "retryCount": { "type": "integer", "minimum": 0, "maximum": 1000 },
+        "payload": { "$ref": "#/$defs/syncPayload" },
+        "objectStorageRef": {
+          "oneOf": [
+            { "$ref": "file-contract.schema.json#/$defs/objectStorageRef" },
+            { "type": "null" }
+          ]
+        },
+        "tombstone": { "oneOf": [{ "$ref": "#/$defs/tombstone" }, { "type": "null" }] },
+        "errorCode": { "oneOf": [{ "$ref": "#/$defs/errorCode" }, { "type": "null" }] },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" }
+      }
+    }
+  }
+}

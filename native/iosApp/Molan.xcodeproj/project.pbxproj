@@ -1,0 +1,892 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0956B50754D75AE17C6959D4 /* MolanLaunchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360E3762E95C10C1E178DBA8 /* MolanLaunchUITests.swift */; };
+		139DF5CE40FDB8C294D7A4E3 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B020D6B8DAE73D5A34D29A /* AppRoute.swift */; };
+		1D1AF9730489F4895CB2095D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172C1B0ABB3A2E5FD0C683C4 /* HomeView.swift */; };
+		20C8ED8A1390F4E0468E5E5A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669115921F2A930E7CF349C4 /* RootView.swift */; };
+		40C0127D221E0B9973264BC1 /* PlainTextDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEB98CF4AD22FACCB745FF7 /* PlainTextDocumentView.swift */; };
+		45783896866D7B24EB371A8D /* LibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155E03F406BDCFBFDF4CD610 /* LibraryRepository.swift */; };
+		468974A185897BE7B3A30D52 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE91D12BD771DBDCB4A20A2 /* AppModel.swift */; };
+		47A739E2B6899BC01FA1C4DB /* ReaderPreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF4C47B8DE964DD3E3008C1 /* ReaderPreferencesStore.swift */; };
+		57207942E6E1D2AD915CDA34 /* DraftStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD98F3C6361A80224D1550D /* DraftStore.swift */; };
+		5CE5B9907577DD10F1E3532F /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75B1E90BB00FF6207E2FB32 /* ReaderView.swift */; };
+		62763A4EB4B982DF6146E5E3 /* AppGroupInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC633DCE90BD08EF27D07FCE /* AppGroupInbox.swift */; };
+		67407E1993AC23420478E332 /* AppGroupInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC633DCE90BD08EF27D07FCE /* AppGroupInbox.swift */; };
+		694E9F241C0C1C4CB86CE91F /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D02D80FAB4D7E91339DFF7 /* AppModelTests.swift */; };
+		6B97FC4EF51D68CBAB88341F /* AppErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDF361210E7AF8142E54617 /* AppErrorView.swift */; };
+		6DE32E02B9DABAE1F3EBE026 /* MolanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6941C94600FE31AA5183BA /* MolanApp.swift */; };
+		75671119FC84B19B26CE8F6D /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF439059B7B7D325EFBFBEC /* ShareViewController.swift */; };
+		8094A79E5F2857B0A44E0435 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E257EC357AF1E681A8895B /* MarkdownDocument.swift */; };
+		832A57B146BA095139D820D3 /* FileArtifactRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29967096B67482AF35614F4B /* FileArtifactRepository.swift */; };
+		849B61FF17CC900549136A22 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422591F4DAAF59501E6424A /* Strings.swift */; };
+		9185218EC0F016B7A2556DBD /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D26F9C4F6BBE4E9D66FB8 /* JSONDocument.swift */; };
+		97FC9041ED68C314AB15D66D /* ReaderSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B449EBBDE549C00B3FA2C8 /* ReaderSessionStore.swift */; };
+		A1F5A39AF3FED30D5D9A7B08 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12F8561C1CFE5A07A15C56F /* SyncCoordinator.swift */; };
+		A9EFDAE3040144DD9FD0E7B7 /* DocumentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8E32F6BFD680E8B0D17630 /* DocumentModels.swift */; };
+		B175A0E33E91A8998C939AD4 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D593D6FD33AA00DFD3050FB /* ActivityView.swift */; };
+		B2EE2011B085229CE4F7193D /* TextSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694D5AA5F9C0568C0044384 /* TextSearch.swift */; };
+		B37D9142A2C3DDC8A5E2D3A8 /* TextFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3613B5CEF13C56ACBD5DFCF /* TextFileDocument.swift */; };
+		BE4CAEA00BB6E2E9EA6151B7 /* TextDocumentDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07877AE96AC34C0346042E93 /* TextDocumentDecoder.swift */; };
+		C8123DC01156A2B7A43FDFDE /* MolanShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10590E87F8FBC2E3A98A8978 /* MolanShared.framework */; };
+		D6E0A6C48AB9BA96B14FF8C8 /* LibraryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FE0FFEBFED099D130DE269 /* LibraryModels.swift */; };
+		DB3D886A25C838EB0A2355CA /* MolanShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EE01D3603CD617042F496BA8 /* MolanShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DE1DFC99D900F4B90D779F3D /* MolanTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0B479D23CAABCD83B6189C /* MolanTheme.swift */; };
+		DEA5A54106677D3B1ED90A96 /* MarkdownDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6452FBDDCABA7EBE9755FAF0 /* MarkdownDocumentView.swift */; };
+		E1956168FD62CFAF6C39D154 /* JSONDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EB54D0B5F92872456A6280 /* JSONDocumentView.swift */; };
+		E4079D0D559666D77FF56C49 /* DocumentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A41D552BE320463E1632F7 /* DocumentRepository.swift */; };
+		F99AA3811485B7B6AD63A592 /* DocumentEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E24BD88D4990563C75417 /* DocumentEditorView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7D25FE288F8E85CC3521B19C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5FF7ED763ACA8605A1F6281D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D29805A6DF3C2527E53CECB1;
+			remoteInfo = Molan;
+		};
+		AE5832288C68BB5F00BC6D75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5FF7ED763ACA8605A1F6281D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D29805A6DF3C2527E53CECB1;
+			remoteInfo = Molan;
+		};
+		FF22B3CAA01FD5953104592A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5FF7ED763ACA8605A1F6281D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6AB152CA3A6F2946892CA3E;
+			remoteInfo = MolanShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		01B6EF476CA2FFA8EBE5B90A /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DB3D886A25C838EB0A2355CA /* MolanShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		07877AE96AC34C0346042E93 /* TextDocumentDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocumentDecoder.swift; sourceTree = "<group>"; };
+		10590E87F8FBC2E3A98A8978 /* MolanShared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MolanShared.framework; path = "../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)/MolanShared.framework"; sourceTree = "<group>"; };
+		155E03F406BDCFBFDF4CD610 /* LibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryRepository.swift; sourceTree = "<group>"; };
+		172C1B0ABB3A2E5FD0C683C4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		22DE289353C0B912B583F311 /* MolanTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MolanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		253ECFB4312CF4D15B71F105 /* Molan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Molan.entitlements; sourceTree = "<group>"; };
+		29967096B67482AF35614F4B /* FileArtifactRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileArtifactRepository.swift; sourceTree = "<group>"; };
+		2EE91D12BD771DBDCB4A20A2 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		30D02D80FAB4D7E91339DFF7 /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
+		3374EBD5F92B39D5E376ED69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		33B020D6B8DAE73D5A34D29A /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
+		360E3762E95C10C1E178DBA8 /* MolanLaunchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolanLaunchUITests.swift; sourceTree = "<group>"; };
+		3AF439059B7B7D325EFBFBEC /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		4E0B479D23CAABCD83B6189C /* MolanTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolanTheme.swift; sourceTree = "<group>"; };
+		6452FBDDCABA7EBE9755FAF0 /* MarkdownDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocumentView.swift; sourceTree = "<group>"; };
+		669115921F2A930E7CF349C4 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		72A41D552BE320463E1632F7 /* DocumentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRepository.swift; sourceTree = "<group>"; };
+		736D26F9C4F6BBE4E9D66FB8 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
+		761ACE39204EC9A420FDB9CB /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		7D593D6FD33AA00DFD3050FB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		81A22118CF45321C049A6B7B /* Molan.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Molan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		839E7C8FE602640AD5AA9CDC /* MolanUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MolanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B449EBBDE549C00B3FA2C8 /* ReaderSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderSessionStore.swift; sourceTree = "<group>"; };
+		A75B1E90BB00FF6207E2FB32 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
+		AEBEFB4C7D6EC186362BCCA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BAEB98CF4AD22FACCB745FF7 /* PlainTextDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextDocumentView.swift; sourceTree = "<group>"; };
+		BDD98F3C6361A80224D1550D /* DraftStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftStore.swift; sourceTree = "<group>"; };
+		BF6941C94600FE31AA5183BA /* MolanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolanApp.swift; sourceTree = "<group>"; };
+		BFF4C47B8DE964DD3E3008C1 /* ReaderPreferencesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderPreferencesStore.swift; sourceTree = "<group>"; };
+		C41E24BD88D4990563C75417 /* DocumentEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentEditorView.swift; sourceTree = "<group>"; };
+		CD8E32F6BFD680E8B0D17630 /* DocumentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentModels.swift; sourceTree = "<group>"; };
+		CDDF361210E7AF8142E54617 /* AppErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrorView.swift; sourceTree = "<group>"; };
+		D2EB54D0B5F92872456A6280 /* JSONDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocumentView.swift; sourceTree = "<group>"; };
+		D3FE0FFEBFED099D130DE269 /* LibraryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModels.swift; sourceTree = "<group>"; };
+		D694D5AA5F9C0568C0044384 /* TextSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearch.swift; sourceTree = "<group>"; };
+		E12F8561C1CFE5A07A15C56F /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
+		E3613B5CEF13C56ACBD5DFCF /* TextFileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFileDocument.swift; sourceTree = "<group>"; };
+		E6E257EC357AF1E681A8895B /* MarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocument.swift; sourceTree = "<group>"; };
+		EC633DCE90BD08EF27D07FCE /* AppGroupInbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupInbox.swift; sourceTree = "<group>"; };
+		EE01D3603CD617042F496BA8 /* MolanShare.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = MolanShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F422591F4DAAF59501E6424A /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		693F04782B8CF637A3185B4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8123DC01156A2B7A43FDFDE /* MolanShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3B1E304AD0AECCAB03604377 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10590E87F8FBC2E3A98A8978 /* MolanShared.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		42479B0582AF94E4AE88B641 /* Molan */ = {
+			isa = PBXGroup;
+			children = (
+				253ECFB4312CF4D15B71F105 /* Molan.entitlements */,
+				5432CEF4AB2A4551F4CF820D /* App */,
+				A9882B361AE8059AEA0A9CA0 /* Data */,
+				46BDB9F6BE90DF975236E323 /* Design */,
+				81DB5316CD6B77064D865A8E /* Domain */,
+				AB3A377BAEBB19C0ED13C44B /* Features */,
+				F53F6FD5A1FF516DAC8BD6C8 /* Resources */,
+			);
+			path = Molan;
+			sourceTree = "<group>";
+		};
+		44E8178B1A8A3078ADD222DF /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				AEBEFB4C7D6EC186362BCCA0 /* Info.plist */,
+				761ACE39204EC9A420FDB9CB /* ShareExtension.entitlements */,
+				3AF439059B7B7D325EFBFBEC /* ShareViewController.swift */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
+		46BDB9F6BE90DF975236E323 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				4E0B479D23CAABCD83B6189C /* MolanTheme.swift */,
+				F422591F4DAAF59501E6424A /* Strings.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		5432CEF4AB2A4551F4CF820D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2EE91D12BD771DBDCB4A20A2 /* AppModel.swift */,
+				BF6941C94600FE31AA5183BA /* MolanApp.swift */,
+				669115921F2A930E7CF349C4 /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		61C60F49225B08433C770901 /* SharedAppGroup */ = {
+			isa = PBXGroup;
+			children = (
+				EC633DCE90BD08EF27D07FCE /* AppGroupInbox.swift */,
+			);
+			path = SharedAppGroup;
+			sourceTree = "<group>";
+		};
+		624FBB5C689998B9064DD711 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				CDDF361210E7AF8142E54617 /* AppErrorView.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		728D1B6B67916DA490068DD6 /* MolanTests */ = {
+			isa = PBXGroup;
+			children = (
+				30D02D80FAB4D7E91339DFF7 /* AppModelTests.swift */,
+			);
+			path = MolanTests;
+			sourceTree = "<group>";
+		};
+		81DB5316CD6B77064D865A8E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				33B020D6B8DAE73D5A34D29A /* AppRoute.swift */,
+				CD8E32F6BFD680E8B0D17630 /* DocumentModels.swift */,
+				736D26F9C4F6BBE4E9D66FB8 /* JSONDocument.swift */,
+				D3FE0FFEBFED099D130DE269 /* LibraryModels.swift */,
+				E6E257EC357AF1E681A8895B /* MarkdownDocument.swift */,
+				D694D5AA5F9C0568C0044384 /* TextSearch.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		8CE663BA2EECA53DC9B03CA3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				81A22118CF45321C049A6B7B /* Molan.app */,
+				EE01D3603CD617042F496BA8 /* MolanShare.appex */,
+				22DE289353C0B912B583F311 /* MolanTests.xctest */,
+				839E7C8FE602640AD5AA9CDC /* MolanUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9DBFCBDFC583A36C674E3557 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				7D593D6FD33AA00DFD3050FB /* ActivityView.swift */,
+				C41E24BD88D4990563C75417 /* DocumentEditorView.swift */,
+				D2EB54D0B5F92872456A6280 /* JSONDocumentView.swift */,
+				6452FBDDCABA7EBE9755FAF0 /* MarkdownDocumentView.swift */,
+				BAEB98CF4AD22FACCB745FF7 /* PlainTextDocumentView.swift */,
+				A75B1E90BB00FF6207E2FB32 /* ReaderView.swift */,
+				E3613B5CEF13C56ACBD5DFCF /* TextFileDocument.swift */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
+		A9882B361AE8059AEA0A9CA0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				72A41D552BE320463E1632F7 /* DocumentRepository.swift */,
+				BDD98F3C6361A80224D1550D /* DraftStore.swift */,
+				29967096B67482AF35614F4B /* FileArtifactRepository.swift */,
+				155E03F406BDCFBFDF4CD610 /* LibraryRepository.swift */,
+				BFF4C47B8DE964DD3E3008C1 /* ReaderPreferencesStore.swift */,
+				A1B449EBBDE549C00B3FA2C8 /* ReaderSessionStore.swift */,
+				E12F8561C1CFE5A07A15C56F /* SyncCoordinator.swift */,
+				07877AE96AC34C0346042E93 /* TextDocumentDecoder.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		AB3A377BAEBB19C0ED13C44B /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				624FBB5C689998B9064DD711 /* Error */,
+				B6263722664F845EA69F408F /* Home */,
+				9DBFCBDFC583A36C674E3557 /* Reader */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		B6263722664F845EA69F408F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				172C1B0ABB3A2E5FD0C683C4 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E82D7EA952363B6ABD2A0292 = {
+			isa = PBXGroup;
+			children = (
+				42479B0582AF94E4AE88B641 /* Molan */,
+				728D1B6B67916DA490068DD6 /* MolanTests */,
+				EB405EFDE6609549705D18C5 /* MolanUITests */,
+				61C60F49225B08433C770901 /* SharedAppGroup */,
+				44E8178B1A8A3078ADD222DF /* ShareExtension */,
+				3B1E304AD0AECCAB03604377 /* Frameworks */,
+				8CE663BA2EECA53DC9B03CA3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EB405EFDE6609549705D18C5 /* MolanUITests */ = {
+			isa = PBXGroup;
+			children = (
+				360E3762E95C10C1E178DBA8 /* MolanLaunchUITests.swift */,
+			);
+			path = MolanUITests;
+			sourceTree = "<group>";
+		};
+		F53F6FD5A1FF516DAC8BD6C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3374EBD5F92B39D5E376ED69 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C6EB0682667C709276176D28 /* MolanUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C34F084BC7361942DC4C10BE /* Build configuration list for PBXNativeTarget "MolanUITests" */;
+			buildPhases = (
+				D1787A02EF06CEF18CEB9301 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5AEFFB6156DD690937117A6F /* PBXTargetDependency */,
+			);
+			name = MolanUITests;
+			packageProductDependencies = (
+			);
+			productName = MolanUITests;
+			productReference = 839E7C8FE602640AD5AA9CDC /* MolanUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		D29805A6DF3C2527E53CECB1 /* Molan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6803609C3BFE7FFB90496205 /* Build configuration list for PBXNativeTarget "Molan" */;
+			buildPhases = (
+				D89673CBFB59CD96F998F544 /* Build KMP shared framework */,
+				428697CA48074DF78E3A5772 /* Sources */,
+				693F04782B8CF637A3185B4A /* Frameworks */,
+				01B6EF476CA2FFA8EBE5B90A /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A8012B20A8B109B7FD6298BE /* PBXTargetDependency */,
+			);
+			name = Molan;
+			packageProductDependencies = (
+			);
+			productName = Molan;
+			productReference = 81A22118CF45321C049A6B7B /* Molan.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D6AB152CA3A6F2946892CA3E /* MolanShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF7E08F4461D5EA7271B8122 /* Build configuration list for PBXNativeTarget "MolanShare" */;
+			buildPhases = (
+				3ADE594DC94149F357F6B977 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MolanShare;
+			packageProductDependencies = (
+			);
+			productName = MolanShare;
+			productReference = EE01D3603CD617042F496BA8 /* MolanShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		DC53AEDBAFFEF9FC6AB74C7D /* MolanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B5F2E9E88ACDDE94E63523D /* Build configuration list for PBXNativeTarget "MolanTests" */;
+			buildPhases = (
+				34AE0ED315D80239405BA70C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66A15939A0D12226ABBBA31F /* PBXTargetDependency */,
+			);
+			name = MolanTests;
+			packageProductDependencies = (
+			);
+			productName = MolanTests;
+			productReference = 22DE289353C0B912B583F311 /* MolanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5FF7ED763ACA8605A1F6281D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					C6EB0682667C709276176D28 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						TestTargetID = D29805A6DF3C2527E53CECB1;
+					};
+					D29805A6DF3C2527E53CECB1 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					D6AB152CA3A6F2946892CA3E = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					DC53AEDBAFFEF9FC6AB74C7D = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 80CECE0F038F9DA1F43CD1E6 /* Build configuration list for PBXProject "Molan" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = E82D7EA952363B6ABD2A0292;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8CE663BA2EECA53DC9B03CA3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D29805A6DF3C2527E53CECB1 /* Molan */,
+				D6AB152CA3A6F2946892CA3E /* MolanShare */,
+				DC53AEDBAFFEF9FC6AB74C7D /* MolanTests */,
+				C6EB0682667C709276176D28 /* MolanUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D89673CBFB59CD96F998F544 /* Build KMP shared framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build KMP shared framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping duplicate Kotlin framework build\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		34AE0ED315D80239405BA70C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				694E9F241C0C1C4CB86CE91F /* AppModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3ADE594DC94149F357F6B977 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62763A4EB4B982DF6146E5E3 /* AppGroupInbox.swift in Sources */,
+				75671119FC84B19B26CE8F6D /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		428697CA48074DF78E3A5772 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B175A0E33E91A8998C939AD4 /* ActivityView.swift in Sources */,
+				6B97FC4EF51D68CBAB88341F /* AppErrorView.swift in Sources */,
+				67407E1993AC23420478E332 /* AppGroupInbox.swift in Sources */,
+				468974A185897BE7B3A30D52 /* AppModel.swift in Sources */,
+				139DF5CE40FDB8C294D7A4E3 /* AppRoute.swift in Sources */,
+				F99AA3811485B7B6AD63A592 /* DocumentEditorView.swift in Sources */,
+				A9EFDAE3040144DD9FD0E7B7 /* DocumentModels.swift in Sources */,
+				E4079D0D559666D77FF56C49 /* DocumentRepository.swift in Sources */,
+				57207942E6E1D2AD915CDA34 /* DraftStore.swift in Sources */,
+				832A57B146BA095139D820D3 /* FileArtifactRepository.swift in Sources */,
+				1D1AF9730489F4895CB2095D /* HomeView.swift in Sources */,
+				9185218EC0F016B7A2556DBD /* JSONDocument.swift in Sources */,
+				E1956168FD62CFAF6C39D154 /* JSONDocumentView.swift in Sources */,
+				D6E0A6C48AB9BA96B14FF8C8 /* LibraryModels.swift in Sources */,
+				45783896866D7B24EB371A8D /* LibraryRepository.swift in Sources */,
+				8094A79E5F2857B0A44E0435 /* MarkdownDocument.swift in Sources */,
+				DEA5A54106677D3B1ED90A96 /* MarkdownDocumentView.swift in Sources */,
+				6DE32E02B9DABAE1F3EBE026 /* MolanApp.swift in Sources */,
+				DE1DFC99D900F4B90D779F3D /* MolanTheme.swift in Sources */,
+				40C0127D221E0B9973264BC1 /* PlainTextDocumentView.swift in Sources */,
+				47A739E2B6899BC01FA1C4DB /* ReaderPreferencesStore.swift in Sources */,
+				97FC9041ED68C314AB15D66D /* ReaderSessionStore.swift in Sources */,
+				5CE5B9907577DD10F1E3532F /* ReaderView.swift in Sources */,
+				20C8ED8A1390F4E0468E5E5A /* RootView.swift in Sources */,
+				849B61FF17CC900549136A22 /* Strings.swift in Sources */,
+				A1F5A39AF3FED30D5D9A7B08 /* SyncCoordinator.swift in Sources */,
+				BE4CAEA00BB6E2E9EA6151B7 /* TextDocumentDecoder.swift in Sources */,
+				B37D9142A2C3DDC8A5E2D3A8 /* TextFileDocument.swift in Sources */,
+				B2EE2011B085229CE4F7193D /* TextSearch.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1787A02EF06CEF18CEB9301 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0956B50754D75AE17C6959D4 /* MolanLaunchUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5AEFFB6156DD690937117A6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D29805A6DF3C2527E53CECB1 /* Molan */;
+			targetProxy = 7D25FE288F8E85CC3521B19C /* PBXContainerItemProxy */;
+		};
+		66A15939A0D12226ABBBA31F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D29805A6DF3C2527E53CECB1 /* Molan */;
+			targetProxy = AE5832288C68BB5F00BC6D75 /* PBXContainerItemProxy */;
+		};
+		A8012B20A8B109B7FD6298BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6AB152CA3A6F2946892CA3E /* MolanShare */;
+			targetProxy = FF22B3CAA01FD5953104592A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		05EC75B715B1D7CD51DD9471 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Molan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Molan";
+			};
+			name = Debug;
+		};
+		074EE47BC95483D36157714E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader.share;
+				PRODUCT_NAME = MolanShare;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		33F23DB06AF0933B53EEA68B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		38D693DA79D4B0BE0E743F37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = Molan/Molan.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)\"",
+				);
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Molan/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader;
+				PRODUCT_NAME = Molan;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8C45DCB1A2452B5E34E93F51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Molan;
+			};
+			name = Release;
+		};
+		97D4CA3945FCA699C6330602 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9FF78257FA1FF89DADA1AEF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader.share;
+				PRODUCT_NAME = MolanShare;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C71A17F99EB1B23BA1BE35AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = Molan/Molan.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)\"",
+				);
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Molan/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader;
+				PRODUCT_NAME = Molan;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CA7C5FB97904F42EE23E4375 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Molan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Molan";
+			};
+			name = Release;
+		};
+		E0EA689FAC48B33DEEB98E14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.molan.reader.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Molan;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5B5F2E9E88ACDDE94E63523D /* Build configuration list for PBXNativeTarget "MolanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05EC75B715B1D7CD51DD9471 /* Debug */,
+				CA7C5FB97904F42EE23E4375 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6803609C3BFE7FFB90496205 /* Build configuration list for PBXNativeTarget "Molan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38D693DA79D4B0BE0E743F37 /* Debug */,
+				C71A17F99EB1B23BA1BE35AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		80CECE0F038F9DA1F43CD1E6 /* Build configuration list for PBXProject "Molan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33F23DB06AF0933B53EEA68B /* Debug */,
+				97D4CA3945FCA699C6330602 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AF7E08F4461D5EA7271B8122 /* Build configuration list for PBXNativeTarget "MolanShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				074EE47BC95483D36157714E /* Debug */,
+				9FF78257FA1FF89DADA1AEF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C34F084BC7361942DC4C10BE /* Build configuration list for PBXNativeTarget "MolanUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0EA689FAC48B33DEEB98E14 /* Debug */,
+				8C45DCB1A2452B5E34E93F51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5FF7ED763ACA8605A1F6281D /* Project object */;
+}

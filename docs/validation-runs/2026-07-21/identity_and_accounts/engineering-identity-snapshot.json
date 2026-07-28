@@ -1,0 +1,39 @@
+{
+  "validationDate": "2026-07-21",
+  "generatedFrom": "scripts/engineering_identity_check.mjs",
+  "configSource": "config/product-identity.json",
+  "actual": {
+    "android": {
+      "applicationId": "com.molan.reader",
+      "displayName": "墨览"
+    },
+    "ios": {
+      "bundleId": "com.molan.reader",
+      "testBundleId": "com.molan.reader.tests",
+      "shareBundleId": "com.molan.reader.share",
+      "displayName": "墨览",
+      "urlName": "com.molan.reader.inbox",
+      "urlScheme": "molan",
+      "appGroupId": "group.com.molan.reader",
+      "shareEntitlementsAppGroupId": "group.com.molan.reader",
+      "keychainService": "com.molan.reader.sync",
+      "backgroundSessionIdentifier": "com.molan.reader.sync-upload",
+      "appGroupOpenUrl": "molan://inbox",
+      "xcodeprojBundleIds": [
+        "com.molan.reader.tests",
+        "com.molan.reader.share",
+        "com.molan.reader",
+        "com.molan.reader.share",
+        "com.molan.reader",
+        "com.molan.reader.tests"
+      ]
+    },
+    "desktop": {
+      "appId": "com.molan.desktop",
+      "packageName": "molan-desktop",
+      "productName": "墨览"
+    }
+  },
+  "mismatches": [],
+  "ok": true
+}

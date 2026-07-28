@@ -8,18 +8,26 @@ AI 生成的结果必须能回到墨览，而不是停留在聊天窗口里。�
 - 针对原文档的新版本。
 - 新建资料库条目。
 
-V2 前优先通过 CLI `molan push` 模拟；真实云端后再接云端 API 和 MCP `write_result`。
+当前本地 V1 已支持通过真实同步收件箱执行结果回流：CLI 使用 `molan write-result / confirm-result / discard-result`，MCP 使用 `write_result`；云端 API 仍后置到同步与鉴权完全稳定之后。
 
 ## 2. 回流入口
 
 | 入口 | 阶段 | 用途 |
 |---|---|---|
-| CLI `molan push <file> --json` | 当前/V2 | AI 把本地结果文件写入收件箱 |
-| CLI `molan push --stdin --title ... --json` | V2 | AI 直接写入生成内容 |
-| MCP `write_result` | V2 后段 | 本地 Agent 工具化写回 |
-| 云端 API `POST /documents/:id/results` | V2/V3 | 网页、团队、第三方集成 |
+| CLI `molan write-result [file] --json` | 当前 / 阶段 F | 先写草稿，或在 `--confirm` 下直接写成新版本/新文档 |
+| CLI `molan confirm-result <draftId> --json` | 当前 / 阶段 F | 对待确认草稿执行用户确认 |
+| CLI `molan discard-result <draftId> --json` | 当前 / 阶段 F | 取消待确认草稿 |
+| MCP `write_result` | 当前 / 阶段 F | 本地 Agent 工具化写回，支持草稿 / 确认 / 取消 |
+| 云端 API `POST /documents/:id/results` | 后续 | 网页、团队、第三方集成 |
 
 所有入口都需要用户确认；AI 不能静默覆盖原文档。
+
+当前实现约束：
+
+- `write-result` / `write_result` 默认先返回草稿 ID；
+- 显式 `--confirm` 或 `confirmed=true` 才会生成正式版本或独立文档；
+- `discard-result` 或 `discard=true` 会删除待确认草稿；
+- `saveMode=new_version` 使用来源版本做冲突检测，来源已漂移时返回冲突而不覆盖。
 
 ## 3. 结果类型
 

@@ -95,7 +95,11 @@ function FooterCol({ title, links }: { title: string; links: readonly { label: s
       <ul className="space-y-2">
         {links.map((l) => (
           <li key={l.label}>
-            <a href={l.href} className="text-sm text-white/50 hover:text-white transition-colors">
+            <a
+              href={l.href}
+              className="text-sm text-white/50 hover:text-white transition-colors"
+              {...(/^https?:\/\//.test(l.href) ? { target: '_blank', rel: 'noreferrer' as const } : {})}
+            >
               {l.label}
             </a>
           </li>

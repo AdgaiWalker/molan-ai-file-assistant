@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-21",
+  "task": "G-008",
+  "readyToDelete": false,
+  "pendingReleaseTasks": [
+    "G-002",
+    "G-003",
+    "G-004",
+    "G-005",
+    "G-006",
+    "G-007"
+  ],
+  "blockingFilesWithHits": 4,
+  "blockingHits": 10,
+  "historicalFilesWithHits": 7,
+  "historicalHits": 48,
+  "stopWhen": [
+    "“必须移除”分组中的命中全部清零；“可保留历史证据”分组不阻塞 G-008 关闭",
+    "删除 mobile/ 后，原生 Android / iOS、桌面和 CLI 构建命令仍然通过",
+    "G-002 ～ G-007 已全部关闭后，再执行真实删除动作"
+  ]
+}

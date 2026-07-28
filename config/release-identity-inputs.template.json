@@ -1,0 +1,21 @@
+{
+  "publicIdentity": {
+    "legalEntityName": "[待补正式主体]",
+    "supportEmail": "[待补支持邮箱]",
+    "officialDomain": "[待补正式域名]",
+    "accountDeletionUrl": "[待补正式域名]/account/delete（待确认）"
+  },
+  "releaseOwners": {
+    "appleDeveloperOwner": "",
+    "googlePlayOwner": "",
+    "windowsPublisherOwner": "",
+    "domainOwner": ""
+  },
+  "publicUrls": {
+    "privacyPolicyUrl": "",
+    "termsOfServiceUrl": "",
+    "accountClosureUrl": "",
+    "dataExportUrl": "",
+    "dataDeletionUrl": ""
+  }
+}

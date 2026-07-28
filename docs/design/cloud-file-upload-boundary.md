@@ -78,13 +78,13 @@ const sensitiveKeyPatterns = [
 
 ## 6. 文件类型边界
 
-| 类型 | V2 默认策略 |
+| 类型 | 跨端同步默认策略 |
 |---|---|
 | Markdown | 可上传内容，可允许 AI 读取 |
 | JSON | 可上传内容，可允许 AI 读取，敏感字段扫描必做 |
 | PDF | 可上传转换结果；AI 读取优先读转换后的 Markdown |
 | Word / PPT / Excel | 不默认上传原件；优先上传转换后的 Markdown |
-| 图片 | V2 不作为主流程上传 |
+| 图片 | 不作为首个同步切片的主流程上传 |
 | 未知二进制 | 不上传，只保存元数据 |
 
 手机端不引入 pandoc；Office 重转换仍交给桌面 CLI/GUI。

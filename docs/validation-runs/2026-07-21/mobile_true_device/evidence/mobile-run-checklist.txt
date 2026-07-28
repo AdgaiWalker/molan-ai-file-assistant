@@ -1,0 +1,11 @@
+生成时间：2026-07-21
+用途：移动真机批次开跑前/结束后的收口清单。
+
+开跑前：
+- 先执行 node scripts/prepare_mobile_true_device_wave.mjs --out default
+- 确认固定样例 hash 与设备矩阵无缺项
+- 确认 Android / iPhone / iPad 都有可用录屏路径
+
+结束条件：
+- mobile-true-device-report.md 已填完设备、来源 App、样例 hash、性能数据与证据路径
+- B-002 / B-004 / B-008 / B-009 / C-002 / C-004 / C-008 / C-009 均有真实证据

@@ -1,0 +1,384 @@
+{
+  "validationDate": "2026-07-21",
+  "generatedFrom": "scripts/identity_evidence_templates.mjs",
+  "source": "config/release-identity-inputs.json",
+  "summary": {
+    "templateCount": 5,
+    "unresolvedInputCount": 8,
+    "nextCommand": "node scripts/apply_release_identity_inputs.mjs --check",
+    "checkCommand": "node scripts/apply_release_identity_inputs.mjs --check"
+  },
+  "templates": [
+    {
+      "id": "public_pages",
+      "title": "官网公开页证据",
+      "tasks": [
+        "G-001",
+        "G-006"
+      ],
+      "environment": "官网本地预览或线上站点",
+      "fields": [
+        {
+          "key": "publicIdentity.legalEntityName",
+          "label": "正式主体名称",
+          "current": "[待补正式主体]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-002",
+            "G-003",
+            "G-004",
+            "G-005",
+            "G-006",
+            "G-007"
+          ]
+        },
+        {
+          "key": "publicIdentity.supportEmail",
+          "label": "支持邮箱",
+          "current": "[待补支持邮箱]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "publicIdentity.officialDomain",
+          "label": "正式域名",
+          "current": "[待补正式域名]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "publicIdentity.accountDeletionUrl",
+          "label": "账号 / 数据删除入口 URL",
+          "current": "[待补正式域名]/account/delete（待确认）",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "G-001",
+            "G-006"
+          ]
+        }
+      ],
+      "command": "node scripts/public_surface_sync_check.mjs",
+      "evidenceSlots": [
+        "隐私政策页面 URL / 截图路径",
+        "服务条款页面 URL / 截图路径",
+        "账号与数据删除页面 URL / 截图路径",
+        "支持页面 URL / 截图路径",
+        "公开面自检命令输出"
+      ],
+      "fillBlock": "证据项：官网公开页证据\n关联任务：G-001、G-006\n执行人：\n执行日期：\n环境 / 后台：官网本地预览或线上站点\n\n正式主体名称：[待补正式主体]\n支持邮箱：[待补支持邮箱]\n正式域名：[待补正式域名]\n账号 / 数据删除入口 URL：[待补正式域名]/account/delete（待确认）\n\n证据材料：\n- 隐私政策页面 URL / 截图路径：\n- 服务条款页面 URL / 截图路径：\n- 账号与数据删除页面 URL / 截图路径：\n- 支持页面 URL / 截图路径：\n- 公开面自检命令输出：\n\n验收结论：\n- 结果：未执行 / 通过 / 不通过\n- 如不通过，阻塞原因：\n- 下一步："
+    },
+    {
+      "id": "app_internal_entrypoints",
+      "title": "应用内隐私 / 支持 / 删除入口证据",
+      "tasks": [
+        "G-001",
+        "G-002",
+        "G-003",
+        "G-006",
+        "G-007"
+      ],
+      "environment": "Android 真机、iOS 真机、桌面发布候选版本",
+      "fields": [
+        {
+          "key": "publicIdentity.supportEmail",
+          "label": "支持邮箱",
+          "current": "[待补支持邮箱]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "publicIdentity.accountDeletionUrl",
+          "label": "账号 / 数据删除入口 URL",
+          "current": "[待补正式域名]/account/delete（待确认）",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "G-001",
+            "G-006"
+          ]
+        }
+      ],
+      "command": "人工打开应用入口并截图",
+      "evidenceSlots": [
+        "Android 隐私入口截图路径",
+        "Android 支持入口截图路径",
+        "Android 删除账号入口截图路径",
+        "iOS 隐私入口截图路径",
+        "iOS 支持入口截图路径",
+        "iOS 删除账号入口截图路径",
+        "桌面端相关入口截图路径"
+      ],
+      "fillBlock": "证据项：应用内隐私 / 支持 / 删除入口证据\n关联任务：G-001、G-002、G-003、G-006、G-007\n执行人：\n执行日期：\n环境 / 后台：Android 真机、iOS 真机、桌面发布候选版本\n\n支持邮箱：[待补支持邮箱]\n账号 / 数据删除入口 URL：[待补正式域名]/account/delete（待确认）\n\n证据材料：\n- Android 隐私入口截图路径：\n- Android 支持入口截图路径：\n- Android 删除账号入口截图路径：\n- iOS 隐私入口截图路径：\n- iOS 支持入口截图路径：\n- iOS 删除账号入口截图路径：\n- 桌面端相关入口截图路径：\n\n验收结论：\n- 结果：未执行 / 通过 / 不通过\n- 如不通过，阻塞原因：\n- 下一步："
+    },
+    {
+      "id": "store_backends",
+      "title": "商店后台与开发者资料证据",
+      "tasks": [
+        "A-007",
+        "G-001",
+        "G-002",
+        "G-003",
+        "G-004",
+        "G-005"
+      ],
+      "environment": "Apple Developer / App Store Connect / Google Play Console / Microsoft 发布后台 / 域名后台",
+      "fields": [
+        {
+          "key": "publicIdentity.legalEntityName",
+          "label": "正式主体名称",
+          "current": "[待补正式主体]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-002",
+            "G-003",
+            "G-004",
+            "G-005",
+            "G-006",
+            "G-007"
+          ]
+        },
+        {
+          "key": "releaseOwners.appleDeveloperOwner",
+          "label": "Apple 开发者账号主体",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-003",
+            "G-005"
+          ]
+        },
+        {
+          "key": "releaseOwners.googlePlayOwner",
+          "label": "Google Play 开发者账号主体",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-002"
+          ]
+        },
+        {
+          "key": "releaseOwners.windowsPublisherOwner",
+          "label": "Windows / Microsoft 发布主体",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-004"
+          ]
+        },
+        {
+          "key": "releaseOwners.domainOwner",
+          "label": "域名持有人",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "publicIdentity.supportEmail",
+          "label": "支持邮箱",
+          "current": "[待补支持邮箱]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        }
+      ],
+      "command": "人工后台回填并截图",
+      "evidenceSlots": [
+        "Apple 开发者主体截图路径",
+        "App Store Connect 隐私 / 支持 / 删除入口配置截图路径",
+        "Google Play 开发者主体截图路径",
+        "Google Play 数据安全 / 联系方式配置截图路径",
+        "Microsoft 发布主体截图路径",
+        "域名持有人或 DNS 后台截图路径"
+      ],
+      "fillBlock": "证据项：商店后台与开发者资料证据\n关联任务：A-007、G-001、G-002、G-003、G-004、G-005\n执行人：\n执行日期：\n环境 / 后台：Apple Developer / App Store Connect / Google Play Console / Microsoft 发布后台 / 域名后台\n\n正式主体名称：[待补正式主体]\nApple 开发者账号主体：未填写\nGoogle Play 开发者账号主体：未填写\nWindows / Microsoft 发布主体：未填写\n域名持有人：未填写\n支持邮箱：[待补支持邮箱]\n\n证据材料：\n- Apple 开发者主体截图路径：\n- App Store Connect 隐私 / 支持 / 删除入口配置截图路径：\n- Google Play 开发者主体截图路径：\n- Google Play 数据安全 / 联系方式配置截图路径：\n- Microsoft 发布主体截图路径：\n- 域名持有人或 DNS 后台截图路径：\n\n验收结论：\n- 结果：未执行 / 通过 / 不通过\n- 如不通过，阻塞原因：\n- 下一步："
+    },
+    {
+      "id": "deletion_execution",
+      "title": "账号 / 数据删除执行证据",
+      "tasks": [
+        "G-001",
+        "G-006",
+        "G-007"
+      ],
+      "environment": "测试账号 + 官网删除入口 + 应用内删除入口",
+      "fields": [
+        {
+          "key": "publicIdentity.supportEmail",
+          "label": "支持邮箱",
+          "current": "[待补支持邮箱]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "publicIdentity.accountDeletionUrl",
+          "label": "账号 / 数据删除入口 URL",
+          "current": "[待补正式域名]/account/delete（待确认）",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "G-001",
+            "G-006"
+          ]
+        }
+      ],
+      "command": "人工提交删除请求并记录结果",
+      "evidenceSlots": [
+        "测试账号标识",
+        "删除请求提交前截图路径",
+        "删除请求提交后确认截图路径",
+        "支持邮箱自动回复或人工确认截图路径",
+        "删除完成后的登录 / 数据不可见验证截图路径"
+      ],
+      "fillBlock": "证据项：账号 / 数据删除执行证据\n关联任务：G-001、G-006、G-007\n执行人：\n执行日期：\n环境 / 后台：测试账号 + 官网删除入口 + 应用内删除入口\n\n支持邮箱：[待补支持邮箱]\n账号 / 数据删除入口 URL：[待补正式域名]/account/delete（待确认）\n\n证据材料：\n- 测试账号标识：\n- 删除请求提交前截图路径：\n- 删除请求提交后确认截图路径：\n- 支持邮箱自动回复或人工确认截图路径：\n- 删除完成后的登录 / 数据不可见验证截图路径：\n\n验收结论：\n- 结果：未执行 / 通过 / 不通过\n- 如不通过，阻塞原因：\n- 下一步："
+    },
+    {
+      "id": "final_record_sync",
+      "title": "最终记录同步证据",
+      "tasks": [
+        "A-007",
+        "G-001"
+      ],
+      "environment": "仓库记录与验证产物",
+      "fields": [
+        {
+          "key": "publicIdentity.legalEntityName",
+          "label": "正式主体名称",
+          "current": "[待补正式主体]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-002",
+            "G-003",
+            "G-004",
+            "G-005",
+            "G-006",
+            "G-007"
+          ]
+        },
+        {
+          "key": "publicIdentity.supportEmail",
+          "label": "支持邮箱",
+          "current": "[待补支持邮箱]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "publicIdentity.officialDomain",
+          "label": "正式域名",
+          "current": "[待补正式域名]",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "publicIdentity.accountDeletionUrl",
+          "label": "账号 / 数据删除入口 URL",
+          "current": "[待补正式域名]/account/delete（待确认）",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "G-001",
+            "G-006"
+          ]
+        },
+        {
+          "key": "releaseOwners.appleDeveloperOwner",
+          "label": "Apple 开发者账号主体",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-003",
+            "G-005"
+          ]
+        },
+        {
+          "key": "releaseOwners.googlePlayOwner",
+          "label": "Google Play 开发者账号主体",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-002"
+          ]
+        },
+        {
+          "key": "releaseOwners.windowsPublisherOwner",
+          "label": "Windows / Microsoft 发布主体",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-004"
+          ]
+        },
+        {
+          "key": "releaseOwners.domainOwner",
+          "label": "域名持有人",
+          "current": "",
+          "source": "config/release-identity-inputs.json",
+          "requiredFor": [
+            "A-007",
+            "G-001",
+            "G-006"
+          ]
+        }
+      ],
+      "command": "node scripts/prepare_identity_and_accounts.mjs --out default",
+      "evidenceSlots": [
+        "docs/validation-runs/2026-07-21/identity_and_accounts/identity-input-status.md 最终状态",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/identity-sync-targets.md 最终状态",
+        "docs/validation-runs/2026-07-21/identity_and_accounts/identity-readiness-snapshot.md 最终状态",
+        "TODO.md 对应任务状态",
+        "最终截图 / 后台链接索引"
+      ],
+      "fillBlock": "证据项：最终记录同步证据\n关联任务：A-007、G-001\n执行人：\n执行日期：\n环境 / 后台：仓库记录与验证产物\n\n正式主体名称：[待补正式主体]\n支持邮箱：[待补支持邮箱]\n正式域名：[待补正式域名]\n账号 / 数据删除入口 URL：[待补正式域名]/account/delete（待确认）\nApple 开发者账号主体：未填写\nGoogle Play 开发者账号主体：未填写\nWindows / Microsoft 发布主体：未填写\n域名持有人：未填写\n\n证据材料：\n- docs/validation-runs/2026-07-21/identity_and_accounts/identity-input-status.md 最终状态：\n- docs/validation-runs/2026-07-21/identity_and_accounts/identity-sync-targets.md 最终状态：\n- docs/validation-runs/2026-07-21/identity_and_accounts/identity-readiness-snapshot.md 最终状态：\n- TODO.md 对应任务状态：\n- 最终截图 / 后台链接索引：\n\n验收结论：\n- 结果：未执行 / 通过 / 不通过\n- 如不通过，阻塞原因：\n- 下一步："
+    }
+  ],
+  "nextAction": {
+    "action": "补齐真实身份字段并预检",
+    "command": "node scripts/apply_release_identity_inputs.mjs --check",
+    "followup": "字段补齐后先运行 node scripts/apply_release_identity_inputs.mjs --check / node scripts/apply_release_identity_inputs.mjs --dry-run，确认无误后再执行 node scripts/apply_release_identity_inputs.mjs。"
+  }
+}

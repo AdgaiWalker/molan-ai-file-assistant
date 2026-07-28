@@ -23,12 +23,15 @@ desktop/release/
 pandoc-3.10-windows-x86_64.msi
 pandoc.zip
 pandoc_extracted/
+desktop/resources/pandoc
 desktop/resources/pandoc.exe
+desktop/resources/pandoc-extracted/
 sample.docx
 sample_1.docx
 
 # Out-of-scope personal files (config.json contains plaintext credentials)
 config.json
+config/release-identity-inputs.json
 school_sdk (1).exe
 analyze_exe.py
 hello_tool.py
@@ -43,6 +46,9 @@ Thumbs.db
 .git-nested-backups/
 mobile/.git/
 mobile/.claude/
+native/.gradle/
+native/local.properties
+server/.local-sync/
 
 # Local agent instructions
 AGENTS.local.md

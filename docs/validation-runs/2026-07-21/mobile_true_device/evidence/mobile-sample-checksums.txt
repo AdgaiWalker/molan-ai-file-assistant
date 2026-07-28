@@ -1,0 +1,18 @@
+生成时间：2026-07-21
+用途：移动真机批次固定样例与哈希；真正录屏时直接引用这里的大小与 SHA256。
+
+- fixtures/mobile-reading/markdown/normal.md
+  - 大小：292 B
+  - SHA256：4243d4826b909c17ae9c79ffa7ed9be10a1776c7dd3e99e21deba17113f04ca5
+- fixtures/mobile-reading/json/normal.json
+  - 大小：167 B
+  - SHA256：51f9b1e74ff7e5dc536eb9b75d5929558531b2af23230d8326b1198a927a3c98
+- fixtures/mobile-reading/text/utf8.txt
+  - 大小：77 B
+  - SHA256：1324da8679e295705c1688a13afa9da9d1e7b831adbeccbe08986a28ac530014
+- fixtures/mobile-reading/markdown/large-1mb.md
+  - 大小：1512031 B
+  - SHA256：6edb341c9924a33d7af8f511d825b3214eb975ff414d7a8edb1acf3ffb1ab256
+- fixtures/mobile-reading/json/large-5mb.json
+  - 大小：5243566 B
+  - SHA256：a56fa9b549895042de2e131317696bdb389636b1378755f6ad4c8d1139934f0e

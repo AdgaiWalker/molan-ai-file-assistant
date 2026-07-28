@@ -1,0 +1,9 @@
+生成时间：2026-07-21
+用途：G-008 删除后验证占位；真正删除后可直接在本文件上填构建与搜索结果。
+
+待补命令输出：
+- rg -n "mobile/|React Native|\bExpo\b|expo start" README.md AGENTS.md .github docs/CLAUDE.md docs/validation-runs/README.md site scripts
+- cd native && ./gradlew :androidApp:assembleDebug :androidApp:testDebugUnitTest
+- xcodebuild -project native/iosApp/Molan.xcodeproj -scheme Molan -destination 'generic/platform=iOS Simulator' build
+- cd desktop && npm run typecheck && npm run build
+- cd desktop/cli && npm run typecheck && npm run build && npm run test

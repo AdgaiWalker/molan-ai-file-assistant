@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://molan.app/contracts/v1/ai-result-envelope.schema.json",
+  "title": "Molan AI Result Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "resultType",
+    "title",
+    "format",
+    "content",
+    "saveMode",
+    "createdBy",
+    "createdAt"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "sourceDocumentId": {
+      "oneOf": [
+        { "$ref": "file-contract.schema.json#/$defs/documentId" },
+        { "type": "null" }
+      ]
+    },
+    "sourceVersionId": {
+      "oneOf": [
+        { "$ref": "file-contract.schema.json#/$defs/versionId" },
+        { "type": "null" }
+      ]
+    },
+    "sourceArtifactId": {
+      "oneOf": [
+        { "$ref": "file-contract.schema.json#/$defs/artifactId" },
+        { "type": "null" }
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "resultType": {
+      "enum": [
+        "summary",
+        "report",
+        "structured_json",
+        "new_document",
+        "revision"
+      ]
+    },
+    "format": {
+      "enum": ["markdown", "json"]
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1
+    },
+    "saveMode": {
+      "enum": ["draft", "new_document", "new_version"]
+    },
+    "createdBy": {
+      "enum": ["cli", "mcp", "cloud_api"]
+    },
+    "modelName": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "promptTextHash": {
+      "oneOf": [
+        { "$ref": "file-contract.schema.json#/$defs/contentHash" },
+        { "type": "null" }
+      ]
+    },
+    "createdAt": {
+      "$ref": "file-contract.schema.json#/$defs/timestamp"
+    }
+  }
+}

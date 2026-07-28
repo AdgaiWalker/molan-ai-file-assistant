@@ -1,4 +1,4 @@
-appId: com.mdreader.desktop
+appId: com.molan.desktop
 productName: 墨览
 copyright: Copyright © 2026
 directories:
@@ -7,19 +7,32 @@ directories:
 files:
   - out/**/*
   - package.json
-extraResources:
-  - from: resources/pandoc.exe
-    to: pandoc.exe
 win:
   target:
     - target: nsis
       arch:
         - x64
   artifactName: ${productName}-${version}-setup.${ext}
+  extraResources:
+    - from: resources
+      to: .
+      filter:
+        - pandoc.exe
+mac:
+  target:
+    - target: dmg
+      arch:
+        - arm64
+        - x64
+  extraResources:
+    - from: resources
+      to: .
+      filter:
+        - pandoc
 nsis:
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
-  shortcutName: MD阅读器
+  shortcutName: 墨览
 # 微软商店上架时改用 msix target：
 # win.target: [{ target: msix, arch: [x64] }]

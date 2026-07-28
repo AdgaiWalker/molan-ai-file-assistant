@@ -1,19 +1,21 @@
 # 贡献说明
 
-感谢参与墨览。本文件说明如何本地运行三端项目、提交前要过哪些检查,以及任务流转规则。
+感谢参与墨览。本文件说明如何运行当前代码、提交前要过哪些检查，以及任务流转规则。产品与目标技术栈以 `PRD.md` 为准。
 
 ## 项目结构
 
-三个子项目在同一仓库下,互无工作空间共享:
+当前项目在同一仓库下，互无工作空间共享：
 
-- `mobile/` — React Native (Expo SDK 57) 手机阅读器
-- `desktop/` — Electron + Vite + React 桌面阅读与转换 GUI
+- `mobile/` — 当前 React Native / Expo 手机实现，作为原生 Android / iOS 重写的行为基线
+- 原生移动端目标 — Android 使用 Kotlin + Compose，iOS 使用 Swift + SwiftUI/UIKit
+- `desktop/` — Electron + Vite + React 桌面阅读、转换与快贴 GUI，后续演进为 AI 文件收件箱
 - `desktop/cli/` — Node CLI (`molan convert`)
-- 根目录 — 产品文档(`PRD.md`、`TODO.md`)与早期 Python 原型(`mdconvert.py`,已废弃)
+- `site/` — 官网静态站点
+- 根目录 — 产品与技术总纲 `PRD.md`、任务清单 `TODO.md` 和构建脚本
 
 ## 本地运行
 
-### 手机端
+### 当前 React Native 手机基线
 
 ```bash
 cd mobile
@@ -23,7 +25,7 @@ npm run typecheck      # TS 检查(主要正确性门槛)
 npm run test           # vitest 单测
 ```
 
-> 写 Expo 代码前,先读 `mobile/AGENTS.md` 和对应版本的 Expo 文档(SDK 57)。版本 API 差异多,别凭记忆写。
+> 只有维护当前 `mobile/` 基线时才遵守 Expo 版本文档规则。新增原生 Android / iOS 功能按 `PRD.md §11` 和各自工程说明执行。
 
 ### 桌面端
 
@@ -72,15 +74,15 @@ CI(`.github/workflows/ci.yml`)在每次 push / PR 会自动跑这三组。
 
 **开发时遵守:**
 
-1. **领任务**:从 `TODO.md` 挑 `[ ]` 或 `[~]`,按 §2.2 的优先级顺序。
+1. **领任务**：从 `TODO.md` 挑 `[ ]` 或 `[~]`，按阶段与“当前最高优先级”顺序。
 2. **做之前先核实状态**:代码可能已经实现了但没标。先 grep / 读代码,确认是真"没做"再动手,避免重复劳动。
 3. **做完立刻改状态**:把 `[ ]` / `[~]` 改成 `[x]`,并在该行补证据(文件路径 + typecheck/test 结果)。证据要求见 TODO §17。
 4. **遇到 `[v]`**:纯代码改动不需要真机;只有"真机/真机交互"相关项才保留 `[v]`,等真机验收再改 `[x]`。
-5. **新增功能要对应任务**:如果做了 TODO 里没有的功能,先回 PRD / TODO 确认它该不该做(多数情况是"不该做",见 TODO §16 不做清单),再决定是否新增任务条目。
+5. **新增功能要对应任务**：如果 TODO 里没有，先回 `PRD.md` 确认产品边界，再决定是否新增任务。
 
 ## 禁止事项
 
 - 不要提交 `config.json`(含明文凭证,见 `.gitignore`)。
 - 不要把 `desktop/resources/pandoc.exe` 提交进 git(体积大,通过脚本下载)。
 - 不要为不存在的"历史包袱"写兼容代码(AGENTS.md §0.5)。
-- 不要复用 `desktop/src/shared/` 的代码到 mobile(mobile 走纯 JS 离线转换)。
+- 不要把桌面 Pandoc 转换逻辑塞进手机端；手机端只承担阅读、收集、轻编辑和必要的轻量转换。

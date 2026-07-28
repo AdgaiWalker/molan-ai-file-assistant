@@ -1,0 +1,71 @@
+{
+  "queueId": "air_019f90e8-e3e3-7daf-acca-3fd17e548baa",
+  "createdAt": "2026-07-23T21:36:49.630Z",
+  "saveMode": "new_version",
+  "document": null,
+  "version": {
+    "clientMutationId": "mut_38ea838b-7e57-4a61-8ce5-0811f6e13065",
+    "documentId": "doc_019c0018-0000-7000-8000-000000000007",
+    "versionId": "ver_019f90e8-e3e2-71b9-ae16-c62c64f4d9b3",
+    "baseVersionId": "ver_019c0018-0000-7000-8000-000000000007",
+    "operation": "upsert",
+    "upload": {
+      "clientMutationId": "mut_3693016d-b087-45cf-90d0-18b5eacc4cad",
+      "fileObjectId": "obj_019f90e8-e3e0-7bd8-8502-419f9646abba",
+      "role": "original",
+      "format": "markdown",
+      "mediaType": "text/markdown",
+      "contentHash": "sha256:2e8dc38315b4c2274c0888faa9c2f55e6e4caa8ecaa286d1f8f65f6dc2c97097",
+      "sizeBytes": 63,
+      "localPath": "/Users/happy/Desktop/molan-ai-file-assistant/docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/real-client-trial/sync-inbox/ai-results/air_019f90e8-e3e3-7daf-acca-3fd17e548baa.md"
+    },
+    "payload": {
+      "id": "ver_019f90e8-e3e2-71b9-ae16-c62c64f4d9b3",
+      "documentId": "doc_019c0018-0000-7000-8000-000000000007",
+      "sourceDeviceId": "dev_019f90e8-e3df-754a-87f5-975f8723298a",
+      "originalFormat": "markdown",
+      "contentHash": "sha256:2e8dc38315b4c2274c0888faa9c2f55e6e4caa8ecaa286d1f8f65f6dc2c97097",
+      "sizeBytes": 63,
+      "fileObjectId": "obj_019f90e8-e3e0-7bd8-8502-419f9646abba",
+      "parentVersionId": "ver_019c0018-0000-7000-8000-000000000007",
+      "createdAt": "2026-07-23T21:36:49.630Z",
+      "updatedAt": "2026-07-23T21:36:49.630Z",
+      "deletedAt": null
+    }
+  },
+  "aiResult": {
+    "clientMutationId": "mut_a7f89f56-07ed-4ebf-bbcc-2c16ef60d2b7",
+    "documentId": "doc_019c0018-0000-7000-8000-000000000007",
+    "versionId": null,
+    "baseVersionId": null,
+    "operation": "upsert",
+    "upload": {
+      "clientMutationId": "mut_a20f6136-3b67-47bf-8fcb-cdb467025ca2",
+      "fileObjectId": "obj_019f90e8-e3e1-754d-8378-f3c7884f55d1",
+      "role": "ai_result",
+      "format": "markdown",
+      "mediaType": "text/markdown",
+      "contentHash": "sha256:2e8dc38315b4c2274c0888faa9c2f55e6e4caa8ecaa286d1f8f65f6dc2c97097",
+      "sizeBytes": 63,
+      "localPath": "/Users/happy/Desktop/molan-ai-file-assistant/docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/real-client-trial/sync-inbox/ai-results/air_019f90e8-e3e3-7daf-acca-3fd17e548baa.md"
+    },
+    "payload": {
+      "id": "air_019f90e8-e3e3-7daf-acca-3fd17e548baa",
+      "documentId": "doc_019c0018-0000-7000-8000-000000000007",
+      "sourceVersionId": "ver_019c0018-0000-7000-8000-000000000007",
+      "sourceArtifactId": "art_019c0018-0000-7000-8000-000000000007",
+      "sourceDeviceId": "dev_019f90e8-e3df-754a-87f5-975f8723298a",
+      "fileObjectId": "obj_019f90e8-e3e1-754d-8378-f3c7884f55d1",
+      "resultType": "summary",
+      "format": "markdown",
+      "mediaType": "text/markdown",
+      "contentHash": "sha256:2e8dc38315b4c2274c0888faa9c2f55e6e4caa8ecaa286d1f8f65f6dc2c97097",
+      "sizeBytes": 63,
+      "generatorName": "mcp",
+      "generatorVersion": "codex-cli-0.144.6",
+      "createdAt": "2026-07-23T21:36:49.630Z",
+      "updatedAt": "2026-07-23T21:36:49.630Z",
+      "deletedAt": null
+    }
+  }
+}

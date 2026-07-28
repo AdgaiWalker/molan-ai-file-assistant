@@ -4,9 +4,9 @@
 
 | 优先级 | 入口 | 阶段 | 裁定 |
 |---|---|---|---|
-| 1 | CLI | V1/V2 | 首选入口，当前已存在本地模拟，后续接真实云端 |
-| 2 | MCP | V2 后段 | 给本地 Agent 暴露标准工具，不早于 CLI 契约稳定后 |
-| 3 | 云端 API | V2/V3 | 给网页、团队空间、第三方集成使用，必须在权限模型稳定后 |
+| 1 | CLI | 当前 / 阶段 E | 首选入口，当前已有本地模拟，后续接真实同步数据 |
+| 2 | MCP | 阶段 E | 给本地 Agent 暴露标准工具，不早于 CLI 契约稳定后 |
+| 3 | 云端 API | 后续 | 给网页、团队空间、第三方集成使用，必须在权限模型稳定后 |
 
 原因：
 - CLI 最容易被 Codex / Claude Code / Cursor / 本地脚本调用。
@@ -70,7 +70,7 @@ MCP 工具后置到 CLI 契约稳定后，最小工具集合：
 | `list_documents` | filter/tag/collection/status | 文档元数据列表 |
 | `read_document` | documentId | 授权内容 |
 | `search_prompts` | query/tag | 提示词列表 |
-| `write_result` | documentId/title/content/kind | 新版本或新文档 |
+| `write_result` | draftId/title/content/format/resultType/saveMode/confirmed | 草稿、确认后的新版本或独立文档 |
 
 MCP 规则：
 - 不绕过 CLI/云端权限模型。

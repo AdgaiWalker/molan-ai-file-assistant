@@ -1,0 +1,16 @@
+生成时间：2026-07-21
+用途：当前工程身份快照，可直接作为改正式 ID 前后的对照记录。
+
+工程配置来源：config/product-identity.json
+当前是否一致：是
+
+Android applicationId：com.molan.reader
+Android 显示名：墨览
+iOS Bundle ID：com.molan.reader
+iOS Share Bundle ID：com.molan.reader.share
+iOS URL Scheme：molan
+iOS App Group ID：group.com.molan.reader
+桌面 App ID：com.molan.desktop
+桌面 packageName：molan-desktop
+
+不一致项数：0

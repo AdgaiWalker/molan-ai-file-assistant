@@ -1,0 +1,54 @@
+任务：E-007 真实 AI 客户端授权读取与撤回验收
+执行日期：2026-07-24
+真实 AI 客户端：Codex CLI 0.144.6
+入口：molan MCP stdio
+MCP 服务：node desktop/cli/dist/index.js mcp --sync-root <evidence>/real-client-trial/sync-inbox
+
+固定对象：
+- 原件：real-client-trial/sample.pdf
+- 原件 SHA256：84462926bf2d64b85061466c28e4b73ba52278747bbc36040b54e44e251675d9
+- 派生 Markdown：real-client-trial/sample.ai.md
+- 派生 SHA256：aff5e6e676ae72b77905b9b2d6088f7ddaa560512a9c00899aa420e5ec4f1a20
+- documentId：doc_019c0018-0000-7000-8000-000000000007
+- sourceVersionId：ver_019c0018-0000-7000-8000-000000000007
+- sourceArtifactId：art_019c0018-0000-7000-8000-000000000007
+
+1. 默认未授权
+- Codex 任务：019f90e4-516a-77e2-abc2-3d0580c77495
+- 客户端实际调用：molan.read_document
+- 工具结果：E_AI_READ_NOT_ALLOWED
+- 客户端最终输出：E_AI_READ_NOT_ALLOWED
+
+2. 显式授权
+- 命令：molan authorize <documentId> --source synced --sync-root <syncRoot> --json
+- 结果：ok=true，allowed=true，scopeType=document
+
+3. 授权后读取
+- Codex 任务：019f90e4-ab0b-7333-83c6-56e32b8f0e14
+- 客户端实际调用：molan.read_document、molan.get_document_versions
+- 读取结果：kind=markdown，readableSource=derived_artifact，auditResult=success
+- 正文第一行：# 测试 Markdown
+- 客户端最终输出：
+  sample.pdf | # 测试 Markdown | ver_019c0018-0000-7000-8000-000000000007 | art_019c0018-0000-7000-8000-000000000007
+- 版本关系：PDF 原件版本哈希与上方原件一致；派生对象指向同一 sourceVersionId。
+
+4. 撤回后立即读取
+- 命令：molan revoke <documentId> --source synced --sync-root <syncRoot> --json
+- 撤回结果：ok=true，allowed=false，scopeType=document
+- Codex 任务：019f90e5-090a-7021-ac85-3ad779a02551
+- 客户端实际调用：molan.read_document
+- 工具结果：E_AI_READ_NOT_ALLOWED
+- 客户端最终输出：E_AI_READ_NOT_ALLOWED
+
+5. 审计结果
+- aiReadable=false
+- lastReadVia=mcp
+- lastReadResult=denied
+- lastReadVersionId=ver_019c0018-0000-7000-8000-000000000007
+- lastReadArtifactId=art_019c0018-0000-7000-8000-000000000007
+- lastReadErrorCode=E_AI_READ_NOT_ALLOWED
+
+结论：
+- 真实 AI 客户端完成了未授权拒绝、显式授权后读取派生正文与版本关系、撤回后立即拒绝。
+- MCP 返回不含本地路径；正文读取被记录为 mcp 审计事件。
+- 验收通过。

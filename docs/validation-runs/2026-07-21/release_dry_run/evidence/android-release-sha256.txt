@@ -1,0 +1,16 @@
+生成时间：2026-07-21
+用途：当前 Android 候选包与 SHA256 记录，可直接作为 G-002 / G-007 演练前的初始证据。
+
+平台：Android
+本地候选产物：native/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+SHA256：f4b8aa5f100a144dab2095145f1172688c79243f61ef66b26e427b6c463e1d77
+文件大小：12567943 B
+修改时间：2026-07-21T22:51:44.513Z
+官网状态：准备中
+官网入口：https://github.com/AdgaiWalker/molan-ai-file-assistant/blob/main/TODO.md
+备注：真机与渠道验收未关闭，公开下载仍准备中。
+
+待补真实演练：
+- release 签名 AAB / APK
+- 真机安装 / 升级 / 降级拒绝矩阵
+- 渠道上传与发布说明截图

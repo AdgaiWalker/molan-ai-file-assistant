@@ -1,0 +1,22 @@
+生成时间：2026-07-21
+用途：Gate D 外部批次 的建议证据文件名、目录与必留字段。
+
+默认批次证据目录：docs/validation-runs/2026-07-21/gate_d_sync/evidence
+现有证据目录：
+- native/androidApp/verify-evidence
+- native/iosApp/verify-evidence
+- desktop/verify-evidence
+
+建议证据文件名：
+- docs/validation-runs/2026-07-21/gate_d_sync/evidence/android-sync-start.mp4
+- docs/validation-runs/2026-07-21/gate_d_sync/evidence/ios-sync-start.mp4
+- docs/validation-runs/2026-07-21/gate_d_sync/evidence/desktop-three-device-sync.png
+- docs/validation-runs/2026-07-21/gate_d_sync/evidence/desktop-office-objects.png
+- docs/validation-runs/2026-07-21/gate_d_sync/evidence/weak-network-log.txt
+- docs/validation-runs/2026-07-21/gate_d_sync/evidence/conflict-resolution-log.txt
+
+必留证据：
+- 来源文件 ID / 版本 / hash
+- 同步事件 ID / 桌面落盘路径 / 派生对象信息
+- 故障注入方式与恢复结果
+- 跨端录屏 / 日志路径

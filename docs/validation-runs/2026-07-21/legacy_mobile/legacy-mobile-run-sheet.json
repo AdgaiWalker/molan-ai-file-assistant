@@ -1,0 +1,246 @@
+{
+  "validationDate": "2026-07-21",
+  "generatedFrom": "scripts/legacy_mobile_run_sheet.mjs",
+  "task": "G-008",
+  "readyToDelete": false,
+  "pendingReleaseTasks": [
+    "G-002",
+    "G-003",
+    "G-004",
+    "G-005",
+    "G-006",
+    "G-007"
+  ],
+  "auditSummary": {
+    "blockingFilesWithHits": 4,
+    "blockingHits": 10,
+    "historicalFilesWithHits": 7,
+    "historicalHits": 48
+  },
+  "summary": {
+    "rowCount": 11,
+    "groupCount": 6,
+    "blockedRows": 10
+  },
+  "groupSummary": [
+    {
+      "phase": "删除前置",
+      "rowCount": 1,
+      "blockedRows": 1
+    },
+    {
+      "phase": "删除前审计",
+      "rowCount": 1,
+      "blockedRows": 1
+    },
+    {
+      "phase": "删除前记录",
+      "rowCount": 1,
+      "blockedRows": 0
+    },
+    {
+      "phase": "真实删除",
+      "rowCount": 2,
+      "blockedRows": 2
+    },
+    {
+      "phase": "删除后验证",
+      "rowCount": 4,
+      "blockedRows": 4
+    },
+    {
+      "phase": "最终回写",
+      "rowCount": 2,
+      "blockedRows": 2
+    }
+  ],
+  "rows": [
+    {
+      "id": "g008-01-release-precondition",
+      "phase": "删除前置",
+      "gate": "禁止删除",
+      "action": "确认 G-002～G-007 已全部关闭，发布产物可获取，回滚方案不依赖旧 React Native 应用。",
+      "passRule": "G-002～G-007 全部为 [x]；否则不得执行真实删除动作。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-ready-state.json",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-02-audit-must-remove-zero",
+      "phase": "删除前审计",
+      "gate": "禁止删除",
+      "action": "运行 legacy_mobile_retirement_audit，确认“必须移除”分组为 0 个文件 / 0 行。",
+      "passRule": "主流程、README、AGENTS、CI、站点和活跃文档不再引用 mobile/、Expo 或 React Native。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-retirement-audit.md",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-03-backup-current-state",
+      "phase": "删除前记录",
+      "gate": "可预先执行",
+      "action": "记录删除前 git status、legacy 审计摘要和当前 TODO 状态，方便回滚和复盘。",
+      "passRule": "删除前状态可追溯；不需要复制 archive 副本。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-blockers.txt",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-04-delete-mobile-directory",
+      "phase": "真实删除",
+      "gate": "禁止删除",
+      "action": "删除旧 mobile/ 目录。",
+      "passRule": "只有 readyToDelete=true 时才执行；删除后工作区不再存在旧 React Native 工程。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-checklist.txt",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-05-remove-legacy-only-deps",
+      "phase": "真实删除",
+      "gate": "禁止删除",
+      "action": "删除只为旧 mobile 存在的依赖、脚本、CI、文档和 generated 缓存引用。",
+      "passRule": "不删除原生 Android/iOS、desktop、CLI、contracts、site 或历史验收记录需要保留的证据。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-delete-checklist.txt",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-06-post-delete-search",
+      "phase": "删除后验证",
+      "gate": "等待删除后执行",
+      "action": "全文搜索 mobile/、Expo、React Native、expo start 等旧移动端关键词。",
+      "passRule": "必须移除范围无命中；TODO、历史证据和本 run sheet 中的保留引用不计阻塞。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-post-delete-verification.txt",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-07-android-build",
+      "phase": "删除后验证",
+      "gate": "等待删除后执行",
+      "action": "运行原生 Android 构建与测试。",
+      "passRule": "native Android 构建/测试通过，证明删除旧 mobile 未影响当前 Android 主线。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-post-delete-verification.txt",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-08-ios-build",
+      "phase": "删除后验证",
+      "gate": "等待删除后执行",
+      "action": "运行原生 iOS 构建。",
+      "passRule": "native iOS 构建通过，证明删除旧 mobile 未影响当前 iOS 主线。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-post-delete-verification.txt",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-09-desktop-site-cli-check",
+      "phase": "删除后验证",
+      "gate": "等待删除后执行",
+      "action": "运行 desktop、desktop/cli、site 和 contracts 的关键检查。",
+      "passRule": "桌面、CLI、站点和契约检查通过，证明旧 mobile 删除没有断主闭环。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/evidence/legacy-post-delete-verification.txt",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-10-final-audit-refresh",
+      "phase": "最终回写",
+      "gate": "等待删除后执行",
+      "action": "重新运行 prepare_legacy_mobile_wave 与 prepare_remaining_external_work，刷新审计、总控和 TODO 证据入口。",
+      "passRule": "legacy-mobile-retirement-audit 的 must_remove 仍为 0；G-008 有删除后构建与搜索证据。",
+      "evidence": "docs/validation-runs/2026-07-21/legacy_mobile/legacy-mobile-prep-summary.md",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    },
+    {
+      "id": "g008-11-close-todo",
+      "phase": "最终回写",
+      "gate": "等待删除后执行",
+      "action": "在证据齐全后把 TODO.md 中 G-008 从 [~] 改为 [x]，并记录删除结果。",
+      "passRule": "G-008 完成定义全部满足；不夹带未验证的发布项。",
+      "evidence": "TODO.md",
+      "resultFields": [
+        "执行人",
+        "执行日期",
+        "命令或动作",
+        "输出摘要",
+        "证据路径",
+        "是否通过",
+        "问题与下一步"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+生成时间：2026-07-21
+用途：Gate E 外部批次 的建议证据文件名、目录与必留字段。
+
+默认批次证据目录：docs/validation-runs/2026-07-21/gate_e_ai_read/evidence
+现有证据目录：
+- desktop/verify-evidence
+
+建议证据文件名：
+- docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/desktop-authorize-before.png
+- docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/desktop-authorize-after.png
+- docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/ai-client-read-success.mp4
+- docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/ai-client-read-revoked.mp4
+- docs/validation-runs/2026-07-21/gate_e_ai_read/evidence/cli-or-mcp-log.txt
+
+必留证据：
+- 原件 hash 与派生 Markdown hash
+- 授权前拒绝 / 授权后可读 / 撤回后拒绝
+- 真实 AI 客户端名称与入口（CLI 或 MCP）
+- 日志或完整录屏路径

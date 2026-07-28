@@ -19,6 +19,9 @@
 | `molan push <file>` | 保存本地文件到 AI 文件收件箱 | 已实现，本地模拟云端 | 是 |
 | `molan pull` | 列出 AI 文件收件箱 | 已实现，本地模拟云端 | 是 |
 | `molan read <idOrTitle>` | 读取 AI 文件收件箱文档内容 | 已实现，本地模拟云端 | 是 |
+| `molan write-result [file]` | 写入 AI 结果草稿，或在显式确认下落成正式结果 | 已实现，真实同步收件箱 | 是 |
+| `molan confirm-result <draftId>` | 确认一份待处理 AI 结果草稿 | 已实现，真实同步收件箱 | 是 |
+| `molan discard-result <draftId>` | 取消一份待处理 AI 结果草稿 | 已实现，真实同步收件箱 | 是 |
 
 公共规则：
 
@@ -219,6 +222,74 @@ molan read <idOrTitle> --json
 - `title`
 - `storedPath`
 
+## 9. `molan write-result`
+
+```bash
+molan write-result [file] --stdin --title <title> --format <markdown|json> \
+  --result-type <summary|report|structured_json|new_document|revision> \
+  --save-mode <draft|new_document|new_version> \
+  --document <idOrTitle> --version <id> --artifact <id> \
+  --request-id <id> --confirm --json
+```
+
+作用：
+
+- 把 AI 生成内容先写成草稿；
+- 显式 `--confirm` 时直接落成新版本或独立结果文档；
+- `save-mode=new_version` 使用来源版本做冲突保护；
+- `--request-id` 用于幂等重放，重复请求返回同一份草稿。
+
+失败：
+
+- 缺少输入：`E_AI_RESULT_INPUT_REQUIRED`
+- 非法 JSON：`E_AI_RESULT_JSON_INVALID`
+- 来源版本已漂移：`E_AI_RESULT_SOURCE_CONFLICT`
+
+示例返回：
+
+```json
+{
+  "ok": true,
+  "confirmed": false,
+  "draftId": "draft_lxyz1234",
+  "saveMode": "new_version",
+  "title": "项目周报摘要",
+  "sourceDocumentId": "doc_xxx",
+  "sourceVersionId": "ver_xxx",
+  "results": [
+    {
+      "ok": true,
+      "draftId": "draft_lxyz1234",
+      "confirmed": false,
+      "saveMode": "new_version",
+      "title": "项目周报摘要"
+    }
+  ]
+}
+```
+
+## 10. `molan confirm-result`
+
+```bash
+molan confirm-result <draftId> --source synced --sync-root <dir> --json
+```
+
+作用：对一份待处理 AI 结果草稿执行显式确认，并写成新版本或独立文档。
+
+失败：
+
+- 草稿不存在：`E_AI_RESULT_DRAFT_NOT_FOUND`
+- 来源版本已漂移：`E_AI_RESULT_SOURCE_CONFLICT`
+- 草稿仍是 `saveMode=draft`：`E_AI_RESULT_CONFIRM_NOT_ALLOWED`
+
+## 11. `molan discard-result`
+
+```bash
+molan discard-result <draftId> --source synced --sync-root <dir> --json
+```
+
+作用：取消待确认草稿，后续确认必须失败。
+
 成功时 `results[0].content` 返回文件内容。非 JSON 模式直接打印内容。
 
 失败：
@@ -232,7 +303,7 @@ molan read <idOrTitle> --json
 | `E_PANDOC_MISSING` | converter | 无法启动 pandoc |
 | `E_UNSUPPORTED_FORMAT` | converter / cli | 文件格式不支持 |
 | `E_INPUT_NOT_FOUND` | converter / cli | 输入文件不存在或无输入 |
-| `E_CONVERT_FAILED` | converter | pandoc 转换失败 |
+| `E_CONVERT_FAILED` | converter | pandoc 或专用格式解析器转换失败 |
 | `E_OUTPUT_FAILED` | converter | 写输出失败 |
 | `E_CLOUD_EMPTY` | cli cloud | 本地 AI 文件收件箱为空 |
 | `E_CLOUD_DOCUMENT_NOT_FOUND` | cli cloud | 收件箱文档不存在 |

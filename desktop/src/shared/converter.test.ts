@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import * as path from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
-import { convertBatch, ERROR_CODES } from './converter';
+import { convertBatch, convertFile, ERROR_CODES, pandocPath } from './converter';
 
 // 失败隔离契约测试:批量转换里单个失败不能污染整批
 // 这是 CLI --json 输出给 AI 消费的契约,AI 会按 results[i].ok 逐项处理,
@@ -54,5 +54,93 @@ describe('convertBatch 失败隔离', () => {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'molan-batch-'));
     const results = await convertBatch([], 'md', tmp, 4);
     expect(results).toEqual([]);
+  });
+});
+
+describe('pandocPath 路径解析', () => {
+  it('优先使用显式的 PANDOC_PATH', () => {
+    const resolved = pandocPath({
+      env: { PANDOC_PATH: '/tmp/custom-pandoc' },
+      existsSync: (target) => target === '/tmp/custom-pandoc',
+      baseDir: '/repo/desktop/out/shared',
+      resourcesPath: '/app/resources',
+    });
+    expect(resolved).toBe('/tmp/custom-pandoc');
+  });
+
+  it('打包后的应用优先使用 process.resourcesPath 下的 pandoc', () => {
+    const resolved = pandocPath({
+      env: {},
+      resourcesPath: '/Applications/Molan.app/Contents/Resources',
+      platform: 'darwin',
+      existsSync: (target) => target === '/Applications/Molan.app/Contents/Resources/pandoc',
+      baseDir: '/repo/desktop/out/shared',
+    });
+    expect(resolved).toBe('/Applications/Molan.app/Contents/Resources/pandoc');
+  });
+
+  it('开发环境会回退到 desktop/resources/pandoc.exe', () => {
+    const resolved = pandocPath({
+      env: {},
+      resourcesPath: undefined,
+      platform: 'win32',
+      baseDir: '/repo/desktop/out/shared',
+      existsSync: (target) => target === '/repo/desktop/resources/pandoc.exe',
+    });
+    expect(resolved).toBe('/repo/desktop/resources/pandoc.exe');
+  });
+
+  it('非 Windows 平台不会误选 pandoc.exe，而是回退到系统 pandoc', () => {
+    const resolved = pandocPath({
+      env: {},
+      resourcesPath: '/Applications/Molan.app/Contents/Resources',
+      platform: 'darwin',
+      baseDir: '/repo/desktop/out/shared',
+      existsSync: (target) => target === '/Applications/Molan.app/Contents/Resources/pandoc.exe',
+    });
+    expect(resolved).toBe('pandoc');
+  });
+});
+
+describe('AI 可读 Markdown 转换', () => {
+  const fixtures = path.join(__dirname, '../../cli/test-fixtures');
+
+  it('从 PDF 提取正文，而不是把 PDF 交给 pandoc reader', async () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'molan-pdf-'));
+    const result = await convertFile(path.join(fixtures, 'sample.pdf'), 'md', tmp);
+
+    expect(result.ok).toBe(true);
+    expect(fs.readFileSync(result.outputPath!, 'utf-8')).toContain('Molan PDF Sample');
+  });
+
+  it('把 XLSX 工作表转换为 Markdown 表格', async () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'molan-xlsx-'));
+    const result = await convertFile(path.join(fixtures, 'sample.xlsx'), 'md', tmp);
+
+    expect(result.ok).toBe(true);
+    const markdown = fs.readFileSync(result.outputPath!, 'utf-8');
+    expect(markdown).toContain('## summary');
+    expect(markdown).toContain('| documents | 12 | ready |');
+  });
+
+  it('把普通 JSON 展开为可引用的 Markdown 字段', async () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'molan-json-'));
+    const result = await convertFile(path.join(fixtures, 'sample.json'), 'md', tmp);
+
+    expect(result.ok).toBe(true);
+    const markdown = fs.readFileSync(result.outputPath!, 'utf-8');
+    expect(markdown).toContain('- **name**：');
+  });
+
+  it('无效 JSON 仍生成带错误说明和完整原文的 Markdown', async () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'molan-invalid-json-'));
+    const input = path.join(tmp, 'invalid.json');
+    fs.writeFileSync(input, '{"broken":', 'utf-8');
+    const result = await convertFile(input, 'md', tmp);
+
+    expect(result.ok).toBe(true);
+    const markdown = fs.readFileSync(result.outputPath!, 'utf-8');
+    expect(markdown).toContain('JSON 解析失败，以下为原始内容');
+    expect(markdown).toContain('{"broken":');
   });
 });

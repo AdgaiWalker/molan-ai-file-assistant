@@ -1,31 +1,27 @@
-import Nav from './components/Nav';
-import Hero from './components/Hero';
-import EarlyAccess from './components/EarlyAccess';
-import FileConvergence from './components/FileConvergence';
-import ThreePlatforms from './components/ThreePlatforms';
-import FlowTimeline from './components/FlowTimeline';
-import FeatureGrid from './components/FeatureGrid';
-import TrustBadges from './components/TrustBadges';
-import Footer from './components/Footer';
+import { useEffect, useState } from 'react';
+import PublicDocPage from './components/PublicDocPage';
+import ImmersiveLanding from './components/ImmersiveLanding';
 
-/**
- * 墨览官网落地页 —— 区块组装。
- * 顺序：Hero → 预约（主转化） → 文件汇聚 → 三端 → 流程 → 能力 → 信任 → FAQ/Footer
- */
+const PUBLIC_ROUTES = new Set(['privacy', 'terms', 'deletion', 'support']);
+
+function readHashRoute() {
+  if (typeof window === 'undefined') return '';
+  return window.location.hash.replace(/^#\/?/, '').trim();
+}
+
 export default function App() {
-  return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <EarlyAccess />
-        <FileConvergence />
-        <ThreePlatforms />
-        <FlowTimeline />
-        <FeatureGrid />
-        <TrustBadges />
-      </main>
-      <Footer />
-    </>
-  );
+  const [route, setRoute] = useState(readHashRoute);
+
+  useEffect(() => {
+    const syncRoute = () => setRoute(readHashRoute());
+    syncRoute();
+    window.addEventListener('hashchange', syncRoute);
+    return () => window.removeEventListener('hashchange', syncRoute);
+  }, []);
+
+  if (PUBLIC_ROUTES.has(route)) {
+    return <PublicDocPage routeId={route as 'privacy' | 'terms' | 'deletion' | 'support'} />;
+  }
+
+  return <ImmersiveLanding />;
 }

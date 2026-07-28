@@ -1,0 +1,21 @@
+生成时间：2026-07-21
+用途：D-010 → E-007 → F-005 的固定执行顺序与停止条件。
+
+固定顺序：
+1. D-010：启动 PostgreSQL 18 Compose，同步服务健康检查通过后再开始三端联调。
+2. D-010：Android 收集 Markdown / JSON，iOS 收集 TXT，桌面 pull 确认三端对象、版本与哈希一致。
+3. D-010：继续补 docx / pdf / xlsx / pptx 同步，确认桌面端能看到原件并保留来源关系。
+4. D-010：执行弱网、长离线、设备撤销、双端冲突、删除恢复，并记录恢复路径与最终状态。
+1. E-007：手机收集 docx / pdf 原件并同步到桌面真实收件箱。
+2. E-007：桌面生成 Markdown 派生副本，记录来源版本与派生对象 hash。
+3. E-007：先验证未授权读取失败，再授权 AI 读取，通过真实 AI 客户端走 CLI 或 MCP 读取正文。
+4. E-007：撤回授权后立即再次读取，确认被拒绝并保留日志或录屏。
+1. F-005：用真实 AI 客户端读取已授权样例，生成 Markdown / JSON 结果。
+2. F-005：通过 `molan write-result` 或 MCP `write_result` 写回，并确认保存为新版本或独立文档。
+3. F-005：桌面推送 `air_` 事件，Android / iOS 拉到结果卡片并进入阅读页。
+4. F-005：从结果回到来源，再执行复制 / 分享 / 保存副本，保留双端录屏。
+
+结束条件：
+- gate-d-sync-report.md 已补 file id / version / hash / 故障恢复证据
+- gate-e-ai-read-report.md 已补授权前拒绝 / 授权后可读 / 撤回后拒绝证据
+- gate-f-result-return-report.md 已补写回确认、Android / iOS 回流录屏

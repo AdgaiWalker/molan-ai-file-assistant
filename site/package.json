@@ -6,7 +6,7 @@
   "description": "墨览官网落地页",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/prepare-sites.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
