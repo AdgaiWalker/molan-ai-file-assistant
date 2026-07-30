@@ -7,7 +7,6 @@ const repoRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '
 const sourcePath = path.join(repoRoot, 'config/product-identity.json');
 const templatesDir = path.join(repoRoot, 'docs/public/templates');
 const outputDir = path.join(repoRoot, 'docs/public');
-const siteOutputPath = path.join(repoRoot, 'site/src/lib/publicIdentity.generated.ts');
 const args = process.argv.slice(2);
 const checkOnly = args.includes('--check');
 
@@ -69,23 +68,13 @@ for (const [templateName, outputName] of fileMap) {
   ok = ensureSynced(outputPath, renderTemplate(templateText)) && ok;
 }
 
-const siteModule = `/**
- * 由 scripts/render_public_docs.mjs 生成。
- * 修改 config/product-identity.json 后重新运行脚本，不要直接手改本文件。
- */
-export const PUBLIC_IDENTITY = ${JSON.stringify(identity, null, 2)} as const;
-`;
-
-ok = ensureSynced(siteOutputPath, siteModule) && ok;
-
 if (checkOnly) {
   if (ok) {
-    console.log('公开文案与站点身份常量已同步。');
+    console.log('公开文案已同步。');
     process.exit(0);
   }
   process.exit(1);
 }
 
-console.log('已同步公开文案与站点身份常量：');
+console.log('已同步公开文案：');
 for (const [, outputName] of fileMap) console.log(`- docs/public/${outputName}`);
-console.log('- site/src/lib/publicIdentity.generated.ts');

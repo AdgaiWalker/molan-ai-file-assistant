@@ -10,7 +10,6 @@ Current projects in one folder (no workspaces):
 - The frozen legacy mobile baseline remains in the repo only as archived acceptance evidence; do not extend it as the main implementation path.
 - `desktop/` — Electron + Vite + React reader, converter, and prompt GUI. It will evolve into the desktop AI file inbox. Office↔Markdown conversion uses the shared engine with CLI.
 - `desktop/cli/` — Node CLI tool (`molan convert`). Office/PDF/PPT/Excel → Markdown, structured JSON output for AI/agent consumption. Main AI entry point.
-- `site/` — Vite + React static product website.
 - Root — product/technical source of truth, task list, and build scripts.
 
 `PRD.md` is the single product and technical source of truth. Consult the relevant section before implementing any feature (use the `/prd` skill when available). `TODO.md` contains implementation order only and must not redefine product decisions.
@@ -111,7 +110,7 @@ The native app targets register `.md` / `.markdown` / `.json` entry points throu
 
 ## Notes
 - No lint/format config exists yet (no eslint/prettier/biome). Use `npm run typecheck` (desktop) as the main correctness check.
-- TypeScript versions differ across JS subprojects; desktop and site use `^5.6.0`, while the frozen legacy baseline still carries its own pinned toolchain.
+- TypeScript versions differ across JS subprojects; desktop uses `^5.6.0`, while the frozen legacy baseline still carries its own pinned toolchain.
 - Test suite: `contracts/`, `desktop/`, `desktop/cli/`, `server/` and the native targets carry the main active checks. The frozen legacy baseline still has archived vitest coverage, but it no longer defines the primary shipping path.
 - `build/`, `dist/`, `logs/`, `.expo/`, `out/`, `release/` are generated — don't edit.
 

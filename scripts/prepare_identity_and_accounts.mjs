@@ -95,12 +95,11 @@ function writeIdentityEvidenceSeeds() {
 
   const publicDocSeedText = [
     generatedAt,
-    '用途：当前公开文案占位与站内入口清单，可直接作为 G-001 的起始对照。',
+    '用途：当前公开文案占位清单，可直接作为 G-001 的起始对照。',
     '',
     ...(Array.isArray(readiness.publicDocs) ? readiness.publicDocs : []).flatMap((doc) => ([
       `文档：${doc.title}`,
       `路径：${doc.relativePath}`,
-      `站内入口：${doc.siteUrl}`,
       `占位数：${doc.placeholderCount}`,
       `占位项：${doc.placeholders?.join('、') || '无'}`,
       '',
@@ -169,7 +168,7 @@ function writeIdentityEvidenceSeeds() {
 
   const syncTargetsSeedText = [
     generatedAt,
-    '用途：身份信息逐位置回填清单；对照自动回写目标和人工补证据目标，避免遗漏官网 / 应用内 / 商店后台。',
+    '用途：身份信息逐位置回填清单；对照自动回写目标和人工补证据目标，避免遗漏应用内 / 商店后台。',
     '',
     ...(Array.isArray(syncTargets.targets) ? syncTargets.targets : []).map((target) => [
       `${target.title}`,
@@ -240,7 +239,7 @@ const activeTasks = identityTasks.filter((task) => todoSnapshot.sectionStatusMap
 const steps = [
   {
     id: 'render_public_docs',
-    title: '公开文案与站点身份常量回写',
+    title: '公开文案回写',
     command: 'node scripts/render_public_docs.mjs',
     run: () => runNodeScript('scripts/render_public_docs.mjs'),
   },

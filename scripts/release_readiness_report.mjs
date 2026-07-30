@@ -97,7 +97,6 @@ const iosInfo = readText('native/iosApp/Molan/Resources/Info.plist');
 const electronBuilder = readText('desktop/electron-builder.yml');
 const desktopPackage = JSON.parse(readText('desktop/package.json') || '{}');
 const cliPackage = JSON.parse(readText('desktop/cli/package.json') || '{}');
-const sitePackage = JSON.parse(readText('site/package.json') || '{}');
 const serverPackage = JSON.parse(readText('server/package.json') || '{}');
 const publicReleaseChannels = JSON.parse(readText('docs/public/public-release-channels.json') || '[]');
 const publicReleaseChannelMap = new Map(
@@ -220,28 +219,11 @@ const sections = [
     },
     nextSteps: [
       'cd desktop/cli && npm run typecheck && npm run build && npm run test && npm run pack:dist',
-      '如需公开下载，再补发布说明、SHA256 和官网入口',
+      '如需公开下载，再补发布说明、SHA256 和下载入口',
     ],
     artifacts: summarizeArtifacts(
       ['desktop/cli/dist'],
       (file) => file.endsWith('.js') || file.endsWith('.zip') || file.endsWith('.tgz'),
-    ),
-  },
-  {
-    id: 'site',
-    title: '官网',
-    config: {
-      packageName: String(sitePackage.name ?? 'missing'),
-      version: String(sitePackage.version ?? 'missing'),
-      artifactRoot: 'site/dist',
-    },
-    nextSteps: [
-      'cd site && npm run typecheck && npm run build',
-      '真实渠道就绪后再把下载链接、SHA256 和教程截图补上',
-    ],
-    artifacts: summarizeArtifacts(
-      ['site/dist'],
-      (file) => file.endsWith('.html') || file.endsWith('.js') || file.endsWith('.css') || file.endsWith('.png') || file.endsWith('.svg'),
     ),
   },
   {
@@ -281,7 +263,7 @@ function buildDeliveryManifestEntry({ id, name, relativeRoots, includeFile, pref
     publicStatus: channel?.status ?? 'coming',
     publicHref: channel?.href ?? '',
     publicCta: channel?.cta ?? '',
-    publicDetail: channel?.detail ?? '当前未配置官网入口。',
+    publicDetail: channel?.detail ?? '当前未配置公开下载入口。',
     artifactCount: candidates.length,
     preferredArtifact,
     missingNote,
@@ -380,7 +362,7 @@ function nextStepRows(items) {
 
 function publicChannelTable(items) {
   if (!Array.isArray(items) || items.length === 0) {
-    return '当前未配置官网公开发布渠道。';
+    return '当前未配置公开发布渠道。';
   }
   return [
     '| 渠道 | 状态 | 说明 | 入口 |',
@@ -394,7 +376,7 @@ function deliveryManifestTable(items) {
     return '当前未生成对外交付物清单。';
   }
   return [
-    '| 平台 | 官网状态 | 当前公开入口 | 本地首选产物 | SHA256 | 备注 |',
+    '| 平台 | 发布状态 | 当前公开入口 | 本地首选产物 | SHA256 | 备注 |',
     '|---|---|---|---|---|---|',
     ...items.map((item) => {
       const preferredArtifact = item.preferredArtifact;
@@ -428,7 +410,7 @@ node scripts/release_readiness_report.mjs --out default
 - \`${validationRelativePath('release_dry_run', 'release-readiness-snapshot.md')}\`
 - \`${validationRelativePath('release_dry_run', 'release-readiness-snapshot.json')}\`
 
-## 当前官网公开发布状态
+## 当前公开发布状态
 
 ${publicChannelTable(publicReleaseChannels)}
 

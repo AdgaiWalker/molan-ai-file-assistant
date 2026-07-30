@@ -11,12 +11,8 @@ const checks = [
     cmd: ['node', 'scripts/engineering_identity_check.mjs', '--check'],
   },
   {
-    label: '公开文案与身份常量',
+    label: '公开文案',
     cmd: ['node', 'scripts/render_public_docs.mjs', '--check'],
-  },
-  {
-    label: '官网发布渠道常量',
-    cmd: ['node', 'scripts/render_release_channels.mjs', '--check'],
   },
   {
     label: 'TODO 状态一致性',

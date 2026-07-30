@@ -39,17 +39,7 @@ function containsDevMarker(value) {
   return /(?:^|[.\s-])dev(?:$|[.\s-])/i.test(value) || / Dev$/i.test(value);
 }
 
-function linkValue(constantsText, key, fallback = 'missing') {
-  return regexValue(constantsText, new RegExp(`${key}:\\s*'([^']+)'`), fallback).trim();
-}
-
-function resolveTemplateLiteral(value, constantsText) {
-  if (!value.includes('${BRAND.github}')) return value;
-  const github = regexValue(constantsText, /github:\s*'([^']+)'/, 'missing');
-  return value.replace('${BRAND.github}', github);
-}
-
-const siteConstants = readText('site/src/lib/constants.ts');
+const productIdentity = readJson('config/product-identity.json');
 const androidGradle = readText('native/androidApp/build.gradle.kts');
 const androidStrings = readText('native/androidApp/src/main/res/values/strings.xml');
 const iosProject = readText('native/iosApp/project.yml');
@@ -63,25 +53,21 @@ const publicDocs = [
     id: 'privacy_policy',
     title: '隐私说明',
     relativePath: 'docs/public/privacy-policy.md',
-    siteUrl: resolveTemplateLiteral(linkValue(siteConstants, 'privacy'), siteConstants),
   },
   {
     id: 'terms_of_service',
     title: '服务条款',
     relativePath: 'docs/public/terms-of-service.md',
-    siteUrl: resolveTemplateLiteral(linkValue(siteConstants, 'terms'), siteConstants),
   },
   {
     id: 'account_and_data_deletion',
     title: '账号与数据删除说明',
     relativePath: 'docs/public/account-and-data-deletion.md',
-    siteUrl: resolveTemplateLiteral(linkValue(siteConstants, 'deletion'), siteConstants),
   },
   {
     id: 'support',
     title: '支持与反馈',
     relativePath: 'docs/public/support.md',
-    siteUrl: resolveTemplateLiteral(linkValue(siteConstants, 'support'), siteConstants),
   },
 ].map((item) => {
   const text = readText(item.relativePath);
@@ -94,8 +80,8 @@ const publicDocs = [
 });
 
 const currentIdentity = {
-  brandName: regexValue(siteConstants, /name:\s*'([^']+)'/, 'missing'),
-  brandSlug: regexValue(siteConstants, /slug:\s*'([^']+)'/, 'missing'),
+  brandName: String(productIdentity.brand?.name ?? 'missing'),
+  brandSlug: String(productIdentity.brand?.slug ?? 'missing'),
   android: {
     applicationId: regexValue(androidGradle, /applicationId\s*=\s*"([^"]+)"/),
     versionName: regexValue(androidGradle, /versionName\s*=\s*"([^"]+)"/),
@@ -150,10 +136,6 @@ for (const doc of publicDocs) {
     pushFinding('public_docs', doc.title === '支持与反馈' ? 'high' : 'medium', `${doc.title} 仍有待补占位`, `文件 \`${doc.relativePath}\` 当前还有 ${doc.placeholderCount} 个占位：${doc.placeholders.join('、')}。`);
   }
 }
-if (publicDocs.some((doc) => doc.siteUrl.includes('/blob/main/docs/public/'))) {
-  pushFinding('site', 'medium', '官网法律/支持入口当前仍指向 GitHub 文档', '当前站点已经从内部设计稿切到公开草案，但链接仍是 GitHub Blob，不是最终官网域名下的正式页面。');
-}
-
 const payload = {
   validationDate,
   tasks: ['A-007', 'G-001'],
@@ -170,7 +152,7 @@ const payload = {
   stopWhen: [
     '正式产品名、Android applicationId、iOS Bundle ID、URL Scheme、App Group ID、桌面 App ID 都已切到可发布值',
     '公开隐私、条款、删除和支持页不再包含待补占位',
-    '官网、应用内和商店后台展示同一套主体、域名、支持邮箱和发布入口',
+    '应用内和商店后台展示同一套主体、域名、支持邮箱和发布入口',
   ],
 };
 
@@ -188,7 +170,7 @@ const markdown = `# 身份与公开入口当前状态快照
 - A-007
 - G-001
 
-用途：把当前仓库里已经确定的产品身份、包名、公开文案入口和仍待补的占位集中拉平，避免后续签名、商店、官网和应用内各填各的。
+用途：把当前仓库里已经确定的产品身份、包名、公开文案入口和仍待补的占位集中拉平，避免后续签名、商店和应用内各填各的。
 
 ## 1. 当前已识别的产品身份
 
@@ -224,7 +206,6 @@ const markdown = `# 身份与公开入口当前状态快照
 ${publicDocs.map((doc) => `### ${doc.title}
 
 - 源文件：\`${doc.relativePath}\`
-- 当前站点链接：${doc.siteUrl}
 - 待补占位数：${doc.placeholderCount}
 ${doc.placeholders.length === 0 ? '- 当前未发现待补占位。' : `- 待补项：${doc.placeholders.join('、')}`}`).join('\n\n')}
 
@@ -241,13 +222,13 @@ ${formatFindings(findings)}
 1. 先确定正式主体、域名、支持邮箱；
 2. 再统一 Android applicationId、iOS Bundle ID / URL Scheme / App Group、桌面 App ID；
 3. 用真实值替换 \`docs/public/\` 下的占位文案；
-4. 最后同步回官网、应用内入口、商店后台和 \`TODO.md\` 当前记录。
+4. 最后同步回应用内入口、商店后台和 \`TODO.md\` 当前记录。
 
 ## 5. 停止条件
 
 - 正式产品名、Android applicationId、iOS Bundle ID、URL Scheme、App Group ID、桌面 App ID 都已切到可发布值；
 - 公开隐私、条款、删除和支持页不再包含待补占位；
-- 官网、应用内和商店后台展示同一套主体、域名、支持邮箱和发布入口。
+- 应用内和商店后台展示同一套主体、域名、支持邮箱和发布入口。
 `;
 
 function writeOutput(targetPath, content) {

@@ -10,7 +10,6 @@
 - 原生移动端目标 — Android 使用 Kotlin + Compose，iOS 使用 Swift + SwiftUI/UIKit
 - `desktop/` — Electron + Vite + React 桌面阅读、转换与快贴 GUI，后续演进为 AI 文件收件箱
 - `desktop/cli/` — Node CLI (`molan convert`)
-- `site/` — 官网静态站点
 - 根目录 — 产品与技术总纲 `PRD.md`、任务清单 `TODO.md` 和构建脚本
 
 ## 本地运行
