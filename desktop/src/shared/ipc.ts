@@ -59,6 +59,7 @@ export const ipcChannels = {
   READ_MD: 'read-md',
   OPEN_PATH: 'open-path',
   COPY_TEXT: 'copy-text',
+  GET_ALWAYS_ON_TOP: 'get-always-on-top',
   SET_ALWAYS_ON_TOP: 'set-always-on-top',
   OPEN_PROMPT_WINDOW: 'open-prompt-window',
   SAVE_TEXT_AS: 'save-text-as',

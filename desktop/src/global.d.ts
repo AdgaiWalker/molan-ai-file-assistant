@@ -15,7 +15,8 @@ interface DesktopApi {
   readMd: (filePath: string) => Promise<string>;
   openPath: (p: string) => Promise<void>;
   copyText: (text: string) => Promise<void>;
-  setAlwaysOnTop: (enabled: boolean) => Promise<void>;
+  getAlwaysOnTop: () => Promise<boolean>;
+  setAlwaysOnTop: (enabled: boolean) => Promise<boolean>;
   openPromptWindow: () => Promise<void>;
   saveTextAs: (request: SaveTextRequest) => Promise<string | null>;
   saveSettings: (settings: unknown) => Promise<void>;

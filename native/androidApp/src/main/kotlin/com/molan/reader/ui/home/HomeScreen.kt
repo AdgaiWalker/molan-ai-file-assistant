@@ -1,6 +1,5 @@
 package com.molan.reader.ui.home
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -9,7 +8,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,17 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,9 +37,6 @@ import com.molan.reader.document.LibraryDocument
 import com.molan.reader.document.LibraryConflict
 import com.molan.reader.document.LibraryUiState
 import com.molan.reader.document.SyncUiState
-import com.molan.reader.document.SyncNotice
-import com.molan.reader.document.SyncFailure
-import java.util.Locale
 
 @Composable
 fun HomeScreen(
@@ -154,16 +145,8 @@ fun HomeScreen(
                     color = MaterialTheme.colorScheme.error,
                 )
                 is LibraryUiState.Ready -> {
-                    val resultGroups = libraryState.documents
-                        .filter { it.kind == "ai_result" && it.sourceDocumentId != null }
-                        .groupBy { requireNotNull(it.sourceDocumentId) }
-                    val documents = libraryState.documents.filter { document ->
-                        document.title.contains(query, ignoreCase = true) && when (filter) {
-                            LibraryFilter.Recent -> true
-                            LibraryFilter.Collected -> document.state != "archived" && document.state != "deleted"
-                            LibraryFilter.Archived -> document.state == "archived"
-                        }
-                    }
+                    val latestResultIds = latestResultIdsBySource(libraryState.documents)
+                    val documents = filterLibraryDocuments(libraryState.documents, filter, query)
                     if (documents.isEmpty()) {
                         Text(
                             stringResource(R.string.library_empty),
@@ -181,7 +164,7 @@ fun HomeScreen(
                                     open = { openDocument(document.id) },
                                     openSource = { sourceId -> openDocument(sourceId) },
                                     openLatestResult = { resultId -> openDocument(resultId) },
-                                    latestResultId = resultGroups[document.id]?.firstOrNull()?.id,
+                                    latestResultId = latestResultIds[document.id],
                                     setArchived = { archived -> setArchived(document.id, archived) },
                                     queueSync = { queueSync(document.id) },
                                     deleteDocument = { scope -> deleteDocument(document.id, scope) },
@@ -193,153 +176,6 @@ fun HomeScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun LibraryDocumentCard(
-    document: LibraryDocument,
-    open: () -> Unit,
-    openSource: (String) -> Unit,
-    openLatestResult: (String) -> Unit,
-    latestResultId: String?,
-    setArchived: (Boolean) -> Unit,
-    queueSync: () -> Unit,
-    deleteDocument: (String) -> Unit,
-    restoreDocument: (String) -> Unit,
-) {
-    var pendingDeleteScope by rememberSaveable { mutableStateOf<String?>(null) }
-    var moreExpanded by rememberSaveable { mutableStateOf(false) }
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(document.title, style = MaterialTheme.typography.titleMedium, maxLines = 2)
-            Text(
-                text = "${document.format.uppercase(Locale.ROOT)} · ${formatBytes(document.sizeBytes)} · " +
-                    documentStateLabel(document.state),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodySmall,
-            )
-            if (document.kind == "ai_result" && document.sourceTitle != null) {
-                Text(
-                    text = stringResource(R.string.library_ai_result_source, document.sourceTitle),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            }
-            if (document.kind == "ai_result" && document.isStale) {
-                Text(
-                    text = stringResource(R.string.library_ai_result_stale),
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            }
-            Text(
-                text = document.contentHash.take(23) + "…",
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.labelSmall,
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (document.state == "deleted") {
-                    OutlinedButton(onClick = { restoreDocument("current_device") }) {
-                        Text(stringResource(R.string.sync_restore_device))
-                    }
-                    OutlinedButton(onClick = { restoreDocument("cloud") }) {
-                        Text(stringResource(R.string.sync_restore_cloud))
-                    }
-                } else {
-                    Button(onClick = open) { Text(stringResource(R.string.library_open)) }
-                    if (document.kind == "ai_result" && document.sourceDocumentId != null) {
-                        OutlinedButton(onClick = { openSource(document.sourceDocumentId) }) {
-                            Text(stringResource(R.string.library_open_source))
-                        }
-                    } else if (latestResultId != null) {
-                        OutlinedButton(onClick = { openLatestResult(latestResultId) }) {
-                            Text(stringResource(R.string.library_open_latest_result))
-                        }
-                    } else if (document.state in setOf("collected", "failed")) {
-                        OutlinedButton(onClick = queueSync) {
-                            Text(stringResource(R.string.sync_this_document))
-                        }
-                    }
-                    Box {
-                        TextButton(onClick = { moreExpanded = true }) {
-                            Text(stringResource(R.string.library_more_actions))
-                        }
-                        DropdownMenu(
-                            expanded = moreExpanded,
-                            onDismissRequest = { moreExpanded = false },
-                        ) {
-                            if (document.kind == "ai_result") {
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.library_delete_result)) },
-                                    onClick = {
-                                        moreExpanded = false
-                                        pendingDeleteScope = "current_device"
-                                    },
-                                )
-                            } else {
-                                DropdownMenuItem(
-                                    text = {
-                                        Text(
-                                            stringResource(
-                                                if (document.state == "archived") R.string.library_restore
-                                                else R.string.library_archive,
-                                            ),
-                                        )
-                                    },
-                                    onClick = {
-                                        moreExpanded = false
-                                        setArchived(document.state != "archived")
-                                    },
-                                )
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.sync_delete_device)) },
-                                    onClick = {
-                                        moreExpanded = false
-                                        pendingDeleteScope = "current_device"
-                                    },
-                                )
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.sync_delete_cloud)) },
-                                    onClick = {
-                                        moreExpanded = false
-                                        pendingDeleteScope = "cloud"
-                                    },
-                                )
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.sync_delete_all)) },
-                                    onClick = {
-                                        moreExpanded = false
-                                        pendingDeleteScope = "all_devices"
-                                    },
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    pendingDeleteScope?.let { scope ->
-        AlertDialog(
-            onDismissRequest = { pendingDeleteScope = null },
-            title = { Text(stringResource(R.string.sync_delete_confirm_title)) },
-            text = { Text(stringResource(deleteConfirmation(scope))) },
-            confirmButton = {
-                TextButton(onClick = {
-                    pendingDeleteScope = null
-                    deleteDocument(scope)
-                }) { Text(stringResource(R.string.sync_delete_confirm)) }
-            },
-            dismissButton = {
-                TextButton(onClick = { pendingDeleteScope = null }) { Text(stringResource(R.string.cancel)) }
-            },
-        )
     }
 }
 
@@ -379,112 +215,4 @@ private fun ConflictSection(
             }
         }
     }
-}
-
-@StringRes
-private fun deleteConfirmation(scope: String): Int = when (scope) {
-    "current_device" -> R.string.sync_delete_device_explanation
-    "cloud" -> R.string.sync_delete_cloud_explanation
-    else -> R.string.sync_delete_all_explanation
-}
-
-@Composable
-private fun SyncPanel(
-    state: SyncUiState,
-    login: (String, String, String) -> Unit,
-    logout: () -> Unit,
-    syncNow: () -> Unit,
-) {
-    var serverUrl by rememberSaveable { mutableStateOf("http://10.0.2.2:43120") }
-    var phone by rememberSaveable { mutableStateOf("") }
-    var code by rememberSaveable { mutableStateOf("") }
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(stringResource(R.string.sync_title), style = MaterialTheme.typography.titleMedium)
-            when (state) {
-                SyncUiState.LoggedOut, is SyncUiState.Failed -> {
-                    Text(stringResource(R.string.sync_login_explanation), style = MaterialTheme.typography.bodySmall)
-                    OutlinedTextField(
-                        value = serverUrl,
-                        onValueChange = { serverUrl = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text(stringResource(R.string.sync_server_url)) },
-                        singleLine = true,
-                    )
-                    OutlinedTextField(
-                        value = phone,
-                        onValueChange = { phone = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text(stringResource(R.string.sync_phone)) },
-                        singleLine = true,
-                    )
-                    OutlinedTextField(
-                        value = code,
-                        onValueChange = { code = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text(stringResource(R.string.sync_code)) },
-                        singleLine = true,
-                    )
-                    if (state is SyncUiState.Failed) {
-                        Text(stringResource(state.reason.messageResource()), color = MaterialTheme.colorScheme.error)
-                    }
-                    Button(onClick = { login(serverUrl, phone, code) }) {
-                        Text(stringResource(R.string.sync_login))
-                    }
-                }
-                SyncUiState.LoggingIn -> {
-                    CircularProgressIndicator()
-                    Text(stringResource(R.string.sync_logging_in))
-                }
-                is SyncUiState.LoggedIn -> {
-                    Text(stringResource(R.string.sync_logged_in, state.deviceId.take(18)))
-                    state.notice?.let { Text(stringResource(it.messageResource())) }
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Button(onClick = syncNow) { Text(stringResource(R.string.sync_now)) }
-                        OutlinedButton(onClick = logout) { Text(stringResource(R.string.sync_logout)) }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun documentStateLabel(state: String): String = stringResource(
-    when (state) {
-        "ai_result" -> R.string.library_ai_result_state
-        "sync_pending" -> R.string.sync_state_pending
-        "synced" -> R.string.sync_state_synced
-        "failed" -> R.string.sync_state_failed
-        "conflict" -> R.string.sync_state_conflict
-        "archived" -> R.string.library_archived
-        "deleted" -> R.string.sync_state_deleted
-        else -> R.string.library_local_state
-    },
-)
-
-private fun SyncNotice.messageResource(): Int = when (this) {
-    SyncNotice.QueueAdded -> R.string.sync_queue_added
-    SyncNotice.Syncing -> R.string.sync_started
-}
-
-private fun SyncFailure.messageResource(): Int = when (this) {
-    SyncFailure.LoginFailed -> R.string.sync_login_failed
-    SyncFailure.LoginRequired -> R.string.sync_login_required
-    SyncFailure.QueueFailed -> R.string.sync_queue_failed
-}
-
-private fun formatBytes(bytes: Long): String = when {
-    bytes < 1_024 -> "$bytes B"
-    bytes < 1_024 * 1_024 -> "%.1f KB".format(Locale.ROOT, bytes / 1_024.0)
-    else -> "%.1f MB".format(Locale.ROOT, bytes / (1_024.0 * 1_024.0))
-}
-
-private enum class LibraryFilter(@param:StringRes val label: Int) {
-    Recent(R.string.library_recent),
-    Collected(R.string.library_collected),
-    Archived(R.string.library_archived),
 }

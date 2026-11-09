@@ -246,10 +246,16 @@ ipcMain.handle(ipcChannels.COPY_TEXT, async (_e, text: string): Promise<void> =>
   clipboard.writeText(text);
 });
 
-// 置顶主窗口，作为电脑端快贴窗的第一阶段能力
-ipcMain.handle(ipcChannels.SET_ALWAYS_ON_TOP, async (_e, enabled: boolean): Promise<void> => {
-  if (!mainWindow) return;
-  mainWindow.setAlwaysOnTop(enabled, 'floating');
+ipcMain.handle(ipcChannels.GET_ALWAYS_ON_TOP, (event): boolean => {
+  return BrowserWindow.fromWebContents(event.sender)?.isAlwaysOnTop() ?? false;
+});
+
+// 只控制发起调用的窗口，避免独立快贴窗误改主窗口状态
+ipcMain.handle(ipcChannels.SET_ALWAYS_ON_TOP, (event, enabled: boolean): boolean => {
+  const targetWindow = BrowserWindow.fromWebContents(event.sender);
+  if (!targetWindow) return false;
+  targetWindow.setAlwaysOnTop(enabled, 'floating');
+  return targetWindow.isAlwaysOnTop();
 });
 
 // 打开独立置顶快贴窗，面向桌面端 AI/IDE 旁侧复制粘贴场景

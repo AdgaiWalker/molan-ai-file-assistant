@@ -934,7 +934,7 @@ summary:focus-visible {
   max-width: 23rem;
 }
 
-.prompt-panel.compact {
+.prompt-panel.floating {
   grid-template-columns: 1fr;
   width: 100%;
   max-width: none;
@@ -977,7 +977,7 @@ summary:focus-visible {
   letter-spacing: -0.025em;
 }
 
-.prompt-header > div:first-child > p:not(.sync-dot) {
+.prompt-header > div:first-child > p {
   margin-top: 0.4rem;
   color: var(--text-secondary);
   font-size: 0.78rem;
@@ -1519,38 +1519,6 @@ summary:focus-visible {
   font-size: 0.7rem;
 }
 
-.inbox-meta-row {
-  display: flex;
-  flex: 0 0 auto;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.35rem;
-}
-
-.inbox-chip {
-  display: inline-flex;
-  max-width: 16rem;
-  border-radius: 999px;
-  padding: 0.22rem 0.5rem;
-  font-size: 0.64rem;
-  line-height: 1.5;
-}
-
-.inbox-chip.success {
-  background: var(--success-soft);
-  color: var(--success);
-}
-
-.inbox-chip.warn {
-  background: var(--warning-soft);
-  color: var(--warning);
-}
-
-.inbox-chip.muted {
-  background: var(--surface-muted);
-  color: var(--text-secondary);
-}
-
 .workflow-steps {
   grid-column: 1 / -1;
   display: grid;
@@ -1807,10 +1775,6 @@ summary:focus-visible {
     flex-direction: column;
   }
 
-  .inbox-meta-row {
-    justify-content: flex-start;
-  }
-
   .login-fields {
     grid-template-columns: 1fr;
   }
@@ -1819,9 +1783,6 @@ summary:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .prompt-detail {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

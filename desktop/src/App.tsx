@@ -101,7 +101,7 @@ export default function App() {
     return (
       <div className="app prompt-window-app">
         <main className="content prompt-window-content">
-          <PromptPanel compact />
+          <PromptPanel mode="floating" />
         </main>
       </div>
     );

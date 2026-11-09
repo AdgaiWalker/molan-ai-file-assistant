@@ -10,28 +10,34 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { strings } from '../constants/strings';
-
-interface PromptItem {
-  readonly id: string;
-  readonly title: string;
-  readonly content: string;
-  readonly group: string;
-  readonly tags: readonly string[];
-}
+import { userFacingError } from '../shared/userFacingError';
+import { DEFAULT_PROMPTS } from './prompt/defaultPrompts';
+import {
+  filterPrompts,
+  groupPrompts,
+  resolveSelectedPrompt,
+  type PromptItem,
+} from './prompt/presentation';
 
 interface PromptPanelProps {
-  compact?: boolean;
+  mode?: 'embedded' | 'floating';
 }
 
-const DEFAULT_PROMPTS: readonly PromptItem[] = strings.prompt.defaults;
+const COPY_FEEDBACK_DURATION_MS = 1_200;
 
-export default function PromptPanel({ compact = false }: PromptPanelProps) {
+export default function PromptPanel({ mode = 'embedded' }: PromptPanelProps) {
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState<PromptItem>(DEFAULT_PROMPTS[0]);
+  const [selectedId, setSelectedId] = useState(DEFAULT_PROMPTS[0].id);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [pinned, setPinned] = useState(false);
-  const [mini, setMini] = useState(compact);
+  const [pinPending, setPinPending] = useState(false);
+  const [detailsCollapsed, setDetailsCollapsed] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const copyFeedbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isFloating = mode === 'floating';
+  const panelCollapsed = isFloating || detailsCollapsed;
+  const searchShortcut = navigator.userAgent.includes('Mac') ? '⌘K' : 'Ctrl K';
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
@@ -44,43 +50,60 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
     return () => window.removeEventListener('keydown', focusSearch);
   }, []);
 
-  const prompts = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return DEFAULT_PROMPTS;
-    return DEFAULT_PROMPTS.filter((item) =>
-      [item.title, item.content, item.group, item.tags.join(' ')].join(' ').toLowerCase().includes(q),
-    );
-  }, [query]);
+  useEffect(() => {
+    window.api.getAlwaysOnTop()
+      .then(setPinned)
+      .catch((error: unknown) => setFailure(userFacingError(error, strings.prompt.pinFailed)));
+  }, []);
 
-  const grouped = useMemo(() => {
-    const map = new Map<string, PromptItem[]>();
-    for (const item of prompts) {
-      const list = map.get(item.group) || [];
-      list.push(item);
-      map.set(item.group, list);
-    }
-    return Array.from(map.entries());
-  }, [prompts]);
+  useEffect(() => () => {
+    if (copyFeedbackTimer.current) clearTimeout(copyFeedbackTimer.current);
+  }, []);
+
+  const prompts = useMemo(() => filterPrompts(DEFAULT_PROMPTS, query), [query]);
+  const grouped = useMemo(() => groupPrompts(prompts), [prompts]);
+  const selected = useMemo(() => resolveSelectedPrompt(prompts, selectedId), [prompts, selectedId]);
 
   const copy = async (item: PromptItem) => {
-    await window.api.copyText(item.content);
-    setCopiedId(item.id);
-    setSelected(item);
-    setTimeout(() => setCopiedId((cur) => (cur === item.id ? null : cur)), 1200);
+    setFailure(null);
+    try {
+      await window.api.copyText(item.content);
+      setCopiedId(item.id);
+      setSelectedId(item.id);
+      if (copyFeedbackTimer.current) clearTimeout(copyFeedbackTimer.current);
+      copyFeedbackTimer.current = setTimeout(
+        () => setCopiedId((currentId) => (currentId === item.id ? null : currentId)),
+        COPY_FEEDBACK_DURATION_MS,
+      );
+    } catch (error) {
+      setFailure(userFacingError(error, strings.prompt.copyFailed));
+    }
   };
 
   const togglePinned = async () => {
-    const next = !pinned;
-    setPinned(next);
-    await window.api.setAlwaysOnTop(next);
+    setPinPending(true);
+    setFailure(null);
+    try {
+      const actualPinned = await window.api.setAlwaysOnTop(!pinned);
+      setPinned(actualPinned);
+    } catch (error) {
+      setFailure(userFacingError(error, strings.prompt.pinFailed));
+    } finally {
+      setPinPending(false);
+    }
   };
 
   const openPromptWindow = async () => {
-    await window.api.openPromptWindow();
+    setFailure(null);
+    try {
+      await window.api.openPromptWindow();
+    } catch (error) {
+      setFailure(userFacingError(error, strings.prompt.openWindowFailed));
+    }
   };
 
   return (
-    <div className={`prompt-panel ${mini ? 'mini' : ''} ${compact ? 'compact' : ''}`}>
+    <div className={`prompt-panel ${panelCollapsed ? 'mini' : ''} ${isFloating ? 'floating' : ''}`}>
       <section className="prompt-main">
         <div className="prompt-header">
           <div>
@@ -90,28 +113,41 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
             <p className="prompt-privacy">{strings.prompt.synced}</p>
           </div>
           <div className="prompt-actions">
-            {!compact && (
-              <button className="btn-icon" onClick={openPromptWindow} title={strings.prompt.openWindow}>
+            {!isFloating && (
+              <button
+                className="btn-icon"
+                onClick={() => void openPromptWindow()}
+                title={strings.prompt.openWindow}
+                aria-label={strings.prompt.openWindow}
+              >
                 <ExternalLink size={16} />
               </button>
             )}
             <button
               className={`btn-icon ${pinned ? 'active' : ''}`}
-              onClick={togglePinned}
+              onClick={() => void togglePinned()}
               title={pinned ? strings.prompt.pinned : strings.prompt.pin}
+              aria-label={pinned ? strings.prompt.pinned : strings.prompt.pin}
               aria-pressed={pinned}
+              disabled={pinPending}
             >
               <Pin size={16} />
             </button>
-            <button
-              className="btn-icon"
-              onClick={() => setMini((cur) => !cur)}
-              title={mini ? strings.prompt.expand : strings.prompt.collapse}
-            >
-              {mini ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
-            </button>
+            {!isFloating && (
+              <button
+                className="btn-icon"
+                onClick={() => setDetailsCollapsed((collapsed) => !collapsed)}
+                title={detailsCollapsed ? strings.prompt.expand : strings.prompt.collapse}
+                aria-label={detailsCollapsed ? strings.prompt.expand : strings.prompt.collapse}
+                aria-expanded={!detailsCollapsed}
+              >
+                {detailsCollapsed ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+              </button>
+            )}
           </div>
         </div>
+
+        {failure && <div className="reader-error" role="alert">{failure}</div>}
 
         <div className="prompt-search">
           <Search size={16} className="search-icon" />
@@ -122,7 +158,7 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
             placeholder={strings.prompt.search}
             autoFocus
           />
-          <span className="kbd-shortcut">⌘K</span>
+          <span className="kbd-shortcut">{searchShortcut}</span>
         </div>
 
         <div className="prompt-groups">
@@ -131,8 +167,8 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
             <div className="prompt-group" key={group}>
               <h3>{group}</h3>
               {items.map((item) => (
-                <div className={`prompt-row ${selected.id === item.id ? 'selected' : ''}`} key={item.id}>
-                  <button className="prompt-row-select" onClick={() => setSelected(item)}>
+                <div className={`prompt-row ${selected?.id === item.id ? 'selected' : ''}`} key={item.id}>
+                  <button className="prompt-row-select" onClick={() => setSelectedId(item.id)}>
                     <span>
                       <strong>{item.title}</strong>
                       <small>{item.content}</small>
@@ -140,7 +176,7 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
                   </button>
                   <button
                     className="prompt-row-copy"
-                    onClick={() => copy(item)}
+                    onClick={() => void copy(item)}
                     title={strings.prompt.copy}
                     aria-label={`${strings.prompt.copy}：${item.title}`}
                   >
@@ -153,11 +189,11 @@ export default function PromptPanel({ compact = false }: PromptPanelProps) {
         </div>
       </section>
 
-      {!mini && (
+      {!panelCollapsed && selected && (
         <aside className="prompt-detail">
           <div className="detail-title">
             <h3>{selected.title}</h3>
-            <button className="btn-primary" onClick={() => copy(selected)}>
+            <button className="btn-primary" onClick={() => void copy(selected)}>
               {copiedId === selected.id ? <Check size={16} /> : <Copy size={16} />}
               <span>{copiedId === selected.id ? strings.prompt.copied : strings.prompt.copy}</span>
             </button>
